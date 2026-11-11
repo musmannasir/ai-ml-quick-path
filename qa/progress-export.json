@@ -1,0 +1,11 @@
+{
+  "schema": "aimlqp-progress",
+  "version": 1,
+  "exportedAt": "2026-11-11T09:57:07.728Z",
+  "progress": {
+    "lesson:ml-classification": {
+      "done": true,
+      "at": "2026-11-11"
+    }
+  }
+}

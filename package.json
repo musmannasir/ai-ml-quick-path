@@ -1,0 +1,26 @@
+{
+  "name": "ai-ml-quick-path",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI & ML Quick Path: a self-contained, plain-words AI and ML guide with Python and .NET examples (static website)",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "serve": "node scripts/serve.mjs",
+    "test:static": "node tests/static-checks.mjs",
+    "test:e2e": "node tests/e2e.mjs",
+    "test:e2e:edge": "node tests/e2e.mjs --channel=msedge",
+    "test:examples": "node scripts/run-examples.mjs",
+    "test": "npm run build && npm run test:static && npm run test:e2e",
+    "package": "node scripts/package.mjs",
+    "extract:code": "python3 scripts/extract_lesson_code.py"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "date": "2026-11-11T09:57:15.689Z",
+  "browser": "Chromium (Playwright)",
+  "pages": 92,
+  "passed": 52,
+  "failed": 0,
+  "results": [
+    {
+      "name": "No uncaught JS errors on all 92 pages (light)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Text contrast WCAG AA on all pages (light): 22446 text elements checked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No uncaught JS errors on all 92 pages (dark)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Text contrast WCAG AA on all pages (dark): 22446 text elements checked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Self-contained: no external links, scripts, styles or images on any of the 92 pages",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Contrast in dynamic states (light)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Contrast in dynamic states (dark)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No document-level horizontal scroll (427 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "200% zoom equivalent (640×450 CSS px): no horizontal scroll on key pages",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Desktop sidebar collapses fully (display:none), main column widens, restores; 3 cycles",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Hidden sidebar state persists after reload, restore button visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Focus mode hides sidebar and lesson side panel; aria-pressed=true",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Focus mode exits and restores sidebar",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Sidebar group Expand all / Collapse all update aria-expanded and visibility",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Sidebar filter shows only matching lessons and opens their group",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile drawer @320px opens over a scrim, closes by Escape/scrim/button, leaves nothing overlaying content",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile drawer @390px opens over a scrim, closes by Escape/scrim/button, leaves nothing overlaying content",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Focus returns to the menu button after closing the drawer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile drawer @768px opens over a scrim, closes by Escape/scrim/button, leaves nothing overlaying content",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Theme choice persists across pages; System removes the override",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Three roadmaps render with all steps (10, 9, 9)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Overview strip shows a connected step for each stage",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Each step except the last has a visible connector with an arrowhead",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Steps start collapsed with aria-expanded=false matching hidden panels",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Individual step toggle opens only that step",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Expand all / Collapse all work on the active roadmap",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Track switcher updates URL; browser Back restores the previous track",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Arrow keys move between tabs and show the matching panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Deep link to a step selects its track and expands it",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Roadmap steps link to lessons and capstone projects",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Print layout shows all tracks and all step details, hides navigation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Case filters combine (industry × difficulty × track × effort), show empty state, Reset restores all",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Hardware filters (workload × cost) work",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Capstone filter by area works (8 total: 3 ML, 3 language models)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Glossary has 100+ terms and search filters them",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Lesson catalogue filters (part × level × code status) combine, show empty state and reset",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Header search returns relevant results, supports arrow keys and Escape",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Search shows a no-results message",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Lesson completion updates sidebar count (1/9)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Export produces versioned JSON (schema aimlqp-progress, version 1)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reset clears progress; import restores it",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Invalid import is rejected with a clear message and changes nothing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Study calendar validates input and renders a schedule for each roadmap",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Site works with localStorage blocked: no errors, theme applies, warning shown on progress page",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "First Tab reaches the skip link; it moves focus to main content",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Focused controls show a visible focus outline (12 consecutive Tab stops)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Every button, link and field has an accessible name",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Code copy buttons have descriptive labels",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Lesson answer reveal: Show all / Hide all",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Quiz feedback marks a correct answer",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced-motion preference removes transitions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Screenshots written to qa/screenshots",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}
