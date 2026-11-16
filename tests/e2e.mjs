@@ -510,7 +510,7 @@ for (const w of [320, 390, 768]) {
   await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 2, prefs: {}, progress: { 'lesson:s-what-is-ai': { done: true, at: '2026-11-01' }, 'lesson:s-lifecycle': { done: true, at: '2026-11-01' }, 'lesson:s-setup': { done: true, at: '2026-11-01' } } })));
   await page.goto(url('roadmaps.html#ml')); await page.reload();
   const next = await page.locator('#ml .rm-continue').getAttribute('href');
-  const count = await page.locator('#ml .node >> nth=0').locator('[data-progress-ids]').innerText();
+  const count = await page.locator('#ml .node >> nth=0').locator('[data-progress-ids]').first().innerText();
   const cp = await page.locator('#ml .node >> nth=1').locator('a[href*="assessment.html#cp-data"]').count();
   expect('Roadmap steps show what to finish first, a progress count and a checkpoint link; Continue points to the first unfinished lesson',
     /Finish step 1/.test(meta.join(' ')) && /lessons/.test(meta.join(' ')) && cp === 1 && /s-what-is-ai/.test(first) && /d-basics/.test(next) && count === '3/3', );
@@ -523,7 +523,7 @@ for (const w of [320, 390, 768]) {
   await page.goto(url('lessons/s-what-is-ai.html'));
   await page.check('[data-progress-checkbox="lesson:s-what-is-ai"]');
   await page.goto(url('plan.html'));
-  const wk = await page.locator('#week-1 [data-progress-ids]').innerText();
+  const wk = await page.locator('#week-1 [data-progress-ids]').first().innerText();
   const doneMark = await page.locator('#week-1 a[data-progress-id="lesson:s-what-is-ai"]').getAttribute('data-done');
   await page.goto(url('progress.html'));
   const resume = (await page.isVisible('#resume-progress')) && /What AI/.test(await page.innerText('#resume-link'));
@@ -579,6 +579,19 @@ for (const w of [320, 390, 768]) {
   expect('Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered',
     !lessonTicked && sidebarDone === 'false' && /1 of 50/.test(block) && exported.progress['exercise:ml-regression']?.done === true && !exported.progress['lesson:ml-regression'] && kept,
     `lesson=${lessonTicked} sidebar=${sidebarDone} block=${block.replace(/s+/g, ' ')} exported=${Object.keys(exported.progress)} kept=${kept}`);
+  await page.context().close();
+}
+
+{
+  // Plan and roadmaps count exercises separately from reading
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/s-what-is-ai.html'));
+  await page.check('[data-progress-checkbox="exercise:s-what-is-ai"]');
+  await page.goto(url('plan.html'));
+  const wk = await page.locator('#week-1 [data-progress-ids]').allInnerTexts();
+  await page.goto(url('roadmaps.html#applied'));
+  const rm = await page.locator('#applied .node >> nth=0').locator('[data-progress-ids]').allInnerTexts();
+  expect('Study plan and roadmap steps show reading and exercise progress separately', wk.join() === '0/4,1/4' && rm.join() === '0/3,1/3', 'plan=' + wk + ' roadmap=' + rm);
   await page.context().close();
 }
 

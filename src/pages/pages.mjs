@@ -152,7 +152,7 @@ function plan(S) {
 <h1>12-week study plan</h1>
 <p class="lede">The shortest sensible route through the whole guide, planned for about 8 to 12 hours a week. Each week has lessons and one practical task. Move on when the task is done, not when the calendar says so.</p>
 <ol class="sprint">${weeks.map((w, i) => `<li class="sprint-week" id="week-${i + 1}">
-  <div class="sprint-head"><span class="sprint-n">Week ${i + 1}</span><h2>${S.esc(w.t)}</h2><span class="meta">Lessons about ${hoursOf(S, w.lessons)} h, plus practice (study estimate)</span><span class="meta week-progress"><span data-progress-ids="${w.lessons.map((l) => 'lesson:' + l).join(' ')}">0/${w.lessons.length}</span> lessons finished</span></div>
+  <div class="sprint-head"><span class="sprint-n">Week ${i + 1}</span><h2>${S.esc(w.t)}</h2><span class="meta">Lessons about ${hoursOf(S, w.lessons)} h, plus practice (study estimate)</span><span class="meta week-progress"><span data-progress-ids="${w.lessons.map((l) => 'lesson:' + l).join(' ')}">0/${w.lessons.length}</span> lessons read, <span data-progress-ids="${w.lessons.map((l) => 'exercise:' + l).join(' ')}">0/${w.lessons.length}</span> exercises done</span></div>
   <dl class="kv"><dt>Lessons</dt><dd><ul class="plain-list">${w.lessons.map((l) => `<li><a class="rm-lesson" href="${ctx.root}lessons/${l}.html" data-progress-id="lesson:${l}"><span class="nav-check" aria-hidden="true"></span>${S.esc(S.lessons[l].title)}</a></li>`).join('')}</ul></dd><dt>Build</dt><dd>${S.esc(w.build)}</dd></dl>
 </li>`).join('')}</ol>
 <div class="callout callout-note"><p><strong>After week 12.</strong> Finish at least two capstones (one ML, one AI application), then use the <a href="solve.html">decision guide</a> on the <a href="cases.html">company cases</a> to practise planning any new problem.</p></div>`;
@@ -204,7 +204,7 @@ function stepContext(S, r, n, ctx) {
   const parts = [...new Set(n.lessons.map((id) => S.MODULES.find((m) => m.groups.some((g) => g.lessons.includes(id)))))];
   const before = !prev ? 'Nothing. You can start here.' : `Finish <a href="#node-${r.id}-${prev.n}">step ${prev.n}: ${S.esc(prev.title)}</a>.${outside.length ? ` Also needed, because this route skips it: ${outside.map((p) => S.lessonLink(p, ctx)).join(', ')}.` : ''}`;
   const check = parts.length ? parts.map((m) => `<a href="${ctx.root}assessment.html#cp-${m.id}">Part ${S.esc(m.stage)} checkpoint</a>`).join(', ') : '';
-  return `<p class="node-meta"><strong>Before this step:</strong> ${before}</p>${n.lessons.length ? `<p class="node-meta"><strong>Finished:</strong> <span data-progress-ids="${n.lessons.map((id) => 'lesson:' + id).join(' ')}">0/${n.lessons.length}</span> lessons. ${check ? `<strong>Check yourself:</strong> ${check}.` : ''}</p>` : ''}`;
+  return `<p class="node-meta"><strong>Before this step:</strong> ${before}</p>${n.lessons.length ? `<p class="node-meta"><strong>Finished:</strong> <span data-progress-ids="${n.lessons.map((id) => 'lesson:' + id).join(' ')}">0/${n.lessons.length}</span> lessons read, <span data-progress-ids="${n.lessons.map((id) => 'exercise:' + id).join(' ')}">0/${n.lessons.length}</span> exercises done. ${check ? `<strong>Check yourself:</strong> ${check}.` : ''}</p>` : ''}`;
 }
 
 export function roadmapComponent(S, ctx) {

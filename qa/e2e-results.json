@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-16T11:04:57.403Z",
+  "date": "2026-11-16T11:47:26.786Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
-  "passed": 65,
+  "passed": 66,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 26874 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 26895 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 26874 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 26895 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -322,6 +322,11 @@
     },
     {
       "name": "Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Study plan and roadmap steps show reading and exercise progress separately",
       "pass": true,
       "detail": ""
     },

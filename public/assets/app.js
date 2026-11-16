@@ -175,7 +175,7 @@
     $$('[data-done-id]').forEach(function (el) { el.setAttribute('data-done', store.isDone(el.getAttribute('data-done-id')) ? 'yes' : 'no'); });
     $$('[data-progress-ids]').forEach(function (el) {
       var ids = el.getAttribute('data-progress-ids').split(' '), n = ids.filter(function (i) { return store.isDone(i); }).length;
-      el.textContent = n + '/' + ids.length; el.setAttribute('aria-label', n + ' of ' + ids.length + ' lessons completed');
+      el.textContent = n + '/' + ids.length; el.setAttribute('aria-label', n + ' of ' + ids.length + (ids[0].indexOf('exercise:') === 0 ? ' exercises done' : ' lessons completed'));
     });
     $$('[data-module-progress]').forEach(function (el) {
       el.textContent = el.getAttribute('data-module-progress').split(' ').filter(function (i) { return store.isDone(i); }).length;

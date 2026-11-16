@@ -119,3 +119,5 @@ Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migrat
 - Diagram reading guides (2026-11-16): every diagram without an author note now shows a generated "How to read it" line built from its own boxes (all 432 diagrams have a caption note or a reading guide). e2e 64/64. Not done: no authored explanation per diagram; no "Explain this diagram" toggle.
 
 - Exercise progress (2026-11-16): each lesson now has two ticks, "read and understood" (lesson:id) and "produced the evidence" (exercise:id); the progress page has an "Exercises done" block; both are exported, imported and reset. Existing ticks keep meaning "lesson done". Project evidence already has its own tick per capstone. e2e 65/65.
+
+- Exercises counted in the 12-week plan and roadmap steps (reading and exercise counts shown separately); completion box and a diagram viewed on screen, no defects (2026-11-16). e2e 66/66.
