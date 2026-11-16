@@ -339,7 +339,11 @@ a.track-card:hover { border-color: var(--line-strong); }
 
 /* Assessment and progress */
 .mcq { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: .8rem 1rem; margin: 0; min-width: 0; }
-.mcq legend { font-weight: 600; padding: 0 .3rem; }
+.mcq legend { float: left; width: 100%; padding: 0 0 .6rem; font-weight: 600; }
+.mcq legend + * { clear: both; }
+/* Quizzes read as one column of questions: a question must never be split across columns. */
+@media (min-width: 1360px) { .content.cols.cols-single { column-count: 1; } }
+@media print { .mcq, .mcq-list > li, .qa > li { break-inside: avoid; } .mcq .mcq-actions { display: none; } }
 .opt { display: flex; gap: .55rem; align-items: flex-start; padding: .3rem 0; cursor: pointer; }
 .mcq-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: .5rem 0; }
 .mcq-feedback { margin: 0; font-weight: 600; }

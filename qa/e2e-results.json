@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-16T04:35:36.807Z",
+  "date": "2026-11-16T04:43:09.931Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
-  "passed": 61,
+  "passed": 63,
   "failed": 0,
   "results": [
     {
@@ -302,6 +302,16 @@
     },
     {
       "name": "12-week plan shows finished lessons per week; progress page offers to resume the last lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Assessment page is one column, question text sits inside its box, and print hides the check buttons and navigation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Print layout hides top bar and check buttons",
       "pass": true,
       "detail": ""
     },

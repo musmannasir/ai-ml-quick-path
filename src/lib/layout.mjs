@@ -134,7 +134,7 @@ ${sidebar(groups, path, root)}
 ${crumbs.length ? `<nav class="crumbs" aria-label="Breadcrumb"><ol>${[['Home', 'index.html'], ...crumbs].map(([label, href], k, arr) =>
     k === arr.length - 1 ? `<li><span aria-current="page">${esc(label)}</span></li>` : `<li><a href="${root}${href}">${esc(label)}</a></li>`).join('')}</ol></nav>` : ''}
 <div class="content-grid">
-<div class="content${['about.html', 'assessment.html'].includes(path) || path.startsWith('cases/') || path.startsWith('projects/') ? ' cols' : ''}">
+<div class="content${['about.html', 'assessment.html'].includes(path) || path.startsWith('cases/') || path.startsWith('projects/') ? ' cols' : ''}${path === 'assessment.html' ? ' cols-single' : ''}">
 ${body}
 </div>
 ${toc}

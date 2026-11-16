@@ -531,6 +531,19 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+{
+  // Assessment: one column of whole questions; question text inside its box; print hides controls and opens explanations
+  const page = await newPage({ width: 1440 });
+  await page.goto(url('assessment.html'));
+  const cols = await page.evaluate(() => getComputedStyle(document.querySelector('.content')).columnCount);
+  const inside = await page.evaluate(() => { const f = document.querySelector('.mcq'), l = f.querySelector('legend'); return l.getBoundingClientRect().top >= f.getBoundingClientRect().top; });
+  await page.emulateMedia({ media: 'print' });
+  const hidden = await page.evaluate(() => getComputedStyle(document.querySelector('.mcq-actions')).display === 'none' && document.querySelectorAll('.sidebar,.topbar').length > 0 && getComputedStyle(document.querySelector('.topbar')).display === 'none');
+  expect('Assessment page is one column, question text sits inside its box, and print hides the check buttons and navigation', cols === 'auto' || cols === '1', 'columns=' + cols);
+  expect('Print layout hides top bar and check buttons', inside && hidden, 'inside=' + inside + ' hidden=' + hidden);
+  await page.context().close();
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
