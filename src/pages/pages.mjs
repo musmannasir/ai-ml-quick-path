@@ -152,8 +152,8 @@ function plan(S) {
 <h1>12-week study plan</h1>
 <p class="lede">The shortest sensible route through the whole guide, planned for about 8 to 12 hours a week. Each week has lessons and one practical task. Move on when the task is done, not when the calendar says so.</p>
 <ol class="sprint">${weeks.map((w, i) => `<li class="sprint-week" id="week-${i + 1}">
-  <div class="sprint-head"><span class="sprint-n">Week ${i + 1}</span><h2>${S.esc(w.t)}</h2><span class="meta">Lessons about ${hoursOf(S, w.lessons)} h, plus practice (study estimate)</span></div>
-  <dl class="kv"><dt>Lessons</dt><dd><ul class="plain-list">${w.lessons.map((l) => `<li>${S.lessonLink(l, ctx)}</li>`).join('')}</ul></dd><dt>Build</dt><dd>${S.esc(w.build)}</dd></dl>
+  <div class="sprint-head"><span class="sprint-n">Week ${i + 1}</span><h2>${S.esc(w.t)}</h2><span class="meta">Lessons about ${hoursOf(S, w.lessons)} h, plus practice (study estimate)</span><span class="meta week-progress"><span data-progress-ids="${w.lessons.map((l) => 'lesson:' + l).join(' ')}">0/${w.lessons.length}</span> lessons finished</span></div>
+  <dl class="kv"><dt>Lessons</dt><dd><ul class="plain-list">${w.lessons.map((l) => `<li><a class="rm-lesson" href="${ctx.root}lessons/${l}.html" data-progress-id="lesson:${l}"><span class="nav-check" aria-hidden="true"></span>${S.esc(S.lessons[l].title)}</a></li>`).join('')}</ul></dd><dt>Build</dt><dd>${S.esc(w.build)}</dd></dl>
 </li>`).join('')}</ol>
 <div class="callout callout-note"><p><strong>After week 12.</strong> Finish at least two capstones (one ML, one AI application), then use the <a href="solve.html">decision guide</a> on the <a href="cases.html">company cases</a> to practise planning any new problem.</p></div>`;
   return { path: 'plan.html', title: '12-week study plan', body, crumbs: [['12-week plan', 'plan.html']], section: 'Start', keywords: 'twelve week plan schedule hours study order beginner' };
@@ -608,6 +608,7 @@ function progress(S) {
   };
   const body = `
 <h1>My progress and study calendar</h1>
+<p id="resume-progress" class="resume-card" hidden><span class="resume-k">Continue where you left off</span><br><a id="resume-link" href="index.html"></a><br><span class="small muted" id="resume-next"></span></p>
 <div class="callout callout-note"><p><strong>How progress works.</strong> A tick means you finished a lesson or a project. It is your own record, not a test result. Completion marks are stored in this browser on this device. They are not uploaded or shared. Clearing browser data removes them, so export a file to keep a backup or move to another device.</p></div>
 <p id="storage-warning" class="callout callout-warn" hidden>This browser is blocking local storage, so progress cannot be saved here. Lessons still work; use export before closing the page.</p>
 <section aria-labelledby="dash-h"><h2 id="dash-h">Progress by part</h2><div id="progress-dashboard" class="dash"></div></section>

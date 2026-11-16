@@ -107,3 +107,5 @@ redesign; diagram audit; separate progress for exercises; quiz retry flow; feedb
 Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migration pack.
 
 - Roadmaps (2026-11-16): each step shows what to finish first (derived from lesson prerequisites), a finished-lessons count, its part checkpoint link, and each roadmap has a "Continue this route" button. e2e 60/60.
+
+- Layout review (2026-11-16): plan, hardware, glossary, progress checked at 1440 px and 390 px; consistent. Added per-week finished counts and done marks to the plan, and a resume link on the progress page. e2e 61/61.

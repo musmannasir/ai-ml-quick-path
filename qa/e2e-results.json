@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-16T04:27:27.485Z",
+  "date": "2026-11-16T04:30:48.474Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
-  "passed": 60,
+  "passed": 61,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 26296 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 26323 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 26296 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 26323 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -297,6 +297,11 @@
     },
     {
       "name": "Roadmap steps show what to finish first, a progress count and a checkpoint link; Continue points to the first unfinished lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "12-week plan shows finished lessons per week; progress page offers to resume the last lesson",
       "pass": true,
       "detail": ""
     },

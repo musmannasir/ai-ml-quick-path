@@ -824,6 +824,8 @@ details.rail-details[open] > summary { border-bottom: 1px solid var(--line); pad
 .mm-bar-fill { display: block; height: 100%; background: var(--accent); }
 .mm-bar-fill[data-w] { width: 0; }
 
+.week-progress { font-weight: 600; color: var(--ink-2); }
+
 /* Roadmap steps: what to finish first, progress, checkpoint */
 .node-meta { margin: .25rem 0; font-size: var(--fs-1); color: var(--ink-2); max-width: none; }
 .node-meta strong { color: var(--ink); }

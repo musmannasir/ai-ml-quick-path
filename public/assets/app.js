@@ -496,7 +496,7 @@
   // ---------- Resume: remember the lesson being read; offer it on the home page ----------
   var lessonMeta = $('meta[name="aimlqp-lesson"]');
   if (lessonMeta) { store.data.last = { id: lessonMeta.content, title: lessonMeta.getAttribute('data-title') || '', at: new Date().toISOString().slice(0, 10) }; store.save(); }
-  var resume = $('#resume-card');
+  var resume = $('#resume-card') || $('#resume-progress');
   if (resume && store.data.last && /^[a-z0-9-]+$/.test(store.data.last.id)) {
     var rl = $('#resume-link'), last = store.data.last;
     rl.href = ROOT + 'lessons/' + last.id + '.html'; rl.textContent = last.title || 'Your last lesson';

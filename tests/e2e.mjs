@@ -517,6 +517,20 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+{
+  // 12-week plan and progress page reflect finished lessons and offer to resume
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/s-what-is-ai.html'));
+  await page.check('[data-progress-checkbox="lesson:s-what-is-ai"]');
+  await page.goto(url('plan.html'));
+  const wk = await page.locator('#week-1 [data-progress-ids]').innerText();
+  const doneMark = await page.locator('#week-1 a[data-progress-id="lesson:s-what-is-ai"]').getAttribute('data-done');
+  await page.goto(url('progress.html'));
+  const resume = (await page.isVisible('#resume-progress')) && /What AI/.test(await page.innerText('#resume-link'));
+  expect('12-week plan shows finished lessons per week; progress page offers to resume the last lesson', wk === '1/4' && doneMark === 'true' && resume && page.errors.length === 0, 'wk=' + wk + ' done=' + doneMark + ' resume=' + resume + ' ' + page.errors.join(';'));
+  await page.context().close();
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
