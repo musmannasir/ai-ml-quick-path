@@ -1,4 +1,4 @@
-# From lesson 'd-basics' (data). Code status: Python executed 2026-11-02 (quickpath.py data); C# not compiled (no .NET SDK in the build environment)
+# From lesson 'd-basics' (data). Code status: Python executed 2026-11-02 (quickpath.py data)
 df = pd.DataFrame({
     "size_m2": [52, 75, 110, 64, None, 95], "rooms": [2, 3, 4, 2, 3, 4],
     "city": ["Lisbon", "Porto", "Lisbon", "Braga", "Porto", "Lisbon"],

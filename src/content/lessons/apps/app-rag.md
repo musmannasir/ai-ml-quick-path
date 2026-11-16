@@ -4,11 +4,12 @@ title: RAG: answering from your own documents
 module: apps
 level: Intermediate
 minutes: 120
+maths: basic arithmetic
 goal: Build a retrieval-augmented generation (RAG) system that checks permissions, retrieves evidence, answers with citations, says "I don't know" when evidence is missing, and is measured with an evaluation set.
 prereqs: app-embeddings, app-prompting
 reviewed: 2026-11-02
 evidence: A working RAG assistant in Python or C# that passes an evaluation set of answerable, unanswerable and forbidden questions, with failures explained.
-code: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings)
 ---
 ## In plain words
 **Retrieval-augmented generation (RAG)** answers a question by first **finding** relevant passages in your own documents and then asking the model to answer **using only those passages**, with **citations**. The model's weights do not change; the knowledge lives in documents you can update, delete and protect. That makes RAG the standard choice for company policies, manuals, contracts and knowledge bases. RAG has two halves. **Ingestion**: split documents into **chunks**, embed them, and store them with metadata (source, version, who may read it). **Answering**: check who is asking, retrieve only chunks that person may read, put them into the prompt, generate an answer that cites chunk ids, and refuse politely when the best evidence is weak. You then **evaluate** with three kinds of questions: answerable, unanswerable, and forbidden for this user.
@@ -54,6 +55,16 @@ note: Access is checked before ranking, so restricted text never reaches the mod
 - Decide | Below the similarity threshold: "I can't find this; please contact HR" | warn
 - Generate | Answer only from the chunks and cite their ids | model
 - Evaluate | Answerable, unanswerable and forbidden questions | output
+```
+
+```maths How many chunks fit in the prompt?
+situation: Your prompt has room for 2,000 tokens of retrieved text. Each chunk of a document is about 400 tokens long.
+find: How many chunks can you include?
+step: Divide the room by the size of one chunk | 2,000 ÷ 400 = 5
+result: You can include **5 chunks**.
+why: Retrieval returns a ranked list of chunks, and you must decide how many to pass to the model. Too few and the answer may be missing; too many and you pay for tokens that distract the model.
+try: You change the chunk size to 250 tokens. How many chunks fit now?
+answer: 2,000 ÷ 250 = 8 chunks. Smaller chunks let you include more separate passages, but each one carries less surrounding text, so a single chunk may no longer contain a complete answer.
 ```
 
 ### Related concepts

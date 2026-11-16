@@ -4,11 +4,12 @@ title: Collecting and labelling data, with SQL
 module: data
 level: Beginner
 minutes: 90
+maths: basic arithmetic
 goal: Pull training data from a database with SQL, plan where data comes from and whether you may use it, and measure how consistently people label it.
 prereqs: d-basics
 reviewed: 2026-11-02
 evidence: Three SQL queries that build a one-row-per-customer feature table, and a labelling guide tested by two people with an agreement score.
-code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py sql and viz); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py sql and viz)
 ---
 ## In plain words
 Most company data lives in **databases**, and **SQL** is the language for asking them questions. `SELECT` picks columns, `WHERE` filters rows, `JOIN` connects tables (customers with their orders), and `GROUP BY` summarises (orders per customer). Data also comes from logs, files, sensors, forms and public datasets. Before using any data, check that you are **allowed** to (owner, licence, customer consent, privacy rules) and that it **represents** the people and situations the model will meet. **Labelling** means adding the right answer to examples, usually by people following a written guide. People disagree, so you measure **agreement**: if two careful labellers often disagree, the task or the guide is unclear, and no model will learn it well.
@@ -57,6 +58,22 @@ loop: Re-label and measure agreement again
 - Labelling guide | Definitions and tricky examples | process
 - Two people label a sample | Compute agreement, fix the guide | process
 - Label the rest | Spot-check quality | output
+```
+
+```maths What GROUP BY computes: an average for each group
+situation: A support table has three tickets. Two are about billing and took 2 hours and 4 hours to answer. One is about login and took 6 hours.
+find: What is the average answer time for each topic?
+table: Topic | Hours to answer
+row: Billing | 2
+row: Billing | 4
+row: Login | 6
+step: Add the billing times | 2 + 4 = 6
+step: Divide by the number of billing tickets | 6 ÷ 2 = 3
+step: Login has one ticket, so its average is that ticket | 6 ÷ 1 = 6
+result: Billing: **3 hours** on average. Login: **6 hours**.
+why: "Average per group" is one of the most common ways to turn raw rows into a model input, for example "average answer time for this customer's topic". The SQL words GROUP BY and AVG do exactly this sum.
+try: A second login ticket arrives and takes 2 hours. What is the new login average?
+answer: 6 + 2 = 8, then 8 ÷ 2 = 4 hours. A group with very few rows changes a lot when one row is added, so check the count as well as the average.
 ```
 
 ### Related concepts

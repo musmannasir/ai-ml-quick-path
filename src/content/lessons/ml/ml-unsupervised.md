@@ -4,11 +4,12 @@ title: Unsupervised learning: groups, compression and anomalies
 module: ml
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Group similar items with clustering, compress many columns with PCA, and flag unusual records with anomaly detection, all without labels.
 prereqs: ml-algorithms
 reviewed: 2026-11-02
 evidence: A clustering or anomaly-detection result on your own data, with each group or flag explained in business words.
-code: Python executed 2026-11-02 (ml_basics.py kmeans, quickpath.py pca and anomaly); C# not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python executed 2026-11-02 (ml_basics.py kmeans, quickpath.py pca and anomaly); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 Often you have data but no answers attached. **Unsupervised learning** finds structure anyway. **Clustering** puts similar items into groups: k-means picks k group centres and moves them until each item is near its centre. **Dimensionality reduction** squeezes many related columns into a few: **PCA** (principal component analysis) finds the main directions in which the data varies. It is useful for charts, speed and noise removal. **Anomaly detection** flags records that do not fit the normal pattern, such as an unusual payment or a strange sensor reading; **Isolation Forest** does this by noticing that odd points are easy to separate from the rest. Results need a person to interpret them: a cluster is only useful if someone can name it and act on it.
@@ -78,6 +79,17 @@ note: Analysts' decisions become labels, so unsupervised work later feeds superv
 - Run the method | Clusters, PCA or anomaly detector | model
 - Interpret | Name each group, review the most unusual records | process
 - Validate with people | Do the groups or flags make business sense? | output
+```
+
+```maths The centre of a cluster (what k-means recalculates)
+situation: Three points have been placed in the same cluster: (1, 2), (3, 4) and (5, 6).
+find: Where is the centre of this cluster?
+step: Average of the first numbers | (1 + 3 + 5) ÷ 3 = 3
+step: Average of the second numbers | (2 + 4 + 6) ÷ 3 = 4
+result: The centre is **(3, 4)**.
+why: k-means repeats two steps: put each point in the cluster with the nearest centre, then move every centre to the average of its points. This box is the second step. Repeating both steps is the whole algorithm.
+try: A new point (7, 4) joins the cluster. Where does the centre move to?
+answer: First numbers: (1 + 3 + 5 + 7) ÷ 4 = 4. Second numbers: (2 + 4 + 6 + 4) ÷ 4 = 4. The centre moves from (3, 4) to (4, 4), towards the new point.
 ```
 
 ## Python example

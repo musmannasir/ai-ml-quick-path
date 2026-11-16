@@ -4,11 +4,12 @@ title: AI frameworks and MCP: what to use in Python and .NET
 module: apps
 level: Intermediate
 minutes: 60
+maths: none
 goal: Know what LangChain, LangGraph, Microsoft.Extensions.AI, Semantic Kernel, Microsoft Agent Framework and the Model Context Protocol do, and when plain code is better.
 prereqs: app-agents
 reviewed: 2026-11-02
 evidence: A short decision note for one project choosing a framework (or none) in your main language, with three reasons.
-code: Conceptual (framework packages not installed in the build environment); C# not compiled (no .NET SDK)
+code: Conceptual (framework packages not installed in the build environment)
 ---
 ## In plain words
 Frameworks save you writing the same plumbing again: connecting to models, tools, vector stores and workflow state. They do **not** train models; they **orchestrate** applications. In **Python**, **LangChain** connects models, prompts, tools and retrievers, and **LangGraph** builds stateful workflows as graphs with pause-and-resume (useful for approvals). LlamaIndex and Haystack focus on retrieval. In **.NET**, **Microsoft.Extensions.AI** gives standard interfaces (`IChatClient`, `IEmbeddingGenerator`) with middleware for logging, caching and telemetry; **Microsoft.Extensions.VectorData** standardises vector stores; **Microsoft Agent Framework** builds agents and multi-step workflows (it succeeds Semantic Kernel's agent features and AutoGen, and reached version 1.0 in April 2026). The **Model Context Protocol (MCP)** is an open standard: you write a tool server once and any MCP-aware AI app can use it. **Plain code** is often best for small, fixed workflows: fewer dependencies and easier debugging.
@@ -113,11 +114,22 @@ Tool calling with Microsoft.Extensions.AI, and the same tool exposed as an MCP s
 ```cs ToolCalling.cs
 using System.ComponentModel;
 using Microsoft.Extensions.AI;
+using OpenAI;
 
+// The underlying model client. The key comes from an environment variable, never from the code.
+IChatClient innerClient = new OpenAIClient(Environment.GetEnvironmentVariable("LLM_API_KEY")!)
+    .GetChatClient("your-model").AsIChatClient();
 IChatClient client = innerClient.AsBuilder().UseFunctionInvocation().Build();   // runs tools the model requests
 var options = new ChatOptions { Tools = [AIFunctionFactory.Create(OrderTools.GetOrderStatus)] };
 var answer = await client.GetResponseAsync("Where is order A-1001?", options);
 Console.WriteLine(answer.Text);
+
+// Stand-in tool so the sample compiles. A real tool looks the order up for the signed-in customer.
+static class OrderTools
+{
+    [Description("Return the delivery status for one of the current customer's orders.")]
+    public static string GetOrderStatus(string orderId) => "delivered";
+}
 ```
 ```cs McpServer/Program.cs
 using System.ComponentModel;
@@ -138,6 +150,10 @@ public static class OrderTools
     [McpServerTool, Description("Return the delivery status for one of the current customer's orders.")]
     public static string GetOrderStatus(string orderId) => Orders.StatusFor(Session.CustomerId, orderId);
 }
+
+// Stand-ins so the sample compiles. In a real application these call your order system and read the signed-in user.
+static class Session { public static string CustomerId => "C-42"; }
+static class Orders { public static string StatusFor(string customerId, string orderId) => "delivered"; }
 ```
 
 ## Maths behind it

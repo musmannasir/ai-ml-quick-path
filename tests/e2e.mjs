@@ -82,7 +82,9 @@ for (const scheme of ['light', 'dark']) {
     page.errors.length = 0;
     await page.goto(url(p));
     const r = await page.evaluate(contrastAudit);
-    if (scheme === 'light') { const ext = await page.$$eval('a[href^="http"], script[src^="http"], link[href^="http"], img[src^="http"]', (es) => es.length); if (ext) extLinks.push(`${p}: ${ext}`); }
+    if (scheme === 'light') { const ext = await page.$$eval('script[src^="http"], link[href^="http"], img[src^="http"], iframe, embed, object, source[src^="http"]', (es) => es.length);
+      const badA = await page.$$eval('a[href^="http"]', (es) => es.filter((a) => !a.classList.contains('ext') || a.getAttribute('rel') !== 'noopener noreferrer external' || a.hasAttribute('target') || a.textContent.trim().length < 4).length);
+      if (ext || badA) extLinks.push(`${p}: ${ext} outside resources, ${badA} unsafe outside links`); }
     checked += r.checked; r.fails.forEach((f) => fails.push(`${p}: ${f}`));
     page.errors.forEach((e) => errs.push(`${p}: ${e}`));
   }
@@ -90,7 +92,7 @@ for (const scheme of ['light', 'dark']) {
   expect(`Text contrast WCAG AA on all pages (${scheme}): ${checked} text elements checked`, fails.length === 0, `${fails.length} failures: ${fails.slice(0, 8).join(' | ')}`);
   await page.context().close();
 }
-expect(`Self-contained: no external links, scripts, styles or images on any of the ${ALL.length} pages`, extLinks.length === 0, extLinks.slice(0, 5).join(' | '));
+expect(`Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all ${ALL.length} pages`, extLinks.length === 0, extLinks.slice(0, 5).join(' | '));
 
 // 2. Contrast in dynamic states (search results, empty filter state, drawer, selected tab, quiz feedback, expanded roadmap)
 for (const scheme of ['light', 'dark']) {
@@ -290,8 +292,17 @@ for (const w of [320, 390, 768]) {
   await page.selectOption('select[data-filter="level"]', 'intermediate'); const mlInt = await shown();
   await page.selectOption('select[data-filter="level"]', 'expert'); const none = await shown(); const empty = await page.isVisible('.empty-state');
   await page.click('.filters [data-filter-reset]'); const reset = await shown();
-  await page.selectOption('select[data-filter="code"]', 'python-output-from-a-real-run'); const exec = await shown();
+  // The code filter now lists the labels produced by the real verification run (qa/code-status.json), so the option
+  // value changed from "python-output-from-a-real-run" to "python-example-run".
+  await page.selectOption('select[data-filter="code"]', 'python-example-run'); const exec = await shown();
   expect('Lesson catalogue filters (part × level × code status) combine, show empty state and reset', total === 50 && ml === 9 && mlInt === 6 && none === 0 && empty && reset === 50 && exec >= 40, `total=${total} ml=${ml} mlIntermediate=${mlInt} none=${none} empty=${empty} reset=${reset} executed=${exec}`);
+  await page.click('.filters [data-filter-reset]');
+  const mathsOpts = await page.$$eval('select[data-filter="maths"] option', (os) => os.map((o) => o.value).filter(Boolean));
+  let mathsSum = 0; for (const v of mathsOpts) { await page.selectOption('select[data-filter="maths"]', v); mathsSum += await shown(); }
+  await page.click('.filters [data-filter-reset]');
+  await page.selectOption('select[data-filter="done"]', 'yes'); const doneNone = await shown();
+  await page.selectOption('select[data-filter="done"]', 'no'); const todo = await shown();
+  expect('Catalogue maths-level filter covers every lesson exactly once; progress filter separates finished from unfinished', mathsOpts.length === 4 && mathsSum === 50 && doneNone === 0 && todo === 50, `options=${mathsOpts.length} sum=${mathsSum} finished=${doneNone} unfinished=${todo}`);
   await page.context().close();
 }
 
@@ -332,7 +343,7 @@ for (const w of [320, 390, 768]) {
   await page.setInputFiles('#import-progress', bad); await page.waitForTimeout(200);
   const badMsg = await page.textContent('#io-status'); const still = await page.textContent('#progress-dashboard');
   expect('Lesson completion updates sidebar count (1/9)', count === '1/9', count);
-  expect('Export produces versioned JSON (schema aimlqp-progress, version 1)', exported.schema === 'aimlqp-progress' && exported.version === 1 && exported.progress['lesson:ml-classification']?.done === true, JSON.stringify(exported).slice(0, 120));
+  expect('Export produces versioned JSON (schema aimlqp-progress, version 2)', exported.schema === 'aimlqp-progress' && exported.version === 2 && exported.progress['lesson:ml-classification']?.done === true, JSON.stringify(exported).slice(0, 120));
   expect('Reset clears progress; import restores it', /1 of 9/.test(dash) && !/1 of 9/.test(afterReset) && /1 of 9/.test(afterImport), '');
   expect('Invalid import is rejected with a clear message and changes nothing', /Import failed/.test(badMsg) && /1 of 9/.test(still), badMsg);
   await page.fill('#cal-hours', '1');
@@ -388,8 +399,111 @@ for (const w of [320, 390, 768]) {
   await rm.context().close();
 }
 
+// 12b. Learning features added 2026-11: maths moments, code language, search inside lessons, start chooser, resume, data migration
+{
+  // Maths moment calculator (learner journey 2): default result, one change, invalid input, reset, answer reveal
+  const page = await newPage({ width: 390, scheme: 'dark' });
+  await page.goto(url('lessons/ml-learning.html'));
+  const w = page.locator('.mm-widget[data-widget="gradient"]');
+  const out = () => w.locator('.mm-out').innerText();
+  const first = await out();
+  await w.locator('input >> nth=1').fill('1.2'); const up = await out();
+  await w.locator('input >> nth=1').fill(''); const errShown = await w.locator('.mm-error').isVisible(); const invalid = await w.locator('input >> nth=1').getAttribute('aria-invalid');
+  const fails = (await page.evaluate(contrastAudit)).fails;
+  await w.locator('[data-widget-reset]').click(); const back = await out(); const errGone = !(await w.locator('.mm-error').isVisible());
+  const mm = page.locator('.math-moment').first();
+  await mm.locator('.mm-try summary').focus(); await page.keyboard.press('Enter');
+  const answer = await mm.locator('.mm-try .mm-answer').isVisible();
+  const scroll = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect('Maths moment calculator: correct default result, reacts to one change, rejects empty input with a message, resets, answer opens by keyboard, readable in dark at 390 px',
+    /1\.4/.test(first) && /2\.56/.test(first) && /went UP/.test(up) && errShown && invalid === 'true' && back === first && errGone && answer && fails.length === 0 && scroll <= 0,
+    `first=${first.slice(0, 60)} up=${/went UP/.test(up)} err=${errShown} invalid=${invalid} reset=${back === first} answer=${answer} contrast=${fails.slice(0, 2).join(';')} scroll=${scroll} ${page.errors.join(';')}`);
+  await page.context().close();
+}
+{
+  // Every calculator type gives the hand-worked answer shown in its lesson (the page and the build agree)
+  const page = await newPage();
+  const cases = [['lessons/d-clean-eda.html', 'mean', /12 ÷ 3 = 4/], ['lessons/ml-regression.html', 'line', /6 \+ 1 = 7/], ['lessons/ml-classification.html', 'confusion', /0\.8 = 80%/],
+    ['lessons/app-embeddings.html', 'dot', /= 11/], ['lessons/dl-transformers.html', 'weighted', /= 8/], ['lessons/llm-local.html', 'memory', /16 GB/], ['lessons/llm-tokens.html', 'softmax', /66\.5%/]];
+  const bad = [];
+  for (const [p, type, re] of cases) {
+    await page.goto(url(p));
+    const t = await page.locator(`.mm-widget[data-widget="${type}"] .mm-out`).innerText().catch(() => 'missing');
+    if (!re.test(t)) bad.push(`${type}: ${t.slice(0, 80)}`);
+  }
+  expect('All 8 calculator types show the same result as the worked steps in their lesson', bad.length === 0 && page.errors.length === 0, bad.join(' | ') + page.errors.join(';'));
+  await page.context().close();
+}
+{
+  // Code language switch (learner journey 3): C# only hides Python, is remembered, and a deep link to the hidden language still lands
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/ml-regression.html'));
+  const vis = (id) => page.locator(`#${id}`).isVisible();
+  const both = (await vis('python-example')) && (await vis('net-c-example'));
+  await page.check('[data-lang-switch] input[value="cs"]');
+  const csOnly = !(await vis('python-example')) && (await vis('net-c-example'));
+  const tocHidden = !(await page.locator('.rail-toc li[data-lang-section="python"]').isVisible());
+  await page.reload();
+  const kept = !(await vis('python-example')) && (await page.isChecked('[data-lang-switch] input[value="cs"]'));
+  await page.goto(url('lessons/ml-regression.html#python-example'));
+  const deep = await vis('python-example');
+  const pill = await page.locator('section[data-lang-section="cs"] .code-evidence .pill').innerText();
+  expect('Code language switch: C# only hides the Python section and its contents entry, survives reload, deep link to the hidden section shows it; C# status pill comes from the compile record',
+    both && csOnly && tocHidden && kept && deep && /^C#:/.test(pill), `both=${both} csOnly=${csOnly} toc=${tocHidden} kept=${kept} deep=${deep} pill=${pill}`);
+  await page.context().close();
+}
+{
+  // Search inside lesson text (learner journey 7): a phrase that is in no page title finds a lesson section with a marked snippet
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('index.html'));
+  await page.fill('#site-search', 'jumped right over');
+  await page.waitForSelector('#search-results .res-snippet mark', { timeout: 10000 }).catch(() => {});
+  const groups = await page.$$eval('#search-results .search-group', (g) => g.map((x) => x.textContent));
+  const marks = await page.$$eval('#search-results .res-snippet mark', (m) => m.length);
+  const href = await page.locator('#search-results a').first().getAttribute('href');
+  await page.locator('#search-results a').first().click();
+  const landed = await page.evaluate(() => location.pathname.endsWith('ml-learning.html') && location.hash === '#how-it-works');
+  expect('Search finds text inside lessons, marks the words and opens the matching section', groups.includes('Inside lessons') && marks >= 1 && landed, `groups=${groups} marks=${marks} href=${href} landed=${landed}`);
+  await page.context().close();
+}
+{
+  // Start chooser and resume (learner journeys 1 and 5)
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('index.html'));
+  const noResume = !(await page.isVisible('#resume-card'));
+  await page.click('[data-persona-pick="dotnet"]');
+  const start = await page.getAttribute('#hero-start', 'href');
+  const pressed = await page.getAttribute('[data-persona-pick="dotnet"]', 'aria-pressed');
+  await page.click('#hero-start');
+  const onSetup = page.url().endsWith('lessons/s-setup.html');
+  const csFirst = await page.isChecked('[data-lang-switch] input[value="cs"]');
+  await page.goto(url('index.html'));
+  const resume = (await page.isVisible('#resume-card')) && /Set up your laptop/.test(await page.innerText('#resume-link'));
+  const chosen = await page.getAttribute('.persona-card[data-persona="dotnet"]', 'data-chosen');
+  await page.click('[data-persona-pick="dotnet"]');
+  const cleared = (await page.getAttribute('#hero-start', 'href')) === 'lessons/s-what-is-ai.html';
+  expect('Start chooser sets the first lesson and code language, is remembered and can be cleared; home page offers to resume the last lesson',
+    noResume && /s-setup/.test(start) && pressed === 'true' && onSetup && csFirst && resume && chosen === 'true' && cleared, `noResume=${noResume} start=${start} pressed=${pressed} onSetup=${onSetup} cs=${csFirst} resume=${resume} chosen=${chosen} cleared=${cleared}`);
+  await page.context().close();
+}
+{
+  // Data written by the previous site version (version 1) is kept and upgraded, never lost
+  const page = await newPage();
+  await page.goto(url('index.html'));
+  await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 1, prefs: { theme: 'dark', sidebar: 'hidden' }, progress: { 'lesson:ml-regression': { done: true, at: '2026-11-01' }, 'project:c01-churn': { done: true, at: '2026-11-02' } } })));
+  await page.goto(url('lessons/ml-regression.html'));
+  const theme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+  const ticked = await page.isChecked('[data-progress-checkbox="lesson:ml-regression"]');
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('aimlqp.v1')));
+  expect('Version 1 browser data migrates to version 2 with theme, layout and all completion marks intact',
+    theme === 'dark' && ticked && stored.version === 2 && stored.prefs.sidebar === 'hidden' && stored.progress['project:c01-churn']?.done === true && stored.progress['lesson:ml-regression']?.at === '2026-11-01' && stored.last?.id === 'ml-regression',
+    JSON.stringify(stored).slice(0, 200));
+  await page.context().close();
+}
+
 // 13. Screenshots
-const shots = [['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
+const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
+['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
   ['roadmaps.html', 1440, 'dark', 'roadmap-collapsed-1440-dark'], ['roadmaps.html#lm', 390, 'light', 'roadmap-lm-390-light'], ['lessons/app-rag.html', 1440, 'light', 'lesson-1440-light'], ['lessons/app-rag.html', 390, 'dark', 'lesson-390-dark'],
   ['cases.html', 1280, 'dark', 'cases-1280-dark'], ['hardware.html', 390, 'light', 'hardware-390-light'], ['progress.html', 1280, 'light', 'progress-1280-light']];
 for (const [p, w, s, name] of shots) {

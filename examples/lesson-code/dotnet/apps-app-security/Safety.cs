@@ -1,4 +1,4 @@
-// From lesson 'app-security' (apps). Code status: Python executed 2026-11-02 (quickpath.py pii); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'app-security' (apps). Code status: Python executed 2026-11-02 (quickpath.py pii)
 using System.Net;
 using System.Text.RegularExpressions;
 

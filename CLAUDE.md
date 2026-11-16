@@ -16,15 +16,20 @@ examples in **both Python and .NET (C#)**, ending with the skills to plan and bu
 little, or are learning to. They do not want heavy mathematics, so maths is kept short and practical.
 
 **Three defining rules of this edition (do not break them):**
-1. **Maths is applied, short and practical (owner decision 2026-11-05, replaces "no maths").** Where maths or
-   statistics applies, the lesson has a collapsible `## Applied Maths - Statistics` section: the main formula,
-   a plain-words meaning and at least two worked examples per topic. No derivations or proofs. Never write
-   "no maths" claims anywhere. Every worked number must be correct and is labelled as made-up/illustrative.
-2. **Self-contained by default: no external links** (owner decision 2026-11-05: the owner may add external reference links later, and exactly one third-party script is allowed, Google AdSense, see section 9; until the owner adds such links the tests stay strict). Nothing on the site may send the learner elsewhere to learn.
-   `scripts/build.mjs` fails on any `https?://` link in content, and `tests/static-checks.mjs` fails on any
-   external `href`/`src` or any web address in visible text. Only `localhost`/`127.0.0.1` addresses inside code
-   samples are allowed. Sources for company cases are shown as title + publisher text; their URLs live only in
-   `CONTENT_SOURCES.md` in the repository.
+1. **Maths is taught at the point of need (owner priority 2026-11-13, builds on the 2026-11-05 decision).** Where a
+   calculation matters, the lesson has a ```maths block (a "maths moment", section 4.8) inside the section that needs it:
+   an everyday situation, tiny numbers, one hand step per line, then the formula and why AI uses it. The build checks every
+   step. The collapsible `## Applied Maths - Statistics` section holds extra worked examples. Do not force maths into a
+   lesson that does not need it (front matter `maths: none`). No proofs in the main text; formal detail goes in a
+   `deeper:` line. Never write "no maths" claims. Every worked number must be correct and labelled as made-up.
+2. **Nothing is loaded from other sites; outside links only to vetted sources** (owner decision 2026-11-13, replaces
+   "no external links"). Every lesson can be finished without leaving the site. An outside address may appear only as an
+   ordinary link to a source registered in `src/data/sources.mjs` (official documentation, case evidence), written in
+   content as `[text](source:id)`. `scripts/build.mjs` fails on a raw `https?://` address in content, and
+   `tests/static-checks.mjs` fails on any unregistered outside address, any outside script, image, font or frame, and any
+   web address printed as visible text. Only `localhost`/`127.0.0.1` inside code samples is allowed. Exactly one
+   third-party script exists, Google AdSense, and only in the opt-in build (section 9). Run `npm run check:links` after
+   adding a source; pages show the real result of the last check.
 3. **Python and .NET for every lesson.** Every lesson has both a "Python example" and a ".NET (C#) example".
 
 **Sibling projects:** "AI, ML & Language Model Engineering Academy" (for .NET developers, storage key
@@ -57,6 +62,14 @@ scripts/build.mjs        Loads lessons + data, validates, renders dist/, writes 
                          sitemap.xml (only if SITE_URL set), _headers and staticwebapp.config.json (CSP)
 scripts/serve.mjs        Local server on port 8080
 scripts/run-examples.mjs Runs the Python examples and compiles every .py file under examples/
+scripts/verify-code.mjs  Compiles every C# lesson sample (dotnet) and runs/syntax-checks every Python one; writes
+                         qa/code-status.json, which the build reads for the status pills on each lesson
+scripts/check-links.mjs  Opens every address in src/data/sources.mjs; writes src/data/source-status.json
+scripts/check-maths.mjs  Parses every lesson and checks every "calculation = result" in the maths text
+scripts/shot.mjs         Page or element screenshots for design review
+src/lib/maths.mjs        Safe arithmetic evaluator, maths-moment renderer, prose arithmetic scanner, calculator definitions
+src/design/tokens.mjs    The only place theme tokens are defined; the build writes them into dist/assets/app.css
+src/data/sources.mjs     Register of vetted outside sources (SOURCES) and the references shown per lesson (LESSON_REFS)
 scripts/extract_lesson_code.py  Copies lesson code blocks into examples/lesson-code/{python,dotnet}/
 scripts/package.mjs      Release ZIPs (needs `zip`; Linux/macOS/WSL)
 src/lib/markdown.mjs     Markdown-subset renderer, lesson parser and validator (REQUIRED_SECTIONS)
@@ -71,7 +84,7 @@ public/assets/app.css    The only stylesheet
 public/assets/app.js     The only client script
 examples/                Runnable code; examples/quickpath/quickpath.py is the main demo file
 tests/static-checks.mjs  HTML checks on dist/ (including zero external links)
-tests/e2e.mjs            52 Playwright checks; writes qa/e2e-results.json and qa/screenshots/
+tests/e2e.mjs            59 Playwright checks; writes qa/e2e-results.json and qa/screenshots/
 ```
 
 **Pages (92):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
@@ -91,10 +104,13 @@ npm run test:e2e:edge  # same browser tests in installed Microsoft Edge (use thi
 npm run test:e2e       # browser tests (first time: npm install && npx playwright install chromium)
 npm run test:examples  # needs Python 3.10+ with numpy, pandas, scikit-learn
 npm run extract:code   # after editing any code block in a lesson
+npm run verify:code    # after extract:code: really compiles C# and runs Python; updates qa/code-status.json (needs .NET SDK, internet for NuGet)
+npm run check:maths    # every maths moment and Applied Maths calculation adds up (also part of npm test)
+npm run check:links    # after adding or changing a source in src/data/sources.mjs (needs internet)
 npm run package        # release ZIPs into release/
 ```
 
-**Definition of done for every change:** `npm run build`, `npm run test:static` and `npm run test:e2e:edge` pass
+**Definition of done for every change:** `npm run build`, `npm run check:maths`, `npm run test:static` and `npm run test:e2e:edge` pass
 (the Playwright Chromium download is blocked on the owner's Windows machine, so browser tests use the installed
 Microsoft Edge via `--channel=msedge` or `PW_CHANNEL=msedge`).
 **Deployment (standing rule from the owner):** after every requested change, once the checks above pass, run
@@ -129,11 +145,15 @@ code: Python executed 2026-11-02 (quickpath.py chunking); C# not compiled (no .N
 ```
 Quote titles that contain a colon.
 
+Optional front matter `maths:` is one of `none`, `basic arithmetic` (default), `algebra`, `advanced optional`; it is shown on
+the lesson and is a catalogue filter. The `code:` line is a human note about Python and about tools that were not run; it must
+not state a C# result, because the pills come from `qa/code-status.json`.
+
 **Required `##` sections, exact titles, in this order** (the build enforces order):
 `In plain words` (≥ 50 words), `Real-world example`, `How it works`, `Python example`, `.NET (C#) example`,
 `Maths behind it` (a `-` list of names; it feeds maths.html), `Common mistakes`, `Quick check`.
 
-**Optional section `## Applied Maths - Statistics`** sits between the .NET example and `Maths behind it`. One intro sentence,
+**Optional section `## Applied Maths - Statistics`** sits anywhere after `How it works` and before `Maths behind it`. One intro sentence,
 then 2–4 topics, each `### Topic (plain description)` containing: `**Where it is used:**`, a ```` ```formula Title ```` block
 (plain-text formula, no LaTeX), `**In plain words:**`, and two or more `**Example 1: label.**` / `**Example 2: label.**`
 worked examples. The build renders each topic as a collapsible `<details class="maths-item">` and enforces the formula and
@@ -154,8 +174,9 @@ title (```` ```python serve.py (FastAPI; not run here) ````), `` `code` ``, `**b
 Output blocks are ```` ```text Output of quickpath.py <demo> (executed) ````; keep that title format, because a
 verification script compares those lines with real runs.
 
-**Internal links only** (the build fails on unknown targets and on any external URL):
-`[text](lesson:app-rag)`, `[text](project:c04-rag-assistant)`, `[text](case:klarna)`, `[text](page:solve.html)`.
+**Links** (the build fails on unknown targets and on any raw outside address):
+`[text](lesson:app-rag)`, `[text](project:c04-rag-assistant)`, `[text](case:klarna)`, `[text](page:solve.html)`,
+and `[text](source:sklearn-linear)` for a registered outside source.
 
 **Adding a lesson:** create the file, add its id to a group in `MODULES` (curriculum.mjs), optionally to a
 roadmap node, add glossary terms if it introduces new ones, then build, test and `npm run extract:code`.
@@ -167,8 +188,8 @@ optional `projects[]`. The overview grid supports 9, 10 or 12 steps (`.steps-9/1
 ### 4.3 Cases (`CASES`)
 Fields: `id, company, industry, category, difficulty, tracks[], effort, confirmed, problem, concept,
 results[{text, date, caveat}], workflow[], tech[[layer, suggested, alternatives]], example{input, output},
-project, acceptance[], risks[], sources[{title, publisher, type}]` — **no `url` field** (add URLs only to
-CONTENT_SOURCES.md). `confirmed` and `results` contain only what sources state; `workflow`/`tech` are the
+project, acceptance[], risks[], sources[{ref, title, publisher, type}]`. `ref` is an id in `src/data/sources.mjs`, which holds
+the address; there is **no `url` field** in cases.mjs. Research notes stay in CONTENT_SOURCES.md. `confirmed` and `results` contain only what sources state; `workflow`/`tech` are the
 guide's suggested design and are labelled as such on the page.
 
 ### 4.4 Capstones (`PROJECTS`)
@@ -178,7 +199,8 @@ structure, evidence`.
 
 ### 4.5 Reference data
 `HARDWARE` tiers have no prices (not verified). `GLOSSARY` is `[term, definition, lessonId]`.
-`CHECKPOINTS` are `{id, title, questions[{q, options[], answer (index), why}]}`, one per part.
+`CHECKPOINTS` are `{id, title, questions[{q, options[], answer (index), why}]}`, one per part (32 questions; the last in each part is a practical one).
+`CASE_CHECKS` (cases.mjs) holds the dated source-check note per case; `STARTERS` (projects.mjs) holds each capstone's verified starter commands and limits.
 
 ### 4.6 Examples
 `examples/quickpath/quickpath.py <demo>` backs most lessons (demos: env, rules_vs_ml, lifecycle, data, anomaly,
@@ -196,24 +218,36 @@ Check without building: `node scripts/check-diagrams.mjs [part...]`. `npm run te
 
 ---
 
+### 4.8 Maths moments (worked calculations inside a section)
+A fenced block `maths <title>` with one item per line, `key: text`. Required: `situation:`, `find:`, at least one `step:`, `why:`.
+Optional: `table:`/`row:`, `note:`, `result:`, `formula:`, `means:`, `caution:`, `try:` with `answer:`, `widget:`, `deeper:`.
+A step is `step: what we do | calculation = result`; use × ÷ − and write powers as `^2`. The build evaluates every step and fails
+if it is wrong (rounded results use `≈`). Widgets: `mean`, `line`, `confusion`, `gradient`, `dot`, `softmax`, `weighted`, `memory`
+(see WIDGETS in src/lib/maths.mjs), for example `widget: mean 2,4,6`. Numbers must be small enough to check in the head, the
+situation everyday, and the `why:` must tie the result to the lesson. Put the block where the idea is first needed.
+
 ## 5. Design system and UI rules
-- Theme tokens at the top of `public/assets/app.css`; dark values defined **twice** (media query and
-  `[data-theme="dark"]`). Never hard-code colours; text contrast ≥ 4.5:1 in both themes (e2e measures it).
+- Theme tokens live ONLY in `src/design/tokens.mjs` (each colour once, as [light, dark]); the build writes them at the top of
+  `dist/assets/app.css`. Never hard-code colours in `app.css`; text contrast ≥ 4.5:1 in both themes (e2e measures it).
+  Full reference: `docs/DESIGN_SYSTEM.md`.
 - Layout states on `<html>`: `data-theme`, `data-sidebar="hidden"`, `data-focus="on"`. Below 1024 px the sidebar
   is a drawer (scrim, `inert` main, Escape closes, focus returns). Lessons use `.lesson-layout` with a sticky
   `.lesson-rail` at ≥ 1200 px.
 - No document-level horizontal scroll; wide content goes in `.table-wrap` or `.stack-on-mobile`.
 - Real `<button>`s for actions, `<a>` for navigation, accessible names, visible focus, `aria-expanded` in sync.
 - CSP: no inline `style=""` and no new inline `<script>`; JSON data blocks are fine.
-- Type and layout (2026-11-04): body 17px (18px from 1680px, 16px under 380px), prose max 76ch. Wide screens: lesson prose sections (In plain words, Real-world example, How it works, Common mistakes) flow into two columns when .lesson-body is 880px or wider, while diagrams, code, tables and headings stay full width BELOW the text (never side by side with text: the owner rejected that), about/assessment/case/capstone pages use two columns (.content.cols, 1500px), plan/roadmap/glossary use 2+ column grids. Card-like list items must override the prose max-width with a `.content`-prefixed rule.
+- Type and layout: lesson text is ONE column, at most 72ch wide (owner priority 2026-11-13, replaces the two-column prose of 2026-11-04); diagrams, code and tables may use the full lesson width and stay BELOW the text (never side by side with text: the owner rejected that). Below 1200px the lesson side panel moves under the lesson. about/assessment/case/capstone pages use two columns (.content.cols, 1500px), plan/roadmap/glossary use 2+ column grids. Card-like list items must override the prose max-width with a `.content`-prefixed rule.
 - Report style (2026-11-04, modelled on the owner's AssistBot architecture report): every lesson section is a bordered panel with a numbered blue badge heading (CSS counters), callouts have a coloured left bar, tables have a tinted header and cell borders above 720px, and the lesson facts show Python/C# status as pills (`pill-ok`, `pill-warn`; built by codeStatus() in build.mjs from the `code:` front matter). About, quiz, case and capstone sections use the same panel (`.content.cols`). Not copied from the report: its filter bar, its zoom button and its CDN diagram library (external scripts are not allowed).
 - Sidebar group ids must be unique (the "Start here" pages group is `begin`, Part 1 is `start`).
 
 ## 6. Client behaviour (app.js)
-- Storage key `aimlqp.v1`: `{ version: 1, prefs: { theme, sidebar, focus }, progress: { "<type>:<id>": { done, at } } }`.
-  Types: `lesson:`, `project:`, `skill:`. All storage access in try/catch; the site works with storage blocked.
-- Export `{ schema: "aimlqp-progress", version: 1, exportedAt, progress }`; import validates schema, version and
+- Storage key `aimlqp.v1` (never rename it): `{ version: 2, prefs: { theme, sidebar, focus, rail, lang, start }, progress: { "<type>:<id>": { done, at } }, last: { id, title, at } }`.
+  `migrate()` in app.js upgrades version 1 data in place and never drops progress; add a case there whenever the shape changes.
+  Types: `lesson:`, `project:`, `skill:`, `exercise:`. All storage access in try/catch; the site works with storage blocked.
+- Export `{ schema: "aimlqp-progress", version: 2, exportedAt, progress }`; import accepts version 1 or 2, validates schema and
   ids, then replaces progress. Reset clears progress only.
+- Search: titles from `search-index.js` (loaded with the page); lesson text from `search-text.js`, loaded on first use of the box.
+- Maths calculators (`.mm-widget`) and the code language switch (`[data-lang-switch]`) are hidden until the script runs.
 - Filters: `.filters[data-filter-target]` with `select[data-filter]` values slugified; cards carry `data-<key>`.
 - Roadmaps: tablist, panels `#applied #ml #lm`, deep links `#node-<id>-<n>`.
 
@@ -226,12 +260,15 @@ Check without building: `node scripts/check-diagrams.mjs [part...]`. `npm run te
 5. Update QA_REPORT.md and PROJECT_PLAN.md when behaviour changes.
 6. Summarise what you changed, the commands you ran and their real results.
 
-**Do not:** add external links (other than those the owner asks for), teach maths, add a backend, analytics or CDNs, put keys in code, invent numbers,
+**Do not:** add outside links that are not in the source register, load anything from another site, force maths where it adds nothing, add a backend, analytics or CDNs, put keys in code, invent numbers,
 claim untested code works, use root-absolute `/` links, or add inline styles/scripts.
 
 ## 8. Known limitations
-- C# samples were desk-reviewed but **not compiled** (no .NET SDK in the build environment); five review findings
-  were fixed on 2026-11-03. FastAPI, MLflow, PyTorch, LangGraph and similar code is not run and is labelled.
+- C# samples: all lesson samples **compile** (.NET SDK 10.0.400, newest NuGet packages) and those that need no model, service or data also **run**; the rest are compiled only (see each lesson and `qa/code-status.json`, last run 2026-11-16).
+  FastAPI, MLflow, PyTorch, LangGraph and model calls are not run and are labelled. Most Python lesson blocks are excerpts and
+  are syntax-checked only; the example programmes they quote do run. See `qa/code-status.json`.
+- The lesson text has had no independent subject review. The older Applied Maths topics are verified numerically but not yet
+  rewritten step by step. Open work is listed in `IMPLEMENTATION_PROGRESS.md`.
 - Browser tests run in Microsoft Edge and Google Chrome (e2e); Firefox was checked by screenshots only (no automated run, Playwright cannot drive stock Firefox); Safari/WebKit is untested. No screen-reader testing yet; no independent subject-matter review.
 - Search is simple term matching. The 404 page uses relative links.
 

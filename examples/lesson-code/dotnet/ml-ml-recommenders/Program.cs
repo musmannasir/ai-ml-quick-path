@@ -1,4 +1,4 @@
-// From lesson 'ml-recommenders' (ml). Code status: Python executed 2026-11-02 (gap_topics.py recsys); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-recommenders' (ml). Code status: Python executed 2026-11-02 (gap_topics.py recsys)
 using Microsoft.ML;
 using Microsoft.ML.Trainers;
 

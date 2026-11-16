@@ -4,11 +4,12 @@ title: Speed, cost and scaling
 module: ops
 level: Advanced
 minutes: 75
+maths: basic arithmetic
 goal: Make models and LLM apps faster and cheaper with batching, caching, smaller models, quantisation and ONNX export, and know when to add more machines or GPUs.
 prereqs: ops-serving, llm-local
 reviewed: 2026-11-02
 evidence: A before-and-after table for one service showing latency, throughput and cost per 1,000 requests after at least two optimisations.
-code: Python executed 2026-11-02 (quickpath.py batching, cache); ONNX export and C# not run (skl2onnx not installed and no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py batching, cache); ONNX export not run (skl2onnx not installed in the build environment)
 ---
 ## In plain words
 Once a model works, the next questions are "can it handle more users?" and "can it cost less?". The main levers, roughly in the order to try them: **Cache**: if the same question comes again, return the saved answer instead of calling the model. **Batch**: process many inputs in one call; models and GPUs are far more efficient on a batch than on single items. **Use a smaller model**: a small model that is good enough beats a large one that is slow and expensive; **distillation** trains a small model to copy a big one. **Quantise**: store weights in fewer bits (8-bit or 4-bit instead of 16-bit) so the model uses less memory and often runs faster, with a small quality loss you must measure. **Export to ONNX**: a standard model format with a fast runtime that works from Python, C#, Java and more. Only then **scale out**: run more copies of the service behind a load balancer (horizontal scaling) or use bigger machines and GPUs (vertical scaling). For LLMs, also cut **tokens**: shorter prompts, fewer retrieved chunks, capped answer length. Cost for hosted LLMs is usually billed per token.
@@ -91,6 +92,18 @@ loop: Repeat until latency and cost are good enough
 - Change one thing | cache, batch, smaller or quantised model, ONNX | process
 - Check quality | re-run your evaluation | warn
 - Record | before-and-after table | output
+```
+
+```maths What a cache saves
+situation: Your assistant receives 100 questions. 60 of them were asked before, so the stored answer is returned from a cache without calling the model.
+find: What is the cache hit rate, and how many model calls are still needed?
+step: Hit rate | 60 ÷ 100 = 0.6 = 60%
+step: Questions that still need the model | 100 − 60 = 40
+result: The hit rate is **60%**, and only **40** model calls are made instead of 100.
+why: A model call is the slowest and most expensive part of an AI application. Every cache hit is an answer in milliseconds at almost no cost.
+caution: A cached answer can be out of date, and an answer written for one user must never be shown to another if it contains private data. Decide what may be cached and for how long.
+try: Each model call costs 0.01 (an invented price). How much do the 100 questions cost with and without the cache?
+answer: Without: 100 × 0.01 = 1. With: 40 × 0.01 = 0.4. The cache saves 0.6, which is 60% of the cost, the same as the hit rate.
 ```
 
 ### Related concepts

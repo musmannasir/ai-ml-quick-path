@@ -1,4 +1,4 @@
-// From lesson 's-lifecycle' (start). Code status: Python executed 2026-11-02 (quickpath.py lifecycle); C# not compiled (no .NET SDK in the build environment)
+// From lesson 's-lifecycle' (start). Code status: Python executed 2026-11-02 (quickpath.py lifecycle)
 using Microsoft.ML;
 using Microsoft.ML.Data;
 

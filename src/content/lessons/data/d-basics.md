@@ -4,11 +4,12 @@ title: Data basics: types, features, labels and splits
 module: data
 level: Beginner
 minutes: 60
+maths: basic arithmetic
 goal: Recognise the main kinds of data, tell features from labels, and split data into training, validation and test sets.
 prereqs: s-lifecycle
 reviewed: 2026-11-02
 evidence: A table of three datasets from your own work or life, with their data type, features, label and how you would split them.
-code: Python executed 2026-11-02 (quickpath.py data); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py data)
 ---
 ## In plain words
 Data comes in a few shapes. **Tabular data** is rows and columns, like a spreadsheet of customers. **Text** is emails, tickets, documents. **Images** and **video** are grids of pixels. **Audio** is sound waves. **Time series** are measurements over time, like daily sales. Tabular data is **structured**; text, images and audio are **unstructured**. In a table, each **row** is one example (one house) and each **column** is one fact about it. The columns the model uses as input are **features** (size, rooms, city). The column you want to predict is the **label** or **target** (price). You never test a model on the data it learned from, so you **split** the data: a **training set** to learn from, a **validation set** to compare ideas, and a **test set** you open only once at the end, like a final exam.
@@ -59,6 +60,19 @@ note: Illustrative proportions only: the common sizes named above.
 - Train | 70 | model
 - Validation | 15 | process
 - Test | 15 | output
+```
+
+```maths Splitting data into training, validation and test sets
+situation: You have 1,000 rows of data. You decide to use 70% for training, 15% for validation and 15% for the final test.
+find: How many rows go into each set?
+step: Training rows | 1,000 × 0.7 = 700
+step: Validation rows | 1,000 × 0.15 = 150
+step: Test rows (the same share) | 1,000 × 0.15 = 150
+step: Check that nothing was lost | 700 + 150 + 150 = 1,000
+result: **700** rows to learn from, **150** to choose settings with, **150** kept hidden for the final score.
+why: A model must be judged on rows it has never seen. If a row is in both the training set and the test set, the score looks better than it really is. That mistake is called leakage.
+try: You have only 500 rows and choose an 80 / 10 / 10 split. How many rows are in each set?
+answer: 500 × 0.8 = 400 for training, 500 × 0.1 = 50 for validation and 50 for test. Check: 400 + 50 + 50 = 500. A test set of 50 rows is small, so its score will be jumpy.
 ```
 
 ## Python example

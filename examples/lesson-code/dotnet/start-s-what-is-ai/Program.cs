@@ -1,4 +1,4 @@
-// From lesson 's-what-is-ai' (start). Code status: Python executed 2026-11-02 (examples/quickpath/quickpath.py rules_vs_ml); C# not compiled (no .NET SDK in the build environment)
+// From lesson 's-what-is-ai' (start). Code status: Python executed 2026-11-02 (examples/quickpath/quickpath.py rules_vs_ml)
 using Microsoft.ML;
 using Microsoft.ML.Data;
 

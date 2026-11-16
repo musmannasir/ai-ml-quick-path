@@ -1,4 +1,4 @@
-# From lesson 'dl-vision' (dl). Code status: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch and C# (ONNX Runtime) not run (not installed in the build environment)
+# From lesson 'dl-vision' (dl). Code status: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 from torchvision import models
 model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)      # pretrained on millions of photos
 model.fc = torch.nn.Linear(model.fc.in_features, 3)                    # new last layer: good / scratched / dented

@@ -1,39 +1,5 @@
-/* AI Engineering Academy — single stylesheet. All colours come from the tokens below. */
-:root {
-  --bg: #f5f7fa; --surface: #ffffff; --surface-2: #eef2f6; --surface-3: #e3e9f0;
-  --ink: #142030; --ink-2: #3c4a5c; --ink-3: #56657a; --line: #d3dbe5; --line-strong: #9aa8b8;
-  --accent: #0f766e; --accent-ink: #ffffff; --accent-soft: #e7f1f0; --link: #0f766e; --link-visited: #5a3e9e;
-  --applied: #0f766e; --applied-soft: #e7f1f0;
-  --ml: #1a56b0; --ml-soft: #e4edfa;
-  --lm: #5b45ad; --lm-soft: #ece8f9;
-  --ok-ink: #17643a; --ok-bg: #e3f4ea; --warn-ink: #6a4300; --warn-bg: #fdf2dc; --bad-ink: #a12a2a; --bad-bg: #fbe7e7;
-  --focus: #0f766e; --focus-halo: #ffffff;
-  --shadow: none;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  --top: 56px; --sb: 272px; --radius: 6px;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f141a; --surface: #161d25; --surface-2: #1d2630; --surface-3: #26313d;
-    --ink: #e8edf2; --ink-2: #b9c4cf; --ink-3: #a3afbc; --line: #2f3b48; --line-strong: #5d6b7a;
-    --accent: #2dd4bf; --accent-ink: #0b1220; --accent-soft: #1a3a3e; --link: #2dd4bf; --link-visited: #c3b3ff;
-    --applied: #2dd4bf; --applied-soft: #1a3a3e; --ml: #82b4ff; --ml-soft: #1b2a40; --lm: #b8a8ff; --lm-soft: #262043;
-    --ok-ink: #8ee0ad; --ok-bg: #12301f; --warn-ink: #f2cf86; --warn-bg: #2f2510; --bad-ink: #ffaaaa; --bad-bg: #3a1919;
-    --focus: #5eead4; --focus-halo: #0f141a; --shadow: none;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f141a; --surface: #161d25; --surface-2: #1d2630; --surface-3: #26313d;
-  --ink: #e8edf2; --ink-2: #b9c4cf; --ink-3: #a3afbc; --line: #2f3b48; --line-strong: #5d6b7a;
-  --accent: #2dd4bf; --accent-ink: #0b1220; --accent-soft: #1a3a3e; --link: #2dd4bf; --link-visited: #c3b3ff;
-  --applied: #2dd4bf; --applied-soft: #1a3a3e; --ml: #82b4ff; --ml-soft: #1b2a40; --lm: #b8a8ff; --lm-soft: #262043;
-  --ok-ink: #8ee0ad; --ok-bg: #12301f; --warn-ink: #f2cf86; --warn-bg: #2f2510; --bad-ink: #ffaaaa; --bad-bg: #3a1919;
-  --focus: #5eead4; --focus-halo: #0f141a; --shadow: none;
-  color-scheme: dark;
-}
+/* AI & ML Quick Path: single stylesheet. Theme tokens (colours, type, space) are defined ONCE in src/design/tokens.mjs;
+   the build writes them above this line in dist/assets/app.css. Never hard-code a colour here. */
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--top) + 16px); }
@@ -199,8 +165,6 @@ main { flex: 1; padding: 1rem clamp(.75rem, 2vw, 1.75rem) 2.5rem; }
 .track-badge-lm { background: var(--lm-soft); color: var(--lm); border-color: transparent; }
 .goal-box { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: .9rem 1.1rem; margin: 0 0 1.5rem; }
 .goal-box p { margin: .3rem 0; }
-.lesson-section { margin-top: 1.5rem; }
-.lesson-section > h2 { padding-top: .5rem; border-top: 1px solid var(--line); }
 .callout { border-radius: var(--radius); padding: .8rem 1rem; margin: 1rem 0; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); }
 .callout p:last-child { margin-bottom: 0; }
 .callout-warn { background: var(--warn-bg); color: var(--warn-ink); border-color: transparent; }
@@ -225,8 +189,6 @@ tbody th { font-weight: 650; }
 details { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0 .8rem; }
 details > summary { cursor: pointer; padding: .5rem 0; font-weight: 600; color: var(--link); min-height: 36px; }
 details[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: .5rem; }
-.completion { margin-top: 2.5rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-.completion h2 { margin-top: 0; }
 .actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
 .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
 .pager a { display: flex; flex-direction: column; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); text-decoration: none; font-weight: 600; color: var(--ink); }
@@ -443,7 +405,6 @@ a.track-card:hover { border-color: var(--line-strong); }
   .toc-card { display: block; }
 }
 @media (min-width: 720px) and (max-width: 1199.98px) { .lesson-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.lesson-body > .lesson-section:first-child > h2 { border-top: 0; }
 .plain-list { list-style: none; padding: 0; }
 .plain-list li { margin: .4rem 0; }
 .stage-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
@@ -573,7 +534,6 @@ h4 { font-size: 1.05rem; margin: 1.2rem 0 .35rem; }
 .content p, .content li, .content dd, .content legend { max-width: 76ch; }
 .lesson-body p, .lesson-body li { line-height: 1.72; }
 .lesson-body li { margin: .35rem 0; }
-.lesson-section > h2 { padding-top: .75rem; margin-top: 2.25rem; }
 .goal-line { font-size: 1.12rem; line-height: 1.55; }
 th { font-weight: 650; }
 tbody tr:nth-child(even) > td { background: var(--surface-2); }
@@ -608,14 +568,8 @@ tbody tr:nth-child(even) > td { background: var(--surface-2); }
   .content.cols > section > h2:first-child { margin-top: 0; }
 }
 
-/* Lessons: when the lesson column is wide, diagrams sit beside the text instead of leaving it empty */
 .lesson-body { container-type: inline-size; container-name: lesson; }
 .lesson-section { display: flow-root; }
-/* Prose sections flow into two columns when the lesson area is wide; diagrams, code, tables and headings span the full width */
-@container lesson (min-width: 880px) { .lesson-section.prose-cols { column-count: 2; column-gap: 2.75rem; } }
-.lesson-section.prose-cols > h2, .lesson-section.prose-cols > h3, .lesson-section.prose-cols > h4, .lesson-section.prose-cols > figure, .lesson-section.prose-cols > .table-wrap, .lesson-section.prose-cols > .callout { column-span: all; }
-.lesson-section.prose-cols > p, .lesson-section.prose-cols li { max-width: none; orphans: 2; widows: 2; }
-.lesson-section.prose-cols li { break-inside: avoid; }
 
 /* Older browsers without container queries: same stacking rules based on the screen width */
 @supports not (container-type: inline-size) {
@@ -641,8 +595,6 @@ tbody tr:nth-child(even) > td { background: var(--surface-2); }
   .content.cols .mcq-list > li { break-inside: avoid-column; }
 }
 @media (max-width: 820px) { .hero-figure { margin-left: auto; margin-right: auto; } }
-.lesson-body > .lesson-section:first-child { margin-top: .25rem; }
-.lesson-body > .lesson-section:first-child > h2 { margin-top: .5rem; padding-top: 0; }
 
 /* Five-step flows: three per row in medium widths, all five in one row when the diagram is wide */
 .dg-flow.c5 { --c: 3; }
@@ -668,20 +620,11 @@ tbody tr:nth-child(even) > td { background: var(--surface-2); }
 .code-status:last-child { margin-bottom: 0; }
 .facts-detail { display: block; margin-top: .15rem; font-size: .8rem; color: var(--ink-3); line-height: 1.4; overflow-wrap: anywhere; }
 
-/* Each lesson section is a bordered panel with a numbered badge heading */
 .lesson-body { counter-reset: sec; }
-.lesson-body > .lesson-section, .lesson-body > .completion { counter-increment: sec; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.25rem 1.15rem; margin: 0 0 1.1rem; box-shadow: var(--shadow); }
-.lesson-body > .lesson-section > h2, .lesson-body > .lesson-section:first-child > h2, .lesson-body > .completion > h2 { display: flex; align-items: center; gap: .65rem; margin: 0 0 .85rem; padding: 0 0 .5rem; border-top: 0; border-bottom: 2px solid var(--line); font-size: 1.4rem; }
-.lesson-body > .lesson-section > h2::before, .lesson-body > .completion > h2::before { content: counter(sec); display: inline-grid; place-items: center; flex: none; min-width: 1.85rem; height: 1.85rem; padding: 0 .45rem; border-radius: 6px; background: var(--accent); color: var(--accent-ink); font-size: .95rem; font-weight: 700; letter-spacing: 0; }
-.lesson-body > .completion { margin-top: 0; }
 .lesson-section .diagram { box-shadow: none; }
 .lesson-section > h3, .lesson-section > h4 { margin-top: 1.3rem; }
 
-/* The same panel and badge on about, quiz, case and capstone pages */
 .content.cols { counter-reset: sec2; }
-.content.cols > section, .content.cols #checkpoints > section { counter-increment: sec2; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.25rem 1.15rem; margin: 0 0 1.1rem; box-shadow: var(--shadow); }
-.content.cols > section > h2:first-child, .content.cols #checkpoints > section > h2:first-child { display: flex; align-items: center; gap: .65rem; margin: 0 0 .85rem; padding: 0 0 .5rem; border-bottom: 2px solid var(--line); font-size: 1.35rem; }
-.content.cols > section > h2:first-child::before, .content.cols #checkpoints > section > h2:first-child::before { content: counter(sec2); display: inline-grid; place-items: center; flex: none; min-width: 1.85rem; height: 1.85rem; padding: 0 .45rem; border-radius: 6px; background: var(--accent); color: var(--accent-ink); font-size: .95rem; font-weight: 700; }
 
 /* Callouts: tinted block with a coloured bar on the left */
 .callout { border: 0; border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; background: var(--accent-soft); padding: .7rem 1rem; }
@@ -697,14 +640,7 @@ tbody tr:nth-child(even) > td { background: transparent; }
   thead th { background: var(--accent-soft); }
 }
 
-/* Cards sit on a quiet background inside panels */
-.lesson-section .card, .content.cols .card { background: var(--bg); box-shadow: none; }
 
-@media (max-width: 720px) {
-  .lesson-body > .lesson-section, .lesson-body > .completion, .content.cols > section, .content.cols #checkpoints > section { padding: .8rem .85rem 1rem; border-radius: 8px; }
-  .lesson-body > .lesson-section > h2, .lesson-body > .completion > h2 { font-size: 1.25rem; }
-}
-@media print { .lesson-body > .lesson-section, .lesson-body > .completion, .content.cols > section { box-shadow: none; } }
 /* Pages without panels: same heading underline as the numbered panels */
 .content:not(.cols) > h2 { border-bottom: 2px solid var(--line); padding-bottom: .4rem; }
 .code-status .pill { white-space: normal; max-width: 100%; overflow-wrap: anywhere; border-radius: 12px; }
@@ -788,16 +724,6 @@ details.rail-details[open] > summary { border-bottom: 1px solid var(--line); pad
 :root[data-focus="on"] .edge-tab { display: none; }
 @media print { .edge-tab { display: none !important; } }
 
-/* ---------- Theme: teal accent, lighter weight (owner decision 2026-11-11) ----------
-   Tokens at the top hold the colours. This block flattens the numbered section panels:
-   a thin divider instead of a shadowed box, and an outlined number instead of a solid badge. */
-.lesson-body > .lesson-section, .lesson-body > .completion, .content.cols > section, .content.cols #checkpoints > section { background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; padding: .25rem 0 1.35rem; margin: 0 0 1.35rem; }
-.lesson-body > .lesson-section > h2, .lesson-body > .lesson-section:first-child > h2, .lesson-body > .completion > h2, .content.cols > section > h2:first-child, .content.cols #checkpoints > section > h2:first-child { border-bottom: 0; padding-bottom: 0; margin-bottom: .75rem; }
-.lesson-body > .lesson-section > h2::before, .lesson-body > .completion > h2::before, .content.cols > section > h2:first-child::before, .content.cols #checkpoints > section > h2:first-child::before { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
-.lesson-section .card, .content.cols .card { background: var(--surface); }
-@media (max-width: 720px) {
-  .lesson-body > .lesson-section, .lesson-body > .completion, .content.cols > section, .content.cols #checkpoints > section { padding: .2rem 0 1.1rem; border-radius: 0; }
-}
 
 /* ---------- Scrollbars: thin and quiet, from the theme tokens (page, sidebar, side panel, tables, code) ---------- */
 * { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
@@ -809,3 +735,145 @@ details.rail-details[open] > summary { border-bottom: 1px solid var(--line); pad
   ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 8px; border: 3px solid transparent; background-clip: content-box; }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: content-box; }
 }
+
+/* =====================================================================================================
+   Design system 2026-11 (see docs/DESIGN_SYSTEM.md). Everything below uses tokens from src/design/tokens.mjs.
+   ===================================================================================================== */
+
+/* ---------- Numbered sections: ONE definition for lessons and for about / quiz / case / capstone pages ----------
+   Flat: a thin divider under each section and an outlined number. (Replaces three layered blocks.) */
+.lesson-body > .lesson-section, .lesson-body > .completion { counter-increment: sec; }
+.content.cols > section, .content.cols #checkpoints > section { counter-increment: sec2; }
+.lesson-body > .lesson-section, .lesson-body > .completion, .content.cols > section, .content.cols #checkpoints > section { background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: var(--s-1) 0 var(--s-5); margin: 0 0 var(--s-5); }
+.lesson-body > .lesson-section > h2, .lesson-body > .completion > h2, .content.cols > section > h2:first-child, .content.cols #checkpoints > section > h2:first-child { display: flex; align-items: center; gap: .65rem; margin: 0 0 var(--s-3); padding: 0; border: 0; font-size: var(--fs-4); }
+.lesson-body > .lesson-section > h2::before, .lesson-body > .completion > h2::before, .content.cols > section > h2:first-child::before, .content.cols #checkpoints > section > h2:first-child::before { display: inline-grid; place-items: center; flex: none; min-width: 1.85rem; height: 1.85rem; padding: 0 .45rem; border-radius: var(--radius); border: 1.5px solid var(--accent); color: var(--accent); background: transparent; font-size: .95rem; font-weight: 700; }
+.lesson-body > .lesson-section > h2::before, .lesson-body > .completion > h2::before { content: counter(sec); }
+.content.cols > section > h2:first-child::before, .content.cols #checkpoints > section > h2:first-child::before { content: counter(sec2); }
+.lesson-section .card, .content.cols .card { background: var(--surface); box-shadow: none; }
+.lesson-body > .completion { border-bottom: 0; }
+
+/* ---------- Lesson reading layout: one comfortable text column; diagrams, code and tables may be wider ---------- */
+.lesson-body p, .lesson-body li, .lesson-body dd { max-width: var(--measure); }
+.lesson-body .card p, .lesson-body .callout p, .lesson-body td p, .lesson-body .dg-box p, .lesson-body figure li, .lesson-body .diagram li, .lesson-body .diagram p { max-width: none; }
+@media (min-width: 1200px) {
+  .lesson-layout { grid-template-columns: minmax(0, 60rem) var(--rail); justify-content: center; gap: 0 var(--s-6); }
+  :root[data-rail="hidden"] .lesson-layout, :root[data-focus="on"] .lesson-layout { grid-template-columns: minmax(0, 60rem); }
+}
+.lesson-head { margin-bottom: var(--s-5); }
+/* Below the wide layout the facts panel moves under the lesson, so reading starts straight after the header. */
+@media (max-width: 1199.98px) { .lesson-layout { display: flex; flex-direction: column; } .lesson-rail { order: 3; margin-top: var(--s-5); } .rail-toggle-row { display: none; } }
+.lesson-pos { color: var(--ink-3); margin-left: .5rem; white-space: nowrap; }
+.lesson-pos::before { content: "·"; margin-right: .5rem; }
+.goal-line { max-width: var(--measure); }
+.lesson-meta { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center; margin: 0 0 var(--s-3); padding: 0; font-size: var(--fs-1); color: var(--ink-2); }
+.lesson-meta li { margin: 0; max-width: none; }
+.meta-k { font-weight: 650; color: var(--ink); }
+.prereq-line { font-size: var(--fs-1); margin: 0 0 var(--s-3); padding: .5rem .75rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); max-width: var(--measure); }
+.lesson-tools { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; }
+.lesson-tools .rail-toggle-row { margin: 0; }
+.leads-to { font-size: var(--fs-1); }
+.code-evidence { margin: 0 0 var(--s-3); max-width: none; }
+.code-evidence .pill { margin-right: .35rem; }
+
+/* Code language switch: a small radio group; hides the other language's section, never the reader's place */
+.lang-switch { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .15rem; margin: 0; padding: .2rem .3rem; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); font-size: var(--fs-1); }
+.lang-switch legend { float: left; padding: 0 .5rem 0 .3rem; font-weight: 650; color: var(--ink-2); }
+.lang-switch label { display: inline-flex; align-items: center; gap: .3rem; min-height: 32px; padding: .1rem .55rem; border-radius: 4px; cursor: pointer; }
+.lang-switch label:has(input:checked) { background: var(--accent-soft); color: var(--ink); font-weight: 650; }
+.lang-switch input { margin: 0; }
+:root[data-lang="python"] [data-lang-section="cs"], :root[data-lang="cs"] [data-lang-section="python"] { display: none; }
+@media print { .lang-switch, .lesson-tools { display: none !important; } :root[data-lang] [data-lang-section] { display: block !important; } }
+
+/* ---------- Maths moment: a worked calculation at the point of need ---------- */
+.math-moment { margin: var(--s-5) 0; padding: var(--s-4) var(--s-4) var(--s-3); background: var(--math-bg); border: 1px solid var(--line); border-left: 4px solid var(--math-line); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; max-width: 52rem; }
+.math-moment p { max-width: none; }
+.mm-eyebrow { margin: 0; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.math-moment .mm-title { margin: .1rem 0 var(--s-2); font-size: var(--fs-3); }
+.mm-k { font-weight: 700; color: var(--ink); }
+.mm-by-hand { margin: var(--s-3) 0 var(--s-1); }
+.mm-steps { list-style: none; margin: 0 0 var(--s-3); padding: 0; counter-reset: mm; display: grid; gap: .35rem; }
+.mm-steps li { margin: 0; max-width: none; }
+.mm-step { counter-increment: mm; display: grid; grid-template-columns: 1.7rem minmax(0, 1fr); gap: .1rem .6rem; align-items: start; padding: .45rem .6rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.mm-step::before { content: counter(mm); grid-row: 1 / span 2; display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent-soft); color: var(--ink); font-size: .8rem; font-weight: 700; }
+.mm-step-label { color: var(--ink-2); font-size: var(--fs-1); }
+.mm-calc { grid-column: 2; display: block; background: transparent; padding: 0; font-size: 1.05rem; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.mm-note { padding: .1rem .6rem; color: var(--ink-2); font-size: var(--fs-1); }
+.mm-result { font-size: 1.02rem; }
+.mm-why, .mm-means { color: var(--ink); }
+.mm-caution { font-size: var(--fs-1); color: var(--ink-2); }
+.mm-table { margin: var(--s-2) 0 var(--s-3); max-width: 26rem; }
+.mm-formula { background: var(--surface); }
+.mm-try { margin: var(--s-3) 0 0; padding-top: var(--s-3); border-top: 1px dashed var(--line-strong); }
+.mm-try p { margin-bottom: .4rem; }
+.mm-answer { padding: .5rem 0 .2rem; }
+.mm-deeper { margin-top: var(--s-2); }
+.mm-mini { margin: 0; }
+.mm-mini code { overflow-wrap: anywhere; }
+/* The calculator is shown only when the script is running; the worked steps above are the fallback. */
+.mm-widget { margin: var(--s-3) 0 0; padding: var(--s-3); background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); }
+.mm-widget > p { margin: 0 0 var(--s-2); }
+.mm-fields { display: flex; flex-wrap: wrap; gap: .6rem .9rem; align-items: flex-end; }
+.mm-field input { width: 7.5rem; }
+.mm-out { margin-top: var(--s-3); font-size: .98rem; }
+.mm-out p { margin: 0 0 .3rem; }
+.mm-out code { display: block; font-size: 1rem; background: transparent; padding: 0; }
+.mm-out .mm-big { font-weight: 700; }
+.mm-bars { display: grid; gap: .3rem; margin: .4rem 0 0; max-width: 24rem; }
+.mm-bar { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 3.2rem; gap: .5rem; align-items: center; font-size: var(--fs-1); }
+.mm-bar-track { height: .7rem; background: var(--surface-3); border-radius: 999px; overflow: hidden; }
+.mm-bar-fill { display: block; height: 100%; background: var(--accent); }
+.mm-bar-fill[data-w] { width: 0; }
+
+/* Applied Maths worked examples: one sentence per numbered line */
+.ex { margin: var(--s-3) 0; padding: var(--s-2) var(--s-3) var(--s-2); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.ex-title { margin: 0 0 .25rem; }
+.ex > p { margin: 0 0 .25rem; max-width: none; }
+.ex-steps { margin: 0; padding-left: 1.5rem; }
+.ex-steps li { max-width: none; margin: .2rem 0; line-height: 1.6; }
+
+/* ---------- Official documentation and source lists ---------- */
+.refs { margin: 0 0 var(--s-5); padding: var(--s-3) var(--s-4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.refs .refs-title { margin: 0 0 .2rem; font-size: var(--fs-2); border: 0; padding: 0; }
+.refs p { margin: 0 0 .4rem; max-width: none; }
+.refs-list { margin: 0; padding-left: 1.1rem; }
+.refs-list li { max-width: none; margin: .3rem 0; }
+.ref-title { font-weight: 600; }
+a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
+
+/* ---------- Home: resume card and starting points ---------- */
+.resume-card { margin: var(--s-4) 0 0; padding: var(--s-3) var(--s-4); background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; max-width: 40rem; }
+.resume-card p { margin: 0; max-width: none; }
+.resume-k { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.resume-line { font-size: var(--fs-3); font-weight: 650; }
+.persona-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr)); margin-bottom: var(--s-4); }
+.persona-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--s-4); }
+.persona-card h3 { margin: 0 0 .4rem; font-size: 1.05rem; }
+.persona-card p { margin: 0 0 .5rem; max-width: none; }
+.persona-actions { margin-top: auto !important; padding-top: .4rem; }
+.persona-card[data-chosen="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.persona-card[data-chosen="true"] h3::after { content: "Your choice"; margin-left: .5rem; font-size: .7rem; font-weight: 700; padding: .05rem .5rem; border-radius: 999px; background: var(--accent-soft); color: var(--ink); vertical-align: middle; white-space: nowrap; }
+
+/* ---------- Top bar and search ---------- */
+.topbar-progress { text-decoration: none; }
+@media (max-width: 900px) { .topbar-progress .btn-label { display: none; } }
+@media (max-width: 480px) { .topbar-progress { display: none; } }
+.search-results .res-snippet { display: block; font-size: var(--fs-0); color: var(--ink-2); margin-top: .1rem; line-height: 1.4; }
+.search-results mark { background: var(--warn-bg); color: var(--warn-ink); padding: 0 .1em; border-radius: 2px; }
+.search-group { margin: .5rem .6rem .15rem; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ---------- Edge tabs: a larger target (24 px wide, WCAG 2.2 target size) ---------- */
+.edge-tab { width: 24px; height: 64px; }
+.edge-tab:focus-visible { z-index: 31; }
+
+/* ---------- Quiz feedback explains, in words, not only colour ---------- */
+.mcq-feedback.ok::before { content: "\2713\00a0"; }
+.mcq-feedback.bad::before { content: "\2717\00a0"; }
+
+/* ---------- Forced colours (Windows high contrast): keep borders and state visible ---------- */
+@media (forced-colors: active) {
+  .math-moment, .mm-step, .mm-widget, .refs, .persona-card, .resume-card, .pill, .badge, .lang-switch { border: 1px solid CanvasText; }
+  .lang-switch label:has(input:checked), .persona-card[data-chosen="true"] { outline: 2px solid Highlight; }
+  .mm-bar-fill { background: Highlight; }
+  .mm-step::before { border: 1px solid CanvasText; }
+}
+@media print { .mm-widget, .refs p.small, #resume-card, .persona-actions { display: none !important; } .math-moment { break-inside: avoid; } }

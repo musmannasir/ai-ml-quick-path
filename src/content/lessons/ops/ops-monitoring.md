@@ -4,11 +4,12 @@ title: Monitoring models and AI apps in production
 module: ops
 level: Advanced
 minutes: 75
+maths: algebra
 goal: Watch a live model or LLM app for data drift, falling quality, latency and cost, and decide when to alert, retrain or roll back.
 prereqs: ops-mlops, app-evals
 reviewed: 2026-11-02
 evidence: A monitoring sheet for one model listing each signal, its threshold, the action it triggers, and a drift check run on your own data.
-code: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency)
 ---
 ## In plain words
 A model starts going stale the day it is deployed, because the world changes and the model does not. **Monitoring** is watching it so you notice before customers do. Watch four kinds of signals. **System health**: errors, latency and throughput, like any web service. **Data drift**: the inputs no longer look like the training data (new customer types, a new product, a changed form). **Concept drift**: the inputs look the same but the right answer has changed (fraudsters change tactics). **Quality and business results**: accuracy once true labels arrive, plus the business number the model exists to move. For LLM apps add **token cost**, **time to first token** (TTFT, how long until the first word appears), refusal rate, user feedback (thumbs up or down) and regular evaluation runs on a sample of real conversations. Every signal needs a **threshold** and an **action**: alert a person, retrain, or roll back.
@@ -90,6 +91,18 @@ note: A common rule of thumb, not a law.
 - Moderate change
 ## Above 0.25 | bad
 - Investigate
+```
+
+```maths Has the data drifted? A simple check
+situation: When the model was trained, the average customer age was 40 and the typical distance from that average (the standard deviation) was 12 years. This week the average age of live customers is 46.
+find: How large is the change, measured in typical distances?
+step: Change in the average | 46 − 40 = 6
+step: Divide by the typical distance | 6 ÷ 12 = 0.5
+result: The average moved by **0.5 standard deviations**.
+why: Models are trained on the past and used on the present. When the inputs drift away from the training data, quality can fall without any error message. Monitoring computes shifts like this for each important input and raises an alert above a limit you choose.
+caution: Half a standard deviation is worth a look, not a proof that the model is now wrong. Check whether the model's results have changed too.
+try: Next month the live average is 64. How large is the shift?
+answer: 64 − 40 = 24, and 24 ÷ 12 = 2 standard deviations. That is a large shift: the model now serves customers unlike those it learned from, so it should be re-evaluated and probably retrained.
 ```
 
 ### Related concepts

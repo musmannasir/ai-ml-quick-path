@@ -4,11 +4,12 @@ title: Fine-tuning: SFT, LoRA, QLoRA and preference tuning
 module: llm
 level: Advanced
 minutes: 90
+maths: advanced optional
 goal: Decide between prompting, RAG and fine-tuning, prepare instruction data, and fine-tune an open model with LoRA or QLoRA, then compare it fairly with the base model.
 prereqs: llm-scale, llm-how
 reviewed: 2026-11-02
 evidence: A decision note (prompt, RAG or fine-tune), a JSONL training set of at least 200 examples with a separate test set, and a base-versus-adapter comparison.
-code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; C# is plain .NET (System.Text.Json) and was not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 There are three ways to make a model do what you need. **Prompting**: change the instructions and examples (fast, no training). **RAG**: give it your documents at question time (best for facts that change, need sources or need permissions). **Fine-tuning**: train it further on examples so the behaviour is built in (best for a consistent format, style or narrow task, or making a smaller, cheaper model do a specific job). **Supervised fine-tuning (SFT)** uses example prompts and ideal answers. Training all weights is expensive, so **LoRA** freezes the model and trains small extra matrices added to some layers, producing a small **adapter** file. **QLoRA** also stores the frozen model in 4-bit form to save memory. **Preference tuning** (such as DPO) trains on pairs of a better and a worse answer. Fine-tuning is poor at teaching facts that change; use RAG for those.
@@ -82,6 +83,20 @@ note: The test set is separated before training and never trained on.
 - Approved examples | Personal data removed | input
 - Training set | Used to train | process
 - Test set | Held out before any training | output
+```
+
+```maths Why LoRA trains so few numbers
+situation: One layer of a model is a grid of 100 by 100 weights. Full fine-tuning would change all of them. LoRA freezes them and adds two thin grids instead: one of 100 by 2 and one of 2 by 100. The 2 is called the rank.
+find: How many numbers does LoRA train, compared with full fine-tuning?
+step: Weights in the full layer | 100 × 100 = 10,000
+step: Weights in the two thin LoRA grids | 100 × 2 + 2 × 100 = 400
+step: LoRA's share of the full layer | 400 ÷ 10,000 = 0.04 = 4%
+result: LoRA trains **400** numbers instead of 10,000, which is **4%**.
+formula: LoRA parameters = rows × rank + rank × columns
+why: Fewer trained numbers means less memory, faster training and a small file to store per task. This is why LoRA makes fine-tuning possible on one ordinary GPU.
+caution: In a real model the layers are thousands wide, so the share is much smaller than 4%, often below 1%. Fewer numbers also means less capacity: LoRA suits adapting style or format better than teaching large amounts of new knowledge.
+try: You raise the rank from 2 to 8. How many numbers are trained now?
+answer: 100 × 8 + 8 × 100 = 1,600, which is 1,600 ÷ 10,000 = 16% of the layer. A higher rank can learn more but costs proportionally more memory and time.
 ```
 
 ### Related concepts

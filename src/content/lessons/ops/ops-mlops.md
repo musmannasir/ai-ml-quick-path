@@ -4,11 +4,12 @@ title: "MLOps: versioning, pipelines and safe releases"
 module: ops
 level: Advanced
 minutes: 90
+maths: algebra
 goal: Make model training repeatable and releases safe by versioning data, code and models, recording metrics in a registry, and promoting a new model only when it passes a gate.
 prereqs: ops-serving, ml-evaluation
 reviewed: 2026-11-02
 evidence: A training pipeline that records data hash, parameters and metrics for every run, plus a promotion rule that rejected at least one candidate.
-code: Python executed 2026-11-02 (quickpath.py registry); MLflow and C# not run (MLflow not installed and no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py registry); MLflow not run (MLflow not installed in the build environment)
 ---
 ## In plain words
 **MLOps** is DevOps for machine learning: the habits and tools that make models repeatable, traceable and safe to change. Normal software has one moving part, the code. ML has three: **code**, **data** and the **model** produced from them. If any one changes, the result changes. So you **version all three**: code in Git, data by a snapshot or a content hash, and models in a **model registry** (a catalogue of every trained model with its metrics, the data it saw and its status such as "candidate", "production" or "archived"). Training runs as a **pipeline** (a script or workflow that goes from raw data to a saved, tested model with no manual steps), so anyone can rerun it. A new model is released only if it passes a **promotion gate**: written rules such as "must beat the current production model, the **champion**, on the same test set by a clear margin, and must pass fairness and speed checks". Safe rollout methods include **shadow mode** (the new model runs on live traffic but its answers are only logged), **canary release** (a small share of users get it first) and **A/B testing** (a planned comparison of business results). Always keep the previous model ready for **rollback**.
@@ -78,6 +79,20 @@ loop: Retrain on a schedule or when drift is detected
 - Compare with champion | apply the gate | process
 - Shadow or canary | watch the metrics | warn
 - Promote | keep the old model for rollback | output
+```
+
+```maths A canary release in numbers
+situation: A new model version gets 5% of 1,000 requests; the old version gets the rest. The new version makes 2 errors. The old version makes 19 errors.
+find: What is the error rate of each version?
+step: Requests sent to the new version | 1,000 × 0.05 = 50
+step: Requests sent to the old version | 1,000 − 50 = 950
+step: Error rate of the new version | 2 ÷ 50 = 0.04 = 4%
+step: Error rate of the old version | 19 ÷ 950 = 0.02 = 2%
+result: The new version shows **4%** errors against **2%** for the old one.
+why: A canary release sends a small share of traffic to a new version so that problems hurt few users. You compare rates, not raw counts, because the two versions received very different numbers of requests.
+caution: The new version's rate rests on only 50 requests and 2 errors. One error fewer would make it 2%. Keep the canary running until there is enough traffic to judge.
+try: After a day the new version has served 2,000 requests with 44 errors. What is its error rate now?
+answer: 44 ÷ 2,000 = 0.022 = 2.2%. With far more data the new version looks close to the old one (2%), not twice as bad. Early numbers from a small canary are a warning light, not a verdict.
 ```
 
 ### Related concepts

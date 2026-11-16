@@ -11,7 +11,11 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'examples' / 'lesson-code'
 EXT = {'python': 'py', 'cs': 'cs', 'csharp': 'cs'}
 
+readme = (OUT / 'README.md').read_text(encoding='utf-8') if (OUT / 'README.md').exists() else None
 shutil.rmtree(OUT, ignore_errors=True)
+if readme is not None:
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / 'README.md').write_text(readme, encoding='utf-8')
 counts = {'py': 0, 'cs': 0, 'fragments': 0}
 for f in sorted((ROOT / 'src' / 'content' / 'lessons').glob('*/*.md')):
     lid, part = f.stem, f.parent.name

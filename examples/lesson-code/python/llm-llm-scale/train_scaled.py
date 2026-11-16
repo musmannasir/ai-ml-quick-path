@@ -1,4 +1,4 @@
-# From lesson 'llm-scale' (llm). Code status: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual; C# is plain .NET and was not compiled (no .NET SDK in the build environment)
+# From lesson 'llm-scale' (llm). Code status: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual
 scaler_dtype = torch.bfloat16
 for i, (xb, yb) in enumerate(loader):
     with torch.autocast("cuda", dtype=scaler_dtype):          # mixed precision

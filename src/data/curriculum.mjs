@@ -133,3 +133,24 @@ export const ROUTES = [
     estimate: 'About 6–8 weeks at 8–10 hours a week to a trained, served model (study estimate).',
   },
 ];
+
+// Starting points for the home page chooser. A choice is a local preference (saved in the browser), not an account.
+// `lang` presets which code examples a lesson shows first ('both', 'python' or 'cs'); the learner can change it in any lesson.
+export const STARTS = [
+  { id: 'new', title: 'I am new to AI and to programming', first: 's-what-is-ai', lang: 'both',
+    who: 'You have not written much code yet. You want to understand what AI is before you build anything.',
+    then: 'Then follow Parts 1 to 3 in order. Read the plain-words sections and the maths moments; run the code when you feel ready.',
+    skip: 'Nothing to skip. Take your time with Part 1.' },
+  { id: 'coder', title: 'I know some programming', first: 's-what-is-ai', lang: 'both',
+    who: 'You can write small programs in any language, but AI and machine learning are new to you.',
+    then: 'Then set up your laptop in the third lesson and run every example from Part 2 onwards.',
+    skip: 'You can skim the setup lesson if Python or .NET is already installed.' },
+  { id: 'dotnet', title: 'I am a .NET (C#) developer', first: 's-setup', lang: 'cs',
+    who: 'You build software with C# and want to add AI and ML to .NET applications.',
+    then: 'Lessons will show the C# example first. Read the first two lessons for the vocabulary, then go on to Part 2.',
+    skip: 'Training deep networks and language models is done in Python (Parts 4 and 5). Each lesson says honestly when C# calls a Python service instead.' },
+  { id: 'python', title: 'I am a Python developer', first: 's-setup', lang: 'python',
+    who: 'You are comfortable with Python and want a fast, complete route through ML and AI applications.',
+    then: 'Lessons will show the Python example first. Skim Part 1, then work through Parts 2 and 3 with the code open.',
+    skip: 'You can skip the Python installation steps in the setup lesson.' },
+];

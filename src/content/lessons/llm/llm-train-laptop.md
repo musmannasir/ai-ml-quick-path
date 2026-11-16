@@ -4,11 +4,12 @@ title: Train a small language model on your laptop
 module: llm
 level: Advanced
 minutes: 120
+maths: advanced optional
 goal: Train a character-level language model end to end on a laptop, read training and validation loss, save and reload checkpoints, and run the same loop as a tiny transformer.
 prereqs: llm-design, dl-training
 reviewed: 2026-11-02
 evidence: Your training log with train and validation loss, a reloaded checkpoint giving the same validation loss, and samples before and after training.
-code: Python NumPy model executed 2026-11-02 (examples/tiny-lm/tiny_char_lm_numpy.py, about 2 seconds on CPU); PyTorch transformer and C# (TorchSharp) not run (not installed in the build environment)
+code: Python NumPy model executed 2026-11-02 (examples/tiny-lm/tiny_char_lm_numpy.py, about 2 seconds on CPU); PyTorch transformer not run (not installed in the build environment)
 ---
 ## In plain words
 You can train a real language model on any laptop if you keep it small. This lesson trains one that reads three characters and predicts the next, on 2,200 characters of original text. It shows every real step of LLM training: building a vocabulary, making (context → next token) pairs, measuring **cross-entropy loss**, updating weights, watching **training** and **validation** loss, saving **checkpoints** and **sampling** text. It is not a production LLM: those use transformers with billions of weights, trillions of tokens and many GPUs. But the loop is the same, which is why engineers test their whole pipeline on a tiny model first. A model guessing randomly among 29 characters has a loss of about 3.37; lower is better. When training loss keeps falling but validation loss stops improving, the model is starting to **overfit**.
@@ -78,6 +79,17 @@ loop: Repeat for thousands of steps, logging train and validation loss
 note: Illustrative figure from the lesson text: 90% train, 10% validation.
 - Training pairs | 90 | process
 - Validation pairs | 10 | output
+```
+
+```maths What score does random guessing get?
+situation: A character-level model chooses the next character from 50 possible characters. Before training it knows nothing, so every character is equally likely.
+find: How often would an untrained model guess the next character correctly?
+step: One right answer out of 50 equally likely choices | 1 ÷ 50 = 0.02 = 2%
+result: Random guessing is right about **2%** of the time.
+why: This is your starting line. In the first training steps the loss should be near the value for random guessing, and it must fall quickly below it. If it does not, something is wrong with the data or the code, not with the model's size.
+try: The model is trained on text that uses only 25 different characters. What is the random-guess rate?
+answer: 1 ÷ 25 = 0.04 = 4%. A smaller vocabulary is easier to guess, so always compare a model with the random-guess level for its own vocabulary, not with a fixed number.
+deeper: The matching loss value is the natural logarithm of the vocabulary size. For 50 characters that is ln(50), about 3.9. A cross-entropy loss near 3.9 at step 0 confirms the model starts from uniform guessing.
 ```
 
 ## Python example

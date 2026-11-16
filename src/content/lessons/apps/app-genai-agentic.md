@@ -4,11 +4,12 @@ title: "Generative AI and Agentic AI: the whole picture"
 module: apps
 level: Advanced
 minutes: 60
+maths: basic arithmetic
 goal: Explain in simple words what generative AI and agentic AI are, how they differ and work together, and decide when a task needs one, the other, both, or neither.
 prereqs: llm-how, app-llm-api, app-agents
 reviewed: 2026-11-05
 evidence: A one-page note for a real task of your choice that says whether it needs generative AI, an agent, both or neither, with the steps, the tools, the checks and where a person approves.
-code: Python not run (the build environment has no Python); C# not compiled (no .NET SDK in the build environment)
+code: Python agent loop is a teaching sketch (see the status above for what was checked)
 ---
 ## In plain words
 **Generative AI** is AI that makes something new: text, pictures, sound, video or code. You give it a request, called a **prompt**, and it writes an answer. It makes the answer one small piece at a time, by guessing what should come next. **Agentic AI** is AI that does things for you. An **agent** is a program that uses a generative model as its brain. It looks at a goal, picks a step, uses a **tool** (such as a search, a database or an email), looks at the result, and repeats until the job is done. A simple way to remember it: generative AI **writes**, agentic AI **acts**. Most agents need generative AI inside, but most generative AI does not need an agent. Many useful products use plain generative AI, and that is a good thing: it is simpler, cheaper and safer. Use an agent only when the task needs several steps and real actions.
@@ -95,6 +96,17 @@ y: No real actions | Real actions
 - Fixed workflow | Many steps in a set order, no actions | process
 - One tool call | A fixed step that uses one tool, with approval if risky | process
 - Agent with human approval | Many steps and real actions: highest risk | warn
+```
+
+```maths How many tokens does one agent run use?
+situation: An agent takes 5 steps to finish a task. At every step it sends the model about 2,000 tokens (the instructions, the tools and what has happened so far).
+find: Roughly how many tokens does the whole run use?
+step: Steps times tokens per step | 5 × 2,000 = 10,000
+result: One run uses about **10,000 tokens**.
+why: An agent is not one model call but many. Cost and waiting time grow with every step, so the number of steps is one of the most important things to limit and to measure.
+caution: This is a floor. In practice each step is longer than the one before, because the history of earlier steps is sent again.
+try: The same task is done with one well-written prompt of 3,000 tokens and no agent. How many tokens are saved?
+answer: 10,000 − 3,000 = 7,000 tokens saved. If a single call can do the job, it is cheaper, faster and easier to test than an agent.
 ```
 
 ### Related concepts

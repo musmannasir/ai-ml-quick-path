@@ -4,11 +4,12 @@ title: Cleaning and exploring data
 module: data
 level: Beginner
 minutes: 90
+maths: basic arithmetic
 goal: Find and fix duplicates, missing values, impossible values and messy categories, and explore data with summaries and charts before modelling.
 prereqs: d-basics
 reviewed: 2026-11-02
 evidence: A cleaning report for a dataset you choose, listing each problem, how many rows it affected and what you decided, plus two charts with one finding each.
-code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py quality, gap_topics.py viz); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py quality, gap_topics.py viz)
 ---
 ## In plain words
 Real data is messy. The same customer appears twice (**duplicates**). Some values are empty (**missing values**). Some are impossible, like a reply time of minus three minutes (**invalid values**) or a 2,000-minute wait (**outliers** that may be errors or real but rare). Categories are spelled differently ("Email", "email ", "e-mail"). **Cleaning** fixes these, and every fix is a decision you write down, because deleting rows can bias the data. **Exploratory data analysis (EDA)** means looking at the data before modelling: counts, averages, medians, and charts. A **histogram** shows how values are spread, a **bar chart** compares groups, a **scatter plot** shows how two numbers move together, and a **line chart** shows change over time. A good chart often reveals a problem that numbers hide, such as a sensor that stopped sending data in March.
@@ -70,6 +71,34 @@ note: Whichever you choose, write the decision down.
 - Drop the row with a reason | Can bias the data if you drop too many
 ```
 
+```maths The average (mean) of a few numbers
+situation: An online store sells 2, 4 and 6 items on three days.
+find: How many items does it sell on a typical day?
+table: Day | Items sold
+row: Monday | 2
+row: Tuesday | 4
+row: Wednesday | 6
+step: Add the three days | 2 + 4 + 6 = 12
+step: Divide by the number of days | 12 ÷ 3 = 4
+result: The average is **4 items per day**.
+formula: average = sum of the values ÷ number of values
+why: Exploring data starts with numbers like this. "Average daily sales" is also a typical model input. Libraries call it the mean.
+caution: An average hides the day-to-day differences. Sales of 4, 4 and 4 also average 4, but that is a very different shop from one that sells 0, 0 and 12.
+widget: mean 2,4,6
+try: Wednesday was a sale day and the store sold 30 items instead of 6. What is the new average, and is it still "typical"?
+answer: 2 + 4 + 30 = 36, then 36 ÷ 3 = 12. No normal day sold anything close to 12 items. One unusual value pulled the average up. The middle value (the median) is still 4, which is why the median is often safer for messy data.
+```
+
+```maths Missing rate: how much of a column is empty
+situation: A customer table has 20 rows. In 3 of them the "age" field is empty.
+find: What share of the ages is missing?
+step: Divide the empty rows by all rows | 3 ÷ 20 = 0.15 = 15%
+result: **15%** of the ages are missing.
+why: Before training, you check every column like this. A column that is 2% empty can usually be filled in. A column that is 60% empty may be better left out, or the reason it is empty may itself be useful information.
+try: After you fix a broken import, only 1 age is still missing. What is the missing rate now?
+answer: 1 ÷ 20 = 0.05 = 5%. The data did not change in the real world; the pipeline was losing values. Always ask why data is missing before deciding how to fill it.
+```
+
 ## Python example
 ```python ml_basics.py quality (excerpt)
 df = df.drop_duplicates("ticket_id")
@@ -99,7 +128,13 @@ ax.set_xlabel("Minutes to first reply"); ax.set_ylabel("Tickets"); ax.legend()
 ## .NET (C#) example
 Clean with LINQ before handing data to ML.NET:
 ```cs Program.cs
-var tickets = LoadTickets();   // your data access code
+// Five made-up tickets so the sample runs as it is. In a real project this list comes from your database.
+List<Ticket> tickets =
+[
+    new(1, "Email", 30), new(1, "Email", 30),      // the same ticket twice
+    new(2, " chat ", 12), new(3, null, 45),        // untidy and missing channel names
+    new(4, "chat", -5),                            // an impossible reply time
+];
 
 var cleaned = tickets
     .GroupBy(t => t.TicketId).Select(g => g.First())                       // remove duplicates

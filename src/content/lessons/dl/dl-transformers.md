@@ -4,11 +4,12 @@ title: Transformers and attention
 module: dl
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Explain attention with queries, keys and values, the parts of a transformer block, and the three transformer families (encoder, decoder, encoder-decoder).
 prereqs: dl-sequences
 reviewed: 2026-11-02
 evidence: The attention toy reproduced by hand for one word, and a table matching three of your tasks to a transformer family.
-code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py); C# (TorchSharp) not run (not installed in the build environment)
+code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 ---
 ## In plain words
 **Attention** lets each word decide which other words matter for understanding it. In "The cat sat because it was tired", the word "it" should pay attention to "cat". Each word produces three things: a **query** (what am I looking for?), a **key** (what do I offer?) and a **value** (what information do I pass on?). Each word compares its query with every key, turns the scores into weights that add up to 1, and takes a weighted mix of the values. **Multi-head attention** runs several of these in parallel, so different heads can follow different relationships (grammar, meaning, position). A **transformer block** combines attention with a small neural network, plus shortcuts (**residual connections**) and **normalisation** that keep deep stacks trainable. **Positional information** tells the model the word order. There are three families: **encoder-only** (BERT-style: understand text, great for classification and embeddings), **decoder-only** (GPT-style: generate text one token at a time; most chat LLMs), and **encoder-decoder** (T5-style: read one text, write another, as in translation).
@@ -75,6 +76,23 @@ note: Taken from the toy run in this lesson.
 ## Words after "it"
 - was | Weight 0 because it is hidden | bad
 - tired | Weight 0 because it is hidden | bad
+```
+
+```maths Attention as a weighted mix
+situation: In the sentence "The cat sat because it was tired", the model is working on the word "it". Attention lets "it" take information from other words. Suppose, with invented weights, it gives 0.75 of its attention to "cat" and 0.25 to "sat". To keep the sum small, each word's information is one number here: 10 for "cat" and 2 for "sat".
+find: What does "it" receive after mixing the two words?
+step: Share taken from "cat" | 0.75 × 10 = 7.5
+step: Share taken from "sat" | 0.25 × 2 = 0.5
+step: Add the shares | 7.5 + 0.5 = 8
+step: Check that the attention weights add up to 1 | 0.75 + 0.25 = 1
+result: "it" receives **8**, a value much closer to "cat" (10) than to "sat" (2).
+formula: new value = weight₁ × value₁ + weight₂ × value₂   (the weights add up to 1)
+why: This weighted mix is what an attention layer does for every word, using all the other words. It is how the model works out that "it" refers to the cat.
+caution: The weights 0.75 and 0.25 are made up for this example. They are not what any real trained model learned. In a real transformer each word is a long list of numbers, and the weights come from comparing "query" and "key" vectors and passing the scores through softmax, as the next part of the lesson explains.
+widget: weighted 0.75,10,0.25,2
+try: The weights change to 0.5 and 0.5. What does "it" receive now?
+answer: 0.5 × 10 + 0.5 × 2 = 5 + 1 = 6. With equal attention the result sits halfway between the two words. Attention is useful because the weights are not equal: the model learns where to look.
+deeper: In real self-attention each token is turned into three vectors: a query, a key and a value. The score between two tokens is the dot product of one token's query with the other's key, divided by the square root of the vector length. Softmax turns each token's scores into weights that add up to 1, and the output is the weighted sum of the value vectors.
 ```
 
 ## Python example

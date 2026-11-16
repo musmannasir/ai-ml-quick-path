@@ -1,4 +1,4 @@
-# From lesson 'dl-neural-nets' (dl). Code status: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch and C# (TorchSharp) not run (not installed in the build environment)
+# From lesson 'dl-neural-nets' (dl). Code status: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch not run (not installed in the build environment)
 h = np.tanh(X @ W1 + b1)                 # hidden layer
 p = sig(h @ W2 + b2)                     # output probability
 dz2 = (p - y) / len(X)                   # backward pass starts at the output

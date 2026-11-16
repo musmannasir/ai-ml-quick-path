@@ -1,4 +1,4 @@
-// From lesson 'ops-architecture' (ops). Code status: C# and FastAPI service not compiled or run (no .NET SDK or FastAPI in the build environment); Dockerfile not built (no Docker in the build environment)
+// From lesson 'ops-architecture' (ops). Code status: FastAPI service not run (FastAPI not installed in the build environment); Dockerfile not built (no Docker in the build environment)
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 

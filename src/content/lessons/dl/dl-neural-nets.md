@@ -4,11 +4,12 @@ title: Neural networks in plain words
 module: dl
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Explain neurons, layers, activations and backpropagation in plain words, and train a small network in Python and C#.
 prereqs: ml-learning
 reviewed: 2026-11-02
 evidence: Your own network that learns XOR in Python or C#, and a note on what changed when you used a different random seed.
-code: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch and C# (TorchSharp) not run (not installed in the build environment)
+code: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch not run (not installed in the build environment)
 ---
 ## In plain words
 A **neural network** is many tiny calculators, called **neurons**, arranged in **layers**. Each neuron takes numbers in, multiplies each by a **weight**, adds them up, and passes the result through an **activation function** (such as ReLU or tanh) that lets the network bend and combine patterns. The first layer receives the input (pixels, words, numbers); **hidden layers** in the middle build up more and more abstract patterns; the **output layer** gives the answer. "Deep" learning simply means many hidden layers. Training works like any model: predict, measure the loss, then **backpropagation** works out how much each weight contributed to the error, and the optimiser nudges every weight a little. A classic test is **XOR** (output 1 when exactly one of two inputs is 1). A straight-line model cannot learn it; a network with one small hidden layer can.
@@ -61,6 +62,21 @@ A manufacturer photographs every product on the line. Hand-written rules for scr
 - Loss | Compare with the right answers | process
 - Backward pass | Backpropagation: how each weight should change | model
 - Update weights | Optimiser such as Adam; repeat | output
+```
+
+```maths What one neuron computes
+situation: A neuron receives two inputs, 2 and 3. Its weights are 0.5 and −1, and its bias is 1. These are invented numbers; training is what finds real ones.
+find: What number does the neuron pass on?
+step: First input times its weight | 0.5 × 2 = 1
+step: Second input times its weight | −1 × 3 = −3
+step: Add both results and the bias | 1 + (−3) + 1 = −1
+note: The activation function ReLU keeps positive numbers and turns negative numbers into 0. The sum is −1, so ReLU gives 0.
+result: The neuron outputs **0**: for this input it stays silent.
+formula: output = ReLU(weight₁ × input₁ + weight₂ × input₂ + bias)
+means: Each weight says how much one input matters and in which direction. The bias shifts the result up or down. ReLU decides whether the neuron "fires".
+why: A neural network is thousands or millions of these small sums stacked in layers. Training changes the weights and biases until the last layer gives useful answers.
+try: Change the second weight from −1 to 1. What does the neuron output now?
+answer: 0.5 × 2 = 1 and 1 × 3 = 3, so the sum is 1 + 3 + 1 = 5. ReLU keeps positive numbers, so the output is 5. Changing one weight switched the neuron from silent to active, which is exactly what training does.
 ```
 
 ## Python example

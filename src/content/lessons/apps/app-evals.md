@@ -4,11 +4,12 @@ title: Evaluating AI applications
 module: apps
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Build an evaluation set, write automatic checks, use an LLM as a judge carefully, detect hallucinations, and compare versions with A/B tests.
 prereqs: app-rag
 reviewed: 2026-11-02
 evidence: An evaluation script with thresholds that runs on every change, plus one regression it caught.
-code: Python executed 2026-11-02 (applied_basics.py evals, examples/math/math_for_ai.py abtest); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (applied_basics.py evals, examples/math/math_for_ai.py abtest)
 ---
 ## In plain words
 AI output varies, and changing a prompt, model or document can quietly break things. An **evaluation (eval)** is a repeatable test on fixed inputs. An **evaluation set** holds realistic inputs with expected outcomes: the right category, facts that must appear, the source to cite, or "should refuse". **Automatic checks** come first: valid JSON, allowed values, correct citation, forbidden text absent. For qualities such as helpfulness or tone, a person or an **LLM-as-judge** (a model scoring answers against a rubric) can score; check the judge against human scores before trusting it. **Hallucination** checks test that every claim is supported by the sources. In production, an **A/B test** shows two versions to different users and compares results, with a statistical test so you do not mistake noise for improvement. Run evals in CI and block releases that fall below thresholds.
@@ -92,6 +93,19 @@ loop: Add new failures to the set and run again
 - Version A and version B shown to different users | input
 - Compare results with a statistical test | process
 - Keep the better version | output
+```
+
+```maths Pass rate on a test set
+situation: Your evaluation set has 20 questions with known good answers. The current version of your app passes 17 of them. After a prompt change it passes 18.
+find: What is the pass rate before and after, and how big is the change really?
+step: Before the change | 17 ÷ 20 = 0.85 = 85%
+step: After the change | 18 ÷ 20 = 0.9 = 90%
+step: Difference in questions | 18 − 17 = 1
+result: The pass rate rose from **85% to 90%**, which is **one question**.
+why: Evaluation turns "it feels better" into a number you can track for every change. This sum is the core of every evaluation report.
+caution: A 5-point jump from a single question is weak evidence. Look at which question changed, and whether any question that passed before now fails.
+try: You grow the set to 200 questions and the new version passes 180. What is the pass rate, and why is it more convincing?
+answer: 180 ÷ 200 = 0.9 = 90%. The rate is the same, but now one question is worth only half a point, so the score no longer jumps when a single answer changes.
 ```
 
 ### Related concepts

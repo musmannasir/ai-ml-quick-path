@@ -1,4 +1,4 @@
-// From lesson 'app-prompting' (apps). Code status: Python scoring harness executed 2026-11-02 (examples/applied-ai-basics/applied_basics.py evals); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'app-prompting' (apps). Code status: Python scoring harness executed 2026-11-02 (examples/applied-ai-basics/applied_basics.py evals)
 using Microsoft.Extensions.AI;
 
 public static class ExtractPrompt

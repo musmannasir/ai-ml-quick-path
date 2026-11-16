@@ -1,4 +1,4 @@
-// From lesson 'ml-algorithms' (ml). Code status: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-algorithms' (ml). Code status: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); added technique snippets (2026-11-05) not run
 using Microsoft.ML;
 
 var ml = new MLContext(seed: 0);

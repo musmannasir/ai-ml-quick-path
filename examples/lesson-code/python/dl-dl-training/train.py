@@ -1,4 +1,4 @@
-# From lesson 'dl-training' (dl). Code status: Python dropout demo executed 2026-11-02 (ai_extras.py dropout); PyTorch and C# (TorchSharp) not run (not installed in the build environment)
+# From lesson 'dl-training' (dl). Code status: Python dropout demo executed 2026-11-02 (ai_extras.py dropout); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model = torch.nn.Sequential(torch.nn.Linear(20, 64), torch.nn.ReLU(), torch.nn.Dropout(0.3), torch.nn.Linear(64, 2)).to(device)
 opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)

@@ -1,4 +1,4 @@
-# From lesson 'app-multimodal' (apps). Code status: Conceptual (no model access in the build environment); C# not compiled (no .NET SDK)
+# From lesson 'app-multimodal' (apps). Code status: Conceptual (no model access in the build environment)
 import base64, os
 from openai import OpenAI
 client = OpenAI()   # or base_url=... for a local vision model

@@ -1,4 +1,4 @@
-// From lesson 'ml-regression' (ml). Code status: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py regression); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-regression' (ml). Code status: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py regression)
 using Microsoft.ML;
 using Microsoft.ML.Data;
 

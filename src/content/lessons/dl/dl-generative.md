@@ -4,11 +4,12 @@ title: Generative models: autoencoders, GANs and diffusion
 module: dl
 level: Advanced
 minutes: 75
+maths: advanced optional
 goal: Explain how autoencoders, variational autoencoders, GANs and diffusion models create new data, and when industry uses each.
 prereqs: dl-vision
 reviewed: 2026-11-02
 evidence: A one-page comparison of four generative model families with one business use for each, plus the noise-schedule demo run and explained.
-code: Python executed 2026-11-02 (ai_extras.py diffusion); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (ai_extras.py diffusion)
 ---
 ## In plain words
 **Generative models** learn what real data looks like so they can make new examples. An **autoencoder** squeezes data into a small code and rebuilds it; it is useful for compression and for **anomaly detection** (things it rebuilds badly are unusual). A **variational autoencoder (VAE)** makes that code smooth, so you can sample new codes and create new data. A **GAN** (generative adversarial network) trains two networks against each other: a **generator** makes fakes and a **discriminator** tries to spot them, until the fakes look real. **Diffusion models**, behind most modern image generators, learn to remove noise: during training they gradually add noise to images, and the model learns to undo each small step; to generate, they start from pure noise and clean it up step by step, often guided by a text prompt. **LLMs** are generative models for text that produce one token at a time.
@@ -71,6 +72,17 @@ A retailer creates lifestyle backgrounds for product photos with a diffusion mod
 note: Illustrative proportions only; the real values are in the executed output below.
 - Signal | 50 | input
 - Noise | 50 | bad
+```
+
+```maths Reconstruction error: how well did the copy match?
+situation: An autoencoder squeezes an input into a small code and then rebuilds it. A tiny input has two numbers, 5 and 3. The rebuilt version is 4 and 3.
+find: How far is the rebuilt version from the original?
+step: Square each difference and add them | (5 − 4)^2 + (3 − 3)^2 = 1
+step: Average over the two numbers | 1 ÷ 2 = 0.5
+result: The reconstruction error is **0.5**.
+why: This number is the loss an autoencoder is trained to make small. It is also used to find unusual inputs: something the model rebuilds badly (a high error) is unlike what it saw in training.
+try: The model rebuilds the input as 2 and 3 instead. What is the error?
+answer: (5 − 2)² + (3 − 3)² = 9, then 9 ÷ 2 = 4.5. The difference tripled (from 1 to 3) but the error grew nine times, because squaring punishes large mistakes much more than small ones.
 ```
 
 ## Python example

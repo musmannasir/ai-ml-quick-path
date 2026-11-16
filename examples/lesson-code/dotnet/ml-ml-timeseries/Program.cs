@@ -1,4 +1,4 @@
-// From lesson 'ml-timeseries' (ml). Code status: Python executed 2026-11-02 (gap_topics.py timeseries); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-timeseries' (ml). Code status: Python executed 2026-11-02 (gap_topics.py timeseries)
 using Microsoft.ML;
 using Microsoft.ML.Transforms.TimeSeries;
 

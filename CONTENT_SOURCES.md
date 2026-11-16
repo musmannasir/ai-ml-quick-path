@@ -1,8 +1,11 @@
 # Content sources register (AI & ML Quick Path)
 
-This guide is **self-contained**: the website has no external links (enforced by `npm run build` and
-`npm run test:static`). Case pages name their sources by title and publisher only. This file is the one place
-where web addresses are recorded, so maintainers can re-check facts. It ships in the source package, not on the site.
+Since 2026-11-13 the website links to its sources. The addresses the site may link to are registered in
+`src/data/sources.mjs`; `npm run check:links` opens each one and writes the result to `src/data/source-status.json`, and
+each page shows that result. This file keeps the research notes: what each source was used for, how it was checked and how
+much to trust it. Last link check 2026-11-13: 55 of 61 confirmed; the Deere press release redirected an automated request to a
+generic page; five sites (InvestmentNews, Klarna, Indeed, and the OpenAI pages for Moderna and Lowe's) refused the automated
+request. Those six need a person to open them. The case facts were re-read against the pages that could be opened (2026-11-13 to 16); corrections and what remains unconfirmed are in `CASE_CHECKS` in `src/data/cases.mjs` and on each case page.
 
 Method: **Seen** = destination read during research for the sibling editions (checked 2026-10-30 to 2026-11-02);
 **Listed** = official address not re-opened from the build environment; **Executed** = number produced by code run

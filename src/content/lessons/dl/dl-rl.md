@@ -4,11 +4,12 @@ title: Reinforcement learning
 module: dl
 level: Advanced
 minutes: 75
+maths: advanced optional
 goal: Explain agents, actions, rewards and policies, implement Q-learning and a policy-gradient agent, and connect reinforcement learning to how chat models are tuned.
 prereqs: ml-learning
 reviewed: 2026-11-02
 evidence: A Q-learning or policy-gradient agent for a small problem you design, with its learned policy explained and averaged over several seeds.
-code: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 In **reinforcement learning (RL)** an **agent** learns by trial and error. It sees a **state**, takes an **action**, gets a **reward** (good or bad), and lands in a new state. Its goal is the most total reward over time, where sooner rewards usually count more (a **discount**). **Q-learning** keeps a score for every action in every state and updates it after each try. **Policy-gradient** methods learn the probabilities of actions directly and make rewarded actions more likely; **PPO** is a stable, widely used version. The agent must balance **exploration** (trying new things) and **exploitation** (using what works). RL powers game-playing systems and robotics, and **RLHF** (reinforcement learning from human feedback) and related methods tune chat models towards answers people prefer.
@@ -53,6 +54,18 @@ A news site must choose which of three page layouts to show. A simple RL agent (
 - Act, observe, update | Sometimes choose at random | model
 - Reduce exploration | Less random as it learns | process
 - Add safety | Hard limits and human oversight | warn
+```
+
+```maths Average reward: is this action worth repeating?
+situation: An agent tries the same action four times. It gets the rewards 1, 0, 1 and 1 (1 means success, 0 means failure).
+find: How good is this action on average?
+step: Add the rewards | 1 + 0 + 1 + 1 = 3
+step: Divide by the number of tries | 3 ÷ 4 = 0.75
+result: The action's average reward is **0.75**.
+why: Reinforcement learning keeps a running estimate like this for each action and prefers the action with the highest one. Learning is updating these estimates as new rewards arrive.
+caution: Four tries is very little. An action tried once with reward 1 has an average of 1, which looks better than 0.75 but may be luck. This is why agents keep exploring.
+try: The fifth try gives a reward of 0. What is the new average?
+answer: 3 + 0 = 3 total reward over 5 tries, so 3 ÷ 5 = 0.6. One failure moved the estimate from 0.75 to 0.6, because there are still few tries.
 ```
 
 ### Related concepts

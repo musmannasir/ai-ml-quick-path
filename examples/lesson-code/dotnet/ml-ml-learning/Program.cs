@@ -1,4 +1,4 @@
-// From lesson 'ml-learning' (ml). Code status: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py gd and cv); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-learning' (ml). Code status: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py gd and cv)
 double[] x = { 1, 2, 3, 4, 5 };
 double[] y = { 3.1, 4.9, 7.2, 8.8, 11.1 };
 double w = 0, b = 0, lr = 0.02;

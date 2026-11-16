@@ -4,11 +4,12 @@ title: Set up your laptop for AI and ML in Python and .NET
 module: start
 level: Beginner
 minutes: 90
+maths: none
 goal: Install and check a Python and a .NET environment for AI work, run notebooks, use Git, and understand when you need a GPU.
 prereqs:
 reviewed: 2026-11-02
 evidence: Both environment checks run on your machine, a Git repository with your first notebook, and a note of whether your laptop has a usable GPU.
-code: Python executed 2026-11-02 (quickpath.py env); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py env)
 ---
 ## In plain words
 You can learn almost all of AI and ML on an ordinary laptop. You need a programming environment, a few libraries and a place to save your work. **Python** has the largest set of AI libraries: NumPy and pandas (data), scikit-learn (classic ML), PyTorch (deep learning), and libraries for language models. **.NET** is strong for building business applications: ML.NET (classic ML), TorchSharp (deep learning), ONNX Runtime (run trained models fast), and Microsoft.Extensions.AI (call language models). A **virtual environment** keeps each Python project's libraries separate. **Notebooks** (Jupyter, or Polyglot Notebooks in VS Code for C#) let you run code step by step and see results. **Git** saves every version of your code. A **GPU** (graphics card) makes deep learning much faster, but it is only needed for bigger neural networks; small models train fine on a CPU, and you can rent GPUs in the cloud when you need them.

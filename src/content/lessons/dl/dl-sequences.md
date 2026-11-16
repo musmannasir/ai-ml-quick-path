@@ -4,11 +4,12 @@ title: Text and sequences: tokens, embeddings and RNNs
 module: dl
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Explain how text becomes numbers (tokens and embeddings), how word vectors capture meaning, and how recurrent networks process sequences and why transformers replaced them.
 prereqs: dl-neural-nets, d-features
 reviewed: 2026-11-02
 evidence: Word vectors trained on a small corpus you choose, with nearest neighbours for five words and a note on one surprising result.
-code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn); C# (TorchSharp) not run (not installed in the build environment)
+code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn)
 ---
 ## In plain words
 Text, speech and sensor readings are **sequences**: order matters. To use text, you first split it into **tokens** (words or pieces of words) and give each an id. Each id is then turned into an **embedding**: a list of numbers that represents meaning, so that "cat" and "dog" end up close together. Early **word vectors** (word2vec, GloVe) learned this from the idea that words used in similar places have similar meanings. A **recurrent neural network (RNN)** reads a sequence one step at a time and keeps a **hidden state**, a running memory. **LSTMs** and **GRUs** improved that memory. Their weakness is speed and long memory: each step waits for the previous one, and early words fade. **Transformers** (next lesson) read all positions at once with attention, which is why almost all modern language models use them.
@@ -59,6 +60,16 @@ A job site wanted "software developer" searches to also find "programmer" listin
 - First token | Its effect may have faded | warn
 - Middle tokens | Mixed into the memory step by step | process
 - Last token | Added most recently | input
+```
+
+```maths How many numbers are in an embedding table?
+situation: A model knows a vocabulary of 10,000 tokens. It stores each token as a list of 100 numbers (its embedding).
+find: How many numbers must the model learn just for this table?
+step: Tokens times numbers per token | 10,000 × 100 = 1,000,000
+result: The embedding table holds **1,000,000** numbers.
+why: Text enters a network as token ids, and the first thing the network does is look up each id in this table. The table is learned during training, and for small models it is a large part of the total size.
+try: You make each embedding 300 numbers long instead of 100. How big is the table?
+answer: 10,000 × 300 = 3,000,000 numbers. Longer embeddings can hold more meaning but cost memory and training time in direct proportion.
 ```
 
 ## Python example

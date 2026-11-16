@@ -4,11 +4,12 @@ title: Computer vision: classification, detection and segmentation
 module: dl
 level: Intermediate
 minutes: 90
+maths: basic arithmetic
 goal: Explain convolutional networks, transfer learning, object detection, segmentation and vision transformers, and run a trained vision model from Python and C#.
 prereqs: dl-training
 reviewed: 2026-11-02
 evidence: A fine-tuned image classifier (or detector) evaluated on images from a different session than training, exported to ONNX and called from C# or Python.
-code: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch and C# (ONNX Runtime) not run (not installed in the build environment); added technique snippets (2026-11-05) not run
+code: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 Images are grids of numbers (pixel brightness per colour). A **convolutional neural network (CNN)** slides small **filters** across the image; early filters detect edges, later ones detect shapes and whole objects. Computer vision has several tasks. **Classification** says what is in the picture ("scratched part"). **Object detection** says what and where, with boxes around each object. **Segmentation** labels every pixel (road, car, person). **Vision transformers (ViT)** cut an image into small patches and treat them like words. In industry you rarely train from zero: **transfer learning** starts from a model already trained on millions of photos and fine-tunes it on your few thousand. Detection quality is measured with **IoU** (how much the predicted box overlaps the true box), and duplicate boxes are removed with **non-maximum suppression (NMS)**.
@@ -50,6 +51,18 @@ The [John Deere case](case:john-deere) describes cameras and machine learning on
 3. Start from a pretrained model; replace its last layer with your classes.
 4. Fine-tune with augmentation; evaluate per class.
 5. Export to **ONNX** (a portable model format) and run it with ONNX Runtime in Python, C#, on a server or on a device.
+
+```maths How big is the output of a convolution?
+situation: An image is 5 pixels wide and 5 pixels high. A filter of 3 by 3 pixels slides across it one pixel at a time, without going over the edge.
+find: How many positions can the filter take, and so how big is the output?
+step: Positions along one row | 5 − 3 + 1 = 3
+step: The same number of positions down, so the output grid is | 3 × 3 = 9
+result: The output (called a feature map) is **3 by 3**, which is 9 numbers.
+formula: output width = image width − filter width + 1   (stride 1, no padding)
+why: Every convolution layer changes the size of what flows through the network. Checking these sizes by hand is the fastest way to fix the "shape mismatch" errors that everyone meets when building a vision model.
+try: The image is 8 by 8 and the filter is still 3 by 3. How big is the output?
+answer: 8 − 3 + 1 = 6, so the output is 6 by 6, which is 36 numbers. Adding one ring of empty pixels around the image (padding) would keep the output the same size as the input.
+```
 
 ### Related concepts
 - **Image classification** answers "what is in this image?" (one label). **Object detection** answers "what and where?" with boxes; well-known model families include YOLO and DETR. **Segmentation** labels every pixel (for example "road", "car", "person"); U-Net is a classic design, widely used in medical imaging.
@@ -129,7 +142,9 @@ float[] scores = results.First().AsEnumerable<float>().ToArray();
 var exp = scores.Select(s => Math.Exp(s)).ToArray();
 int best = Array.IndexOf(scores, scores.Max());
 Console.WriteLine($"{labels[best]} ({exp[best] / exp.Sum():P0})");
-// LoadAndNormalise: resize to 224x224 and normalise exactly as during training (for example with ImageSharp).
+// Stand-in so the sample compiles: it returns an empty image. A real version decodes the file, resizes it to
+// 224 x 224 and normalises it exactly as during training (for example with the ImageSharp package).
+static float[] LoadAndNormalise(string path) => new float[3 * 224 * 224];
 ```
 
 ### More techniques in C#: transfer learning and data augmentation

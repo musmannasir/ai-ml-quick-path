@@ -1,5 +1,11 @@
-// From lesson 'app-multimodal' (apps). Code status: Conceptual (no model access in the build environment); C# not compiled (no .NET SDK)
+// From lesson 'app-multimodal' (apps). Code status: Conceptual (no model access in the build environment)
 using Microsoft.Extensions.AI;
+using OpenAI;
+
+// Any chat client that accepts images works. This one talks to an OpenAI-compatible service;
+// the key comes from an environment variable, never from the code.
+IChatClient chat = new OpenAIClient(Environment.GetEnvironmentVariable("LLM_API_KEY")!)
+    .GetChatClient("your-vision-model").AsIChatClient();
 
 byte[] image = await File.ReadAllBytesAsync("invoice.png");
 var message = new ChatMessage(ChatRole.User,

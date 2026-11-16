@@ -1,4 +1,4 @@
-# From lesson 'llm-finetune' (llm). Code status: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; C# is plain .NET (System.Text.Json) and was not compiled (no .NET SDK in the build environment)
+# From lesson 'llm-finetune' (llm). Code status: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; added technique snippets (2026-11-05) not run
 from datasets import load_dataset
 from peft import LoraConfig
 from trl import SFTConfig, SFTTrainer

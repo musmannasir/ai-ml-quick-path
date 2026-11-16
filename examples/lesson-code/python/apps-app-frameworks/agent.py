@@ -1,4 +1,4 @@
-# From lesson 'app-frameworks' (apps). Code status: Conceptual (framework packages not installed in the build environment); C# not compiled (no .NET SDK)
+# From lesson 'app-frameworks' (apps). Code status: Conceptual (framework packages not installed in the build environment)
 import os
 from langchain.agents import create_agent
 from langchain.chat_models import init_chat_model

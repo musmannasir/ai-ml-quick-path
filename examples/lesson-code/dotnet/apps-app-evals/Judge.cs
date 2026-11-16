@@ -1,4 +1,4 @@
-// From lesson 'app-evals' (apps). Code status: Python executed 2026-11-02 (applied_basics.py evals, examples/math/math_for_ai.py abtest); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'app-evals' (apps). Code status: Python executed 2026-11-02 (applied_basics.py evals, examples/math/math_for_ai.py abtest)
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.AI;
 

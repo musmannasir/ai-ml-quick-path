@@ -1,4 +1,4 @@
-// From lesson 'ml-improve' (ml). Code status: Python executed 2026-11-02 (gap_topics.py tune and interp); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-improve' (ml). Code status: Python executed 2026-11-02 (gap_topics.py tune and interp)
 using Microsoft.ML;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;

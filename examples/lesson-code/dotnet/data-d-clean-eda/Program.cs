@@ -1,5 +1,11 @@
-// From lesson 'd-clean-eda' (data). Code status: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py quality, gap_topics.py viz); C# not compiled (no .NET SDK in the build environment)
-var tickets = LoadTickets();   // your data access code
+// From lesson 'd-clean-eda' (data). Code status: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py quality, gap_topics.py viz)
+// Five made-up tickets so the sample runs as it is. In a real project this list comes from your database.
+List<Ticket> tickets =
+[
+    new(1, "Email", 30), new(1, "Email", 30),      // the same ticket twice
+    new(2, " chat ", 12), new(3, null, 45),        // untidy and missing channel names
+    new(4, "chat", -5),                            // an impossible reply time
+];
 
 var cleaned = tickets
     .GroupBy(t => t.TicketId).Select(g => g.First())                       // remove duplicates

@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-11T09:57:15.689Z",
+  "date": "2026-11-16T04:16:43.874Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
-  "passed": 52,
+  "passed": 59,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 22446 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 26220 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,12 +21,12 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 22446 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 26220 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Self-contained: no external links, scripts, styles or images on any of the 92 pages",
+      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 92 pages",
       "pass": true,
       "detail": ""
     },
@@ -186,6 +186,11 @@
       "detail": ""
     },
     {
+      "name": "Catalogue maths-level filter covers every lesson exactly once; progress filter separates finished from unfinished",
+      "pass": true,
+      "detail": ""
+    },
+    {
       "name": "Header search returns relevant results, supports arrow keys and Escape",
       "pass": true,
       "detail": ""
@@ -201,7 +206,7 @@
       "detail": ""
     },
     {
-      "name": "Export produces versioned JSON (schema aimlqp-progress, version 1)",
+      "name": "Export produces versioned JSON (schema aimlqp-progress, version 2)",
       "pass": true,
       "detail": ""
     },
@@ -257,6 +262,36 @@
     },
     {
       "name": "Reduced-motion preference removes transitions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Maths moment calculator: correct default result, reacts to one change, rejects empty input with a message, resets, answer opens by keyboard, readable in dark at 390 px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "All 8 calculator types show the same result as the worked steps in their lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Code language switch: C# only hides the Python section and its contents entry, survives reload, deep link to the hidden section shows it; C# status pill comes from the compile record",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Search finds text inside lessons, marks the words and opens the matching section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Start chooser sets the first lesson and code language, is remembered and can be cleared; home page offers to resume the last lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Version 1 browser data migrates to version 2 with theme, layout and all completion marks intact",
       "pass": true,
       "detail": ""
     },

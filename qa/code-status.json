@@ -1,0 +1,1675 @@
+{
+ "generated": "2026-11-16",
+ "machine": "win32",
+ "tools": {
+  "dotnet": "10.0.400",
+  "python": "Python 3.12.10",
+  "pythonModules": {
+   "numpy": "2.5.2",
+   "pandas": "3.0.5",
+   "sklearn": "1.9.1",
+   "torch": "not installed",
+   "fastapi": "not installed",
+   "mlflow": "not installed",
+   "langgraph": "not installed",
+   "transformers": "not installed",
+   "onnxruntime": "1.20.1"
+  }
+ },
+ "examples": [
+  {
+   "command": "python spam_classifier.py",
+   "cwd": "examples/spam-classifier",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python attention_toy.py",
+   "cwd": "examples/attention",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python tiny_char_lm_numpy.py",
+   "cwd": "examples/tiny-lm",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python memory_estimate.py",
+   "cwd": "examples/memory-estimate",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python rag_leave_policy.py",
+   "cwd": "examples/rag-leave-policy",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python returns_workflow.py",
+   "cwd": "examples/agent-returns",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python summarize.py --offline",
+   "cwd": "examples/llm-summarizer/python",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python -m unittest test_summary_schema.py",
+   "cwd": "examples/llm-summarizer/python",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python ml_basics.py",
+   "cwd": "examples/ml-basics",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python applied_basics.py",
+   "cwd": "examples/applied-ai-basics",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python quickpath.py",
+   "cwd": "examples/quickpath",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python math_for_ai.py",
+   "cwd": "examples/math",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python ai_extras.py",
+   "cwd": "examples/ai-extras",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  },
+  {
+   "command": "python gap_topics.py",
+   "cwd": "examples/gap-topics",
+   "result": "ran",
+   "date": "2026-11-16",
+   "detail": ""
+  }
+ ],
+ "lessons": {
+  "app-agents": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-agents/snippet33.py",
+     "date": "2026-11-16",
+     "result": "fragment",
+     "detail": "Part of a larger programme; not valid Python on its own."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-agents/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Agents.AI": "1.28.0",
+      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "Microsoft.Extensions.AI.OpenAI",
+      "Microsoft.Agents.AI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs an API key for a model service."
+    }
+   ]
+  },
+  "app-embeddings": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-embeddings/embed_search.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'openai'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-embeddings/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "OllamaSharp": "5.5.2",
+      "System.Numerics.Tensors": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "OllamaSharp",
+      "System.Numerics.Tensors"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a model service running on this machine or the network."
+    }
+   ]
+  },
+  "app-evals": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-evals/Judge.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "app-frameworks": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-frameworks/agent.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'langchain'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-frameworks/ToolCalling.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "Microsoft.Extensions.AI.OpenAI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs an API key for a model service."
+    },
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-frameworks/McpServer/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.Hosting": "11.0.0",
+      "Microsoft.Extensions.Logging.Console": "11.0.0",
+      "ModelContextProtocol": "2.4.0"
+     },
+     "wanted": [
+      "ModelContextProtocol",
+      "Microsoft.Extensions.Hosting",
+      "Microsoft.Extensions.Logging.Console"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": ""
+    }
+   ]
+  },
+  "app-llm-api": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-llm-api/summarize.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-llm-api/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk.Web",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "Microsoft.Extensions.AI.OpenAI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A web service; starting it would wait for requests."
+    }
+   ]
+  },
+  "app-multimodal": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-multimodal/read_invoice.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'openai'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-multimodal/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "Microsoft.Extensions.AI.OpenAI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs an API key for a model service."
+    }
+   ]
+  },
+  "app-prompting": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-prompting/PromptV3.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "app-rag": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-rag/snippet8.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-rag/RagService.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "System.Numerics.Tensors": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "System.Numerics.Tensors"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "app-rag-advanced": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-rag-advanced/snippet20.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-rag-advanced/HybridSearch.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "app-responsible": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-responsible/snippet10.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-responsible/Fairness.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "app-security": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-security/Safety.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "d-basics": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/data-d-basics/quickpath.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/data-d-basics/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "d-clean-eda": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/data-d-clean-eda/ml_basics.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    },
+    {
+     "file": "examples/lesson-code/python/data-d-clean-eda/snippet11.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/data-d-clean-eda/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "rows 4, out-of-range ids: 4\r\nemail: count 1, mean 30.0, median 30.0\r\nchat: count 1, mean 12.0, median 12.0\r\nunknown: count 1, mean 45.0, median 45.0"
+    }
+   ]
+  },
+  "d-collect": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/data-d-collect/gap_topics.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/data-d-collect/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Data.SqlClient": "7.1.2"
+     },
+     "wanted": [
+      "Microsoft.Data.SqlClient"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "d-features": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/data-d-features/ml_basics.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/data-d-features/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": ""
+    }
+   ]
+  },
+  "dl-generative": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-generative/generate.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'diffusers'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-generative/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "step    1: signal 1.000, noise 0.010\r\nstep  100: signal 0.947, noise 0.321\r\nstep  500: signal 0.280, noise 0.960\r\nstep 1000: signal 0.006, noise 1.000"
+    }
+   ]
+  },
+  "dl-graphs": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-graphs/snippet8.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-graphs/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "0 0 0 0 1 1 1 1"
+    }
+   ]
+  },
+  "dl-neural-nets": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-neural-nets/ai_extras.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    },
+    {
+     "file": "examples/lesson-code/python/dl-dl-neural-nets/snippet9.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-neural-nets/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "TorchSharp-cpu": "0.107.0"
+     },
+     "wanted": [
+      "TorchSharp-cpu"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "step 500 loss 0.0002\r\nstep 1000 loss 0.0001\r\nstep 1500 loss 0.0000\r\nstep 2000 loss 0.0000\r\n0.000, 1.000, 1.000, 0.000"
+    }
+   ]
+  },
+  "dl-rl": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-rl/epsilon_greedy.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    },
+    {
+     "file": "examples/lesson-code/python/dl-dl-rl/snippet10.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-rl/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "cell 0: left 0.656 right 0.729\r\ncell 1: left 0.656 right 0.810\r\ncell 2: left 0.729 right 0.900\r\ncell 3: left 0.810 right 1.000"
+    },
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-rl/EpsilonGreedy.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "1"
+    }
+   ]
+  },
+  "dl-sequences": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-sequences/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "TorchSharp-cpu": "0.107.0"
+     },
+     "wanted": [
+      "TorchSharp-cpu"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "0.39, 0.31, 0.30"
+    }
+   ]
+  },
+  "dl-speech": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-speech/transcribe.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'transformers'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-speech/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Whisper.net": "1.9.1"
+     },
+     "wanted": [
+      "Whisper.net"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data or model file that is not part of the sample."
+    }
+   ]
+  },
+  "dl-training": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-training/train.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    },
+    {
+     "file": "examples/lesson-code/python/dl-dl-training/training_tricks.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-training/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "TorchSharp-cpu": "0.107.0"
+     },
+     "wanted": [
+      "TorchSharp-cpu"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": ""
+    },
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-training/TrainingTricks.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "dl-transformers": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-transformers/snippet9.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-transformers/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "TorchSharp-cpu": "0.107.0"
+     },
+     "wanted": [
+      "TorchSharp-cpu"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "weights 7x7, output 7x16"
+    }
+   ]
+  },
+  "dl-vision": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-vision/fine_tune.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'torchvision'"
+    },
+    {
+     "file": "examples/lesson-code/python/dl-dl-vision/transfer_augment.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-vision/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.OnnxRuntime": "1.32.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.OnnxRuntime"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    },
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-vision/TransferAugment.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "trainable before freezing: 1001539\r\ntrainable after freezing:  1539\r\nimages from one original: 3 (original, flipped, cropped)"
+    }
+   ]
+  },
+  "llm-design": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-design/snippet10.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-design/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "laptop tiny       6.8 M params | weights 0.01 GB | training ~0.1 GB | ~0.1 B tokens\r\nsmall           110.3 M params | weights 0.22 GB | training ~1.8 GB | ~2.2 B tokens\r\nmedium         1318.7 M params | weights 2.64 GB | training ~21.1 GB | ~26.4 B tokens"
+    }
+   ]
+  },
+  "llm-eval": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-eval/snippet9.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-eval/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "average loss 1.316 nats, perplexity 3.73"
+    }
+   ]
+  },
+  "llm-finetune": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-finetune/finetune.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'datasets'"
+    },
+    {
+     "file": "examples/lesson-code/python/llm-llm-finetune/qlora_dpo_rlhf.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-finetune/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "train 0, test 0"
+    },
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-finetune/TuningIdeas.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "16-bit GB: 2\r\n4-bit GB: 0.5\r\nDPO loss: 0.620957047789532\r\nscore: 6"
+    }
+   ]
+  },
+  "llm-how": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-how/snippet12.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-how/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "P(support | the) = 0.14\r\nP(ticket | the) = 0.29\r\nP(team | the) = 0.29\r\nP(customer | the) = 0.29"
+    }
+   ]
+  },
+  "llm-local": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-local/local_chat.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'openai'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-local/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "OllamaSharp": "5.5.2"
+     },
+     "wanted": [
+      "Microsoft.Extensions.AI",
+      "OllamaSharp"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a model service running on this machine or the network."
+    }
+   ]
+  },
+  "llm-scale": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-scale/train_scaled.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-scale/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "weights (16-bit): 16 GB, full training state: 128 GB\r\ndata parallel per GPU: 128 GB -> does not fit\r\nFSDP per GPU: 16 GB -> fits (plus activations)"
+    }
+   ]
+  },
+  "llm-tokens": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-tokens/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.Tokenizers": "3.0.0",
+      "Microsoft.ML.Tokenizers.Data.O200kBase": "3.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.Tokenizers",
+      "Microsoft.ML.Tokenizers.Data.O200kBase"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "13 tokens: 8256 18376 2569 220 41040 899 26 290 11022 10408 18157 72291 13\r\nT=0.2: refund 0.92, replacement 0.08, discount 0.00, apology 0.00, banana 0.00\r\nT=1: refund 0.51, replacement 0.31, discount 0.11, apology 0.07, banana 0.00\r\nT=2: refund 0.37, replacement 0.29, discount 0.17, apology 0.14, banana 0.03"
+    }
+   ]
+  },
+  "llm-train-laptop": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-train-laptop/tiny_gpt_pytorch.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-train-laptop/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "TorchSharp-cpu": "0.107.0"
+     },
+     "wanted": [
+      "TorchSharp-cpu"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data or model file that is not part of the sample."
+    }
+   ]
+  },
+  "ml-algorithms": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-algorithms/bagging_demo.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    },
+    {
+     "file": "examples/lesson-code/python/ml-ml-algorithms/snippet12.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-algorithms/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.FastTree": "6.0.0",
+      "Microsoft.ML.LightGbm": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.FastTree",
+      "Microsoft.ML.LightGbm"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    },
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-algorithms/BaggingDemo.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "each model says: 11.4, 9.9, 10.6, 10.8, 11.6\r\nbagged answer (the average): 10.860000000000001"
+    }
+   ]
+  },
+  "ml-classification": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-classification/spam_classifier.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-classification/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "ml-evaluation": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-evaluation/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.LightGbm": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.LightGbm"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "ml-improve": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-improve/snippet12.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-improve/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.AutoML": "0.24.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.AutoML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "ml-learning": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-learning/ml_basics.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-learning/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "step    1: loss=57.2220 w=1.002 b=0.281\r\nstep   10: loss=0.0565 w=2.106 b=0.616\r\nstep  100: loss=0.0316 w=2.055 b=0.815\r\nstep 2000: loss=0.0214 w=1.990 b=1.050"
+    }
+   ]
+  },
+  "ml-recommenders": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-recommenders/snippet10.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-recommenders/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.Recommender": "0.24.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.Recommender"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a model, a service or data that is not part of the sample."
+    }
+   ]
+  },
+  "ml-regression": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-regression/gap_topics.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-regression/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.FastTree": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.FastTree"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "ml-timeseries": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-timeseries/snippet11.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-timeseries/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.TimeSeries": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.TimeSeries"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a model, a service or data that is not part of the sample."
+    }
+   ]
+  },
+  "ml-unsupervised": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-unsupervised/quickpath.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    },
+    {
+     "file": "examples/lesson-code/python/ml-ml-unsupervised/kmeans_step.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-unsupervised/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a model, a service or data that is not part of the sample."
+    },
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-unsupervised/KMeansStep.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "(2.0, 2.0) | (9.0, 9.0)"
+    }
+   ]
+  },
+  "ops-architecture": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ops-ops-architecture/classifier_service.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'fastapi'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ops-ops-architecture/ClassifierClient.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk.Web",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "ops-mlops": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ops-ops-mlops/train.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'mlflow'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ops-ops-mlops/TrainAndGate.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.FastTree": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.FastTree"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "ops-monitoring": {
+   "python": [],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ops-ops-monitoring/Monitoring.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "ops-scale": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ops-ops-scale/export_onnx.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'skl2onnx'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ops-ops-scale/FastScoring.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "class library (no entry point)",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.Caching.Memory": "11.0.0",
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.OnnxRuntime": "1.32.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.OnnxRuntime",
+      "Microsoft.Extensions.AI",
+      "Microsoft.Extensions.Caching.Memory"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A class with no entry point; it is used from another programme."
+    }
+   ]
+  },
+  "ops-serving": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ops-ops-serving/serve.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run: No module named 'fastapi'"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ops-ops-serving/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk.Web",
+     "packages": {
+      "Microsoft.Extensions.ML": "6.0.0",
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.Extensions.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "A web service; starting it would wait for requests."
+    }
+   ]
+  },
+  "s-lifecycle": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/start-s-lifecycle/quickpath.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/start-s-lifecycle/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0",
+      "Microsoft.ML.FastTree": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML",
+      "Microsoft.ML.FastTree"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "not run",
+     "runDetail": "Needs a data file, a database or a model file that is not part of the sample."
+    }
+   ]
+  },
+  "s-setup": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/start-s-setup/snippet7.py",
+     "date": "2026-11-16",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/start-s-setup/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": ".NET 10.0.11 on Microsoft Windows 10.0.26200\r\nCPU cores: 8\r\nML.NET loaded: 1.0.0.0"
+    }
+   ]
+  },
+  "s-what-is-ai": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/start-s-what-is-ai/quickpath.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/start-s-what-is-ai/Program.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {
+      "Microsoft.ML": "6.0.0"
+     },
+     "wanted": [
+      "Microsoft.ML"
+     ],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "Spam: True (probability 98%)"
+    }
+   ]
+  },
+  "app-genai-agentic": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/apps-app-genai-agentic/agent_loop.py",
+     "date": "2026-11-16",
+     "result": "syntax-ok",
+     "detail": "Not run to completion here: EOFError: EOF when reading a line"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/apps-app-genai-agentic/AgentLoop.cs",
+     "date": "2026-11-13",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "step 1: find_order(A-1001) -> lost\r\nstep 2: prepare_refund(A-1001) -> refund prepared for A-1001 (needs approval)\r\nApprove this refund? (y/n) Stopped: a person did not approve the refund."
+    }
+   ]
+  }
+ }
+}

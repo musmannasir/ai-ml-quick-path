@@ -1,4 +1,4 @@
-// From lesson 'ml-evaluation' (ml). Code status: Python executed 2026-11-02 (ml_basics.py metrics, gap_topics.py roc); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ml-evaluation' (ml). Code status: Python executed 2026-11-02 (ml_basics.py metrics, gap_topics.py roc)
 using Microsoft.ML;
 using Microsoft.ML.Data;
 

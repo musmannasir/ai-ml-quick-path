@@ -1,4 +1,5 @@
 // Runs the offline Python examples and compiles all others. Requires Python 3.10+ with
+// PYTHONIOENCODING=utf-8: the examples print symbols such as Σ and ≈; on Windows a piped run would otherwise fail with cp1252.
 // numpy, pandas and scikit-learn. Examples needing torch, langgraph, fastapi or an API key are compiled only.
 import { execFileSync } from 'node:child_process';
 import { readdirSync, statSync } from 'node:fs';
@@ -13,7 +14,7 @@ const runs = [['spam-classifier', ['spam_classifier.py']], ['attention', ['atten
   ['quickpath', ['quickpath.py']], ['math', ['math_for_ai.py']], ['ai-extras', ['ai_extras.py']], ['gap-topics', ['gap_topics.py']]];
 let failed = 0;
 for (const [dir, args] of runs) {
-  try { execFileSync(py, args, { cwd: join(EX, dir), stdio: 'pipe' }); console.log(`ran      ${dir}/${args.join(' ')}`); }
+  try { execFileSync(py, args, { cwd: join(EX, dir), stdio: 'pipe', env: { ...process.env, PYTHONIOENCODING: 'utf-8', MPLBACKEND: 'Agg' } }); console.log(`ran      ${dir}/${args.join(' ')}`); }
   catch (e) { failed++; console.log(`FAILED   ${dir}/${args.join(' ')}\n${e.stderr}`); }
 }
 const all = (function walk(d) { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : p.endsWith('.py') ? [p] : []; }); })(EX);

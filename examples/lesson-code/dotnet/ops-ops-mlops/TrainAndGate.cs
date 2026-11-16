@@ -1,4 +1,4 @@
-// From lesson 'ops-mlops' (ops). Code status: Python executed 2026-11-02 (quickpath.py registry); MLflow and C# not run (MLflow not installed and no .NET SDK in the build environment)
+// From lesson 'ops-mlops' (ops). Code status: Python executed 2026-11-02 (quickpath.py registry); MLflow not run (MLflow not installed in the build environment)
 using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.ML;

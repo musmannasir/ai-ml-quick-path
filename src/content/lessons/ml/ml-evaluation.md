@@ -4,11 +4,12 @@ title: Measuring models honestly
 module: ml
 level: Intermediate
 minutes: 90
+maths: basic arithmetic
 goal: Choose the right metric for the problem, use cross-validation, read ROC and precision-recall results, and handle rare classes with thresholds and class weights.
 prereqs: ml-classification, ml-regression
 reviewed: 2026-11-02
 evidence: An evaluation report with the metric choice justified, cross-validated scores with spread, and a threshold table for one classifier.
-code: Python executed 2026-11-02 (ml_basics.py metrics, gap_topics.py roc); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (ml_basics.py metrics, gap_topics.py roc)
 ---
 ## In plain words
 A model is only as good as the way you measure it. **Accuracy** (share of correct answers) is misleading when one class is rare: if 2% of payments are fraud, "never fraud" is 98% accurate and useless. Use **precision**, **recall** and **F1** (their balance) for rare classes. **ROC-AUC** measures how well the model ranks positives above negatives across all thresholds (0.5 is guessing, 1 is perfect). **PR-AUC** (precision-recall area) is more honest when positives are rare. For numbers, use **MAE**, **RMSE** and **R²**. **Cross-validation** trains and tests on several different splits and averages the results, so one lucky split does not fool you. For rare classes, choose the **threshold** deliberately and consider **class weights**, which make mistakes on the rare class cost more during training.
@@ -51,6 +52,17 @@ note: One lucky split cannot fool you, because the score is an average over seve
 - Test | On the held-out part | process
 - Record the score | One score per round | output
 loop: Repeat for each split, then average the scores and report the spread
+```
+
+```maths Why accuracy fails when one class is rare
+situation: A bank checks 100 card payments. Only 2 of them are fraud. A lazy model answers "not fraud" for every payment.
+find: How accurate is the lazy model, and how much fraud does it catch?
+step: It is right for the 98 normal payments | 98 ÷ 100 = 0.98 = 98%
+step: Share of the fraud it catches (recall) | 0 ÷ 2 = 0
+result: Accuracy is **98%**, but the model catches **none** of the fraud.
+why: When the thing you look for is rare, accuracy rewards a model for ignoring it. This lesson uses precision, recall and F1 instead, because they look only at how the rare class is handled.
+try: A real model flags 4 payments. 1 of them is fraud. It misses the other fraud. What are its precision and recall?
+answer: Precision: 1 ÷ 4 = 0.25 = 25%. Recall: 1 ÷ 2 = 0.5 = 50%. Its accuracy is 96 ÷ 100 = 96%, which is lower than the lazy model's 98%, yet it is clearly the more useful model.
 ```
 
 ## Real-world example

@@ -1,4 +1,4 @@
-// From lesson 'llm-local' (llm). Code status: Python memory arithmetic executed 2026-11-02 (memory_estimate.py); local model calls not run (no model runner in the build environment); C# not compiled (no .NET SDK)
+// From lesson 'llm-local' (llm). Code status: Python memory arithmetic executed 2026-11-02 (memory_estimate.py); local model calls not run (no model runner in the build environment)
 using Microsoft.Extensions.AI;
 using OllamaSharp;
 

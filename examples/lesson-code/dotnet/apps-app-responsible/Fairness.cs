@@ -1,4 +1,4 @@
-// From lesson 'app-responsible' (apps). Code status: Python executed 2026-11-02 (quickpath.py fairness); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'app-responsible' (apps). Code status: Python executed 2026-11-02 (quickpath.py fairness)
 public record Decision(string Group, bool Qualified, bool Approved);
 
 public static class Fairness

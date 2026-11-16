@@ -1,13 +1,13 @@
 import { esc } from './markdown.mjs';
 import { MODULES, REVIEWED } from '../data/curriculum.mjs';
 
-export const INLINE_SCRIPT = `(function(){try{var d=JSON.parse(localStorage.getItem('aimlqp.v1')||'{}'),p=d.prefs||{},h=document.documentElement;if(p.theme==='light'||p.theme==='dark')h.setAttribute('data-theme',p.theme);if(p.sidebar==='hidden')h.setAttribute('data-sidebar','hidden');if(p.focus==='on')h.setAttribute('data-focus','on');if(p.rail==='hidden')h.setAttribute('data-rail','hidden');}catch(e){}document.documentElement.classList.add('js');})();`;
+export const INLINE_SCRIPT = `(function(){try{var d=JSON.parse(localStorage.getItem('aimlqp.v1')||'{}'),p=d.prefs||{},h=document.documentElement;if(p.theme==='light'||p.theme==='dark')h.setAttribute('data-theme',p.theme);if(p.sidebar==='hidden')h.setAttribute('data-sidebar','hidden');if(p.focus==='on')h.setAttribute('data-focus','on');if(p.rail==='hidden')h.setAttribute('data-rail','hidden');if(p.lang==='python'||p.lang==='cs')h.setAttribute('data-lang',p.lang);}catch(e){}document.documentElement.classList.add('js');})();`;
 
 export const SITE = {
   name: 'AI & ML Quick Path: From Concepts to Industry',
   short: 'AI & ML Quick Path',
   url: (process.env.SITE_URL || '').replace(/\/$/, ''),
-  description: 'A self-contained, plain-language guide to AI and machine learning concepts and how industry builds them, with Python and .NET examples, from first steps to advanced systems.',
+  description: 'A free, plain-language guide to AI and machine learning concepts and how industry builds them, with small worked maths, Python and .NET examples, from first steps to advanced systems.',
 };
 
 // ---------- optional Google AdSense (owner decision 2026-11-05) ----------
@@ -29,6 +29,7 @@ const FOOTER_AD_PAGES = /^(lessons\.html|glossary|cases|projects|hardware|solve|
 
 const ICON = {
   menu: '<svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>',
+  progress: '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
   focus: '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
   logo: '<svg aria-hidden="true" viewBox="0 0 32 32" width="28" height="28"><rect width="32" height="32" rx="7" fill="var(--accent)"/><path d="M8 22l5-12 5 12M10 18h6M21 10v12" stroke="var(--accent-ink)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 };
@@ -80,7 +81,7 @@ function sidebar(groups, current, root) {
 </nav>`;
 }
 
-export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '' }) {
+export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '' }) {
   const depth = path.split('/').length - 1;
   const root = depth ? '../'.repeat(depth) : '';
   const fullTitle = path === 'index.html' ? SITE.name : `${title} | ${SITE.short}`;
@@ -94,7 +95,8 @@ export function page({ path, title, description, body, crumbs = [], groups, toc 
 <title>${esc(fullTitle)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="color-scheme" content="light dark">
-<meta name="aiea-root" content="${root}">
+<meta name="aiea-root" content="${root}">${lessonId ? `
+<meta name="aimlqp-lesson" content="${esc(lessonId)}" data-title="${esc(title)}">` : ''}
 ${canonical ? `<link rel="canonical" href="${esc(canonical)}">\n<meta property="og:url" content="${esc(canonical)}">` : ''}
 <meta property="og:type" content="${path.startsWith('lessons/') ? 'article' : 'website'}">
 <meta property="og:title" content="${esc(title)}">
@@ -112,11 +114,12 @@ ${ADS.client ? `<meta name="google-adsense-account" content="${esc(ADS.client)}"
   <button type="button" id="sidebar-toggle" class="btn btn-quiet" aria-controls="sidebar" aria-expanded="true">${ICON.menu}<span class="btn-label">Contents</span></button>
   <a class="brand" href="${root}index.html">${ICON.logo}<span class="brand-text">${SITE.short}</span></a>
   <div class="search" role="search">
-    <label for="site-search" class="sr-only">Search the academy</label>
-    <input id="site-search" type="search" autocomplete="off" placeholder="Search lessons, projects, terms" aria-controls="search-results" aria-expanded="false" aria-describedby="search-hint">
-    <span id="search-hint" class="sr-only">Results appear below as you type. Press the down arrow to move into the results.</span>
+    <label for="site-search" class="sr-only">Search the guide</label>
+    <input id="site-search" type="search" autocomplete="off" placeholder="Search lessons, terms, questions" aria-controls="search-results" aria-expanded="false" aria-describedby="search-hint">
+    <span id="search-hint" class="sr-only">Results appear below as you type: page titles first, then matching text inside lessons. Press the down arrow to move into the results.</span>
     <div id="search-results" class="search-results" hidden><p class="search-status" role="status" aria-live="polite"></p><ul></ul></div>
   </div>
+  <a class="btn btn-quiet topbar-progress" href="${root}progress.html">${ICON.progress}<span class="btn-label">Progress</span></a>
   <button type="button" id="focus-toggle" class="btn btn-quiet" aria-pressed="false">${ICON.focus}<span class="btn-label">Focus</span></button>
   <label class="theme-picker"><span class="theme-label">Theme</span>
     <select id="theme-select"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
@@ -139,7 +142,7 @@ ${toc}
 </main>
 ${FOOTER_AD_PAGES.test(path) ? adSlot('footer') : ''}
 <footer class="site-footer">
-  <p>${SITE.name}. Content reviewed ${REVIEWED}. ${ADS.client ? 'This site is supported by advertising.' : 'Self-contained edition: no external links.'} Text CC BY 4.0, code MIT.</p>
+  <p>${SITE.name}. Content reviewed ${REVIEWED}. ${ADS.client ? 'This site is supported by advertising.' : 'No advertising, no tracking, no account.'} Lessons work without leaving the site; links to official documentation are optional reading. Text CC BY 4.0, code MIT.</p>
   <ul class="footer-links"><li><a href="${root}about.html">About and accessibility</a></li><li><a href="${root}privacy.html">Privacy and cookies</a></li><li><a href="${root}cases.html">Real-world cases</a></li><li><a href="${root}progress.html">Progress export</a></li></ul>
 </footer>
 </div>

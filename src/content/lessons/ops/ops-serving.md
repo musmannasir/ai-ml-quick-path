@@ -4,11 +4,12 @@ title: Serving a model as an API
 module: ops
 level: Intermediate
 minutes: 90
+maths: basic arithmetic
 goal: Turn a saved model into a web API that loads the model once, validates input, returns a versioned answer and reports its health, in Python and in ASP.NET Core.
 prereqs: s-lifecycle, ml-classification
 reviewed: 2026-11-02
 evidence: A running prediction API with /health and /predict, input validation that returns 400 for bad input, and a latency measurement (p50 and p95) from your machine.
-code: Python executed 2026-11-02 (quickpath.py serving, standard-library HTTP server); FastAPI and C# not run (FastAPI not installed and no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py serving, standard-library HTTP server); FastAPI not run (FastAPI not installed in the build environment)
 ---
 ## In plain words
 A trained model sitting in a file helps nobody. **Serving** means putting it behind an **API** (a web address other programs can call) so a website, a mobile app or another service can send it data and get a prediction back. A good prediction API does five things: it **loads the model once** when the service starts (loading it on every request is slow), it **checks the input** and rejects bad requests with a clear error, it returns the **model version** with every answer so you can trace which model made which decision, it offers a **health check** so the hosting platform knows the service is alive, and it is **measured** for speed. There are two serving styles. **Online (real-time)** serving answers one request in milliseconds, for example a fraud check during payment. **Batch** serving scores millions of rows on a schedule, for example a nightly churn score for every customer. Pick batch whenever the answer is not needed immediately, because it is simpler and cheaper.
@@ -74,6 +75,16 @@ note: Do the slow work once, the quick work every time.
 - Build the features | same layout as training | process
 - Call the model | already in memory | model
 - Return result and version | the answer | output
+```
+
+```maths Finding the 95th percentile (p95)
+situation: You record the response time of 20 requests and sort them from fastest to slowest.
+find: Which request in the sorted list is the p95 latency?
+step: 95% of the way through 20 requests | 20 × 0.95 = 19
+result: The **19th** fastest request is the p95. Only one request in this sample was slower.
+why: An average hides slow requests. p95 says "95 out of 100 users waited this long or less", so it describes what the slowest users feel. Service targets are usually written as a p95 or p99.
+try: You have 200 requests. Which one is the p99?
+answer: 200 × 0.99 = 198, so the 198th fastest request is the p99, and only 2 requests were slower. Higher percentiles need more requests before they mean anything.
 ```
 
 ## Python example

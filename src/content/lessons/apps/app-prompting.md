@@ -4,11 +4,12 @@ title: Prompt engineering that works in production
 module: apps
 level: Beginner
 minutes: 60
+maths: basic arithmetic
 goal: Write clear prompts with roles, rules, delimiters, examples and output formats, keep prompts versioned, and test them with a small evaluation set.
 prereqs: app-llm-api
 reviewed: 2026-11-02
 evidence: Two versions of a prompt for one task, each scored on the same 20 test inputs, with the winning version and its weak cases documented.
-code: Python scoring harness executed 2026-11-02 (examples/applied-ai-basics/applied_basics.py evals); C# not compiled (no .NET SDK in the build environment)
+code: Python scoring harness executed 2026-11-02 (examples/applied-ai-basics/applied_basics.py evals)
 ---
 ## In plain words
 **Prompt engineering** is the practice of writing, testing and improving the instructions you give a model so that it returns useful, reliable answers. A **prompt** is everything the model receives: instructions, context and the user's input. Good prompts read like a clear brief for a capable new colleague. Useful patterns: give a **role** and the **task**; state **rules** (what to do when information is missing: "use null, do not guess"); separate **instructions from data** with clear **delimiters** (such as `<email>…</email>`) and say that the data is not instructions; give one or two **examples** of input and ideal output (**few-shot** prompting); fix the **output format**; and keep **temperature low** for factual tasks. For hard problems, asking the model to work step by step can help, but keep reasoning out of the final machine-readable answer. Treat prompts like code: **version** them and **test** each change on the same evaluation set.
@@ -59,6 +60,16 @@ note: The numbers come from the insurer example above.
 4. Add one normal and one tricky example.
 5. Run the prompt on a fixed set of test inputs; score automatically.
 6. Change one thing at a time; keep the version that scores best.
+
+```maths Does the prompt fit? A token budget
+situation: A model can read 8,000 tokens in one call (its context window). You keep 1,000 tokens free for the answer. Your instructions use 500 tokens and the user's question uses 300.
+find: How many tokens are left for documents or examples?
+step: Take everything else away from the window | 8,000 − 1,000 − 500 − 300 = 6,200
+result: **6,200 tokens** remain for documents and examples.
+why: Everything in a call shares one window: instructions, examples, documents, the question and the answer. If the total is too large the call fails or text is cut off, usually from a place you did not choose.
+try: You add three examples of 400 tokens each to the prompt. How much room is left?
+answer: The examples use 3 × 400 = 1,200 tokens, so 6,200 − 1,200 = 5,000 tokens remain. Examples improve answers but are paid for on every call and take room from documents.
+```
 
 ### Related concepts
 - **Chain of thought**: asking the model to work through intermediate steps before the final answer. It often helps on multi-step problems; ask for the final answer in a separate field so your code reads only that.

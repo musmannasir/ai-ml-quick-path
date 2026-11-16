@@ -113,3 +113,61 @@ architecture flows, comma-joined lesson lists in the plan.
 - New capstone c08-lora-finetune "Fine-tune a small model with LoRA" (8 capstones; e2e capstone filter test updated to 8 total / 3 language models).
 - All new snippets are NOT run or compiled (no Python or .NET SDK here) and carry no output blocks; `code:` front matter shows a "not run" pill. Worked numbers recomputed with node by the authors, not independently reviewed.
 - Checks: build 91 pages, static passed, Edge and Chrome e2e 52/52.
+
+## Upgrade 2026-11-13 (V2 specification), branch upgrade/v2-2026-11
+
+Machine: Windows 11 Pro, Node 22.17.0, .NET SDK 10.0.400, Python 3.12.10 (numpy 2.5.2, pandas 3.0.5, scikit-learn 1.9.1),
+Playwright Chromium. Nothing was deployed.
+
+| Check | Command | Result |
+|---|---|---|
+| Build | `npm run build` | 92 pages |
+| Maths | `npm run check:maths` | 52 maths moments, 118 applied-maths topics, 697 calculations checked, 0 problems |
+| Static | `npm run test:static` | 9,761 internal links; 97 outside reference links to 59 registered sources; 0 unregistered outside addresses or resources. Passed |
+| Browser | `npm run test:e2e` | 59 of 59 passed (was 52; 7 added, 3 changed) |
+| Python examples | `npm run test:examples` | 14 runs, 0 failures (2 failed before the UTF-8 fix on Windows) |
+| Code verification | `npm run verify:code` | C# 58 of 58 compiled; Python blocks: 9 ran, 41 syntax only, 1 fragment |
+| Links | `npm run check:links` | 55 ok, 1 moved, 5 blocked, of 61 |
+| Ads build | build and static with fake ids | passed; default build has 0 pages with ad markup |
+
+Tests changed on purpose, with the reason:
+- "Self-contained: no external links..." became "Nothing loaded from other sites ... every outside link is a marked reference link" (owner decision: vetted links allowed).
+- "Export produces versioned JSON (... version 1)" now expects version 2 (data migration). Version 1 files still import.
+- The catalogue code filter value changed from `python-output-from-a-real-run` to `python-example-run` (labels now come from the verification record).
+
+Tests added: catalogue maths and progress filters; maths calculator journey (default, change, invalid input, reset, keyboard,
+dark theme at 390 px); all 8 calculator types against the hand-worked result; code language switch and deep link; search inside
+lesson text; start chooser and resume; version 1 to version 2 data migration.
+
+Defects found and fixed during the work: Maths map overflowed by 3 px at 320 px (no-wrap on step code); verification records for a
+nested sample folder were filed under the wrong lesson; the lesson-code README was deleted by re-extraction (script now keeps it).
+
+Screens reviewed by eye (qa/screenshots): lesson with a maths moment at 1440 px light, maths moment at 1280 px light and 390 px dark,
+lesson header at 390 px light, home at 1440 px light. Not reviewed by eye after the change: roadmaps, plan, hardware, glossary,
+assessment, progress, capstone and print layouts (they are covered only by the automated contrast and overflow checks).
+
+Still not done, and not claimed: axe scan; screen-reader pass; Edge, Firefox, Safari and real phones for the new features;
+Lighthouse; running any C# sample; PyTorch, FastAPI, MLflow, LangGraph and live model calls; an independent review of the lesson
+text and of the maths teaching; re-reading the case facts against their sources.
+
+## Upgrade round 2, 2026-11-16
+
+Real results on this date: build 92 pages; `check:maths` 697 calculations, 0 problems; static checks passed; browser tests 59 of 59;
+C#: 57 of 57 samples compiled and 25 ran to the end; Python: 14 of 14 example programmes ran, and of 51 lesson blocks 9 ran on their own, 41 passed a syntax check only and 1 is a fragment.
+
+- **Cases re-checked against their sources.** Each claim on the 11 case pages was compared with the source pages that could be opened.
+  Ten wordings or figures were corrected (for example Intercom now quotes 12,000+ customers, not 8,000+; Klarna's share of chats differs
+  between sources and the page says so). Every case page has a dated "Source check" section saying what was confirmed and what rests on a
+  page that refused an automated request. Six such pages still need a person to open them.
+- **Capstones.** Each of the 8 has a "Starter code you can run today" section: the exact command (all run on 2026-11-13), the lessons whose
+  C# samples cover the .NET route, and what the starter does not give you. Vision and LoRA have no runnable training starter here.
+- **Assessments.** One practical question added to each checkpoint (read numbers, find a leakage bug, diagnose training, estimate memory,
+  name a defence, defend a release decision): 32 questions in total.
+- **Older Applied Maths examples** are shown one sentence per numbered line (240 examples). Layout only; wording and numbers unchanged.
+- **Maths moment placement.** 25 moments moved from after "Related concepts" to the step they belong to.
+- **C# samples are now also run**, not only compiled, where that is possible without a model, a service or data.
+- Static checks now also require the source-check section and two linked sources on every case, and the starter section on every capstone.
+
+Still open after round 2: lesson-by-lesson teaching review; rewording or trimming the older maths topics; the six unopened sources; roadmap
+redesign; diagram audit; separate progress for exercises; quiz retry flow; feedback link; screen reader, other browsers, phones, axe and
+Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migration pack.

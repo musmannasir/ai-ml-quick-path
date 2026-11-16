@@ -4,11 +4,12 @@ title: Designing a language model
 module: llm
 level: Advanced
 minutes: 75
+maths: advanced optional
 goal: Choose tokeniser, vocabulary, width, depth, heads and context length for a model, estimate its size and memory, and plan experiments.
 prereqs: llm-tokens, dl-transformers
 reviewed: 2026-11-02
 evidence: A design sheet for a small model with parameter count, memory estimate, training data plan and three experiments that each change one setting.
-code: Python executed 2026-11-02 (quickpath.py llm_size); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py llm_size)
 ---
 ## In plain words
 Designing an LLM means choosing a handful of numbers and writing down why. **Vocabulary size**: how many tokens the tokeniser knows (bigger means shorter sequences but a bigger embedding table). **Width** (model dimension): how many numbers represent each token. **Depth**: how many transformer blocks. **Heads**: how many attention heads per block (width divided by heads is the size of each head). **Context length**: how many tokens it can read at once (longer costs more memory). Plus choices about position encoding, normalisation and whether to share the input and output embedding tables. These settings decide the **parameter count**, which decides memory, speed and how much training data you need. Research on scaling found that for a fixed compute budget, model size and training data should grow together; a widely used rule of thumb is roughly 20 training tokens per parameter. A design is a hypothesis: test it with experiments that change one setting at a time.
@@ -68,6 +69,16 @@ note: Each step feeds the next. Experiments may send you back to change a settin
 ## One change at a time | output
 - Compare against the same baseline
 - Any change is traced to one choice
+```
+
+```maths Counting parameters in one small piece of a model
+situation: A tiny language model has a vocabulary of 1,000 tokens. Each token's embedding is a list of 16 numbers.
+find: How many parameters (learned numbers) are in the embedding table?
+step: Tokens times numbers per token | 1,000 × 16 = 16,000
+result: The embedding table has **16,000** parameters.
+why: A model's size is simply the count of all such numbers in all its parts. "A 7 billion parameter model" means this sum, done for every table and layer, comes to 7 billion. Design choices such as vocabulary size, embedding length and number of layers each multiply into the total.
+try: You double the embedding length to 32. How many parameters now?
+answer: 1,000 × 32 = 32,000. Doubling the embedding length doubles this table. Inside the transformer layers the effect is stronger: several of their matrices grow with the square of this length, so they become four times larger.
 ```
 
 ### Related concepts

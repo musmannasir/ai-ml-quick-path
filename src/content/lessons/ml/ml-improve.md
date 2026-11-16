@@ -4,11 +4,12 @@ title: Improving and explaining models
 module: ml
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Tune hyperparameters with grid, random and automated search, reduce overfitting with regularisation and ensembles, and explain predictions with feature importance and Shapley values.
 prereqs: ml-evaluation, ml-algorithms
 reviewed: 2026-11-02
 evidence: A tuning report (search space, best cross-validated score, single test score) and a plain-language explanation of one prediction.
-code: Python executed 2026-11-02 (gap_topics.py tune and interp); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (gap_topics.py tune and interp)
 ---
 ## In plain words
 Once you have a working model, three levers improve it. **Tuning** searches for the best hyperparameters (tree depth, learning rate, number of trees). **Grid search** tries every combination; **random search** samples combinations and often finds good ones faster; **AutoML** tools search algorithms and settings for you. **Regularisation** stops overfitting by keeping the model simpler (penalising large weights, limiting tree depth, stopping early). **Ensembles** combine several models (bagging, boosting, stacking) for more stable results. People also need to know **why** a model decided something. **Feature importance** shows which inputs matter overall; **permutation importance** measures how much the score drops when one feature is shuffled; **Shapley values** (the SHAP library) split one specific prediction into contributions from each feature, and the parts add up exactly to the prediction.
@@ -93,6 +94,17 @@ note: Tune with cross-validation on training data only. Look at the test set onc
 - Add regularisation | If validation trails training | process
 - Retrain and test once | Best settings, one test score | model
 - Explain | Importance overall, Shapley values for one prediction | output
+```
+
+```maths Counting the cost of a grid search
+situation: You want to try 3 learning rates and 4 tree depths, and you judge each combination with 5-fold cross-validation.
+find: How many times will the model be trained?
+step: Number of setting combinations | 3 × 4 = 12
+step: Each combination is trained once per fold | 12 × 5 = 60
+result: The search trains the model **60 times**.
+why: Tuning looks cheap until you multiply. Knowing this number before you start tells you whether the search takes minutes or days, and whether a random search over fewer combinations is the better choice.
+try: You add a third setting with 3 values. How many trainings now?
+answer: 3 × 4 × 3 = 36 combinations, and 36 × 5 = 180 trainings. One extra setting tripled the cost. This fast growth is why grid search is only practical for a few settings.
 ```
 
 ## Python example

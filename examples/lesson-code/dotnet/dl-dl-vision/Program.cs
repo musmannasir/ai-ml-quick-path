@@ -1,4 +1,4 @@
-// From lesson 'dl-vision' (dl). Code status: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch and C# (ONNX Runtime) not run (not installed in the build environment)
+// From lesson 'dl-vision' (dl). Code status: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 
@@ -13,4 +13,6 @@ float[] scores = results.First().AsEnumerable<float>().ToArray();
 var exp = scores.Select(s => Math.Exp(s)).ToArray();
 int best = Array.IndexOf(scores, scores.Max());
 Console.WriteLine($"{labels[best]} ({exp[best] / exp.Sum():P0})");
-// LoadAndNormalise: resize to 224x224 and normalise exactly as during training (for example with ImageSharp).
+// Stand-in so the sample compiles: it returns an empty image. A real version decodes the file, resizes it to
+// 224 x 224 and normalises it exactly as during training (for example with the ImageSharp package).
+static float[] LoadAndNormalise(string path) => new float[3 * 224 * 224];

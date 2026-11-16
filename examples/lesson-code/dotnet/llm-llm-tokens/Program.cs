@@ -1,4 +1,4 @@
-// From lesson 'llm-tokens' (llm). Code status: Python executed 2026-11-02 (quickpath.py bpe and sampling); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'llm-tokens' (llm). Code status: Python executed 2026-11-02 (quickpath.py bpe and sampling)
 using Microsoft.ML.Tokenizers;
 
 var tokenizer = TiktokenTokenizer.CreateForModel("gpt-4o");

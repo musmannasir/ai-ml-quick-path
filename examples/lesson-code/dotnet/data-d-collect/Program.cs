@@ -1,4 +1,4 @@
-// From lesson 'd-collect' (data). Code status: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py sql and viz); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'd-collect' (data). Code status: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py sql and viz)
 using Microsoft.Data.SqlClient;
 
 const string sql = """

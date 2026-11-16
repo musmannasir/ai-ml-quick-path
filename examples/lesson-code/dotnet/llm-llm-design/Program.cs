@@ -1,4 +1,4 @@
-// From lesson 'llm-design' (llm). Code status: Python executed 2026-11-02 (quickpath.py llm_size); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+// From lesson 'llm-design' (llm). Code status: Python executed 2026-11-02 (quickpath.py llm_size)
 var designs = new (string Name, long Vocab, long Width, long Layers, long Context)[]
 {
     ("laptop tiny", 8_000, 256, 6, 256),

@@ -1,4 +1,4 @@
-// From lesson 'app-rag' (apps). Code status: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'app-rag' (apps). Code status: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings)
 using System.Numerics.Tensors;
 using Microsoft.Extensions.AI;
 

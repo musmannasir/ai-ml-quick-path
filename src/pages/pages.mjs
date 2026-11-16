@@ -1,5 +1,6 @@
 // Non-lesson pages for AI & ML Quick Path. Each function returns { path, title, description, body, crumbs, ... }.
-// Self-contained edition: no page may contain an external link (the build and static checks enforce this).
+// Lessons work without leaving the site. Outside links are allowed only to sources registered in src/data/sources.mjs
+// (S.sourceItem / S.sourceLink); the build and static checks enforce this.
 
 const TRACK_LABEL = { applied: 'AI application', ml: 'Machine learning', lm: 'Language models' };
 
@@ -29,6 +30,16 @@ const hoursOf = (S, ids) => Math.round(ids.reduce((a, id) => a + S.lessons[id].m
 const table = (S, label, head, rows, cls = '') => `<div class="table-wrap stack-on-mobile" tabindex="0" role="region" aria-label="${S.esc(label)}"><table${cls ? ` class="${cls}"` : ''}><thead><tr>${head.map((h) => `<th scope="col">${S.esc(h)}</th>`).join('')}</tr></thead><tbody>${
   rows.map((r) => `<tr><th scope="row">${r[0]}</th>${r.slice(1).map((c, i) => `<td data-label="${S.esc(head[i + 1])}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 
+// What the last real verification run found, as one sentence (numbers come from qa/code-status.json).
+function codeSummary(S) {
+  const all = Object.values(S.CODE_STATUS.lessons || {});
+  const cs = all.flatMap((x) => x.csharp || []), ex = S.CODE_STATUS.examples || [];
+  if (!cs.length && !ex.length) return 'No verification run has been recorded yet.';
+  const ok = cs.filter((x) => x.result === 'compiled').length, ran = ex.filter((x) => x.result === 'ran').length;
+  const date = (cs[0] || ex[0] || {}).date || '';
+  return `On ${date}, ${ran} of ${ex.length} Python example programmes ran and ${ok} of ${cs.length} C# lesson samples compiled with .NET SDK ${S.esc(S.CODE_STATUS.tools?.dotnet || '')}; each lesson shows its own result.`;
+}
+
 // ---------- Home ----------
 function home(S) {
   const ctx = S.ctxFor('index.html');
@@ -41,7 +52,8 @@ function home(S) {
     ['How it works', 'The steps in order, with what goes in and what comes out.'],
     ['Python example', 'Runnable code, with the real output it printed.'],
     ['.NET (C#) example', 'The same idea in C#, with the packages it needs.'],
-    ['Applied Maths - Statistics', 'Collapsible panels with the main formula, a plain-words meaning and two worked examples for each maths idea the lesson uses (where it applies).'],
+    ['Maths moments (inside the sections above)', 'Where a calculation matters, a small box works it out by hand with tiny everyday numbers, one step per line, then shows the formula and why AI uses it. Many have a "try one change" question and a small calculator.'],
+    ['Applied Maths - Statistics', 'Optional, collapsible extra worked examples for the maths ideas the lesson uses (where it applies).'],
     ['Maths behind it', 'The names of the maths topics involved, so you can recognise them in documentation and job descriptions.'],
     ['Common mistakes', 'What goes wrong in real projects.'],
     ['Quick check', 'Questions with hidden answers to confirm you understood.'],
@@ -50,9 +62,10 @@ function home(S) {
 <section class="hero" aria-labelledby="hero-h">
   <div class="hero-text">
     <h1 id="hero-h">AI and machine learning, from zero to industry projects</h1>
-    <p class="lede">A complete, step-by-step guide for people new to AI. It explains every concept in plain words, shows how companies use it, and gives working examples in both Python and .NET (C#). Where a lesson uses maths or statistics, a short collapsible panel shows the main formula with simple worked examples. Everything you need is on these pages; there are no outside links to follow.</p>
+    <p class="lede">A complete, step-by-step guide for people new to AI. It explains every concept in plain words, shows how companies use it, and gives working examples in both Python and .NET (C#). Where a lesson needs a calculation, it is worked out by hand with tiny numbers, exactly where you need it. You can finish every lesson without leaving the site; links to official documentation are optional extra reading.</p>
     <p class="hero-facts"><span>${total} lessons</span><span>About ${hours} hours of study</span><span>${S.MODULES.length} parts</span><span>${S.ROADMAPS.length} visual roadmaps</span><span>${S.PROJECTS.length} capstone projects</span><span>${S.CASES.length} real company cases</span></p>
-    <p class="actions"><a class="btn btn-primary" href="lessons/s-what-is-ai.html">Start lesson 1</a><a class="btn" href="plan.html">See the 12-week plan</a></p>
+    <p class="actions"><a class="btn btn-primary" href="lessons/s-what-is-ai.html" id="hero-start">Start lesson 1</a><a class="btn" href="#start-h">Choose where to start</a><a class="btn" href="plan.html">See the 12-week plan</a></p>
+    <div id="resume-card" class="resume-card" hidden><p class="resume-k">Continue where you left off</p><p class="resume-line"><a id="resume-link" href="lessons/s-what-is-ai.html"></a></p><p class="small muted" id="resume-next"></p></div>
   </div>
   <figure class="hero-figure" aria-labelledby="hero-fig-cap">
     <svg viewBox="0 0 360 262" role="img" aria-labelledby="hero-fig-title">
@@ -63,6 +76,22 @@ function home(S) {
   </figure>
 </section>
 
+<section aria-labelledby="start-h" class="start-here">
+  <h2 id="start-h">Where do you want to start?</h2>
+  <p>Pick the line that fits you best. It only changes what this page suggests first; every lesson stays open, there is no sign-up, and you can change your choice at any time. The choice is saved in this browser only.</p>
+  <div class="persona-grid" data-persona-chooser>
+  ${S.STARTS.map((p) => `<article class="persona-card" data-persona="${p.id}" aria-labelledby="persona-${p.id}">
+    <h3 id="persona-${p.id}">${S.esc(p.title)}</h3>
+    <p>${S.esc(p.who)}</p>
+    <p><strong>Start with:</strong> ${S.lessonLink(p.first, ctx)}</p>
+    <p class="small">${S.esc(p.then)}</p>
+    <p class="small muted">${S.esc(p.skip)}</p>
+    <p class="persona-actions"><button type="button" class="btn btn-small" data-persona-pick="${p.id}" data-first="lessons/${p.first}.html" data-lang="${p.lang}" aria-pressed="false" hidden>Use this starting point</button></p>
+  </article>`).join('')}
+  </div>
+  <p class="small">Prefer one subject? Open a roadmap: <a href="roadmaps.html#applied">Applied AI (the full quick path)</a>, <a href="roadmaps.html#ml">machine learning</a> or <a href="roadmaps.html#lm">language models</a>.</p>
+</section>
+
 <section aria-labelledby="parts-h">
   <h2 id="parts-h">The seven parts</h2>
   <ul class="card-list stage-grid">${S.MODULES.map((m) => { const ids = m.groups.flatMap((g) => g.lessons);
@@ -71,7 +100,7 @@ function home(S) {
 
 <section aria-labelledby="lesson-h">
   <h2 id="lesson-h">How every lesson is built</h2>
-  <p>All ${total} lessons use the same eight sections in the same order, so you always know where to look.</p>
+  <p>All ${total} lessons use the same sections in the same order, so you always know where to look. Maths is not a separate chapter: it appears inside a section at the moment it is needed.</p>
   ${table(S, 'Lesson sections', ['Section', 'What you get'], sections.map(([a, b]) => [S.esc(a), S.esc(b)]))}
 </section>
 
@@ -96,10 +125,10 @@ function home(S) {
   <h2 id="levels-h">How lessons are labelled</h2>
   <div class="two-col">
     <ul class="plain-list"><li><span class="badge badge-beginner">Beginner</span> needs only the lessons listed as prerequisites.</li><li><span class="badge badge-intermediate">Intermediate</span> builds on several earlier lessons.</li><li><span class="badge badge-advanced">Advanced</span> needs Parts 1 to 3 and some practice.</li><li><span class="badge badge-expert">Expert</span> combines many parts into full systems.</li></ul>
-    <div class="callout callout-note"><p><strong>Honest about the code.</strong> Every lesson states whether its code was run. Python outputs shown in lessons were copied from real runs on ${S.REVIEWED}. The C# examples were written carefully but could not be compiled in the build environment, and are labelled that way. Durations are study estimates; quick checks are self-checks, not certificates. Progress is saved only in this browser (see <a href="progress.html">progress</a>).</p></div>
+    <div class="callout callout-note"><p><strong>Honest about the code.</strong> Every lesson shows what was really checked. ${codeSummary(S)} Compiled is not the same as run: samples that call a model or need your own data were not executed. Durations are study estimates for reading; practice and projects take longer. Quick checks are self-checks, not certificates, and finishing the lessons does not by itself make anyone an expert. Progress is saved only in this browser (see <a href="progress.html">progress</a>).</p></div>
   </div>
 </section>`;
-  return { path: 'index.html', title: 'Welcome', description: 'A self-contained, plain-words guide to AI and machine learning from beginner to industry level, with Python and .NET examples.', body, crumbs: [], wide: true, section: 'Start', keywords: 'start beginner fresh ai ml guide python dotnet plain words' };
+  return { path: 'index.html', title: 'Welcome', description: 'A free, plain-words guide to AI and machine learning from beginner to industry level, with small worked maths and Python and .NET examples.', body, crumbs: [], wide: true, section: 'Start', keywords: 'start beginner fresh ai ml guide python dotnet plain words' };
 }
 
 // ---------- 12-week plan ----------
@@ -207,16 +236,17 @@ ${roadmapComponent(S, ctx)}`;
 // ---------- Lesson catalogue ----------
 function catalogue(S) {
   const ctx = S.ctxFor('lessons.html');
-  const codeKind = (c) => (/executed|computed/i.test(c || '') ? 'Python output from a real run' : 'Conceptual code (not run)');
+  const codeKind = (l) => S.codeEvidence(l).map((e) => e.label);
+  const MATHS = { none: 'No maths', 'basic arithmetic': 'Basic arithmetic', algebra: 'Some algebra', 'advanced optional': 'Optional advanced maths' };
   const bucket = (m) => (m <= 60 ? 'Up to 1 h' : m <= 90 ? '1–1.5 h' : 'Over 1.5 h');
   const body = `
 <h1>All lessons</h1>
-<p class="lede">All ${S.LESSON_ORDER.length} lessons in the recommended order. Combine the filters to find what you need. Every lesson has a Python and a C# example.</p>
-${filterBar(S, 'cat-list', [['part', 'Part', S.MODULES.map((m) => m.short)], ['level', 'Level', S.LEVELS], ['code', 'Python code', ['Python output from a real run', 'Conceptual code (not run)']], ['time', 'Study time', ['Up to 1 h', '1–1.5 h', 'Over 1.5 h']]], 'Filter lessons')}
+<p class="lede">All ${S.LESSON_ORDER.length} lessons in the recommended order. Combine the filters to find what you need. Every lesson has a Python and a C# example; the code filter uses the results of the last real verification run.</p>
+${filterBar(S, 'cat-list', [['part', 'Part', S.MODULES.map((m) => m.short)], ['level', 'Level', S.LEVELS], ['code', 'Code check', [...new Set(S.LESSON_ORDER.flatMap((id) => codeKind(S.lessons[id])))].sort()], ['maths', 'Maths needed', Object.values(MATHS)], ['time', 'Study time', ['Up to 1 h', '1–1.5 h', 'Over 1.5 h']], ['done', 'My progress', [['Not finished yet', 'no'], ['Finished', 'yes']]]], 'Filter lessons')}
 <ol id="cat-list" class="card-list catalogue">${S.MODULES.flatMap((m) => m.groups.flatMap((g) => g.lessons.map((id) => {
     const l = S.lessons[id];
-    return `<li class="card" ${dataAttrs(S, { part: m.short, level: l.level, code: codeKind(l.code), time: bucket(l.minutes) })} data-text="${S.esc((l.title + ' ' + l.goal + ' ' + m.title).toLowerCase())}">
-  <p class="card-kicker"><span class="badge">Part ${S.esc(m.stage)}</span>${S.levelBadge(l.level)}<span class="small muted">${S.fmtMinutes(l.minutes)}</span></p>
+    return `<li class="card" ${dataAttrs(S, { part: m.short, level: l.level, code: codeKind(l), maths: MATHS[l.maths], time: bucket(l.minutes) })} data-done="no" data-done-id="lesson:${id}" data-text="${S.esc((l.title + ' ' + l.goal + ' ' + m.title).toLowerCase())}">
+  <p class="card-kicker"><span class="badge">Part ${S.esc(m.stage)}</span>${S.levelBadge(l.level)}<span class="small muted">${S.fmtMinutes(l.minutes)} · ${S.esc(MATHS[l.maths])}</span></p>
   <h2 class="card-title"><a href="${ctx.root}lessons/${id}.html" data-progress-id="lesson:${id}"><span class="nav-check" aria-hidden="true"></span>${S.esc(l.title)}</a></h2>
   <p class="small">${S.esc(l.goal)}</p></li>`; }))).join('')}</ol>
 ${emptyState('lessons')}`;
@@ -291,13 +321,22 @@ function maths(S) {
     ['Information theory', 'Entropy, cross-entropy, KL divergence', 'Classification and language-model losses, perplexity, drift scores'],
     ['Graph theory', 'Nodes, edges, neighbours', 'Graph neural networks, knowledge graphs, recommendations'],
   ];
+  const moments = S.mathsIndex.map((m) => [
+    `<strong>${S.esc(m.title)}</strong>`,
+    S.md(m.find, ctx).replace(/^<p>|<\/p>$/g, ''),
+    `<ul class="plain-list mm-mini">${m.steps.slice(0, 3).map((s) => `<li><code>${S.esc(s)}</code></li>`).join('')}${m.steps.length > 3 ? `<li class="small muted">and ${m.steps.length - 3} more step${m.steps.length - 3 > 1 ? 's' : ''} in the lesson</li>` : ''}</ul>`,
+    `<a href="lessons/${m.lesson}.html#${m.id}">${S.esc(S.lessons[m.lesson].title)}</a>`,
+  ]);
   const body = `
 <h1>Maths map</h1>
-<p class="lede">The libraries do the calculations for you, but knowing the idea behind them makes results easier to trust and debug. This page lists the maths behind each lesson. Open the lesson's “Applied Maths - Statistics” section for the main formulas and worked examples.</p>
+<p class="lede">You do not need to study maths before you start. Each lesson teaches the one calculation it needs, at the moment it needs it, with tiny numbers you can check in your head. This page is an optional index: use it when you want to find a worked example again or see which lessons use an idea.</p>
+<section aria-labelledby="moments-h"><h2 id="moments-h">Worked examples, by idea</h2>
+<p>${S.mathsIndex.length} maths moments from the lessons. Every step shown here is checked by the site's build: a lesson cannot be published if one of its steps does not add up. All numbers are small, made-up teaching values, not measurements.</p>
+${table(S, 'Maths moments', ['Idea', 'The question it answers', 'First steps, by hand', 'Lesson'], moments)}</section>
 <section aria-labelledby="areas-h"><h2 id="areas-h">The main areas</h2>
 ${table(S, 'Maths areas', ['Area', 'Topics it includes', 'Where it appears in AI and ML'], areas.map(([a, b, c]) => [S.esc(a), S.esc(b), S.esc(c)]))}</section>
 <section aria-labelledby="by-lesson-h"><h2 id="by-lesson-h">By lesson</h2>
-<p>Taken from the "Maths behind it" section of every lesson.</p>
+<p>The names of the maths topics behind each lesson, so you can recognise them in documentation and job descriptions. "formulas" marks lessons with an extra "Applied Maths - Statistics" section of worked examples.</p>
 ${table(S, 'Maths names by lesson', ['Lesson', 'Part', 'Maths names'], rows)}</section>`;
   return { path: 'maths.html', title: 'Maths map', body, crumbs: [['Maths map', 'maths.html']], wide: true, section: 'Reference', keywords: 'maths map statistics probability linear algebra calculus formulas applied maths' };
 }
@@ -400,6 +439,10 @@ ${sec('Build steps', `<ol>${p.steps.map((s) => `<li>${S.esc(s)}</li>`).join('')}
 ${sec('Python route and .NET route', `<dl class="kv"><dt>Python</dt><dd>${S.esc(p.python)}</dd><dt>.NET (C#)</dt><dd>${S.esc(p.dotnet)}</dd></dl>`)}
 ${sec('Example input and output', `<dl class="kv"><dt>Input</dt><dd><code>${S.esc(p.io.input)}</code></dd><dt>Output</dt><dd><code>${S.esc(p.io.output)}</code></dd></dl>`)}
 ${sec('Data', `<p>${S.esc(p.data)}</p>`)}
+${S.STARTERS[p.id] ? sec('Starter code you can run today', (() => { const st = S.STARTERS[p.id]; const ctx2 = S.ctxFor(path); return `<p>${S.esc(st.shows)}</p>
+<figure class="code"><figcaption>Shell — from the folder ${S.esc(st.folder)} (run on 2026-11-13, finished without error)</figcaption><pre tabindex="0"><code>${S.esc(st.commands.join('\n'))}</code></pre></figure>
+<p><strong>For the .NET route:</strong> the C# samples in ${st.cs.map((id) => S.lessonLink(id, ctx2)).join(', ')} compile with the current .NET SDK. They are building blocks, not a finished project.</p>
+<div class="callout callout-warn"><p><strong>What the starter does not give you.</strong> ${S.esc(st.gap)}</p></div>`; })()) : ''}
 ${sec('Starter file structure', `<figure class="code"><figcaption>Structure (Python file | .NET project)</figcaption><pre tabindex="0"><code>${S.esc(p.structure)}</code></pre></figure>`)}
 ${sec('Tests', list(p.tests, S.esc))}
 ${sec('How it will be judged', list(p.rubric, S.esc))}
@@ -436,6 +479,7 @@ function casePage(S, c) {
 <header class="lesson-head"><p class="eyebrow-line">Company case</p><h1>${S.esc(c.company)}: ${S.esc(c.category)}</h1>
 <div class="meta-row"><span class="badge">${S.esc(c.industry)}</span><span class="badge">${c.difficulty}</span><span class="meta">Rebuild effort ${S.esc(c.effort)} (estimate)</span></div></header>
 <section aria-labelledby="confirmed"><h2 id="confirmed">What the published sources confirm</h2><p>${S.esc(c.confirmed)}</p></section>
+${S.CASE_CHECKS[c.id] ? `<section aria-labelledby="checked"><h2 id="checked">Source check, 13 November 2026</h2><p>${S.esc(S.CASE_CHECKS[c.id])}</p></section>` : ''}
 <section aria-labelledby="problem"><h2 id="problem">Business problem and AI concept</h2><dl class="kv"><dt>Problem</dt><dd>${S.esc(c.problem)}</dd><dt>Concept</dt><dd>${S.esc(c.concept)}</dd></dl></section>
 <section aria-labelledby="results"><h2 id="results">Reported results</h2><ul class="results">${c.results.map((r) => `<li><p>${S.esc(r.text)}</p><p class="small muted">${S.esc(r.date)}. Caveat: ${S.esc(r.caveat)}</p></li>`).join('')}</ul></section>
 <section aria-labelledby="workflow"><h2 id="workflow">Suggested workflow</h2>
@@ -445,7 +489,7 @@ function casePage(S, c) {
 <div class="table-wrap stack-on-mobile" tabindex="0" role="region" aria-label="Technology choices"><table><thead><tr><th scope="col">Layer</th><th scope="col">Suggested</th><th scope="col">Alternatives</th></tr></thead><tbody>${c.tech.map(([a, b, d]) => `<tr><th scope="row">${S.esc(a)}</th><td data-label="Suggested">${S.esc(b)}</td><td data-label="Alternatives">${S.esc(d)}</td></tr>`).join('')}</tbody></table></div></section>
 <section aria-labelledby="io"><h2 id="io">Small example</h2><dl class="kv"><dt>Input</dt><dd>${S.esc(c.example.input)}</dd><dt>Output</dt><dd>${S.esc(c.example.output)}</dd></dl></section>
 <section aria-labelledby="repro"><h2 id="repro">Rebuild it yourself</h2><p>${S.esc(c.project)}</p><h3>Definition of done</h3>${list(c.acceptance, S.esc)}<h3>Security and privacy risks</h3>${list(c.risks, S.esc)}</section>
-<section aria-labelledby="sources"><h2 id="sources">Sources</h2><p class="small muted">Listed by title and publisher. This guide contains no external links; search for the title if you want to read the original.</p><ul>${c.sources.map((s) => `<li><cite>${S.esc(s.title)}</cite>. <span class="small muted">${S.esc(s.publisher)}. ${S.esc(s.type)}.</span></li>`).join('')}</ul></section>`;
+<section aria-labelledby="sources"><h2 id="sources">Sources</h2><p class="small muted">The facts and results above come only from these published sources. Each link opens the publisher's own site, which is outside this guide. The note after each link says what the last automatic link check found; "review needed" means a person should open it before relying on it.</p><ul class="refs-list">${c.sources.map((s) => (s.ref && S.SOURCES[s.ref] ? S.sourceItem(s.ref, [s.publisher.includes(',') ? s.publisher.slice(s.publisher.indexOf(',') + 1).trim() : '', s.type].filter(Boolean).join('. ')) : `<li><cite>${S.esc(s.title)}</cite>. <span class="small muted">${S.esc(s.publisher)}. ${S.esc(s.type)}.</span></li>`)).join('')}</ul></section>`;
   return { path, title: `${c.company} case`, description: c.problem, body, crumbs: [['Company cases', 'cases.html'], [c.company, path]], section: 'Company cases', keywords: `${c.industry} ${c.category} ${c.problem}` };
 }
 
@@ -551,7 +595,7 @@ function progress(S) {
   };
   const body = `
 <h1>My progress and study calendar</h1>
-<div class="callout callout-note"><p><strong>How progress works.</strong> Completion marks are stored in this browser on this device. They are not uploaded or shared. Clearing browser data removes them, so export a file to keep a backup or move to another device.</p></div>
+<div class="callout callout-note"><p><strong>How progress works.</strong> A tick means you finished a lesson or a project. It is your own record, not a test result. Completion marks are stored in this browser on this device. They are not uploaded or shared. Clearing browser data removes them, so export a file to keep a backup or move to another device.</p></div>
 <p id="storage-warning" class="callout callout-warn" hidden>This browser is blocking local storage, so progress cannot be saved here. Lessons still work; use export before closing the page.</p>
 <section aria-labelledby="dash-h"><h2 id="dash-h">Progress by part</h2><div id="progress-dashboard" class="dash"></div></section>
 <section aria-labelledby="io-h"><h2 id="io-h">Export, import and reset</h2>
@@ -561,7 +605,7 @@ function progress(S) {
   <button type="button" class="btn btn-danger" id="reset-progress">Reset learning progress</button>
 </div>
 <p id="io-status" role="status" aria-live="polite" class="small"></p>
-<p class="small muted">Reset removes lesson, capstone and skill marks only; theme and layout choices stay. Import replaces current progress with the file's contents after checking its format (schema "aimlqp-progress", version 1).</p></section>
+<p class="small muted">Reset removes lesson, capstone and skill marks only; theme and layout choices stay. Import replaces current progress with the file's contents after checking its format (schema "aimlqp-progress", version 1 or 2). Exports made before this version still import.</p></section>
 <section aria-labelledby="cal-h"><h2 id="cal-h">Study calendar</h2>
 <p>Choose a roadmap and your weekly hours to see an estimated schedule. It uses each step's lower and upper effort; real progress varies.</p>
 <div class="filters calendar-form" role="group" aria-label="Study calendar settings">
@@ -579,10 +623,11 @@ function progress(S) {
 function about(S) {
   const body = `
 <h1>About, sources and privacy</h1>
-<section aria-labelledby="about-h"><h2 id="about-h">About this guide</h2><p>A free, self-contained guide that takes someone new to AI to the point of planning and building industry AI and ML systems. It explains concepts and their implementation in Python and .NET with the maths kept short: lessons that use it have an "Applied Maths - Statistics" section with main formulas and simple worked examples, and the <a href="maths.html">maths map</a> collects the topics. Everything needed to learn is on these pages.</p>
-<p>Content reviewed ${S.REVIEWED}. Tools, model versions and package APIs change quickly: each lesson shows its review date and states honestly whether its code was run. Python outputs quoted in lessons were copied from real runs; the C# examples were not compiled because no .NET SDK was available in the build environment. Durations are study estimates. Completing lessons does not certify job readiness.</p></section>
+<section aria-labelledby="about-h"><h2 id="about-h">About this guide</h2><p>A free guide that takes someone new to AI to the point of planning and building industry AI and ML systems. It explains concepts and their implementation in Python and .NET. Maths is taught at the point of need: where a calculation matters, a "maths moment" works it out by hand with tiny numbers inside the lesson, and the <a href="maths.html">maths map</a> indexes them. Everything needed to learn is on these pages; links to official documentation and to case-study sources are optional reading on outside sites.</p>
+<p>Content reviewed ${S.REVIEWED}. Tools, model versions and package APIs change quickly: each lesson shows its review date and states honestly whether its code was run. Python outputs quoted in lessons were copied from real runs. ${codeSummary(S)} Durations are study estimates. Completing lessons does not certify job readiness.</p>
+<p><strong>Review status.</strong> The arithmetic in every worked example is checked automatically. The lesson text has not yet had an independent review by a second subject expert, and no named author or reviewer is claimed.</p></section>
 <section aria-labelledby="sources"><h2 id="sources">Sources for company cases</h2>
-<p>Case facts and results come only from published sources, listed by title and publisher on each case page. Each case separates documented facts from the guide's suggested workflow. The full source register, with web addresses and confidence notes, is <code>CONTENT_SOURCES.md</code> in the source package.</p>
+<p>Case facts and results come only from published sources, linked on each case page with the date of the last link check. Each case separates documented facts from the guide's suggested workflow. Research notes and confidence levels are in <code>CONTENT_SOURCES.md</code> in the source package.</p>
 <ul>${S.CASES.map((c) => `<li><a href="cases/${c.id}.html">${S.esc(c.company)}</a>: ${c.sources.map((s) => S.esc(s.publisher)).join('; ')}</li>`).join('')}</ul></section>
 <section aria-labelledby="privacy"><h2 id="privacy">Privacy</h2><p>What the site stores, what it shares and how advertising works is on the <a href="privacy.html">Privacy and cookies</a> page. In short: no account or sign-in, and your progress stays in your browser. All example data is synthetic. Do not paste confidential data into exercises that call outside model APIs.</p></section>
 <section aria-labelledby="licence"><h2 id="licence">Licences</h2><p>Lesson text and diagrams: Creative Commons Attribution 4.0 (CC BY 4.0). Example code: MIT licence. Company and product names belong to their owners and are used only to identify them.</p></section>

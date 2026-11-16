@@ -4,11 +4,12 @@ title: From laptop to big hardware: scaling training
 module: llm
 level: Expert
 minutes: 90
+maths: advanced optional
 goal: Estimate memory for training and inference, and choose the right scaling tools (GPUs, mixed precision, gradient accumulation and checkpointing, data and model parallelism, FSDP) as models grow.
 prereqs: llm-train-laptop
 reviewed: 2026-11-02
 evidence: A written plan to train or fine-tune a named model size on a named GPU setup, with memory arithmetic and the chosen techniques justified.
-code: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual; C# is plain .NET and was not compiled (no .NET SDK in the build environment)
+code: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual
 ---
 ## In plain words
 The same training loop scales from a laptop to thousands of GPUs, but memory and time become the limits. Memory has several parts: the **weights** (parameters × bytes each; 2 bytes in 16-bit formats), the **gradients**, the **optimiser state** (AdamW keeps extra numbers per weight) and the **activations** saved for the backward pass. A common rule of thumb for full training with AdamW is about **16 bytes per parameter** before activations. Tools to fit and speed up training, from easiest to hardest: use a **GPU**; use **mixed precision** (BF16); **gradient accumulation** (add up gradients from several small batches to act like one big batch); **gradient checkpointing** (recompute activations instead of storing them); **data parallelism** (copies of the model on several GPUs, each with different data); **sharded data parallelism** (FSDP or DeepSpeed ZeRO split weights, gradients and optimiser state across GPUs); and **tensor and pipeline parallelism** (split the model itself across GPUs). For fine-tuning, **LoRA** and **QLoRA** cut memory far more than any of these.
@@ -89,6 +90,17 @@ note: Numbers are the ones in this lesson's text.
 ## With it | output
 - Gradients from small batches are added up
 - One update acts like a larger batch
+```
+
+```maths Effective batch size
+situation: One GPU can fit 8 examples at a time. You collect the results of 4 such small batches before each weight update (this is called gradient accumulation), and you train on 2 GPUs at once.
+find: How many examples does each weight update use?
+step: Examples collected on one GPU before an update | 8 × 4 = 32
+step: Across both GPUs | 32 × 2 = 64
+result: The effective batch size is **64**.
+why: Large models train better with large batches, but a large batch does not fit in memory. Accumulation and several GPUs give the same effect in smaller pieces. The learning rate is usually chosen for the effective batch size, not for the 8 that fit on one card.
+try: You move to 4 GPUs and want to keep an effective batch of 64, still with 8 examples per GPU. How many accumulation steps do you need?
+answer: Each round gives 8 × 4 = 32 examples across the 4 GPUs, so you need 64 ÷ 32 = 2 accumulation steps. More GPUs let you update twice as often for the same effective batch.
 ```
 
 ## Python example

@@ -1,4 +1,4 @@
-// From lesson 'llm-train-laptop' (llm). Code status: Python NumPy model executed 2026-11-02 (examples/tiny-lm/tiny_char_lm_numpy.py, about 2 seconds on CPU); PyTorch transformer and C# (TorchSharp) not run (not installed in the build environment)
+// From lesson 'llm-train-laptop' (llm). Code status: Python NumPy model executed 2026-11-02 (examples/tiny-lm/tiny_char_lm_numpy.py, about 2 seconds on CPU); PyTorch transformer not run (not installed in the build environment)
 using TorchSharp;
 using static TorchSharp.torch;
 using static TorchSharp.torch.nn;

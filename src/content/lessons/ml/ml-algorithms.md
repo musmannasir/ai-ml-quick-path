@@ -4,11 +4,12 @@ title: The main ML algorithms and when to use each
 module: ml
 level: Intermediate
 minutes: 90
+maths: basic arithmetic
 goal: Explain in plain words how linear models, k-nearest neighbours, decision trees, random forests, gradient boosting, support vector machines and naive Bayes work, and choose between them.
 prereqs: ml-regression, ml-classification
 reviewed: 2026-11-02
 evidence: A cross-validated comparison of at least four algorithms on one dataset, with your choice explained by accuracy, speed and explainability.
-code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); C# not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 You do not need dozens of algorithms. These cover most industry work with tables of data:
@@ -94,6 +95,21 @@ note: Matches the paragraph above: accuracy and explainability pull in different
 - Compare fairly | Same cross-validation folds, same metric | process
 - Weigh the trade-offs | Accuracy, speed, memory, explainability | warn
 - Tune the best one or two | See the lesson on improving models | output
+```
+
+```maths Distance between two examples (k-nearest neighbours)
+situation: Each customer is described by two numbers: visits per month and items per visit. A known customer is (1, 2). A new customer is (4, 6). The k-nearest-neighbours method needs to know how far apart they are.
+find: What is the straight-line distance between the two customers?
+step: Difference in visits | 4 − 1 = 3
+step: Difference in items | 6 − 2 = 4
+step: Square both differences and add them | 3^2 + 4^2 = 25
+step: Take the square root | sqrt(25) = 5
+result: The two customers are **5** units apart.
+formula: distance = square root of (sum of squared differences)
+why: k-nearest neighbours predicts by looking at the closest known examples. "Closest" means the smallest distance by this sum. The same idea of distance is used in clustering and in searching embeddings.
+caution: If one column is measured in thousands and another in single units, the big column decides the distance alone. Scale the columns first (see the feature engineering lesson).
+try: A third customer is (4, 2). How far is it from the known customer (1, 2), and which of the two is the nearer neighbour?
+answer: Differences: 4 − 1 = 3 and 2 − 2 = 0. Distance: sqrt(9 + 0) = 3. That is smaller than 5, so (4, 2) is the nearer neighbour.
 ```
 
 ### Related concepts
