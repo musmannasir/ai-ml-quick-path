@@ -501,6 +501,22 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+{
+  // Roadmap steps: prerequisite, progress count, checkpoint link, and a continue button that follows the learner's progress
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('roadmaps.html#ml'));
+  const meta = await page.locator('#ml .node >> nth=1').locator('.node-meta').allInnerTexts();
+  const first = await page.locator('#ml .rm-continue').getAttribute('href');
+  await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 2, prefs: {}, progress: { 'lesson:s-what-is-ai': { done: true, at: '2026-11-01' }, 'lesson:s-lifecycle': { done: true, at: '2026-11-01' }, 'lesson:s-setup': { done: true, at: '2026-11-01' } } })));
+  await page.goto(url('roadmaps.html#ml')); await page.reload();
+  const next = await page.locator('#ml .rm-continue').getAttribute('href');
+  const count = await page.locator('#ml .node >> nth=0').locator('[data-progress-ids]').innerText();
+  const cp = await page.locator('#ml .node >> nth=1').locator('a[href*="assessment.html#cp-data"]').count();
+  expect('Roadmap steps show what to finish first, a progress count and a checkpoint link; Continue points to the first unfinished lesson',
+    /Finish step 1/.test(meta.join(' ')) && /lessons/.test(meta.join(' ')) && cp === 1 && /s-what-is-ai/.test(first) && /d-basics/.test(next) && count === '3/3', );
+  await page.context().close();
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],

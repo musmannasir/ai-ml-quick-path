@@ -105,3 +105,5 @@ C#: 57 of 57 samples compiled and 25 ran to the end; Python: 14 of 14 example pr
 Still open after round 2: lesson-by-lesson teaching review; rewording or trimming the older maths topics; the six unopened sources; roadmap
 redesign; diagram audit; separate progress for exercises; quiz retry flow; feedback link; screen reader, other browsers, phones, axe and
 Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migration pack.
+
+- Roadmaps (2026-11-16): each step shows what to finish first (derived from lesson prerequisites), a finished-lessons count, its part checkpoint link, and each roadmap has a "Continue this route" button. e2e 60/60.

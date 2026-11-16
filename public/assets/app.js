@@ -181,6 +181,7 @@
       el.textContent = el.getAttribute('data-module-progress').split(' ').filter(function (i) { return store.isDone(i); }).length;
     });
     if (window.renderDashboard) window.renderDashboard();
+    if (window.renderRoadmaps) window.renderRoadmaps();
   }
   $$('[data-progress-checkbox]').forEach(function (c) {
     c.addEventListener('change', function () { store.setDone(c.getAttribute('data-progress-checkbox'), c.checked); renderProgress(); });
@@ -374,6 +375,16 @@
     window.addEventListener('hashchange', fromHash);
     window.addEventListener('popstate', fromHash);
     fromHash();
+    // "Continue this route": the first lesson on this roadmap that is not finished yet.
+    var setContinue = function () {
+      $$('.roadmap').forEach(function (panel) {
+        var btn = $('.rm-continue', panel), note = $('.rm-continue-note', panel); if (!btn) return;
+        var next = $$('.node-lessons a[data-progress-id]', panel).filter(function (a) { return a.getAttribute('data-done') !== 'true'; })[0];
+        btn.hidden = !next;
+        if (next) { btn.href = next.href; note.textContent = 'Next: ' + next.textContent; } else note.textContent = 'You have finished every lesson on this roadmap.';
+      });
+    };
+    setContinue(); window.renderRoadmaps = setContinue;
   }
 
   // ---------- Assessment ----------

@@ -196,6 +196,17 @@ ${table(S, 'Related roles', ['Role', 'What they do'], others.map(([a, b]) => [S.
 }
 
 // ---------- Roadmaps ----------
+// For one roadmap step: what to finish first and which part checkpoint covers it. Everything is derived from the data.
+function stepContext(S, r, n, ctx) {
+  const own = new Set(n.lessons), done = new Set(r.nodes.filter((x) => x.n < n.n).flatMap((x) => x.lessons));
+  const outside = [...new Set(n.lessons.flatMap((id) => S.lessons[id].prereqs))].filter((p) => !own.has(p) && !done.has(p)).slice(0, 4);
+  const prev = r.nodes.find((x) => x.n === n.n - 1);
+  const parts = [...new Set(n.lessons.map((id) => S.MODULES.find((m) => m.groups.some((g) => g.lessons.includes(id)))))];
+  const before = !prev ? 'Nothing. You can start here.' : `Finish <a href="#node-${r.id}-${prev.n}">step ${prev.n}: ${S.esc(prev.title)}</a>.${outside.length ? ` Also needed, because this route skips it: ${outside.map((p) => S.lessonLink(p, ctx)).join(', ')}.` : ''}`;
+  const check = parts.length ? parts.map((m) => `<a href="${ctx.root}assessment.html#cp-${m.id}">Part ${S.esc(m.stage)} checkpoint</a>`).join(', ') : '';
+  return `<p class="node-meta"><strong>Before this step:</strong> ${before}</p>${n.lessons.length ? `<p class="node-meta"><strong>Finished:</strong> <span data-progress-ids="${n.lessons.map((id) => 'lesson:' + id).join(' ')}">0/${n.lessons.length}</span> lessons. ${check ? `<strong>Check yourself:</strong> ${check}.` : ''}</p>` : ''}`;
+}
+
 export function roadmapComponent(S, ctx) {
   return `
 <div class="roadmap-bar">
@@ -207,15 +218,17 @@ export function roadmapComponent(S, ctx) {
 ${S.ROADMAPS.map((r) => `<section role="tabpanel" id="${r.id}" aria-labelledby="tab-${r.id}" class="roadmap track-${r.color}" tabindex="-1">
   <h2>${S.esc(r.title)} roadmap</h2>
   <p>${S.esc(r.summary)}</p>
+  <p class="rm-continue-row"><a class="btn btn-primary rm-continue" href="#node-${r.id}-1" hidden>Continue this route</a> <span class="small muted rm-continue-note" role="status"></span></p>
   <nav class="overview" aria-label="${S.esc(r.title)} steps at a glance"><ol class="steps-${r.nodes.length}">${r.nodes.map((n) => `<li><a href="#node-${r.id}-${n.n}"><span class="ov-n">${n.n}</span><span class="ov-t">${S.esc(n.short)}</span></a></li>`).join('')}</ol></nav>
   <ol class="flow">${r.nodes.map((n) => `
     <li class="node" id="node-${r.id}-${n.n}">
       <div class="node-card">
         <div class="node-head"><span class="node-n" aria-hidden="true">${n.n}</span><h3 class="node-title"><span class="sr-only">Step ${n.n} of ${r.nodes.length}: </span>${S.esc(n.title)}</h3><span class="node-effort">${S.esc(n.effort)}<span class="sr-only"> study estimate</span></span></div>
         <p class="node-desc">${S.esc(n.desc)}</p>
+        ${stepContext(S, r, n, ctx)}
         <button type="button" class="node-toggle" aria-expanded="true" aria-controls="np-${r.id}-${n.n}"><span class="when-closed">Show lessons</span><span class="when-open">Hide lessons</span><span class="sr-only"> for step ${n.n}, ${S.esc(n.title)}</span></button>
         <div class="node-panel" id="np-${r.id}-${n.n}">
-          <ul class="node-lessons">${n.lessons.map((id) => `<li>${S.lessonLink(id, ctx)} ${S.levelBadge(S.lessons[id].level)} <span class="small muted">${S.fmtMinutes(S.lessons[id].minutes)}</span></li>`).join('')}${
+          <ul class="node-lessons">${n.lessons.map((id) => `<li><a class="rm-lesson" href="${ctx.root}lessons/${id}.html" data-progress-id="lesson:${id}"><span class="nav-check" aria-hidden="true"></span>${S.esc(S.lessons[id].title)}</a> ${S.levelBadge(S.lessons[id].level)} <span class="small muted">${S.fmtMinutes(S.lessons[id].minutes)}</span></li>`).join('')}${
             (n.projects || []).map((p) => `<li><a href="${ctx.root}projects/${p}.html">Capstone ${S.projectsById[p].n}: ${S.esc(S.projectsById[p].title)}</a> <span class="small muted">${S.esc(S.projectsById[p].effort)}</span></li>`).join('')}</ul>
         </div>
       </div>
