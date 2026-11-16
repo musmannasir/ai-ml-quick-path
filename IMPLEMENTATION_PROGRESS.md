@@ -109,3 +109,5 @@ Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migrat
 - Roadmaps (2026-11-16): each step shows what to finish first (derived from lesson prerequisites), a finished-lessons count, its part checkpoint link, and each roadmap has a "Continue this route" button. e2e 60/60.
 
 - Layout review (2026-11-16): plan, hardware, glossary, progress checked at 1440 px and 390 px; consistent. Added per-week finished counts and done marks to the plan, and a resume link on the progress page. e2e 61/61.
+
+- Diagram audit (2026-11-16): all 432 diagrams analysed. No overflow or clipping at 320, 768 and 1440 px in dark mode; every number in a diagram appears in its lesson text; 3 duplicate titles and 3 repeated structures are intentional reinforcement. Three thin diagrams (two-step flows and a two-step loop) given a third step. `npm run check:diagrams` now enforces: 3+ steps in step diagrams, unique titles per lesson, numbers present in lesson text; it is part of `npm test`. Not done: 245 diagrams have no caption note; no human review of whether each diagram teaches well.

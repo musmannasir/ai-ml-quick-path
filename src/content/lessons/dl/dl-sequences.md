@@ -25,6 +25,7 @@ Text, speech and sensor readings are **sequences**: order matters. To use text, 
 ```diagram loop A recurrent network reading a sequence
 - Read the next token | One step at a time | input
 - Update the hidden state | The running memory | model
+- Pass the state on | It becomes the input to the next step | store
 loop: Repeat for every token, then use the final state to predict
 ```
 

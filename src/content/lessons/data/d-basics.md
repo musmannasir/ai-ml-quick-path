@@ -45,6 +45,7 @@ An estate agency wants to suggest listing prices. Each past sale is one row; siz
 ```diagram flow Splitting by time
 note: Older sales to learn from, the most recent months to test on.
 - Older sales | Train on these | model
+- Cut-off date | Nothing after it is used for learning | warn
 - Most recent months | Test on these | output
 ```
 

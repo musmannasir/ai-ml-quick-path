@@ -58,6 +58,7 @@ A payments company knows fraud rings share devices and pass money between their 
 ```diagram flow Reach grows with each layer
 - Layer 1 | A node knows its direct neighbours | process
 - Layer 2 | It knows nodes two steps away | model
+- Layer 3 | It knows nodes three steps away, so more of the graph | output
 ```
 
 ```maths Message passing: a node averages its neighbours

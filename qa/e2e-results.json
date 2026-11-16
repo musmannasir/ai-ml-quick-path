@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-16T04:30:48.474Z",
+  "date": "2026-11-16T04:35:36.807Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
   "passed": 61,
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 26323 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 26332 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 26323 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 26332 text elements checked",
       "pass": true,
       "detail": ""
     },
