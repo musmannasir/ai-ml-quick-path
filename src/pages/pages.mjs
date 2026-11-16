@@ -593,7 +593,8 @@ function assessment(S) {
 <ol class="mcq-list">${cp.questions.map((q, qi) => `<li><fieldset class="mcq" data-answer="${q.answer}"><legend>${S.esc(q.q)}</legend>
 ${q.options.map((o, oi) => `<label class="opt"><input type="radio" name="${cp.id}-${qi}" value="${oi}"> ${S.esc(o)}</label>`).join('')}
 <div class="mcq-actions"><button type="button" class="btn btn-small" data-check-answer>Check answer</button><p class="mcq-feedback" role="status" aria-live="polite"></p></div>
-<details><summary>Explanation</summary><p>${S.esc(q.why)}</p></details></fieldset></li>`).join('')}</ol></section>`).join('')}</div>
+<details><summary>Explanation</summary><p>${S.esc(q.why)}</p></details></fieldset></li>`).join('')}</ol>
+<div class="cp-foot"><p class="cp-score small" role="status" aria-live="polite"></p><button type="button" class="btn btn-small" data-retry-quiz hidden>Retry this quiz</button></div></section>`).join('')}</div>
 <section aria-labelledby="ready-h"><h2 id="ready-h">Interview readiness signals</h2><p>Things you can demonstrate with your own capstones. Tick them to track your self-assessment (stored in this browser only).</p>
 <div class="two-col">${Object.entries(ready).map(([role, items]) => `<div><h3>${role}</h3><ul class="checklist">${items.map((it, i) => `<li><label class="check-row"><input type="checkbox" data-progress-checkbox="skill:${S.slug(role)}-${i}"> ${S.esc(it)}</label></li>`).join('')}</ul></div>`).join('')}</div></section>`;
   return { path: 'assessment.html', title: 'Checkpoints and readiness', body, crumbs: [['Checkpoints', 'assessment.html']], wide: true, section: 'Practice', keywords: 'quiz checkpoint interview readiness skills assessment' };

@@ -387,15 +387,48 @@
     setContinue(); window.renderRoadmaps = setContinue;
   }
 
-  // ---------- Assessment ----------
+  // ---------- Assessment: check, try again, lock when right, score per quiz (kept in this page only, not saved) ----------
+  function quizScore(section) {
+    var qs = $$('.mcq', section), right = qs.filter(function (q) { return q.getAttribute('data-state') === 'right'; });
+    var first = right.filter(function (q) { return q.getAttribute('data-attempts') === '1'; }).length;
+    var tried = qs.filter(function (q) { return Number(q.getAttribute('data-attempts') || 0) > 0; }).length;
+    var out = $('.cp-score', section), retry = $('[data-retry-quiz]', section);
+    if (out) out.textContent = tried ? right.length + ' of ' + qs.length + ' correct so far, ' + first + ' on the first try.' + (right.length === qs.length ? ' Quiz complete. Retry it later to test what you remember.' : '') : '';
+    if (retry) retry.hidden = !tried;
+  }
   $$('[data-check-answer]').forEach(function (b) {
     b.addEventListener('click', function () {
       var fs = b.closest('.mcq'), fb = $('.mcq-feedback', fs), chosen = $('input:checked', fs);
       fb.classList.remove('ok', 'bad');
+      $$('.opt', fs).forEach(function (o) { o.classList.remove('opt-wrong'); });
       if (!chosen) { fb.textContent = 'Choose an answer first.'; return; }
-      var right = chosen.value === fs.getAttribute('data-answer');
-      fb.textContent = right ? 'Correct.' : 'Not quite. Read the explanation below.'; fb.classList.add(right ? 'ok' : 'bad');
-      var d = $('details', fs); if (d && !right) d.open = true;
+      var n = Number(fs.getAttribute('data-attempts') || 0) + 1; fs.setAttribute('data-attempts', String(n));
+      var right = chosen.value === fs.getAttribute('data-answer'), d = $('details', fs);
+      if (right) {
+        fs.setAttribute('data-state', 'right');
+        fb.textContent = 'Correct' + (n === 1 ? ' on the first try.' : ' on try ' + n + '.'); fb.classList.add('ok');
+        $$('input', fs).forEach(function (i) { i.disabled = true; }); b.disabled = true;
+        if (d) d.open = true;
+      } else {
+        fs.setAttribute('data-state', 'wrong');
+        chosen.closest('.opt').classList.add('opt-wrong');
+        fb.textContent = 'Not quite (try ' + n + '). Pick another answer and check again, or open the explanation.'; fb.classList.add('bad');
+      }
+      quizScore(fs.closest('.checkpoint'));
+    });
+  });
+  $$('[data-retry-quiz]').forEach(function (r) {
+    r.addEventListener('click', function () {
+      var section = r.closest('.checkpoint');
+      $$('.mcq', section).forEach(function (q) {
+        q.removeAttribute('data-state'); q.removeAttribute('data-attempts');
+        $$('input', q).forEach(function (i) { i.disabled = false; i.checked = false; });
+        $$('.opt', q).forEach(function (o) { o.classList.remove('opt-wrong'); });
+        var fb = $('.mcq-feedback', q); fb.textContent = ''; fb.classList.remove('ok', 'bad');
+        $('[data-check-answer]', q).disabled = false; var d = $('details', q); if (d) d.open = false;
+      });
+      quizScore(section); var first = $('input', section); if (first) first.focus();
+      var st = $('.cp-score', section); if (st) st.textContent = 'Quiz reset. Answer again.';
     });
   });
 

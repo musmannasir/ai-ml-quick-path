@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-16T04:43:09.931Z",
+  "date": "2026-11-16T04:49:26.380Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
-  "passed": 63,
+  "passed": 64,
   "failed": 0,
   "results": [
     {
@@ -312,6 +312,11 @@
     },
     {
       "name": "Print layout hides top bar and check buttons",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Quiz retry: a wrong answer can be changed, a right answer locks and reports its try, the score counts first tries, Retry resets the quiz",
       "pass": true,
       "detail": ""
     },

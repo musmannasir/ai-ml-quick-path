@@ -878,6 +878,11 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .edge-tab:focus-visible { z-index: 31; }
 
 /* ---------- Quiz feedback explains, in words, not only colour ---------- */
+.cp-foot { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; margin: var(--s-2) 0 var(--s-4); }
+.cp-score { margin: 0; color: var(--ink-2); }
+.opt-wrong { color: var(--bad-ink); }
+.opt-wrong::after { content: " (not this one)"; font-weight: 600; }
+.mcq[data-state="right"] { border-color: var(--ok-ink); }
 .mcq-feedback.ok::before { content: "\2713\00a0"; }
 .mcq-feedback.bad::before { content: "\2717\00a0"; }
 

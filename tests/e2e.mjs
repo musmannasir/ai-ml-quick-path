@@ -544,6 +544,25 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+{
+  // Quiz retry flow: wrong answer can be changed, right answer locks, score counts first tries, retry resets
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('assessment.html'));
+  const q = page.locator('#cp-ml ~ .mcq-list .mcq').first();
+  const sec = page.locator('.checkpoint:has(#cp-ml)');
+  await q.locator('input[value="0"]').check(); await q.locator('[data-check-answer]').click();
+  const wrong = await q.locator('.mcq-feedback').innerText(); const mark = await q.locator('.opt-wrong').count(); const stillOpen = await q.locator('input[value="1"]').isEnabled();
+  await q.locator('input[value="1"]').check(); await q.locator('[data-check-answer]').click();
+  const right = await q.locator('.mcq-feedback').innerText(); const locked = await q.locator('input[value="2"]').isDisabled(); const open = await q.locator('details').evaluate((d) => d.open);
+  const score = await sec.locator('.cp-score').innerText();
+  await sec.locator('[data-retry-quiz]').click();
+  const reset = (await q.locator('input:checked').count()) === 0 && (await q.locator('input[value="2"]').isEnabled()) && (await q.locator('.mcq-feedback').innerText()) === '';
+  expect('Quiz retry: a wrong answer can be changed, a right answer locks and reports its try, the score counts first tries, Retry resets the quiz',
+    wrong.startsWith('Not quite (try 1)') && mark === 1 && stillOpen && /on try 2/.test(right) && locked && open && /1 of 5 correct so far, 0 on the first try/.test(score) && reset && page.errors.length === 0,
+    `wrong=${wrong.slice(0, 40)} mark=${mark} right=${right} locked=${locked} score=${score} reset=${reset}`);
+  await page.context().close();
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
