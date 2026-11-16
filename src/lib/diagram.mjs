@@ -57,6 +57,24 @@ export function parseDiagram(info, bodyLines, where = 'diagram') {
   return d;
 }
 
+// A plain-words reading guide generated from the diagram's own data (used when the author wrote no note), so it always agrees with the boxes.
+function readHint(d, inl) {
+  const list = (items) => items.map((i) => inl(i.label)).join(', ');
+  switch (d.type) {
+    case 'flow': return `follow the steps in order: ${list(d.items)}.`;
+    case 'loop': return `follow the steps in order, then go back to the first: ${list(d.items)}.`;
+    case 'layers': return `the layers, in the order listed: ${list(d.items)}.`;
+    case 'compare': return `${d.groups.length} columns side by side: ${d.groups.map((g) => inl(g.title)).join(', ')}. Read down each column.`;
+    case 'nest': return `boxes sit inside each other, outermost first: ${list(d.items)}.`;
+    case 'matrix': return `four boxes arranged by ${inl(d.x[0])} or ${inl(d.x[1])} (across) and ${inl(d.y[0])} or ${inl(d.y[1])} (down).`;
+    case 'lanes': return `each row is a separate path: ${d.groups.map((g) => inl(g.title)).join(', ')}.`;
+    case 'fan': return `one box, ${inl(d.items[0].label)}, leads to several: ${list(d.items.slice(1))}.`;
+    case 'merge': return `several boxes (${list(d.items.slice(1))}) come together into ${inl(d.items[0].label)}.`;
+    case 'bar': return `one bar split into parts: ${d.items.map((i) => inl(i.label) + ' ' + i.detail).join(', ')}. The sizes are only for illustration.`;
+    default: return '';
+  }
+}
+
 export function renderDiagram(info, bodyLines, inline, ctx, where) {
   const d = parseDiagram(info, bodyLines, where);
   const inl = (s) => inline(s, ctx);
@@ -82,5 +100,5 @@ export function renderDiagram(info, bodyLines, inline, ctx, where) {
       body = `<ol class="dg-bar">${d.items.map((it) => `<li class="dg-seg w${w(it)} k-${it.kind}"><strong class="dg-label">${inl(it.label)}</strong><span class="dg-detail">${esc(it.detail.replace('%', ''))}%</span></li>`).join('')}</ol>`; break;
     }
   }
-  return `<figure class="diagram dgt-${d.type}" role="group" aria-labelledby="${id}"><figcaption id="${id}"><span class="dg-kicker">Diagram</span> ${inl(d.title)}</figcaption>${body}${d.note ? `<p class="dg-note">${inl(d.note)}</p>` : ''}</figure>`;
+  return `<figure class="diagram dgt-${d.type}" role="group" aria-labelledby="${id}"><figcaption id="${id}"><span class="dg-kicker">Diagram</span> ${inl(d.title)}</figcaption>${body}${d.note ? `<p class="dg-note">${inl(d.note)}</p>` : `<p class="dg-note dg-read"><strong>How to read it:</strong> ${readHint(d, inl)}</p>`}</figure>`;
 }
