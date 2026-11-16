@@ -563,6 +563,25 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+{
+  // Exercises are tracked apart from reading: own tick, own progress block, kept in export, independent of the lesson tick
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/ml-regression.html'));
+  await page.check('[data-progress-checkbox="exercise:ml-regression"]');
+  const lessonTicked = await page.isChecked('[data-progress-checkbox="lesson:ml-regression"]');
+  const sidebarDone = await page.getAttribute('#sidebar a[data-progress-id="lesson:ml-regression"]', 'data-done');
+  await page.goto(url('progress.html'));
+  const block = await page.locator('#progress-dashboard .dash-item', { hasText: 'Exercises done' }).innerText();
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#export-progress')]);
+  const exported = JSON.parse(readFileSync(await dl.path(), 'utf8'));
+  await page.goto(url('lessons/ml-regression.html'));
+  const kept = await page.isChecked('[data-progress-checkbox="exercise:ml-regression"]');
+  expect('Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered',
+    !lessonTicked && sidebarDone === 'false' && /1 of 50/.test(block) && exported.progress['exercise:ml-regression']?.done === true && !exported.progress['lesson:ml-regression'] && kept,
+    `lesson=${lessonTicked} sidebar=${sidebarDone} block=${block.replace(/s+/g, ' ')} exported=${Object.keys(exported.progress)} kept=${kept}`);
+  await page.context().close();
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],

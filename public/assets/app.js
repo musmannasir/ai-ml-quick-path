@@ -440,6 +440,7 @@
     if (!store.ok) $('#storage-warning').hidden = false;
     window.renderDashboard = function () {
       var blocks = C.modules.map(function (m) { return { title: m.title, ids: m.lessons.map(function (l) { return 'lesson:' + l.id; }), href: null }; });
+      blocks.push({ title: 'Exercises done (evidence produced)', ids: C.modules.flatMap(function (m) { return m.lessons.map(function (l) { return 'exercise:' + l.id; }); }) });
       blocks.push({ title: 'Portfolio projects', ids: C.projects.map(function (p) { return 'project:' + p.id; }) });
       dash.innerHTML = '';
       blocks.forEach(function (b) {

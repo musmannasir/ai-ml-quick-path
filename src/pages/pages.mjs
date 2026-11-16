@@ -610,7 +610,7 @@ function progress(S) {
   const body = `
 <h1>My progress and study calendar</h1>
 <p id="resume-progress" class="resume-card" hidden><span class="resume-k">Continue where you left off</span><br><a id="resume-link" href="index.html"></a><br><span class="small muted" id="resume-next"></span></p>
-<div class="callout callout-note"><p><strong>How progress works.</strong> A tick means you finished a lesson or a project. It is your own record, not a test result. Completion marks are stored in this browser on this device. They are not uploaded or shared. Clearing browser data removes them, so export a file to keep a backup or move to another device.</p></div>
+<div class="callout callout-note"><p><strong>How progress works.</strong> A lesson has two ticks: reading it, and producing its exercise evidence. A project has one. It is your own record, not a test result. Completion marks are stored in this browser on this device. They are not uploaded or shared. Clearing browser data removes them, so export a file to keep a backup or move to another device.</p></div>
 <p id="storage-warning" class="callout callout-warn" hidden>This browser is blocking local storage, so progress cannot be saved here. Lessons still work; use export before closing the page.</p>
 <section aria-labelledby="dash-h"><h2 id="dash-h">Progress by part</h2><div id="progress-dashboard" class="dash"></div></section>
 <section aria-labelledby="io-h"><h2 id="io-h">Export, import and reset</h2>

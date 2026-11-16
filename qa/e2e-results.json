@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-16T11:02:38.868Z",
+  "date": "2026-11-16T11:04:57.403Z",
   "browser": "Chromium (Playwright)",
   "pages": 92,
-  "passed": 64,
+  "passed": 65,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 26822 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 26874 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 26822 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 26874 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -317,6 +317,11 @@
     },
     {
       "name": "Quiz retry: a wrong answer can be changed, a right answer locks and reports its try, the score counts first tries, Retry resets the quiz",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered",
       "pass": true,
       "detail": ""
     },

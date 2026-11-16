@@ -293,8 +293,9 @@ ${sections}
 <section class="completion" aria-labelledby="completion">
   <h2 id="completion">Completion</h2>
   <p><strong>Evidence of completion.</strong> ${md(l.evidence, ctx).replace(/^<p>|<\/p>$/g, '')}</p>
-  <label class="check-row"><input type="checkbox" data-progress-checkbox="lesson:${id}"> I have completed this lesson and its exercise</label>
-  <p class="small muted">Saved in this browser only. A tick records that you finished the work; it is not a test result. <a href="${ctx.root}progress.html">See all progress</a>.</p>
+  <label class="check-row"><input type="checkbox" data-progress-checkbox="lesson:${id}"> I have read this lesson and understood it</label>
+  <label class="check-row"><input type="checkbox" data-progress-checkbox="exercise:${id}"> I have produced the evidence above (the exercise)</label>
+  <p class="small muted">Saved in this browser only. Reading and exercise are ticked separately because they are different achievements. A tick records your own work; it is not a test result. <a href="${ctx.root}progress.html">See all progress</a>.</p>
   ${after.length ? `<p class="leads-to"><strong>This lesson prepares you for:</strong> ${after.map((x) => lessonLink(x, ctx)).join(', ')}.</p>` : ''}
   <div class="actions"><button type="button" class="btn btn-small" data-print>Print or save as PDF</button></div>
 </section>

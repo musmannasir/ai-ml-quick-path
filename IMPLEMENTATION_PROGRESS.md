@@ -117,3 +117,5 @@ Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migrat
 - Quiz retry flow (2026-11-16): a wrong answer marks the choice "(not this one)" in words, keeps the options open and counts the try; a right answer locks, reports its try and opens the explanation; each part shows "x of y correct so far, z on the first try" and a Retry button that resets it. Results are kept on the page only, not saved. The lesson "Quick check" (reveal answers) is unchanged. e2e 64/64.
 
 - Diagram reading guides (2026-11-16): every diagram without an author note now shows a generated "How to read it" line built from its own boxes (all 432 diagrams have a caption note or a reading guide). e2e 64/64. Not done: no authored explanation per diagram; no "Explain this diagram" toggle.
+
+- Exercise progress (2026-11-16): each lesson now has two ticks, "read and understood" (lesson:id) and "produced the evidence" (exercise:id); the progress page has an "Exercises done" block; both are exported, imported and reset. Existing ticks keep meaning "lesson done". Project evidence already has its own tick per capstone. e2e 65/65.
