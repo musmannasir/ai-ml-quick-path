@@ -43,7 +43,7 @@ if (doPy) {
     ['memory-estimate', ['memory_estimate.py']], ['rag-leave-policy', ['rag_leave_policy.py']], ['agent-returns', ['returns_workflow.py']],
     ['llm-summarizer/python', ['summarize.py', '--offline']], ['llm-summarizer/python', ['-m', 'unittest', 'test_summary_schema.py']],
     ['ml-basics', ['ml_basics.py']], ['applied-ai-basics', ['applied_basics.py']],
-    ['quickpath', ['quickpath.py']], ['math', ['math_for_ai.py']], ['ai-extras', ['ai_extras.py']], ['gap-topics', ['gap_topics.py']], ['generalisation', ['generalisation.py']], ['model-compare', ['model_compare.py']], ['linear-deeper', ['linear_deeper.py']], ['boosting', ['adaboost.py']], ['clustering', ['clustering.py']], ['seeing-data', ['see_data.py']], ['patterns', ['patterns.py']], ['maths-moments', ['maths_moments.py']]];
+    ['quickpath', ['quickpath.py']], ['math', ['math_for_ai.py']], ['ai-extras', ['ai_extras.py']], ['gap-topics', ['gap_topics.py']], ['generalisation', ['generalisation.py']], ['model-compare', ['model_compare.py']], ['linear-deeper', ['linear_deeper.py']], ['boosting', ['adaboost.py']], ['clustering', ['clustering.py']], ['seeing-data', ['see_data.py']], ['patterns', ['patterns.py']], ['backprop', ['autograd.py']], ['nlp-classic', ['text_basics.py']], ['vision-more', ['vision_more.py']], ['gen-more', ['gen_more.py']], ['rl-value', ['rl_value.py']], ['rl-policy', ['rl_policy.py']], ['maths-moments', ['maths_moments.py']]];
   status.examples = [];
   for (const [dir, a] of runs) {
     if (!existsSync(join(EX, dir))) continue;

@@ -29,8 +29,8 @@ export const MODULES = [
     id: 'dl', page: 'part-4-deep-learning.html', stage: '4', title: 'Part 4: Deep learning', short: '4 Deep learning', track: 'ml',
     intro: 'Neural networks and how to train them, then the model families used for images, text, audio, generation, decision-making and connected data.',
     groups: [
-      { title: 'Neural networks', lessons: ['dl-neural-nets', 'dl-training'] },
-      { title: 'Model families', lessons: ['dl-vision', 'dl-sequences', 'dl-transformers', 'dl-generative', 'dl-speech', 'dl-rl', 'dl-graphs'] },
+      { title: 'Neural networks', lessons: ['dl-neural-nets', 'dl-backprop', 'dl-training'] },
+      { title: 'Model families', lessons: ['dl-vision', 'dl-vision-more', 'dl-sequences', 'dl-nlp-classic', 'dl-transformers', 'dl-generative', 'dl-gen-more', 'dl-speech', 'dl-rl', 'dl-rl-value', 'dl-rl-policy', 'dl-graphs'] },
     ],
   },
   {
@@ -74,7 +74,7 @@ export const ROADMAPS = [
       { n: 2, title: 'Data skills', short: 'Data', effort: '8–12 h', desc: 'Data types, collection, labelling, cleaning, exploring and features.', lessons: ['d-basics', 'd-collect', 'd-clean-eda', 'd-features'] },
       { n: 3, title: 'Core machine learning', short: 'ML', effort: '12–18 h', desc: 'How models learn, regression, classification, the main algorithms and unsupervised learning.', lessons: ['ml-learning', 'ml-regression', 'ml-classification', 'ml-linear-deeper', 'ml-algorithms', 'ml-trees-more', 'ml-unsupervised', 'ml-clustering', 'ml-see-data', 'ml-patterns'] },
       { n: 4, title: 'Measure, improve and apply ML', short: 'Improve', effort: '8–12 h', desc: 'Metrics, tuning, explanations, forecasting and recommenders.', lessons: ['ml-evaluation', 'ml-model-compare', 'ml-generalisation', 'ml-improve', 'ml-timeseries', 'ml-recommenders'] },
-      { n: 5, title: 'Deep learning', short: 'Deep learning', effort: '14–20 h', desc: 'Neural networks, training, vision, text, transformers, generation, speech, RL and graphs.', lessons: ['dl-neural-nets', 'dl-training', 'dl-vision', 'dl-sequences', 'dl-transformers', 'dl-generative', 'dl-speech', 'dl-rl', 'dl-graphs'] },
+      { n: 5, title: 'Deep learning', short: 'Deep learning', effort: '14–20 h', desc: 'Neural networks, training, vision, text, transformers, generation, speech, RL and graphs.', lessons: ['dl-neural-nets', 'dl-backprop', 'dl-training', 'dl-vision', 'dl-vision-more', 'dl-sequences', 'dl-nlp-classic', 'dl-transformers', 'dl-generative', 'dl-gen-more', 'dl-speech', 'dl-rl', 'dl-rl-value', 'dl-rl-policy', 'dl-graphs'] },
       { n: 6, title: 'Large language models', short: 'LLMs', effort: '14–20 h', desc: 'How LLMs work, design, train on a laptop, scale up, fine-tune, run locally, evaluate.', lessons: ['llm-how', 'llm-tokens', 'llm-design', 'llm-train-laptop', 'llm-scale', 'llm-finetune', 'llm-local', 'llm-eval'] },
       { n: 7, title: 'Talk to models and add knowledge', short: 'RAG', effort: '10–14 h', desc: 'LLM APIs, prompting, embeddings, RAG and advanced retrieval.', lessons: ['app-llm-api', 'app-prompting', 'app-embeddings', 'app-rag', 'app-rag-advanced'] },
       { n: 8, title: 'Agents, multimodal and trust', short: 'Agents', effort: '12–16 h', desc: 'Tools, agents, frameworks, multimodal apps, evaluation, security and responsible AI.', lessons: ['app-agents', 'app-frameworks', 'app-multimodal', 'app-evals', 'app-security', 'app-responsible', 'app-genai-agentic'] },
@@ -92,7 +92,7 @@ export const ROADMAPS = [
       { n: 4, title: 'Algorithms and unsupervised learning', short: 'Algorithms', effort: '6–10 h', desc: 'Which algorithm when; clustering, PCA and anomalies.', lessons: ['ml-algorithms', 'ml-trees-more', 'ml-unsupervised', 'ml-clustering', 'ml-see-data', 'ml-patterns'] },
       { n: 5, title: 'Evaluation and improvement', short: 'Evaluate', effort: '7–11 h', desc: 'Metrics, validation, bias and variance, tuning, explanations.', lessons: ['ml-evaluation', 'ml-model-compare', 'ml-generalisation', 'ml-improve'] },
       { n: 6, title: 'Forecasting and recommendations', short: 'Industry ML', effort: '6–10 h', desc: 'Two of the most common business uses.', lessons: ['ml-timeseries', 'ml-recommenders'] },
-      { n: 7, title: 'Deep learning', short: 'Deep learning', effort: '14–20 h', desc: 'Networks, training, vision and other model families.', lessons: ['dl-neural-nets', 'dl-training', 'dl-vision', 'dl-sequences', 'dl-transformers', 'dl-rl'] },
+      { n: 7, title: 'Deep learning', short: 'Deep learning', effort: '14–20 h', desc: 'Networks, training, vision and other model families.', lessons: ['dl-neural-nets', 'dl-backprop', 'dl-training', 'dl-vision', 'dl-vision-more', 'dl-sequences', 'dl-nlp-classic', 'dl-transformers', 'dl-rl', 'dl-rl-value', 'dl-rl-policy'] },
       { n: 8, title: 'MLOps and production', short: 'MLOps', effort: '10–14 h', desc: 'Serve, track, monitor and scale models.', lessons: ['ops-serving', 'ops-mlops', 'ops-monitoring', 'ops-scale'] },
       { n: 9, title: 'Capstones', short: 'Capstone', effort: '30–50 h', desc: 'Churn prediction, demand forecasting and image inspection.', lessons: [], projects: ['c01-churn', 'c02-forecast', 'c03-vision'] },
     ],

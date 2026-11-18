@@ -130,7 +130,7 @@ export function parseLesson(raw, file) {
   const meta = {};
   for (const line of m[1].split('\n')) {
     const kv = line.match(/^(\w+):\s*(.*)$/);
-    if (kv) meta[kv[1]] = kv[2].trim();
+    if (kv) meta[kv[1]] = kv[2].trim().replace(/^"(.*)"$/, '$1');
   }
   for (const key of ['id', 'title', 'module', 'level', 'minutes', 'goal', 'reviewed', 'evidence']) {
     if (!meta[key]) throw new Error(`${file}: front matter is missing "${key}"`);

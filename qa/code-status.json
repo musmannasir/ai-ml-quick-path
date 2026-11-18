@@ -163,6 +163,48 @@
    "result": "ran",
    "date": "2026-11-18",
    "detail": ""
+  },
+  {
+   "command": "python autograd.py",
+   "cwd": "examples/backprop",
+   "result": "ran",
+   "date": "2026-11-18",
+   "detail": ""
+  },
+  {
+   "command": "python text_basics.py",
+   "cwd": "examples/nlp-classic",
+   "result": "ran",
+   "date": "2026-11-18",
+   "detail": ""
+  },
+  {
+   "command": "python vision_more.py",
+   "cwd": "examples/vision-more",
+   "result": "ran",
+   "date": "2026-11-18",
+   "detail": ""
+  },
+  {
+   "command": "python gen_more.py",
+   "cwd": "examples/gen-more",
+   "result": "ran",
+   "date": "2026-11-18",
+   "detail": ""
+  },
+  {
+   "command": "python rl_value.py",
+   "cwd": "examples/rl-value",
+   "result": "ran",
+   "date": "2026-11-18",
+   "detail": ""
+  },
+  {
+   "command": "python rl_policy.py",
+   "cwd": "examples/rl-policy",
+   "result": "ran",
+   "date": "2026-11-18",
+   "detail": ""
   }
  ],
  "lessons": {
@@ -1892,6 +1934,156 @@
      "run": "ran",
      "runDetail": "",
      "output": "round  rule                   weighted error  alpha\r\n    1  x > 3.5 gives -1                0.300  0.424\r\n    2  x > 9.5 gives -1                0.214  0.650\r\n    3  x > 6.5 gives +1                0.182  0.752\r\nensemble accuracy after 3 rounds: 1.00\r\nweights of the ten points after round 3: 0.125 0.125 0.125 0.102 0.102 0.102 0.065 0.065 0.065 0.125"
+    }
+   ]
+  },
+  "dl-backprop": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-backprop/autograd.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-backprop/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "loss 0.1101  d loss / d w = -0.2943  d loss / d b = -0.1471\r\nnumerical check of d loss / d w: -0.2943\r\nlayers  gradient reaching the first layer (sigmoid layers, weight 1)  (ReLU layers, weight 1)\r\n     1                                                   2.35e-01                     1.0\r\n     5                                                   6.08e-04                     1.0\r\n    10                                                   3.48e-07                     1.0\r\n    20                                                   1.14e-13                     1.0"
+    }
+   ]
+  },
+  "dl-gen-more": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-gen-more/gen_more.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-gen-more/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "reparameterised sample z = 1.40\r\nKL for (mu 0, sigma 1): 0.000   for (mu 1, sigma 0.5): 0.818   for (mu 3, sigma 0.2): 5.629\r\ndensity of x at 0.5: 0.3521;  density of y at 2.0: 0.1760  (divided by the stretch 2)\r\n step  abar    signal weight  noise weight  noisy value\r\n    1  0.9999          1.000         0.010        1.995\r\n  100  0.8970          0.947         0.321        1.734\r\n  500  0.0786          0.280         0.960        0.081\r\n 1000  0.0000          0.006         1.000       -0.487"
+    }
+   ]
+  },
+  "dl-nlp-classic": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-nlp-classic/text_basics.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-nlp-classic/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "tokens: ['the', 'cats', 'were', 'running', 'quickly', 'and', 'the', 'dogs', 'ran', 'home']\r\nwithout stop words: ['cats', 'running', 'quickly', 'dogs', 'ran', 'home']\r\nstems: ['cat', 'runn', 'quick', 'dog', 'ran', 'home']\r\nBLEU-2 for 'the cat sat on the mat': 1.000\r\nBLEU-2 for 'the cat is on the mat':  0.707\r\nBLEU-2 for 'the cat sat':            0.368\r\nViterbi tags for ['dogs', 'bark', 'loudly'] -> ['N', 'V', 'N']  probability 0.00504"
+    }
+   ]
+  },
+  "dl-rl-policy": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-rl-policy/rl_policy.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-rl-policy/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "step  probability of the better action\r\n   0  0.500\r\n   5  0.760\r\n  10  0.871\r\n  20  0.939\r\n  30  0.961\r\nreturns:    2.122 2.358 2.620 1.800 2.000\r\nadvantages: -0.058 0.178 0.440 -0.380 -0.180   (baseline 2.180)\r\nratio 1.1  advantage +2.0  objective +2.20\r\nratio 1.5  advantage +2.0  objective +2.40\r\nratio 0.7  advantage -2.0  objective -1.60\r\nratio 1.1  advantage -2.0  objective -2.20"
+    }
+   ]
+  },
+  "dl-rl-value": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-rl-value/rl_value.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-rl-value/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "Monte Carlo return from states 0, 1, 2, 3: 0.729 0.810 0.900 1.000\r\nTD(0) estimates after 30 episodes:        0.729 0.810 0.900 1.000\r\nQ-learning value of 'right' in states 0 to 3: 0.729 0.810 0.900 1.000   best action in each: RRRR\r\nSARSA      value of 'right' in states 0 to 3: 0.639 0.782 0.889 1.000   best action in each: RRRR"
+    }
+   ]
+  },
+  "dl-vision-more": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/dl-dl-vision-more/vision_more.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/dl-dl-vision-more/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "Sobel response, one row of the 4x4 output: [0, 36, 36, 0]\r\nmixup image: [[0.3, 1.0], [0.7, 0.0]]  label mix: cat 0.7, dog 0.3\r\ndistance to positive 0.707, to negative 5.000, triplet loss 0.000\r\nwith a hard negative at distance 1.131, triplet loss 0.576"
     }
    ]
   }
