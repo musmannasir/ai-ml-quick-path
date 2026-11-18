@@ -3,7 +3,7 @@
 A free learning website for people **new to AI** who want a complete grip on AI and machine
 learning, from the first idea to designing and building industry systems.
 
-- **50 lessons in 7 parts**: the big picture, data, machine learning, deep learning, large language models,
+- **51 lessons in 7 parts**: the big picture, data, machine learning, deep learning, large language models,
   AI applications (RAG, agents, multimodal, evaluation, security, responsible AI) and production (serving,
   MLOps, monitoring, scale, architecture).
 - **Maths at the point of need.** Where a calculation matters, a "maths moment" inside the lesson works it out by hand with tiny numbers, one step per line (52 of them; the build checks every step). Extra worked examples sit in a collapsible "Applied Maths - Statistics" section; the Maths map indexes them.
@@ -41,7 +41,7 @@ Latest results are in `QA_REPORT.md`.
 ```
 scripts/build.mjs            generator (validates lessons, fails on external or broken links)
 scripts/extract_lesson_code.py   copies lesson code blocks into examples/lesson-code/
-src/content/lessons/<part>/  50 lessons in Markdown
+src/content/lessons/<part>/  51 lessons in Markdown
 src/data/                    curriculum (parts, roadmaps, routes), cases, capstones, hardware, glossary, quizzes
 src/pages/pages.mjs          all non-lesson pages
 src/lib/                     Markdown renderer, page layout

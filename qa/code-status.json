@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16",
+ "generated": "2026-11-18",
  "machine": "win32",
  "tools": {
   "dotnet": "10.0.400",
@@ -21,98 +21,105 @@
    "command": "python spam_classifier.py",
    "cwd": "examples/spam-classifier",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python attention_toy.py",
    "cwd": "examples/attention",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python tiny_char_lm_numpy.py",
    "cwd": "examples/tiny-lm",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python memory_estimate.py",
    "cwd": "examples/memory-estimate",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python rag_leave_policy.py",
    "cwd": "examples/rag-leave-policy",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python returns_workflow.py",
    "cwd": "examples/agent-returns",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python summarize.py --offline",
    "cwd": "examples/llm-summarizer/python",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python -m unittest test_summary_schema.py",
    "cwd": "examples/llm-summarizer/python",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python ml_basics.py",
    "cwd": "examples/ml-basics",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python applied_basics.py",
    "cwd": "examples/applied-ai-basics",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python quickpath.py",
    "cwd": "examples/quickpath",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python math_for_ai.py",
    "cwd": "examples/math",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python ai_extras.py",
    "cwd": "examples/ai-extras",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
    "detail": ""
   },
   {
    "command": "python gap_topics.py",
    "cwd": "examples/gap-topics",
    "result": "ran",
-   "date": "2026-11-16",
+   "date": "2026-11-18",
+   "detail": ""
+  },
+  {
+   "command": "python generalisation.py",
+   "cwd": "examples/generalisation",
+   "result": "ran",
+   "date": "2026-11-18",
    "detail": ""
   }
  ],
@@ -1668,6 +1675,31 @@
      "run": "ran",
      "runDetail": "",
      "output": "step 1: find_order(A-1001) -> lost\r\nstep 2: prepare_refund(A-1001) -> refund prepared for A-1001 (needs approval)\r\nApprove this refund? (y/n) Stopped: a person did not approve the refund."
+    }
+   ]
+  },
+  "ml-generalisation": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-generalisation/generalisation.py",
+     "date": "2026-11-18",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-generalisation/Program.cs",
+     "date": "2026-11-18",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "wobble alone (the error no model can remove): 0.249\r\nalways predict the training average: test RMSE 0.762\r\n k  train RMSE  test RMSE\r\n 1       0.000      0.394\r\n 3       0.300      0.246\r\n 5       0.250      0.274\r\n 9       0.321      0.315\r\n15       0.358      0.367\r\n29       0.750      0.755"
     }
    ]
   }

@@ -36,7 +36,7 @@ little, or are learning to. They do not want heavy mathematics, so maths is kept
 `aiea.v1`) and "Complete AI Academy" (for CS graduates, with full maths, key `caia.v1`) share this code base.
 Keep them separate: this site uses storage key `aimlqp.v1` and export schema `aimlqp-progress`.
 
-**Structure (7 parts, 50 lessons):** 1 The big picture (3), 2 Data (4), 3 Machine learning (9),
+**Structure (7 parts, 51 lessons):** 1 The big picture (3), 2 Data (4), 3 Machine learning (10),
 4 Deep learning (9), 5 Large language models (8), 6 AI applications (12), 7 Production (5).
 Roadmaps: `applied` "Quick path: complete grip" (10 steps), `ml` "ML engineer view" (9), `lm` "AI engineer view" (9).
 Capstones: c01-churn, c02-forecast, c03-vision, c04-rag-assistant, c05-agent, c06-tiny-llm, c07-local-assistant, c08-lora-finetune.
@@ -87,9 +87,9 @@ tests/static-checks.mjs  HTML checks on dist/ (including zero external links)
 tests/e2e.mjs            59 Playwright checks; writes qa/e2e-results.json and qa/screenshots/
 ```
 
-**Pages (92):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
+**Pages (93):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
 maths (maths names map, generated from every lesson's maths section), 7 part pages (`part-1-start.html` …
-`part-7-production.html`), 50 lessons, projects + 8 capstones, cases + 11, hardware, glossary, assessment,
+`part-7-production.html`), 51 lessons, projects + 8 capstones, cases + 11, hardware, glossary, assessment,
 progress, about, 404. Output uses **relative links** and works from `file://`.
 
 ---

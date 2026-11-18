@@ -17,6 +17,8 @@ const QA = join(ROOT, 'qa');
 mkdirSync(join(QA, 'screenshots'), { recursive: true });
 const url = (p) => { const [f, h] = p.split('#'); return pathToFileURL(join(DIST, f)).href + (h ? '#' + h : ''); };
 const ALL = (function walk(d, pre = '') { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p, pre + f + '/') : f.endsWith('.html') ? [pre + f] : []; }); })(DIST).sort();
+const ML_LESSONS = (readFileSync(join(DIST, 'index.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
+const LESSONS = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p)).length;   // read from dist/, not typed
 const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
@@ -288,6 +290,8 @@ for (const w of [320, 390, 768]) {
   await page.goto(url('lessons.html'));
   const shown = () => page.$$eval('#cat-list > li', (ls) => ls.filter((l) => !l.hidden).length);
   const total = await shown();
+  const mlExpected = await page.$$eval('#cat-list > li[data-part~="3-machine-learning"]', (l) => l.length);
+  const mlIntExpected = await page.$$eval('#cat-list > li[data-part~="3-machine-learning"][data-level~="intermediate"]', (l) => l.length);
   await page.selectOption('select[data-filter="part"]', '3-machine-learning'); const ml = await shown();
   await page.selectOption('select[data-filter="level"]', 'intermediate'); const mlInt = await shown();
   await page.selectOption('select[data-filter="level"]', 'expert'); const none = await shown(); const empty = await page.isVisible('.empty-state');
@@ -295,14 +299,14 @@ for (const w of [320, 390, 768]) {
   // The code filter now lists the labels produced by the real verification run (qa/code-status.json), so the option
   // value changed from "python-output-from-a-real-run" to "python-example-run".
   await page.selectOption('select[data-filter="code"]', 'python-example-run'); const exec = await shown();
-  expect('Lesson catalogue filters (part × level × code status) combine, show empty state and reset', total === 50 && ml === 9 && mlInt === 6 && none === 0 && empty && reset === 50 && exec >= 40, `total=${total} ml=${ml} mlIntermediate=${mlInt} none=${none} empty=${empty} reset=${reset} executed=${exec}`);
+  expect('Lesson catalogue filters (part × level × code status) combine, show empty state and reset', total === LESSONS && ml === mlExpected && mlInt === mlIntExpected && none === 0 && empty && reset === LESSONS && exec >= 40, `total=${total} ml=${ml} mlIntermediate=${mlInt} none=${none} empty=${empty} reset=${reset} executed=${exec}`);
   await page.click('.filters [data-filter-reset]');
   const mathsOpts = await page.$$eval('select[data-filter="maths"] option', (os) => os.map((o) => o.value).filter(Boolean));
   let mathsSum = 0; for (const v of mathsOpts) { await page.selectOption('select[data-filter="maths"]', v); mathsSum += await shown(); }
   await page.click('.filters [data-filter-reset]');
   await page.selectOption('select[data-filter="done"]', 'yes'); const doneNone = await shown();
   await page.selectOption('select[data-filter="done"]', 'no'); const todo = await shown();
-  expect('Catalogue maths-level filter covers every lesson exactly once; progress filter separates finished from unfinished', mathsOpts.length === 4 && mathsSum === 50 && doneNone === 0 && todo === 50, `options=${mathsOpts.length} sum=${mathsSum} finished=${doneNone} unfinished=${todo}`);
+  expect('Catalogue maths-level filter covers every lesson exactly once; progress filter separates finished from unfinished', mathsOpts.length === 4 && mathsSum === LESSONS && doneNone === 0 && todo === LESSONS, `options=${mathsOpts.length} sum=${mathsSum} finished=${doneNone} unfinished=${todo}`);
   await page.context().close();
 }
 
@@ -342,10 +346,10 @@ for (const w of [320, 390, 768]) {
   const bad = join(QA, 'bad.json'); writeFileSync(bad, '{"hello": 1}');
   await page.setInputFiles('#import-progress', bad); await page.waitForTimeout(200);
   const badMsg = await page.textContent('#io-status'); const still = await page.textContent('#progress-dashboard');
-  expect('Lesson completion updates sidebar count (1/9)', count === '1/9', count);
+  expect('Lesson completion updates the sidebar count (1 of the Part 3 lessons)', count === '1/' + ML_LESSONS, count);
   expect('Export produces versioned JSON (schema aimlqp-progress, version 2)', exported.schema === 'aimlqp-progress' && exported.version === 2 && exported.progress['lesson:ml-classification']?.done === true, JSON.stringify(exported).slice(0, 120));
-  expect('Reset clears progress; import restores it', /1 of 9/.test(dash) && !/1 of 9/.test(afterReset) && /1 of 9/.test(afterImport), '');
-  expect('Invalid import is rejected with a clear message and changes nothing', /Import failed/.test(badMsg) && /1 of 9/.test(still), badMsg);
+  expect('Reset clears progress; import restores it', dash.includes('1 of ' + ML_LESSONS) && !afterReset.includes('1 of ' + ML_LESSONS) && afterImport.includes('1 of ' + ML_LESSONS), '');
+  expect('Invalid import is rejected with a clear message and changes nothing', /Import failed/.test(badMsg) && still.includes('1 of ' + ML_LESSONS), badMsg);
   await page.fill('#cal-hours', '1');
   const calErr = await page.isVisible('#cal-error'); const inv = await page.getAttribute('#cal-hours', 'aria-invalid');
   await page.fill('#cal-hours', '10'); await page.selectOption('#cal-roadmap', 'lm');
@@ -577,7 +581,7 @@ for (const w of [320, 390, 768]) {
   await page.goto(url('lessons/ml-regression.html'));
   const kept = await page.isChecked('[data-progress-checkbox="exercise:ml-regression"]');
   expect('Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered',
-    !lessonTicked && sidebarDone === 'false' && /1 of 50/.test(block) && exported.progress['exercise:ml-regression']?.done === true && !exported.progress['lesson:ml-regression'] && kept,
+    !lessonTicked && sidebarDone === 'false' && new RegExp('1 of ' + LESSONS).test(block) && exported.progress['exercise:ml-regression']?.done === true && !exported.progress['lesson:ml-regression'] && kept,
     `lesson=${lessonTicked} sidebar=${sidebarDone} block=${block.replace(/s+/g, ' ')} exported=${Object.keys(exported.progress)} kept=${kept}`);
   await page.context().close();
 }

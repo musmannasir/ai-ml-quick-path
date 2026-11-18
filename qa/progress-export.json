@@ -1,11 +1,11 @@
 {
   "schema": "aimlqp-progress",
   "version": 2,
-  "exportedAt": "2026-11-16T11:47:11.014Z",
+  "exportedAt": "2026-11-18T11:32:11.724Z",
   "progress": {
     "lesson:ml-classification": {
       "done": true,
-      "at": "2026-11-16"
+      "at": "2026-11-18"
     }
   }
 }

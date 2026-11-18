@@ -1,32 +1,32 @@
 {
-  "date": "2026-11-16T11:47:26.786Z",
+  "date": "2026-11-18T11:32:38.093Z",
   "browser": "Chromium (Playwright)",
-  "pages": 92,
+  "pages": 93,
   "passed": 66,
   "failed": 0,
   "results": [
     {
-      "name": "No uncaught JS errors on all 92 pages (light)",
+      "name": "No uncaught JS errors on all 93 pages (light)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 26895 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 27283 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No uncaught JS errors on all 92 pages (dark)",
+      "name": "No uncaught JS errors on all 93 pages (dark)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 26895 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 27283 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 92 pages",
+      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 93 pages",
       "pass": true,
       "detail": ""
     },
@@ -41,7 +41,7 @@
       "detail": ""
     },
     {
-      "name": "No document-level horizontal scroll (427 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
+      "name": "No document-level horizontal scroll (429 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
       "pass": true,
       "detail": ""
     },
@@ -201,7 +201,7 @@
       "detail": ""
     },
     {
-      "name": "Lesson completion updates sidebar count (1/9)",
+      "name": "Lesson completion updates the sidebar count (1 of the Part 3 lessons)",
       "pass": true,
       "detail": ""
     },
