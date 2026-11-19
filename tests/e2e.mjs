@@ -601,7 +601,7 @@ for (const w of [320, 390, 768]) {
 
 // 12b. Simulations (public/assets/sim.js and sims/*.js)
 {
-  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag']];
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl']];
   const problems = [];
   for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
     const page = await newPage({ width: w });
@@ -618,7 +618,7 @@ for (const w of [320, 390, 768]) {
     if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
     await page.context().close();
   }
-  expect('All twenty-five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+  expect('All thirty-two simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
 
   // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
   const page = await newPage({ width: 1280 });
@@ -760,6 +760,40 @@ for (const w of [320, 390, 768]) {
   expect('Vector-search simulation: the default query near the animals gives "horse" first and one topic', r.out[0] === 'horse' && r.out[1] === '1' && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('app-rag', 'rag', `setRange('Chunk size', 20); return [reads(), done('all')];`);
   expect('Retrieval simulation: chunks of 20 words find the answer to the first question and all four questions at 20 words sent, and the challenge ticks', r.out[0][1] === 'yes' && r.out[0][2] === '20' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12f. Behaviour of the Phase 4 simulations (convolution, running state, word weights, autoencoder, graph, spectrogram, reinforcement learning)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('dl-vision', 'cnn', `setSel('Image', 'bar'); setSel('Filter', 'vertical edge'); return [reads(), done('edge')];`);
+  expect('Convolution simulation: the vertical bar with the vertical-edge filter gives a 6 × 6 map with strongest response 3, and the challenge ticks', r.out[0][0] === '6 × 6' && r.out[0][2] === '3' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-sequences', 'seq', `const q = reads(); setRange('Memory', 0); return [q[0], q[1], reads()[1], done('forget')];`);
+  expect('Running-state simulation: with memory 0.9 the first sentence ends at -0.67 (negative), with no memory it is unsure, and the challenge ticks', r.out[0] === '-0.67' && r.out[1] === 'negative' && r.out[2] === 'unsure' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-nlp-classic', 'txt', `setSel('Review', '3'); f.querySelector('.sim-ctl.check input').click(); return [reads()[0], done('rare')];`);
+  expect('Word-weight simulation: for review 4 with rarity weighting the top word is "ending" and the challenge ticks', r.out[0] === 'ending' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-generative', 'ae', `const q = reads()[0]; setRange('Numbers in the middle', 2); return [q, reads()[0], done('ae')];`);
+  expect('Autoencoder simulation: one number in the middle loses 54.3% and two lose 7.5% (the Python program gives the same), and the challenge ticks', r.out[0] === '54.3%' && r.out[1] === '7.5%' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-graphs', 'gnn', `setRange('Rounds', 10); return [reads()[1], done('smooth')];`);
+  expect('Graph simulation: after 10 rounds the values differ by 0.02 and the challenge ticks', r.out[0] === '0.02' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-speech', 'spec', `setSel('Window size', '128'); return [reads()[2], done('pitch')];`);
+  expect('Spectrogram simulation: a window of 128 reads the first pitch as 102 Hz and the second as 250 Hz, and the challenge ticks', r.out[0] === '102 and 250 Hz' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-rl', 'rl', `btn('Train 50').click(); return [reads()[2], done('path')];`);
+  expect('Reinforcement-learning simulation: after 50 episodes the best path reaches the goal in 6 moves (the Python program gives the same path) and the challenge ticks', r.out[0] === '6 moves to the goal' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
 }
 
 // 13. Screenshots

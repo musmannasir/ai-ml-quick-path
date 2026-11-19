@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-19T12:42:21.758Z",
+  "date": "2026-11-19T18:58:19.451Z",
   "browser": "Chromium (Playwright)",
   "pages": 114,
-  "passed": 90,
+  "passed": 97,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 36373 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 36912 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 36373 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 36912 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -331,7 +331,7 @@
       "detail": ""
     },
     {
-      "name": "All twenty-five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "name": "All thirty-two simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
       "pass": true,
       "detail": ""
     },
@@ -447,6 +447,41 @@
     },
     {
       "name": "Retrieval simulation: chunks of 20 words find the answer to the first question and all four questions at 20 words sent, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Convolution simulation: the vertical bar with the vertical-edge filter gives a 6 × 6 map with strongest response 3, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Running-state simulation: with memory 0.9 the first sentence ends at -0.67 (negative), with no memory it is unsure, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Word-weight simulation: for review 4 with rarity weighting the top word is \"ending\" and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Autoencoder simulation: one number in the middle loses 54.3% and two lose 7.5% (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Graph simulation: after 10 rounds the values differ by 0.02 and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Spectrogram simulation: a window of 128 reads the first pitch as 102 Hz and the second as 250 Hz, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reinforcement-learning simulation: after 50 episodes the best path reaches the goal in 6 moves (the Python program gives the same path) and the challenge ticks",
       "pass": true,
       "detail": ""
     },

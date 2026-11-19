@@ -72,6 +72,21 @@ try: Ana gains a third friend with a score of 10. What message does she receive 
 answer: 2 + 6 + 10 = 18, and 18 ÷ 3 = 6. The new connection changed what Ana "knows" without changing Ana's own data. In a graph, who you are connected to is part of your description.
 ```
 
+## Live simulation
+A graph network lets every node learn from its neighbours. Watch the information travel.
+
+```sim gnn Messages passing round a graph
+question: How does information travel across a graph, and what happens after many rounds?
+watch: Each circle is a node holding one number. In each round a node keeps part of its own value and takes the average of its neighbours' values.
+watch: After one round the value has reached the neighbours. After two rounds it has reached nodes two steps away.
+watch: After many rounds all nodes hold nearly the same number, so they can no longer be told apart.
+try: smooth | Use enough rounds that the largest and smallest values differ by less than 0.03.
+predict: Node A starts with the value 1. After 2 rounds, which nodes hold something? | Only node A | Nodes within two steps of A | All six nodes
+answer: 2 | Information moves one edge per round. After two rounds it has reached the nodes within two steps of A, but not the far side of the graph.
+leaves-out: Six nodes, one number each and plain averaging. Real graph networks keep a list of numbers per node, learn the weights that mix messages, and use several kinds of layers. Very deep graph networks do blur nodes together, as shown here.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 Eight nodes in two loose groups (0–3 and 4–7) joined by one edge (3–4). Only node 0 and node 7 have labels:
 ```text Output of gap_topics.py gnn (executed)

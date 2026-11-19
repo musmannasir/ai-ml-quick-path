@@ -84,6 +84,36 @@ answer: 3 + 0 = 3 total reward over 5 tries, so 3 ÷ 5 = 0.6. One failure moved 
 - RLHF | Tunes chat models towards answers people prefer | output
 ```
 
+## Live simulation
+Reinforcement learning learns from rewards, not from labelled examples. Two small problems show the main ideas.
+
+```sim rl Q-learning in a grid world
+preset: grid
+question: How can a learner discover a good path when the only reward comes at the end?
+watch: The learner starts at S. Reaching the star gives +1, the cross gives -1, and every move costs a little.
+watch: Each square shows an arrow for the best move found so far and the value of that square. Values spread backwards from the goal, one square per pass.
+watch: The boxed squares are the best path now. Epsilon sets how often it tries a random move instead of its best.
+try: path | Train until the best path reaches the goal in exactly 6 moves.
+predict: The learner gets +1 only at the goal. Why does learning take many episodes? | The reward must travel backwards one square at a time | The grid is too big to see | It forgets what it learned
+answer: 1 | At first only the square next to the goal learns that it leads to a reward. In the next episodes the square before that learns, and so on back to the start.
+leaves-out: A 4 × 4 grid where moves always work as planned. Real problems have far more states, so the table of values is replaced by a neural network, and moves can be unreliable. Policy gradient methods, which learn the choice of moves directly, are not shown.
+reference: examples/sim-dl/dl.py
+```
+
+```sim rl Slot machines and exploring
+preset: bandit
+question: Should a learner keep using what looks best, or try other options too?
+watch: Three slot machines pay with different hidden chances. The bars show what the learner thinks of each.
+watch: With epsilon 0 it always pulls the arm that looks best so far. With epsilon above 0 it sometimes pulls a random arm.
+watch: Regret counts how many chances to win were lost compared with always pulling the best arm.
+try: stuck | Set epsilon to 0, pull 100 times, and see that the best arm is never tried.
+try: explore | Set epsilon above 0 and reach 500 pulls with a regret below 20.
+predict: With epsilon 0 (never explore), what does the learner do? | It finds the best arm | It sticks with the first arm that paid | It tries all arms equally
+answer: 2 | At the start every arm looks equally bad, so it pulls the first one. When that pays, the estimate rises and it never has a reason to leave. Here it never pulls the best arm at all.
+leaves-out: Three arms with fixed chances (30%, 50% and 70%) and an average that is updated after each pull. Real problems have changing options and context, and the best way to explore is a research topic of its own.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 Q-learning in a corridor of five cells (reward +1 at the end):
 ```text Output of ai_extras.py qlearn (executed)

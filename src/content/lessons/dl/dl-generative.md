@@ -85,6 +85,35 @@ try: The model rebuilds the input as 2 and 3 instead. What is the error?
 answer: (5 − 2)² + (3 − 3)² = 9, then 9 ÷ 2 = 4.5. The difference tripled (from 1 to 3) but the error grew nine times, because squaring punishes large mistakes much more than small ones.
 ```
 
+## Live simulation
+Two ideas behind generative models can be seen with small numbers: squeezing data through a narrow middle, and adding then removing noise.
+
+```sim ae Autoencoder: squeeze, then rebuild
+preset: ae
+question: What is an autoencoder learning when it squeezes data through a narrow middle?
+watch: Each sample has 8 numbers. The network must pass them through a middle of only a few numbers, then rebuild all 8.
+watch: The share of the data lost falls fast when the middle has the right size, then slowly.
+watch: The three rows show the original, the rebuilt version, and the difference between them.
+try: ae | Find the smallest middle that loses less than 10% of the data.
+predict: The 8 numbers really come from two hidden causes plus a little noise. With 2 numbers in the middle, how much is lost? | About half | Very little | Everything
+answer: 2 | Two numbers can hold both causes, so only the noise is lost: about 7.5% here. With one number, about 54% is lost.
+leaves-out: A straight-line autoencoder with 40 made-up samples, computed as the best possible squeeze (the same directions PCA finds). Real autoencoders have bends in them, learn by gradient descent, and are often used to clean or generate images. GANs are not shown.
+reference: examples/sim-dl/dl.py
+```
+
+```sim ae Diffusion: add noise, then guess it back
+preset: diff
+question: How can a model create things by removing noise, and what happens when its noise guess is wrong?
+watch: The grey curve is a clean signal. The noise steps bury it a little more each time, until almost none is left.
+watch: A generating model is trained to guess the noise that was added. Here the guess is the true noise plus a mistake that you choose.
+watch: Line 2 is the signal rebuilt from that guess. See how a mistake in the guess becomes a mistake in the result.
+try: diff | Add 20 noise steps and see that almost none of the signal strength is left.
+predict: The model's guess of the noise is slightly wrong. What happens to the rebuilt signal? | It is still perfect | It is wrong by about the size of the guess mistake | It gets better
+answer: 2 | The rebuild subtracts the guessed noise, so any mistake in the guess passes straight into the result. At step 10 it comes out about 1.1 times the size of the mistake.
+leaves-out: The noise is known here, so no model is trained; the page shows only the arithmetic of one add and one remove step on a 32-point signal. Real diffusion models learn to guess the noise from millions of images and remove it over many steps.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 How a diffusion model's training noise grows over 1,000 steps (a linear schedule):
 ```text Output of ai_extras.py diffusion (executed)

@@ -175,6 +175,33 @@ checks.push(['llm', 'examples/sim-llm/llm.py', () => {
   return out;
 }]);
 
+// ---- Phase 4: convolution, running state, word weights, autoencoder and diffusion, graph, spectrogram, reinforcement learning ----
+checks.push(['dl', 'examples/sim-dl/dl.py', () => {
+  const D = load('dl.js').logic.dl, out = [], r3 = (v) => f(v, 3), max2 = (m) => Math.max(...m.map((r) => Math.max(...r))), min2 = (m) => Math.min(...m.map((r) => Math.min(...r)));
+  const V = D.KERNELS['vertical edge'], m = D.conv2d(D.IMAGES.bar, V, 1, 0);
+  out.push(`bar with vertical edge filter, row 3 of the map: ${m[3].join(' ')}; map size ${m.length}`);
+  out.push(`output sizes for an 8 by 8 image, 3 by 3 filter: stride 1 pad 0 -> ${m.length}, stride 2 pad 0 -> ${D.conv2d(D.IMAGES.bar, V, 2, 0).length}, stride 1 pad 1 -> ${D.conv2d(D.IMAGES.bar, V, 1, 1).length}, after 2 by 2 max pool of the first -> ${D.maxpool2(m).length}`);
+  for (const [img, ker] of [['square', 'horizontal edge'], ['square', 'vertical edge'], ['diagonal', 'blur']]) { const mm = D.conv2d(D.IMAGES[img], D.KERNELS[ker], 1, 0); out.push(`${img} with ${ker}: strongest response ${f(max2(mm), 2)}, weakest ${f(min2(mm) + 0, 2)}`); }
+  for (const a of [0.9, 0.3]) out.push(`running state, memory ${f(a, 1)}, sentence 1: ${D.runState(D.SENTENCES[0], a, 1).map((v) => r3(v)).join(' ')}`);
+  out.push(`running state, memory 0.9, sentence 2: ${D.runState(D.SENTENCES[1], 0.9, 1).map((v) => r3(v)).join(' ')}`);
+  for (const idf of [false, true]) { const v = D.tfVectors(idf)[0], top = Object.keys(v).sort((a, b) => v[b] - v[a] || (a < b ? -1 : 1)).slice(0, 3); out.push(`document 1 top words, ${idf ? 'with idf' : 'counts only'}: ${top.map((w) => `${w}:${r3(v[w])}`).join(' ')}`); }
+  const T = D.tfVectors(true); out.push('similarity of document 1 to all four (with idf): ' + T.map((d) => r3(D.cosine(T[0], d))).join(' '));
+  const X = D.aeData(), comps = D.components(X, 4);
+  out.push('autoencoder with 1 to 4 numbers in the middle, share of the data lost: ' + [1, 2, 3, 4].map((k) => `${k}:${r3(D.aeError(X, comps.slice(0, k)))}`).join(' '));
+  const eps = D.noise(5);
+  out.push('diffusion, signal kept (alpha bar) and distance from the clean signal: ' + [0, 5, 10, 20].map((t) => `t=${t} ${r3(D.alphaBar(t))} ${r3(D.rms(D.noisy(t, eps), D.SIGNAL))}`).join(' '));
+  const g2 = D.noise(6), ab = D.alphaBar(10), xt = D.noisy(10, eps);
+  out.push('diffusion at t=10, rebuilt signal error by error in the noise guess: ' + [0, 0.1, 0.3, 0.5].map((e) => `${f(e, 1)}:${r3(D.rms(xt.map((x, q) => (x - Math.sqrt(1 - ab) * (eps[q] + e * g2[q])) / Math.sqrt(ab)), D.SIGNAL))}`).join(' '));
+  let h = [1, 0, 0, 0, 0, 0]; const rows = {};
+  for (let k = 1; k <= 10; k++) { h = D.messageRound(h, 0.4); rows[k] = h; }
+  for (const k of [1, 2, 3, 5, 10]) out.push(`graph, round ${k}: ${rows[k].map((v) => r3(v)).join(' ')} spread ${r3(Math.max(...rows[k]) - Math.min(...rows[k]))}`);
+  const sig = D.signal();
+  for (const N of [32, 128]) { const sp = D.spectrogram(sig, N); out.push(`spectrogram, window ${N}: ${sp.length} frames, ${sp[0].length} bins, peak frequency first frame ${f(D.peak(sp[0], N), 1)} Hz, last frame ${f(D.peak(sp[sp.length - 1], N), 1)} Hz`); }
+  for (const ep of [1, 3, 10, 50]) { const path = D.greedyPath(D.qLearn(0.2, 0.5, 0.9, ep, 5)); out.push(`grid world, ${ep} episodes: greedy path ${path.join('>')} (${path[path.length - 1] === D.GOAL ? 'reaches the goal' : 'does not reach the goal'})`); }
+  for (const e of [0, 0.1, 0.5]) { const b = D.bandit(e, 500); out.push(`bandit, epsilon ${f(e, 1)}, 500 pulls: pulls [${b.n.join(', ')}] estimates ${b.est.map((v) => f(v, 2)).join(' ')} regret ${f(b.regret, 1)}`); }
+  return out;
+}]);
+
 let bad = 0;
 for (const [name, ref, js] of checks) {
   let a, b;

@@ -74,6 +74,22 @@ try: A second system misses the word "back" completely and gets the rest right. 
 answer: One missing word out of five spoken: 1 ÷ 5 = 0.2 = 20%. The two systems have the same WER although they make different kinds of mistake, so always read some of the transcripts, not only the score.
 ```
 
+## Live simulation
+Most speech systems start from a spectrogram, a picture of pitch against time. You can make one and see its main trade-off.
+
+```sim spec From a sound wave to a spectrogram
+question: How does a computer turn a sound wave into a picture of its pitches over time, and what does the window size trade away?
+watch: The top picture is the sound: 100 Hz for the first half, 250 Hz for the second, and one short click.
+watch: The spectrogram cuts the sound into windows and measures how strong each pitch is in each one. A real Fourier transform runs in this page.
+watch: A long window reads pitch accurately but smears when things happen. A short window shows the click but cannot separate close pitches.
+try: click | Use a small window so the click shows as a short bright column.
+try: pitch | Use a window long enough to read the first pitch within 2 Hz of 100 Hz.
+predict: You need to tell a 100 Hz tone from a 110 Hz tone. Which window helps? | A short window | A long window | Neither
+answer: 2 | A window of N milliseconds separates pitches that differ by more than about 1000 ÷ N Hz. A short window has coarse steps, so close pitches fall into the same step.
+leaves-out: A made-up half-second sound at 1000 samples a second. Real audio uses 16,000 or more samples a second, windows of about 25 milliseconds, and often a pitch scale that follows human hearing. The page runs the plain Fourier transform, which gives the same numbers as the fast version, only more slowly.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 A one-second tone mixing 440 Hz and 880 Hz, and a transcript comparison:
 ```text Output of gap_topics.py speech (executed)

@@ -73,6 +73,21 @@ try: You make each embedding 300 numbers long instead of 100. How big is the tab
 answer: 10,000 × 300 = 3,000,000 numbers. Longer embeddings can hold more meaning but cost memory and training time in direct proportion.
 ```
 
+## Live simulation
+A running state is the simplest way to read a sequence. You can set its memory and watch what it keeps.
+
+```sim seq A running state that reads a sentence
+question: How can a network read a sentence one word at a time and still remember the start?
+watch: The bars show one number, the state, after each word. Positive words push it up, negative words push it down.
+watch: Memory sets how much of the old state is kept at each step. A high memory lets early words still count at the end.
+watch: Set the memory to zero and see that only the latest word is left.
+try: forget | For the first sentence, turn the memory down until the final verdict becomes "unsure".
+predict: The first sentence ends with a neutral word ("ending"). With a strong memory of 0.9, what is the verdict at the end? | Positive | Negative | Unsure
+answer: 2 | The state still carries the negative words "dull" and "slow" just before the neutral last word, so it ends negative (about -0.67). The early positive word has mostly faded.
+leaves-out: One number for the state, with weights set by hand. A real recurrent network keeps many numbers and learns its weights from data, and the long-memory versions (LSTM, GRU) add gates to keep information for longer. Transformers replaced this one-word-at-a-time reading with attention. The embedding map is not shown here.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 Word vectors built from a 23-sentence corpus by counting which words appear together:
 ```text Output of gap_topics.py wordvec (executed)

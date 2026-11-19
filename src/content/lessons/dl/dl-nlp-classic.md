@@ -78,6 +78,21 @@ try: Is it likelier that the third word is a verb? Use the best way to reach V a
 answer: 0.126 × 0.2 × 0.05 = 0.00126, which is lower than 0.00504, so noun is likelier.
 ```
 
+## Live simulation
+Before neural networks, text was compared with word counts. Weighting by rarity was the key improvement.
+
+```sim txt Counting words and weighting them by rarity
+question: How can a program compare texts with nothing but word counts, and why do rare words matter more?
+watch: A bag of words counts each word and forgets the order. The bars show the weight of each word in the chosen review.
+watch: Switch on rarity weighting (TF-IDF). A word found in only one review now counts for more than a word found in most of them.
+watch: The second list shows how similar each review is to this one. 1 means the same mix of words, 0 means no words in common.
+try: rare | Choose review 4, switch rarity weighting on, and see "ending" become its top word.
+predict: Review 4 uses the word "ending", which no other review uses. When words are weighted by rarity, what happens to its weight? | It goes down | It goes up | It stays the same
+answer: 2 | TF-IDF multiplies a word's count by a number that is larger for rarer words. "ending" appears in one review out of four, so its weight rises compared with common words like "film".
+leaves-out: Four tiny made-up reviews and a stop list of two words. Real text work uses thousands of documents, and also handles word endings, pairs of words and spelling. The rarity formula here is one common version; others differ in detail.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 Each step is written from scratch with the standard library. The stemmer is deliberately rough so you can see what it does wrong.
 

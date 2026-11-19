@@ -87,6 +87,22 @@ answer: 8 − 3 + 1 = 6, so the output is 6 by 6, which is 36 numbers. Adding on
 - Larger training set | More variety without new photos | output
 ```
 
+## Live simulation
+Seeing how a filter works on a tiny picture makes the idea behind convolutional networks concrete.
+
+```sim cnn A filter sliding over an image
+question: How does a filter find edges and shapes in an image, and what do stride, padding and pooling change?
+watch: The box on the input image is the window. The filter multiplies each pixel under it by its own weight and adds them up. That sum is one number in the feature map.
+watch: An edge filter gives a large number where brightness changes in its direction, a negative number on the other side of the edge, and zero on flat areas.
+watch: Stride, padding and pooling change the size of the map. The readout shows the size.
+try: edge | Choose the vertical bar and the vertical-edge filter, and find a window where the response is 3.
+try: shrink | Make the feature map 3 × 3 by changing the stride.
+predict: A 3 × 3 filter slides over an 8 × 8 image with stride 1 and no padding. How big is the feature map? | 8 × 8 | 6 × 6 | 3 × 3
+answer: 2 | The window can start in 6 places across and 6 down (8 − 3 + 1), so there are 36 responses. Padding with a border of zeros would give back 8 × 8.
+leaves-out: One filter with hand-chosen weights on a tiny 8 × 8 picture without colour. A real convolutional network learns many filters at once, stacks layers so that later filters find shapes made of edges, and learns every weight from data. Boxes, overlap (IoU) and non-maximum suppression for detection are not shown.
+reference: examples/sim-dl/dl.py
+```
+
 ## Python example
 A vertical-edge filter on a dark-to-bright image, and detection geometry:
 ```text Output of ai_extras.py conv (executed)
