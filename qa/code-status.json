@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18",
+ "generated": "2026-11-19",
  "machine": "win32",
  "tools": {
   "dotnet": "10.0.400",
@@ -21,189 +21,224 @@
    "command": "python spam_classifier.py",
    "cwd": "examples/spam-classifier",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python attention_toy.py",
    "cwd": "examples/attention",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python tiny_char_lm_numpy.py",
    "cwd": "examples/tiny-lm",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python memory_estimate.py",
    "cwd": "examples/memory-estimate",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python rag_leave_policy.py",
    "cwd": "examples/rag-leave-policy",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python returns_workflow.py",
    "cwd": "examples/agent-returns",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python summarize.py --offline",
    "cwd": "examples/llm-summarizer/python",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python -m unittest test_summary_schema.py",
    "cwd": "examples/llm-summarizer/python",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python ml_basics.py",
    "cwd": "examples/ml-basics",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python applied_basics.py",
    "cwd": "examples/applied-ai-basics",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python quickpath.py",
    "cwd": "examples/quickpath",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python math_for_ai.py",
    "cwd": "examples/math",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python ai_extras.py",
    "cwd": "examples/ai-extras",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python gap_topics.py",
    "cwd": "examples/gap-topics",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python generalisation.py",
    "cwd": "examples/generalisation",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python model_compare.py",
    "cwd": "examples/model-compare",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python linear_deeper.py",
    "cwd": "examples/linear-deeper",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python adaboost.py",
    "cwd": "examples/boosting",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python clustering.py",
    "cwd": "examples/clustering",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python see_data.py",
    "cwd": "examples/seeing-data",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python patterns.py",
    "cwd": "examples/patterns",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python autograd.py",
    "cwd": "examples/backprop",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python text_basics.py",
    "cwd": "examples/nlp-classic",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python vision_more.py",
    "cwd": "examples/vision-more",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python gen_more.py",
    "cwd": "examples/gen-more",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python rl_value.py",
    "cwd": "examples/rl-value",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
    "detail": ""
   },
   {
    "command": "python rl_policy.py",
    "cwd": "examples/rl-policy",
    "result": "ran",
-   "date": "2026-11-18",
+   "date": "2026-11-19",
+   "detail": ""
+  },
+  {
+   "command": "python search.py",
+   "cwd": "examples/search-games",
+   "result": "ran",
+   "date": "2026-11-19",
+   "detail": ""
+  },
+  {
+   "command": "python logic.py",
+   "cwd": "examples/logic-planning",
+   "result": "ran",
+   "date": "2026-11-19",
+   "detail": ""
+  },
+  {
+   "command": "python causal.py",
+   "cwd": "examples/causal",
+   "result": "ran",
+   "date": "2026-11-19",
+   "detail": ""
+  },
+  {
+   "command": "python bayes.py",
+   "cwd": "examples/bayes",
+   "result": "ran",
+   "date": "2026-11-19",
+   "detail": ""
+  },
+  {
+   "command": "python validate.py",
+   "cwd": "examples/data-validation",
+   "result": "ran",
+   "date": "2026-11-19",
    "detail": ""
   }
  ],
@@ -212,7 +247,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-agents/snippet33.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "fragment",
      "detail": "Part of a larger programme; not valid Python on its own."
     }
@@ -245,7 +280,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-embeddings/embed_search.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'openai'"
     }
@@ -300,7 +335,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-frameworks/agent.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'langchain'"
     }
@@ -353,7 +388,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-llm-api/summarize.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -384,7 +419,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-multimodal/read_invoice.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'openai'"
     }
@@ -437,7 +472,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-rag/snippet8.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -468,7 +503,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-rag-advanced/snippet20.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -497,7 +532,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-responsible/snippet10.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -540,7 +575,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-basics/quickpath.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -569,13 +604,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-clean-eda/ml_basics.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
      "file": "examples/lesson-code/python/data-d-clean-eda/snippet11.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -601,7 +636,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-collect/gap_topics.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -630,7 +665,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-features/ml_basics.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -660,7 +695,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-generative/generate.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'diffusers'"
     }
@@ -686,7 +721,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-graphs/snippet8.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -712,13 +747,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-neural-nets/ai_extras.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
      "file": "examples/lesson-code/python/dl-dl-neural-nets/snippet9.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -748,12 +783,12 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-rl/epsilon_greedy.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     },
     {
      "file": "examples/lesson-code/python/dl-dl-rl/snippet10.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -816,7 +851,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-speech/transcribe.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'transformers'"
     }
@@ -845,13 +880,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-training/train.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
      "file": "examples/lesson-code/python/dl-dl-training/training_tricks.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -893,7 +928,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-transformers/snippet9.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -923,13 +958,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-vision/fine_tune.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'torchvision'"
     },
     {
      "file": "examples/lesson-code/python/dl-dl-vision/transfer_augment.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -973,7 +1008,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-design/snippet10.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -998,7 +1033,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-eval/snippet9.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1023,13 +1058,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-finetune/finetune.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'datasets'"
     },
     {
      "file": "examples/lesson-code/python/llm-llm-finetune/qlora_dpo_rlhf.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1068,7 +1103,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-how/snippet12.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1094,7 +1129,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-local/local_chat.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'openai'"
     }
@@ -1125,7 +1160,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-scale/train_scaled.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1178,7 +1213,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-train-laptop/tiny_gpt_pytorch.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1207,12 +1242,12 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-algorithms/bagging_demo.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     },
     {
      "file": "examples/lesson-code/python/ml-ml-algorithms/snippet12.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1259,7 +1294,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-classification/spam_classifier.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1312,7 +1347,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-improve/snippet12.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1343,7 +1378,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-learning/ml_basics.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1369,7 +1404,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-recommenders/snippet10.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1400,7 +1435,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-regression/gap_topics.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1431,7 +1466,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-timeseries/snippet11.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1462,13 +1497,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-unsupervised/quickpath.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
      "file": "examples/lesson-code/python/ml-ml-unsupervised/kmeans_step.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1510,7 +1545,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-architecture/classifier_service.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'fastapi'"
     }
@@ -1535,7 +1570,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-mlops/train.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'mlflow'"
     }
@@ -1584,7 +1619,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-scale/export_onnx.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'skl2onnx'"
     }
@@ -1619,7 +1654,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-serving/serve.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'fastapi'"
     }
@@ -1650,7 +1685,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-lifecycle/quickpath.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1681,7 +1716,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-setup/snippet7.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1710,7 +1745,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-what-is-ai/quickpath.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1740,7 +1775,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-genai-agentic/agent_loop.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "syntax-ok",
      "detail": "Not run to completion here: EOFError: EOF when reading a line"
     }
@@ -1766,7 +1801,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-generalisation/generalisation.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1791,7 +1826,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-clustering/clustering.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1816,7 +1851,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-linear-deeper/linear_deeper.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1841,7 +1876,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-model-compare/model_compare.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1866,7 +1901,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-patterns/patterns.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1891,7 +1926,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-see-data/see_data.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1916,7 +1951,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-trees-more/adaboost.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1941,7 +1976,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-backprop/autograd.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1966,7 +2001,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-gen-more/gen_more.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -1991,7 +2026,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-nlp-classic/text_basics.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -2016,7 +2051,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-rl-policy/rl_policy.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -2041,7 +2076,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-rl-value/rl_value.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -2066,7 +2101,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-vision-more/vision_more.py",
-     "date": "2026-11-18",
+     "date": "2026-11-19",
      "result": "ran"
     }
    ],
@@ -2084,6 +2119,131 @@
      "run": "ran",
      "runDetail": "",
      "output": "Sobel response, one row of the 4x4 output: [0, 36, 36, 0]\r\nmixup image: [[0.3, 1.0], [0.7, 0.0]]  label mix: cat 0.7, dog 0.3\r\ndistance to positive 0.707, to negative 5.000, triplet loss 0.000\r\nwith a hard negative at distance 1.131, triplet loss 0.576"
+    }
+   ]
+  },
+  "ai-logic-plan": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ai-logic-plan/logic.py",
+     "date": "2026-11-19",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ai-logic-plan/Program.cs",
+     "date": "2026-11-19",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "brute force would check 243 assignments and finds 12 that work\r\nbacktracking found a solution after 9 colour choices: A=red B=green C=blue D=red E=green\r\nrows where both statements are true: [(True, True)] -> Q is always true there: True\r\ngeneration  best fitness  average fitness\r\n         0             6             4.50\r\n         1             6             4.17\r\n         2             7             6.00\r\n         3             7             6.00\r\n         4             7             6.33\r\n         5             7             6.17\r\n         6             7             6.50\r\n         7             8             6.00\r"
+    }
+   ]
+  },
+  "ai-search": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ai-search/search.py",
+     "date": "2026-11-19",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ai-search/Program.cs",
+     "date": "2026-11-19",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "maze: shortest path has 8 steps\r\nbreadth-first search looked at 18 cells; A* looked at 16 cells (path 8 steps)\r\nminimax value of the game: 4\r\nalpha-beta gives the same value 4 after looking at 7 of 9 leaves"
+    }
+   ]
+  },
+  "ml-bayes": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-bayes/bayes.py",
+     "date": "2026-11-19",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-bayes/Program.cs",
+     "date": "2026-11-19",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "chance the grass is wet: 0.4484   chance of rain given wet grass: 0.3577\r\nMCMC posterior mean 0.664, spread 0.132   (exact answer: mean 0.667, spread 0.131)\r\nmeasurement  estimate  uncertainty (variance)\r\n        5.1     5.050         0.990\r\n        4.8     4.925         0.498\r\n        5.3     5.050         0.332\r\n        4.9     5.012         0.249\r\n        5.0     5.010         0.200"
+    }
+   ]
+  },
+  "ml-causal": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ml-ml-causal/causal.py",
+     "date": "2026-11-19",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ml-ml-causal/Program.cs",
+     "date": "2026-11-19",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "treated 100, untreated 100\r\nnaive difference in average outcome: 4.312\r\n  within group z=0 (100 patients): effect 2.000\r\n  within group z=1 (100 patients): effect 1.981\r\nadjusted for z (weighted by group size): 1.990   true effect: 2\r\nrandomised experiment, plain difference: 2.005"
+    }
+   ]
+  },
+  "ops-data-debt": {
+   "python": [
+    {
+     "file": "examples/lesson-code/python/ops-ops-data-debt/validate.py",
+     "date": "2026-11-19",
+     "result": "ran"
+    }
+   ],
+   "csharp": [
+    {
+     "file": "examples/lesson-code/dotnet/ops-ops-data-debt/Program.cs",
+     "date": "2026-11-19",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "rule                       rows failing\r\nage between 0 and 120      2\r\ncountry is PT, ES or FR    1\r\namount is present          1\r\namount at most 200         1\r\nid is unique               1\r\nrows kept: 4 of 10\r\naverage amount: training 52.00, live 79.94, shift 27.94"
     }
    ]
   }

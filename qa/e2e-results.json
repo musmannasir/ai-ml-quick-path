@@ -1,32 +1,32 @@
 {
-  "date": "2026-11-18T12:11:24.029Z",
+  "date": "2026-11-19T04:09:22.326Z",
   "browser": "Chromium (Playwright)",
-  "pages": 105,
+  "pages": 110,
   "passed": 66,
   "failed": 0,
   "results": [
     {
-      "name": "No uncaught JS errors on all 105 pages (light)",
+      "name": "No uncaught JS errors on all 110 pages (light)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 31500 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 33285 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No uncaught JS errors on all 105 pages (dark)",
+      "name": "No uncaught JS errors on all 110 pages (dark)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 31500 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 33285 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 105 pages",
+      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 110 pages",
       "pass": true,
       "detail": ""
     },
@@ -41,7 +41,7 @@
       "detail": ""
     },
     {
-      "name": "No document-level horizontal scroll (453 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
+      "name": "No document-level horizontal scroll (463 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
       "pass": true,
       "detail": ""
     },

@@ -21,6 +21,7 @@ export const MODULES = [
     groups: [
       { title: 'How learning works', lessons: ['ml-learning', 'ml-regression', 'ml-classification', 'ml-linear-deeper', 'ml-algorithms', 'ml-trees-more', 'ml-unsupervised'] },
       { title: 'More unsupervised methods', lessons: ['ml-clustering', 'ml-see-data', 'ml-patterns'] },
+      { title: 'Beyond learning: other AI methods', lessons: ['ai-search', 'ai-logic-plan', 'ml-causal', 'ml-bayes'] },
       { title: 'Measure and improve', lessons: ['ml-evaluation', 'ml-model-compare', 'ml-generalisation', 'ml-improve'] },
       { title: 'Common industry problems', lessons: ['ml-timeseries', 'ml-recommenders'] },
     ],
@@ -56,7 +57,7 @@ export const MODULES = [
   {
     id: 'ops', page: 'part-7-production.html', stage: '7', title: 'Part 7: Production', short: '7 Production',
     intro: 'Run AI and ML reliably for real users: serving models as APIs, MLOps, monitoring, cost and scale, and reference architectures that combine .NET and Python.',
-    groups: [{ title: 'From prototype to production', lessons: ['ops-serving', 'ops-mlops', 'ops-monitoring', 'ops-scale', 'ops-architecture'] }],
+    groups: [{ title: 'From prototype to production', lessons: ['ops-serving', 'ops-mlops', 'ops-data-debt', 'ops-monitoring', 'ops-scale', 'ops-architecture'] }],
   },
 ];
 
@@ -78,7 +79,7 @@ export const ROADMAPS = [
       { n: 6, title: 'Large language models', short: 'LLMs', effort: '14–20 h', desc: 'How LLMs work, design, train on a laptop, scale up, fine-tune, run locally, evaluate.', lessons: ['llm-how', 'llm-tokens', 'llm-design', 'llm-train-laptop', 'llm-scale', 'llm-finetune', 'llm-local', 'llm-eval'] },
       { n: 7, title: 'Talk to models and add knowledge', short: 'RAG', effort: '10–14 h', desc: 'LLM APIs, prompting, embeddings, RAG and advanced retrieval.', lessons: ['app-llm-api', 'app-prompting', 'app-embeddings', 'app-rag', 'app-rag-advanced'] },
       { n: 8, title: 'Agents, multimodal and trust', short: 'Agents', effort: '12–16 h', desc: 'Tools, agents, frameworks, multimodal apps, evaluation, security and responsible AI.', lessons: ['app-agents', 'app-frameworks', 'app-multimodal', 'app-evals', 'app-security', 'app-responsible', 'app-genai-agentic'] },
-      { n: 9, title: 'Production', short: 'Production', effort: '10–14 h', desc: 'Serving, MLOps, monitoring, cost and scale, architectures.', lessons: ['ops-serving', 'ops-mlops', 'ops-monitoring', 'ops-scale', 'ops-architecture'] },
+      { n: 9, title: 'Production', short: 'Production', effort: '10–14 h', desc: 'Serving, MLOps, monitoring, cost and scale, architectures.', lessons: ['ops-serving', 'ops-mlops', 'ops-data-debt', 'ops-monitoring', 'ops-scale', 'ops-architecture'] },
       { n: 10, title: 'Capstones and real cases', short: 'Capstone', effort: '30–60 h', desc: 'Use the decision guide on real cases and build at least two capstones.', lessons: [], projects: ['c01-churn', 'c04-rag-assistant', 'c06-tiny-llm', 'c08-lora-finetune'] },
     ],
   },
@@ -93,7 +94,7 @@ export const ROADMAPS = [
       { n: 5, title: 'Evaluation and improvement', short: 'Evaluate', effort: '7–11 h', desc: 'Metrics, validation, bias and variance, tuning, explanations.', lessons: ['ml-evaluation', 'ml-model-compare', 'ml-generalisation', 'ml-improve'] },
       { n: 6, title: 'Forecasting and recommendations', short: 'Industry ML', effort: '6–10 h', desc: 'Two of the most common business uses.', lessons: ['ml-timeseries', 'ml-recommenders'] },
       { n: 7, title: 'Deep learning', short: 'Deep learning', effort: '14–20 h', desc: 'Networks, training, vision and other model families.', lessons: ['dl-neural-nets', 'dl-backprop', 'dl-training', 'dl-vision', 'dl-vision-more', 'dl-sequences', 'dl-nlp-classic', 'dl-transformers', 'dl-rl', 'dl-rl-value', 'dl-rl-policy'] },
-      { n: 8, title: 'MLOps and production', short: 'MLOps', effort: '10–14 h', desc: 'Serve, track, monitor and scale models.', lessons: ['ops-serving', 'ops-mlops', 'ops-monitoring', 'ops-scale'] },
+      { n: 8, title: 'MLOps and production', short: 'MLOps', effort: '10–14 h', desc: 'Serve, track, monitor and scale models.', lessons: ['ops-serving', 'ops-mlops', 'ops-data-debt', 'ops-monitoring', 'ops-scale'] },
       { n: 9, title: 'Capstones', short: 'Capstone', effort: '30–50 h', desc: 'Churn prediction, demand forecasting and image inspection.', lessons: [], projects: ['c01-churn', 'c02-forecast', 'c03-vision'] },
     ],
   },
