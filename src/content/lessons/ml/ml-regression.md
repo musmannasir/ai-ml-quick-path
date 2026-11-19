@@ -119,6 +119,22 @@ try: Home C's mistake becomes 9 instead of 3. What is the new MAE?
 answer: (1 + 2 + 9) ÷ 3 = 4. One bad prediction doubled the MAE. RMSE, the other measure in this lesson, would rise even more, because it squares each mistake before averaging.
 ```
 
+## Live simulation
+Fitting a line is easier to understand when you try it yourself and then see what the best fit does.
+
+```sim reg Fit a line by hand, then compare with the best fit
+question: How does a regression line get chosen, and how much can one odd point or a penalty change it?
+watch: The dashed lines are residuals, the gaps between each point and your line. The error (MSE) is the average of their squares.
+watch: The best-fit line is the one with the smallest possible MSE. R² says how much of the spread in the answers the line explains (1 is all of it).
+watch: Add the outlier and see the best-fit line move. Then raise the ridge penalty and watch the slope shrink toward zero.
+try: close | Move the sliders by hand until your error is within 10% of the best fit.
+try: outlier | Add the outlier and see the best-fit slope change by more than 0.3.
+predict: One extra point is added far below the others, at the right edge. What happens to the best-fit slope? | It stays the same | It moves toward the odd point, so the slope falls | It goes to zero
+answer: 2 | Least squares squares every gap, so a point far from the line pulls hard. Here the slope falls from about 1.62 to about 1.02 because of one point out of 13.
+leaves-out: One input and made-up points (the true rule behind them is slope 1.5, intercept 0.3, plus noise). Real regression has many inputs, and the ridge penalty here is applied to the slope only. The lasso penalty, which can set weights exactly to zero, is not shown.
+reference: examples/sim-core/core.py
+```
+
 ## Python example
 House prices (thousands) against size, 28 training and 12 test houses; polynomial degree controls how bendy the curve can be:
 ```python gap_topics.py regression (excerpt)

@@ -123,6 +123,22 @@ Common text tasks that are classification or close to it:
 - Usually do better on meaning
 ```
 
+## Live simulation
+A classifier outputs a chance. Choosing the threshold turns that chance into a decision, and every choice has a cost.
+
+```sim cls Threshold, confusion matrix and ROC curve
+question: A classifier gives a chance, not a yes or no. Where should the line be drawn, and what does each choice cost?
+watch: The shaded area is where the model says class 1. Move the threshold and the area grows or shrinks, but the model itself does not change.
+watch: The matrix counts true positives, false alarms, misses and true negatives. Precision is true positives over everything called 1. Recall is true positives over everything that really is 1.
+watch: The dot on the ROC curve moves as the threshold moves. A curve that bends toward the top left means a better model.
+try: recall | Find a threshold where recall is at least 90%.
+try: precision | Find a threshold where precision is at least 95% while recall stays above 50%.
+predict: You lower the threshold from 0.5 to 0.2. What happens? | Recall goes up and precision goes down | Both go up | Accuracy always goes up
+answer: 1 | A lower threshold calls more points class 1. It catches more of the real ones (recall up) and also some wrong ones (precision down). In this data, recall rises from 84% to 94% and precision falls from 84% to 67%.
+leaves-out: Two made-up groups that overlap, and a plain logistic regression. Real data has many more inputs, and the best threshold depends on what a miss and a false alarm cost, which no chart can tell you.
+reference: examples/sim-core/core.py
+```
+
 ## Python example
 24 synthetic messages, 8 held out for testing:
 ```python spam_classifier.py (excerpt)

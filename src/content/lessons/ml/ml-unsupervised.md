@@ -92,6 +92,34 @@ try: A new point (7, 4) joins the cluster. Where does the centre move to?
 answer: First numbers: (1 + 3 + 5 + 7) ÷ 4 = 4. Second numbers: (2 + 4 + 6 + 4) ÷ 4 = 4. The centre moves from (3, 4) to (4, 4), towards the new point.
 ```
 
+## Live simulation
+Without labels, a method must find structure on its own. Two of the main ideas are grouping and squeezing.
+
+```sim km Clustering: k-means and DBSCAN
+question: How do clustering methods find groups when nobody gave them labels, and when do they fail?
+watch: k-means alternates two steps. Assign: each point joins its nearest centre. Move: each centre goes to the middle of its points. It stops when nothing changes.
+watch: The elbow chart shows total squared distance for k = 1 to 8. It falls fast until the right number of groups and slowly after.
+watch: Switch to the curved groups. k-means cuts them with a straight line, while DBSCAN follows the curves.
+try: three | On the three round groups, run k-means with k = 3 to the end.
+try: moons | On the curved groups, find DBSCAN settings that give exactly 2 clusters.
+predict: The data has three real groups. If you pick k = 5, what happens to the total squared distance? | It goes up | It goes down, because the extra centres split real groups | It stays the same
+answer: 2 | More centres always reduce the distance, so the number alone cannot choose k. The elbow is where the drop slows: here, from 16.8 at k = 2 to 3.0 at k = 3, and only to 2.4 at k = 5.
+leaves-out: Made-up points in two dimensions. Real data has many columns, so groups cannot be seen and the scaling of the columns matters. Hierarchical clustering is not shown, and a good number of clusters is a judgement, not a result.
+reference: examples/sim-core/core.py
+```
+
+```sim pca PCA: the axis that keeps the most spread
+question: How can two numbers per point become one with the least loss, and what is a principal component?
+watch: Each point drops a shadow onto the axis. The shadows are the new one-number version of the data.
+watch: "Spread kept" is the share of the data's variation that the shadows still show. Turn the axis and see it change.
+watch: The best axis lines up with the long direction of the cloud. That direction is the first principal component.
+try: axis | Turn the axis by hand until it is within 5 degrees of the best one.
+predict: Two numbers per point become one (the shadow). Which axis loses the least? | The horizontal one | The one where the shadows stay most spread out | The vertical one
+answer: 2 | The shadows lose the least information when they stay as spread out as possible, which happens along the long direction of the cloud. Here that axis keeps 95% of the spread; the horizontal axis keeps 72%.
+leaves-out: Two dimensions, so you can see the cloud. PCA is used when there are dozens or thousands of columns. It finds directions of large spread, which are not always the directions that matter for your task, and the columns should be on comparable scales first.
+reference: examples/sim-core/core.py
+```
+
 ## Python example
 ```text Output of ml_basics.py kmeans (executed) — two customer groups found without labels
 cluster centre: orders/month=2.0, basket=$31

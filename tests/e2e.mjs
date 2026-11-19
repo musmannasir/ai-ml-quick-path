@@ -601,7 +601,7 @@ for (const w of [320, 390, 768]) {
 
 // 12b. Simulations (public/assets/sim.js and sims/*.js)
 {
-  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp']];
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom']];
   const problems = [];
   for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
     const page = await newPage({ width: w });
@@ -618,7 +618,7 @@ for (const w of [320, 390, 768]) {
     if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
     await page.context().close();
   }
-  expect('All twelve simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+  expect('All nineteen simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
 
   // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
   const page = await newPage({ width: 1280 });
@@ -696,6 +696,38 @@ for (const w of [320, 390, 768]) {
   expect('Transformer block simulation: switching off the add path drops the chance on agreeing verbs below 60%', parseInt(r.out[0], 10) < 60 && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('dl-transformers', 'tf6', mk(`setSel('Mode', 'use'); for (let i = 0; i < 6; i++) btn('Next word (using mode)').click(); return [reads(), f.querySelector('[data-try="serial"]').classList.contains('done')];`));
   expect('Training-against-using simulation: using mode needs six passes for six words and the challenge ticks', r.out[0][0] === '6' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12d. Behaviour of the Phase 2 simulations (regression, classification, bias and variance, cross-validation, clustering, PCA, anomalies)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const setRange = (label, v) => { const lab = [...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)); const i = document.getElementById(lab.getAttribute('for')); i.value = v; i.dispatchEvent(new Event('input')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('ml-regression', 'reg', `btn('Use the best fit').click(); return [reads()[1], reads()[2], done('close')];`);
+  expect('Regression simulation: "Use the best fit" gives R² 0.93 and slope 1.62, and the challenge ticks', r.out[0] === '0.93' && r.out[1] === '1.62' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-classification', 'cls', `const q = reads(); setRange('Decision threshold', 0.2); return [q[0], q[1], reads()[1], done('recall')];`);
+  expect('Classification simulation: at 0.5 precision and recall are 84%; at 0.2 recall is 94% and the challenge ticks', r.out[0] === '84%' && r.out[1] === '84%' && r.out[2] === '94%' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-generalisation', 'bv', `setRange('Degree', 9); return [reads(), done('overfit')];`);
+  expect('Bias and variance simulation: degree 9 with 15 points trains well and does far worse on new points, and the challenge ticks', Number(r.out[0][0]) < 0.05 && Number(r.out[0][1]) > 100 && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-evaluation', 'cv', `btn('Test every').click(); return [reads(), done('all')];`);
+  expect('Cross-validation simulation: five folds with k = 3 give an average of 85% (the Python program gives the same folds) and the challenge ticks', r.out[0][1] === '85%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-unsupervised', 'km', `btn('Run to the end').click(); return [reads(), done('three')];`);
+  expect('Clustering simulation: k-means with k = 3 on three groups ends at a total squared distance of 3.04 and the challenge ticks', r.out[0][1] === '3.04' && r.out[0][2] === '3' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-unsupervised', 'pca', `btn('Use the best').click(); return [reads(), done('axis')];`);
+  expect('PCA simulation: the best axis keeps 95% of the spread at 30 degrees and the challenge ticks', r.out[0][0] === '95%' && r.out[0][2] === '30°' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-patterns', 'anom', `setRange('Share of points', 5); return [reads(), done('all')];`);
+  expect('Anomaly simulation: flagging 5% catches all four real anomalies with one false alarm and the challenge ticks', r.out[0][1] === '4 of 4' && r.out[0][2] === '1' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
 }
 
 // 13. Screenshots

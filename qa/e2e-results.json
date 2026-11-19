@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-19T11:54:26.030Z",
+  "date": "2026-11-19T12:16:45.007Z",
   "browser": "Chromium (Playwright)",
   "pages": 114,
-  "passed": 77,
+  "passed": 84,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 35694 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 36020 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 35694 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 36020 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -331,7 +331,7 @@
       "detail": ""
     },
     {
-      "name": "All twelve simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "name": "All nineteen simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
       "pass": true,
       "detail": ""
     },
@@ -382,6 +382,41 @@
     },
     {
       "name": "Training-against-using simulation: using mode needs six passes for six words and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Regression simulation: \"Use the best fit\" gives R² 0.93 and slope 1.62, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Classification simulation: at 0.5 precision and recall are 84%; at 0.2 recall is 94% and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Bias and variance simulation: degree 9 with 15 points trains well and does far worse on new points, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cross-validation simulation: five folds with k = 3 give an average of 85% (the Python program gives the same folds) and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Clustering simulation: k-means with k = 3 on three groups ends at a total squared distance of 3.04 and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "PCA simulation: the best axis keeps 95% of the spread at 30 degrees and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Anomaly simulation: flagging 5% catches all four real anomalies with one false alarm and the challenge ticks",
       "pass": true,
       "detail": ""
     },

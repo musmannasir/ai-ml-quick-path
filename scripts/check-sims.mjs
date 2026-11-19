@@ -119,6 +119,37 @@ checks.push(['bp', 'examples/sim-backprop/graph.py', () => {
   return out;
 }]);
 
+// ---- Phase 2: regression, classification, bias and variance, cross-validation, clustering, PCA, anomalies ----
+checks.push(['core', 'examples/sim-core/core.py', () => {
+  load('sup.js'); const C = load('core.js').logic.core, S = globalThis.window.AIQPSim.logic.sup, out = [];
+  const r3 = (v) => f(v, 3), join = (a, d) => a.map((v) => f(v, d)).join(' ');
+  let d = C.regData(5, 12, 0.3, false), o = C.ols(d.X, d.Y, 0);
+  out.push(`regression: slope ${r3(o.a)} intercept ${r3(o.b)} MSE ${f(C.mse(d.X, d.Y, o.a, o.b), 4)} R2 ${r3(C.r2(d.X, d.Y, o.a, o.b))}`);
+  const d2 = C.regData(5, 12, 0.3, true), o2 = C.ols(d2.X, d2.Y, 0);
+  out.push(`with one outlier: slope ${r3(o2.a)} intercept ${r3(o2.b)} R2 ${r3(C.r2(d2.X, d2.Y, o2.a, o2.b))}`);
+  out.push('ridge slopes (penalty 0, 1, 5): ' + [0, 1, 5].map((l) => r3(C.ols(d.X, d.Y, l).a)).join(' '));
+  const cd = C.clsData(11, 100), pr = S.fitLogistic(cd, 300), p = cd.X.map((q) => pr(q));
+  for (const t of [0.2, 0.5, 0.8]) { const c = C.confusion(p, cd.y, t); out.push(`classification, threshold ${f(t, 1)}: tp ${c.tp} fp ${c.fp} fn ${c.fn} tn ${c.tn} precision ${r3(c.tp / Math.max(1, c.tp + c.fp))} recall ${r3(c.tp / Math.max(1, c.tp + c.fn))}`); }
+  out.push(`area under the ROC curve: ${r3(C.roc(p, cd.y).auc)}`);
+  for (const [n, noise] of [[15, 0.25], [50, 0.25]]) {
+    const tr = C.polyData(3, n, noise), te = C.polyData(4, 200, noise);
+    out.push(`polynomials, ${n} points, noise ${f(noise, 2)}: ` + [1, 3, 7, 9].map((g) => { const w = C.polyFit(tr.X, tr.Y, g); return `deg ${g} train ${r3(C.polyMse(w, tr.X, tr.Y))} test ${r3(C.polyMse(w, te.X, te.Y))}`; }).join('; '));
+  }
+  const cv = S.makeData('blobs', 40, 21);
+  for (const kk of [1, 3]) out.push(`cross-validation, 5 folds, k-nearest k=${kk}: ${join(C.cvScores(cv.X, cv.y, 5, 7, kk), 2)}`);
+  const B = C.blobs3(60, 5), last = (h) => h[h.length - 1].inertia;
+  out.push('k-means on three blobs, k=3, seeds 1-6: inertia ' + [1, 2, 3, 4, 5, 6].map((s) => r3(last(C.kmeans(B, 3, s)))).join(' '));
+  out.push('elbow, seed 1, k=1..8: ' + [1, 2, 3, 4, 5, 6, 7, 8].map((k) => f(last(C.kmeans(B, k, 1)), 2)).join(' '));
+  const mo = S.makeData('moons', 200, 3), lab = C.dbscan(mo.X, 0.2, 4);
+  out.push(`DBSCAN on moons, eps 0.2, min points 4: clusters ${Math.max(-1, ...lab.filter((l) => l !== null)) + 1}, noise ${lab.filter((l) => l === null).length}`);
+  out.push(`k-means on moons, k=2: inertia ${r3(last(C.kmeans(mo.X, 2, 1)))}`);
+  const P = C.pcaData(8, 40), st = C.pcaStats(P), best = C.bestAngle(st), tot = st[0] + st[1];
+  out.push(`PCA: best axis ${f(best, 1)} degrees; variance kept at 0 ${r3(C.varAlong(st, 0) / tot)}, 90 ${r3(C.varAlong(st, 90) / tot)}, best ${r3(C.varAlong(st, best) / tot)}`);
+  const A = C.anomalyData(6, 80), sc = C.knnScores(A, 5);
+  for (const c of [0.02, 0.05, 0.1]) { const fl = Object.keys(C.flag(sc, c)).map(Number), caught = fl.filter((i) => i >= 80).length; out.push(`anomalies, flag ${Math.round(c * 100)}%: flagged ${fl.length}, real anomalies caught ${caught} of 4, false alarms ${fl.length - caught}`); }
+  return out;
+}]);
+
 let bad = 0;
 for (const [name, ref, js] of checks) {
   let a, b;

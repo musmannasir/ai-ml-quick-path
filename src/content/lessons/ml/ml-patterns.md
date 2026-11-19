@@ -60,6 +60,21 @@ try: If milk were in only 40% of baskets, what would the lift of the same rule b
 answer: 0.8 ÷ 0.4 = 2. Now bread baskets have milk twice as often as chance, which is a strong link.
 ```
 
+## Live simulation
+Anomaly detection ranks points by how unusual they are, then a flag rate decides how many to act on.
+
+```sim anom Finding anomalies with a distance score
+question: How do we find the unusual points in data when nobody has labelled them?
+watch: Each point's score is its distance to its 5th nearest neighbour. A point far from everything gets a high score.
+watch: You choose what share of points to flag. Reveal the real anomalies to see how many were caught and how many flags were false alarms.
+watch: Raise the share and watch false alarms grow faster than catches.
+try: all | Catch all 4 real anomalies with at most 2 false alarms.
+predict: At 5% all four real anomalies are caught. You raise the share to 10%. What happens? | More real anomalies are caught | The same four are caught, and the extra flags are false alarms | False alarms fall
+answer: 2 | All four were already caught, so the extra flagged points can only be normal points: 5 false alarms at 10%, against 1 at 5%.
+leaves-out: 84 made-up points in two dimensions, with 4 planted anomalies we know about. In real work nobody knows the true anomalies, so the flag rate is chosen from the cost of a miss against the cost of a false alarm. Other methods (isolation forest, density) behave differently on real data.
+reference: examples/sim-core/core.py
+```
+
 ## Python example
 Three small demonstrations in one file: Mahalanobis distance for two points at nearly the same straight-line distance, a kernel density estimate on twelve values, and the three numbers of a rule on eight baskets.
 

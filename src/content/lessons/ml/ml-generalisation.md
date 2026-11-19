@@ -110,6 +110,22 @@ note: Each new feature is only worth it if it carries real signal.
 - **No free lunch.** No single model is best on every problem. A model works when its built-in assumptions (a line, a tree, similar inputs have similar outputs) fit the data. That is why you compare models on your own data and keep a baseline.
 - **Occam's razor.** When two models perform equally well on test data, choose the simpler one. It is easier to explain, cheaper to run and less likely to be fragile.
 
+## Live simulation
+Overfitting and underfitting are two ends of one dial. Turn the dial and watch both errors.
+
+```sim bv Bias, variance and the wiggly curve
+question: Why does a more flexible model do better on training data but sometimes worse on new data?
+watch: The grey curve is the real pattern (a sine wave). The dots are noisy samples of it. The coloured curve is the polynomial fitted to the dots.
+watch: Degree 1 is a straight line: too stiff to follow the wave (high bias). A high degree can pass through every dot and swing wildly in between (high variance).
+watch: The second chart shows training error always falling, while the error on new points falls and then rises. Try more training points.
+try: overfit | With 15 points, choose degree 7 or more and make the error on new points more than 3 times the training error.
+try: more | Raise the training points to 50 or more at degree 7 or more, and bring the two errors within 1.5 times of each other.
+predict: With 15 points and degree 9, how will the error on new points compare with the training error? | About the same | Much higher | Lower
+answer: 2 | A degree-9 curve has 10 free numbers to fit 15 noisy points, so it chases the noise. Its error on new points is far larger than on the points it saw.
+leaves-out: One input, a made-up sine pattern and polynomials only. Real models overfit in other ways (deep trees, many features), and the usual cures there include regularisation, simpler models and more data. Error on new points here uses a fresh made-up sample.
+reference: examples/sim-core/core.py
+```
+
 ## Python example
 The run below uses 60 points on a curve plus a repeatable wobble that stands in for noise. Even-numbered points train the model and odd-numbered points test it. The dial is the number of neighbours k that a k-nearest-neighbours model averages: k = 1 copies the nearest training point (very flexible), and k = 29 averages nearly everything (very simple).
 

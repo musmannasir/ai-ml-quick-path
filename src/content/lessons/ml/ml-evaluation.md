@@ -110,6 +110,21 @@ note: Both shift the balance between precision and recall.
 - Shift the scores in a similar way
 ```
 
+## Live simulation
+Cross-validation is a way to get a steadier score from limited data.
+
+```sim cv Cross-validation, fold by fold
+question: How can all the data be used for both training and testing, and why is one score from one split not enough?
+watch: The data is split into folds. In each round one fold is held out (ringed) and the model trains on the rest.
+watch: Every point is tested exactly once. The table fills in as you test each fold.
+watch: Look at the spread from the lowest to the highest fold. A model's score depends on which points happened to be held out.
+try: all | Test every fold with 5 or more folds.
+predict: Why average the score over several folds instead of using one train and test split? | It is faster | A single split can be lucky or unlucky | It uses less data
+answer: 2 | Each fold scores a different small test set, so the numbers differ. The average is steadier, and the spread tells you how much to trust it.
+leaves-out: 40 made-up points and a simple nearest-neighbour model. Real work also keeps a final test set that cross-validation never touches, and uses time-ordered folds for time series (the splits and leakage simulation in the data lessons shows why).
+reference: examples/sim-core/core.py
+```
+
 ## Python example
 1,000 transactions, 20 fraudulent; the model catches 15 and raises 30 false alarms:
 ```text Output of ml_basics.py metrics (executed)

@@ -237,7 +237,8 @@ An optional lesson section `## Live simulation` (after "How it works", before "P
 Modules so far: `nn` (neural network playground), `bpe` (tokens), `gen` (text generation loop), `attn` (one attention layer, tiny trained model in
 `attn-model.js`), `sup` (supervised algorithms), the Transformer series `tf1` (words to numbers), `tf4` (one block stage by stage), `tf5` (writing one word at a time, cache),
 `tf6` (training against using), all on the same tiny model (21 words, one block with 2 heads, feed-forward and layer norm), plus `gd` (gradient descent), `train` (optimiser race) and `bp`
-(backpropagation). Register a new module in `SIM_MODULES` (src/lib/sim.mjs); a module that needs the shared model lists `attn-model.js` and `attn.js` in `SIM_FILES`. The shared UI helpers
+(backpropagation), and the Phase 2 set `reg`, `cls`, `bv`, `cv`, `km` (k-means and DBSCAN), `pca`, `anom`, whose shared calculations are in `core.js` (Python twin
+`examples/sim-core/core.py`; helper `AIQPSim.plot`). Register a new module in `SIM_MODULES` (src/lib/sim.mjs); a module that needs the shared model lists `attn-model.js` and `attn.js` in `SIM_FILES`. The shared UI helpers
 (`AIQPSim.ui.vecRows`, `bars`, `legend`) live in `attn.js`.
 Rules: the calculation is real, repeatable (LCG random numbers) and kept in `AIQPSim.logic.<module>` so Node can run it; every module has a Python
 program in `examples/sim-*` that prints the same headline numbers and `scripts/check-sims.mjs` compares them; data is made up and labelled; a "What this leaves
