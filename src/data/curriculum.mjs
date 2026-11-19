@@ -8,7 +8,7 @@ export const MODULES = [
   {
     id: 'start', page: 'part-1-start.html', stage: '1', title: 'Part 1: The big picture', short: '1 Big picture',
     intro: 'What AI and machine learning are, how a real AI project runs from idea to production, and how to set up Python and .NET on your own laptop.',
-    groups: [{ title: 'The big picture', lessons: ['s-what-is-ai', 's-lifecycle', 's-setup'] }],
+    groups: [{ title: 'The big picture', lessons: ['s-what-is-ai', 's-lifecycle', 's-setup'] }, { title: 'Optional language refreshers', lessons: ['s-python-refresher', 's-csharp-refresher'] }],
   },
   {
     id: 'data', page: 'part-2-data.html', stage: '2', title: 'Part 2: Data', short: '2 Data',
@@ -41,6 +41,7 @@ export const MODULES = [
       { title: 'How LLMs work', lessons: ['llm-how', 'llm-tokens'] },
       { title: 'Design and train', lessons: ['llm-design', 'llm-train-laptop', 'llm-scale'] },
       { title: 'Adapt, run and evaluate', lessons: ['llm-finetune', 'llm-local', 'llm-eval'] },
+      { title: 'Going deeper', lessons: ['llm-embed-train', 'llm-paradigms'] },
     ],
   },
   {
@@ -76,7 +77,7 @@ export const ROADMAPS = [
       { n: 3, title: 'Core machine learning', short: 'ML', effort: '12–18 h', desc: 'How models learn, regression, classification, the main algorithms and unsupervised learning.', lessons: ['ml-learning', 'ml-regression', 'ml-classification', 'ml-linear-deeper', 'ml-algorithms', 'ml-trees-more', 'ml-unsupervised', 'ml-clustering', 'ml-see-data', 'ml-patterns'] },
       { n: 4, title: 'Measure, improve and apply ML', short: 'Improve', effort: '8–12 h', desc: 'Metrics, tuning, explanations, forecasting and recommenders.', lessons: ['ml-evaluation', 'ml-model-compare', 'ml-generalisation', 'ml-improve', 'ml-timeseries', 'ml-recommenders'] },
       { n: 5, title: 'Deep learning', short: 'Deep learning', effort: '14–20 h', desc: 'Neural networks, training, vision, text, transformers, generation, speech, RL and graphs.', lessons: ['dl-neural-nets', 'dl-backprop', 'dl-training', 'dl-vision', 'dl-vision-more', 'dl-sequences', 'dl-nlp-classic', 'dl-transformers', 'dl-generative', 'dl-gen-more', 'dl-speech', 'dl-rl', 'dl-rl-value', 'dl-rl-policy', 'dl-graphs'] },
-      { n: 6, title: 'Large language models', short: 'LLMs', effort: '14–20 h', desc: 'How LLMs work, design, train on a laptop, scale up, fine-tune, run locally, evaluate.', lessons: ['llm-how', 'llm-tokens', 'llm-design', 'llm-train-laptop', 'llm-scale', 'llm-finetune', 'llm-local', 'llm-eval'] },
+      { n: 6, title: 'Large language models', short: 'LLMs', effort: '14–20 h', desc: 'How LLMs work, design, train on a laptop, scale up, fine-tune, run locally, evaluate.', lessons: ['llm-how', 'llm-tokens', 'llm-design', 'llm-train-laptop', 'llm-scale', 'llm-finetune', 'llm-local', 'llm-eval', 'llm-embed-train', 'llm-paradigms'] },
       { n: 7, title: 'Talk to models and add knowledge', short: 'RAG', effort: '10–14 h', desc: 'LLM APIs, prompting, embeddings, RAG and advanced retrieval.', lessons: ['app-llm-api', 'app-prompting', 'app-embeddings', 'app-rag', 'app-rag-advanced'] },
       { n: 8, title: 'Agents, multimodal and trust', short: 'Agents', effort: '12–16 h', desc: 'Tools, agents, frameworks, multimodal apps, evaluation, security and responsible AI.', lessons: ['app-agents', 'app-frameworks', 'app-multimodal', 'app-evals', 'app-security', 'app-responsible', 'app-genai-agentic'] },
       { n: 9, title: 'Production', short: 'Production', effort: '10–14 h', desc: 'Serving, MLOps, monitoring, cost and scale, architectures.', lessons: ['ops-serving', 'ops-mlops', 'ops-data-debt', 'ops-monitoring', 'ops-scale', 'ops-architecture'] },
