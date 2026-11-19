@@ -105,6 +105,22 @@ try: A model's mistakes on the same two days are 1 and 1. What is its MAE, and w
 answer: (1 + 1) ÷ 2 = 1. Improvement: (1.5 − 1) ÷ 1.5 ≈ 0.33 = 33%. The model's error is a third smaller than the baseline's.
 ```
 
+## Live simulation
+Forecasting is tested on time-ordered data. Compare three simple methods on one made-up series.
+
+```sim ts Forecasting a monthly series
+question: How do we test a forecast fairly, and which simple methods beat which?
+watch: The line is four years of monthly values. The last year is held back: methods are fitted on the first three years and tested on the last.
+watch: Compare the three methods over the same months. The miss is the average size of the gap between the forecast and what happened.
+watch: Smoothing with a moving average makes the trend easier to see. It is not a forecast.
+try: trend | Choose "Trend plus yearly pattern" and forecast 12 months ahead with an average miss below 3.
+try: worse | Choose "Repeat the same month last year" and see it do worse than repeating the last value.
+predict: A series has a clear upward trend and a yearly pattern. Over the next 12 months, which simple method should do best? | Repeat the last value | Repeat the same month last year | Trend plus yearly pattern
+answer: 3 | It is the only method that follows both the trend and the yearly pattern. Repeating last year's month ignores the trend, so it falls behind a little more each year.
+leaves-out: A made-up series with a known steady trend, a yearly pattern and a little noise, so the right answer is clear. Real series change character over time. One split is shown; real forecasting is tested on several time-ordered splits. The trend-and-pattern method is a plain straight-line fit plus average monthly differences.
+reference: examples/sim-ai/ai.py
+```
+
 ## Python example
 A year of synthetic daily sales with a rising trend and a weekend peak; the last 60 days are the test period:
 ```text Output of gap_topics.py timeseries (executed)

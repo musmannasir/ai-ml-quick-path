@@ -202,6 +202,23 @@ checks.push(['dl', 'examples/sim-dl/dl.py', () => {
   return out;
 }]);
 
+// ---- Phase 5: recommender, time series, probability of a test, treatment paradox, search and games, backtracking ----
+checks.push(['ai', 'examples/sim-ai/ai.py', () => {
+  const A = load('ai.js').logic.ai, out = [], r3 = (v) => f(v, 3), r2 = (v) => f(v, 2);
+  out.push('similarity of user 1 to the others: ' + [1, 2, 3, 4, 5].map((u) => r3(A.userSimilarity(0, u))).join(' '));
+  for (const item of [2, 4]) out.push(`predicted rating for user 1, ${A.ITEMS[item]}: k=2 ${r2(A.predict(0, item, 2).value)}, k=3 ${r2(A.predict(0, item, 3).value)}, everyone's average ${r2(A.itemAverage(item))}`);
+  const y = A.series(), fit = A.fitTrendSeason(y, 36), strongest = fit.season.reduce((m, v) => (Math.abs(v) > Math.abs(m) ? v : m), fit.season[0]);
+  out.push(`trend per month ${r3(fit.b)}, strongest season effect ${r2(strongest)}`);
+  for (const h of [1, 3, 12]) out.push(`forecast error (MAE) over the next ${h} month(s): repeat last ${r2(A.mae('naive', y, h))}, repeat last year ${r2(A.mae('seasonal', y, h))}, trend and season ${r2(A.mae('trend', y, h))}`);
+  for (const [pr, se, sp] of [[0.1, 0.95, 0.9], [0.01, 0.95, 0.9], [0.5, 0.95, 0.9]]) out.push(`prior ${r2(pr)}, sensitivity ${r2(se)}, specificity ${r2(sp)}: chance of illness after 1 positive ${r3(A.posterior(pr, se, sp, 1))}, after 2 ${r3(A.posterior(pr, se, sp, 2))}`);
+  const c = A.counts(0.01, 0.95, 0.9); out.push(`10000 people at prior 0.01: true positives ${c.tp}, missed ${c.fn}, false alarms ${c.fp}, true negatives ${c.tn}`);
+  for (const hs of [[0.8, 0.1], [0.5, 0.5]]) out.push(`treatment A with ${f(hs[0] * 100, 0)}% hard cases ${r3(A.overall('A', hs[0]))}; treatment B with ${f(hs[1] * 100, 0)}% hard cases ${r3(A.overall('B', hs[1]))}`);
+  for (const algo of ['bfs', 'dfs', 'astar']) { const r = A.solve(algo); out.push(`maze, ${algo}: ${r.order.length} cells examined, path of ${r.length} steps`); }
+  for (const prune of [false, true]) { const m = A.minimax(prune); out.push(`game tree, ${prune ? 'with pruning' : 'without pruning'}: best value ${m.best}, leaves looked at ${m.seen} of 9`); }
+  for (const smart of [false, true]) { const m = A.colourMap(smart); out.push(`map colouring, ${smart ? 'most constrained first' : 'fixed order'}: solved ${m.ok ? 'True' : 'False'}, colours tried ${m.tries}, backtracks ${m.back}, result ${m.col.map((k) => 'RGB'[k]).join('')}`); }
+  return out;
+}]);
+
 let bad = 0;
 for (const [name, ref, js] of checks) {
   let a, b;

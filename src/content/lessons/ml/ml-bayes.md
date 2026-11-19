@@ -111,6 +111,22 @@ try: With the uncertainty now 0.99, what is the gain for the next measurement?
 answer: 0.99 ÷ (0.99 + 1) ≈ 0.4975. The filter now gives the new measurement about half the weight.
 ```
 
+## Live simulation
+A positive test is evidence, not proof. The numbers behind it are easiest to see as counts of people.
+
+```sim bay How likely is illness after a positive test?
+question: Why does a positive result from a good test often still mean "probably fine"?
+watch: Out of 10,000 people, the first bar splits them into ill and healthy. The second bar shows only those with a positive test.
+watch: When the illness is rare, a small false-alarm rate on a large healthy group can produce more false alarms than true cases.
+watch: A second independent positive test changes the odds again.
+try: rare | Make the illness rare (1% or less) and see the chance of illness after a positive test drop below 20%.
+try: twice | Starting from an illness that affects at least 5% of people, switch on the second positive test and bring the chance of illness to 90% or more.
+predict: A test catches 95% of illnesses and clears 90% of healthy people. Only 1% of people are ill. You test positive. About how likely are you to be ill? | About 95% | About 50% | Under 10%
+answer: 3 | Of 10,000 people, 100 are ill and 95 of them test positive. Of 9,900 healthy people, 990 also test positive. So 95 of 1,085 positives are really ill: about 9%.
+leaves-out: Made-up percentages, whole-person counts, and the assumption that the two tests are independent. Real tests are often not independent of each other, and the chance of illness for a particular person depends on more than the average rate.
+reference: examples/sim-ai/ai.py
+```
+
 ## Python example
 Three demonstrations: enumeration in a small Bayesian network, a Metropolis sampler for a coin that showed 7 heads in 10 flips, and a Kalman filter with five noisy measurements of one number. A small repeatable random generator makes the numbers repeat.
 

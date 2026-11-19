@@ -76,6 +76,35 @@ result: The tree grows by multiplying at every move. Three choices become 59049 
 why: This explosive growth is why programs cannot look at everything, and why pruning and good guesses matter. Chess has far more than 3 moves per turn, so a program uses pruning and a scoring guess to stop early.
 ```
 
+## Live simulation
+Search is a way to find a path or a move. Two pictures show the main ideas.
+
+```sim srch Searching a maze
+preset: maze
+question: How do different search methods find a way through a maze, and what does each one cost?
+watch: Slide the number of cells examined, or run to the end. The numbers show the order in which cells were examined.
+watch: Breadth-first spreads out evenly. Depth-first dives as far as it can. A* leans toward the goal.
+watch: Compare the path length and the number of cells examined for the three methods.
+try: guided | Run A* to the end and see it examine fewer cells than breadth-first while still finding the shortest path (13 steps).
+predict: Which methods are guaranteed to find the shortest path here? | Depth-first | Breadth-first, and A* with a distance guide | All three
+answer: 2 | Breadth-first looks at every cell one step away, then two steps, and so on, so the first path it finds is the shortest. A* with a distance that never overestimates also finds the shortest. Depth-first found a 21-step path in this maze.
+leaves-out: One fixed 8 by 8 maze where every step costs the same. Real search problems have steps with different costs and far larger spaces, and the choice of guide for A* matters.
+reference: examples/sim-ai/ai.py
+```
+
+```sim srch Choosing a move in a two-player game
+preset: tree
+question: How does a program choose a move when an opponent will answer it, and how can it skip moves that cannot matter?
+watch: You pick one of three moves, then the opponent picks a reply. The numbers at the bottom say how good each result is for you.
+watch: The opponent is assumed to pick the reply that is worst for you. You pick the move whose worst case is best (minimax).
+watch: Switch on pruning and see how many positions can be skipped without changing the answer.
+try: prune | Switch on pruning and see the program look at fewer than 9 positions.
+predict: In the second branch the opponent can already hold you to 2, and the first branch is worth 3 to you. Do you need to look at the other replies in the second branch? | Yes, always | No, they cannot change your choice | Only if they are larger
+answer: 2 | The second branch is already worth at most 2 to you, which is worse than the 3 you have. More replies can only make it worse for you, so they cannot change your choice.
+leaves-out: A tiny tree with nine made-up values. Real game programs search millions of positions, use a scoring function for positions they cannot finish, and order the moves so that pruning works best.
+reference: examples/sim-ai/ai.py
+```
+
 ## Python example
 A 5 by 5 maze with walls, solved by breadth-first search and by A*, followed by a small game tree solved by minimax and by alpha-beta. The standard library is enough.
 

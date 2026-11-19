@@ -94,6 +94,21 @@ try: What is the fitness of 1111011111?
 answer: Nine ones, so the fitness is 9, one short of the best.
 ```
 
+## Live simulation
+A rule-based solver searches for choices that satisfy every rule. Order matters more than it seems.
+
+```sim csp Solving a puzzle by backtracking
+question: How does a program solve a puzzle with rules, and why does the order of its choices matter?
+watch: Neighbouring regions must have different colours. The program tries a colour, moves on, and undoes its choice when it hits a dead end.
+watch: Run the fixed order to the end and note the colours tried and the backtracks.
+watch: Then choose the most constrained region first and compare.
+try: smart | Run the most-constrained-first order to the end. It should need no backtracks.
+predict: Choosing the most constrained region first will... | Need more tries | Need fewer tries | Give a different colouring
+answer: 2 | A region with few allowed colours is the likeliest to cause a dead end, so dealing with it first finds problems early. Here it uses 11 tries instead of 59, and the colouring is the same.
+leaves-out: Seven regions and three colours. Real solvers (for timetables, routes or configurations) also remove colours that can no longer work before choosing, and learn from past dead ends. Building a plan step by step is not shown.
+reference: examples/sim-ai/ai.py
+```
+
 ## Python example
 Three small demonstrations: map colouring with backtracking, a truth-table check that "if P then Q, and P" guarantees Q, and a genetic algorithm that evolves a 10-bit string towards all ones, with a small repeatable random generator so that the numbers repeat.
 

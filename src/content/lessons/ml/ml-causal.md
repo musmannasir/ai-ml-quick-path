@@ -71,6 +71,21 @@ try: Compare within the severe group only. What is the effect there?
 answer: Treated severe patients average 16 and untreated severe patients average 14, so the effect is 16 - 14 = 2, which is the true effect.
 ```
 
+## Live simulation
+Averages can hide a cause. Simpson's paradox is the clearest example.
+
+```sim cau When a hidden cause fools the averages
+question: How can a treatment that is better in every group look worse overall?
+watch: Look at the split view first. Treatment A beats treatment B for easy cases and for hard cases.
+watch: Then look at everyone together. The result changes because A is mostly given hard cases and B mostly easy ones.
+watch: Move the sliders so both treatments get the same mix of cases, and the overall result agrees with the groups.
+try: flip | Make the mix of cases within five percentage points the same for A and B and see A come out ahead overall.
+predict: Treatment A does better than B for easy cases and for hard cases. Can B still look better overall? | No, that is impossible | Yes, if B is given mostly easy cases | Only if the data is wrong
+answer: 2 | The overall rate is an average over whatever mix of cases each treatment received. If B mostly got easy cases, its average rises even though it is worse inside each group.
+leaves-out: Made-up counts for 100 patients per treatment, and one hidden cause (how hard the case is). Real studies have many such causes, some unknown. Randomly assigning treatments, as a trial does, evens out the mix of cases; with data from ordinary practice, extra care is needed before saying a treatment causes an outcome.
+reference: examples/sim-ai/ai.py
+```
+
 ## Python example
 200 patients from a repeatable rule. A hidden factor z (1 means a more severe case) raises the outcome by 4 and makes treatment more likely. The treatment adds exactly 2, so the true effect is 2. The program compares treated and untreated in three ways: plainly, adjusted for z, and in a randomised version where a coin decides treatment.
 

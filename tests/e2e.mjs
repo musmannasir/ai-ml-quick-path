@@ -601,7 +601,7 @@ for (const w of [320, 390, 768]) {
 
 // 12b. Simulations (public/assets/sim.js and sims/*.js)
 {
-  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl']];
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl'], ['ml-recommenders', 'rec'], ['ml-timeseries', 'ts'], ['ml-bayes', 'bay'], ['ml-causal', 'cau'], ['ai-search', 'srch'], ['ai-logic-plan', 'csp']];
   const problems = [];
   for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
     const page = await newPage({ width: w });
@@ -618,7 +618,7 @@ for (const w of [320, 390, 768]) {
     if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
     await page.context().close();
   }
-  expect('All thirty-two simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+  expect('All thirty-eight simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
 
   // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
   const page = await newPage({ width: 1280 });
@@ -794,6 +794,38 @@ for (const w of [320, 390, 768]) {
   expect('Spectrogram simulation: a window of 128 reads the first pitch as 102 Hz and the second as 250 Hz, and the challenge ticks', r.out[0] === '102 and 250 Hz' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('dl-rl', 'rl', `btn('Train 50').click(); return [reads()[2], done('path')];`);
   expect('Reinforcement-learning simulation: after 50 episodes the best path reaches the goal in 6 moves (the Python program gives the same path) and the challenge ticks', r.out[0] === '6 moves to the goal' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12g. Behaviour of the Phase 5 simulations (recommender, forecasting, test probability, treatment paradox, search, backtracking)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('ml-recommenders', 'rec', `const q = reads()[0]; setRange('How many similar', 3); return [q, reads()[0], done('k')];`);
+  expect('Recommender simulation: User 1 and Film C is predicted at 4.50 with k = 2 and 3.93 with k = 3 (the Python program gives the same), and the challenge ticks', r.out[0] === '4.50' && r.out[1] === '3.93' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-timeseries', 'ts', `setSel('Forecast method', 'trend'); setRange('Months ahead', 12); return [reads(), done('trend')];`);
+  expect('Forecasting simulation: trend plus pattern over 12 months misses by 2.32 against 5.26 for repeating the last value, and the challenge ticks', r.out[0][0] === '2.32' && r.out[0][1] === '5.26' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-bayes', 'bay', `setRange('How common', -2); return [reads()[2], done('rare')];`);
+  expect('Test-probability simulation: at 1% prevalence a positive test means 8.8% chance of illness, and the challenge ticks', r.out[0] === '8.8%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-causal', 'cau', `const q = reads(); f.querySelector('.sim-btns button').click(); return [q[2], reads()[2], reads()[0], done('flip')];`);
+  expect('Treatment-paradox simulation: B looks better overall (A 74%, B 81%), and with the same mix A comes out ahead at 80%, and the challenge ticks', r.out[0] === 'B' && r.out[1] === 'A' && r.out[2] === '80%' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ai-search', 'srch', `setSel('Method', 'astar'); btn('Run to the end').click(); return [reads(), done('guided')];`);
+  expect('Search simulation: A* examines 14 cells and finds the 13-step path (the Python program gives the same), and the challenge ticks', r.out[0][0] === '14' && r.out[0][1] === '13 steps' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ai-logic-plan', 'csp', `setSel('Which region', 'smart'); btn('Run to the end').click(); return [reads(), done('smart')];`);
+  expect('Backtracking simulation: most constrained first solves the puzzle with 11 colours tried and no backtracks, and the challenge ticks', r.out[0][0] === '11' && r.out[0][1] === '0' && r.out[0][2] === 'solved' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
 }
 
 // 13. Screenshots

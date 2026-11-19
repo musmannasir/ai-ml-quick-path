@@ -96,6 +96,22 @@ try: A second user has the taste (2, 0): they like action and do not care about 
 answer: Film A: 2 × 3 + 0 × 4 = 6. Film B: 2 × 4 + 0 × 1 = 8. For this user film B wins. The same films get a different order for a different taste.
 ```
 
+## Live simulation
+A recommender fills in the blanks of a table of ratings. You can see which users it listens to.
+
+```sim rec A recommender: guess a rating from similar users
+question: How can a system guess what you will like from what people like you liked?
+watch: The table holds made-up ratings. Pick a user and a film that user has not rated.
+watch: The bars show who is most similar to that user, judged only on films both have rated. The boxed bars are the users the system listens to.
+watch: The prediction is a weighted average of their ratings. Change k to listen to more or fewer users.
+try: k | For User 1 and Film C, change k so that the prediction moves by at least 0.5.
+try: cold | Switch on the cold-start option and see what the system falls back on.
+predict: User 1 and User 2 gave similar ratings to films A and B, and User 2 gave Film C a 5. What will the system guess for User 1 on Film C? | Low | High | Nothing at all
+answer: 2 | The users most similar to User 1 liked Film C, so the weighted average is high (4.5 when listening to the two most similar users).
+leaves-out: Six users and six films, all made up. Real systems have millions of users and items, most of the table is empty, and many use learned hidden factors instead of comparing users directly. They also have to avoid feeding people only more of what they already saw. A brand-new user is shown as the cold-start problem; fixes such as asking a few questions are not simulated.
+reference: examples/sim-ai/ai.py
+```
+
 ## Python example
 60 users, 40 items, about 30% of ratings known (synthetic):
 ```text Output of gap_topics.py recsys (executed)
