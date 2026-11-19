@@ -938,7 +938,7 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .sim-readouts dt { font-size: .75rem; color: var(--ink-2); font-weight: 600; }
 .sim-readouts dd { margin: 0; font-family: var(--mono); font-weight: 700; font-size: 1.05rem; color: var(--ink); overflow-wrap: anywhere; }
 .sim-row { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); align-items: start; }
-.sim-card { padding: .5rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); min-width: 0; }
+.sim-card { overflow-x: auto; padding: .5rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); min-width: 0; }
 .sim-card-t { margin: 0 0 .3rem; font-size: .8125rem; font-weight: 700; color: var(--ink-2); }
 .sim-canvas, .sim-svg { display: block; width: 100%; height: auto; background: var(--sim-bg); border: 1px solid var(--line); border-radius: var(--radius); }
 .sim-canvas { touch-action: manipulation; }

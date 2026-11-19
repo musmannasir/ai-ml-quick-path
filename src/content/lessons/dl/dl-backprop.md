@@ -83,6 +83,22 @@ try: What is the numerical slope of f(w) = w squared at w = 5, using a nudge of 
 answer: 5.001^2 = 25.010001 and 4.999^2 = 24.990001. The difference is 0.02 and 0.02 ÷ 0.002 = 10, which equals 2 × 5.
 ```
 
+## Live simulation
+Backpropagation is the chain rule applied to a calculation graph. Here is the smallest graph that still shows every kind of step.
+
+```sim bp Backpropagation on one neuron
+question: How does a network work out, for every weight, which way to change it?
+watch: The forward pass fills each box with a value, from x and w on the left to the loss on the right.
+watch: Each backward step multiplies the gradient coming from the right by the local slope of one box. An add passes the gradient on; a product scales it by the other input.
+watch: The nudge check changes w by a tiny amount and measures the loss change directly. It should match the backward result.
+try: chain | Show all four backward steps and confirm that the nudge check agrees with the gradient of w.
+try: learn | With x = 2 and target y = 1, press "Update w and b once" until the loss is below 0.02.
+predict: Here a is about 0.60 and the target is 1. If w gets slightly bigger, does the loss go down or up? | Down | Up | It stays the same
+answer: 1 | A bigger w makes z and then a larger, and a moves toward the target of 1, so the loss falls. That is why the gradient of w is negative: we move w the opposite way to its gradient.
+leaves-out: One neuron and one training example, where a real network has many layers and millions of weights. Frameworks work out these gradients automatically with the same rule; this page shows the rule by hand.
+reference: examples/sim-backprop/graph.py
+```
+
 ## Python example
 A tiny autograd engine in about 30 lines. Each number remembers how it was made, and `backward()` applies the chain rule. It computes the same gradients as the hand calculation, checks one by a nudge, and then shows how the gradient fades through stacks of sigmoid layers. It needs no libraries. PyTorch was not installed for this lesson, so the PyTorch equivalent (`loss.backward()`) is described, not run.
 

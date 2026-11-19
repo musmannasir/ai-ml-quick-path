@@ -115,6 +115,23 @@ answer: New w = 1 − 1 × (−4) = 5. New loss = (5 − 3)² = 4. The step jump
 deeper: The slope 2 × (w − 3) is the derivative of (w − 3)² with respect to w. With many weights, the derivative for each weight is collected into a vector called the gradient. Backpropagation is the method that computes this gradient efficiently for a neural network using the chain rule.
 ```
 
+## Live simulation
+Learning is a search for numbers that make the loss small. Gradient descent does the search with one simple rule, and you can watch it work.
+
+```sim gd Gradient descent: a ball rolling down a curve
+question: How does a model learn by moving a number downhill, and what does the learning rate change?
+watch: The ball is the model's one number, x. The curve is the loss: lower is better. Each dot is one step.
+watch: Each step moves x by the learning rate times the slope. Where the curve is flat, steps become small.
+watch: Try very small and very large learning rates, and try the two-valley curve from different starting points.
+try: fast | On the bowl, get the loss below 0.01 in 15 steps or fewer.
+try: blow | Raise the learning rate until the loss grows instead of shrinking.
+try: local | On the two-valley curve, find a starting point from which the ball settles in the shallower valley.
+predict: The bowl's lowest point is x = 3. With learning rate 1.0, starting at 0, where does the ball go? | It settles at 3 | It bounces between 0 and 6 forever | It blows up
+answer: 2 | Each step is 1.0 times the slope. From 0 the slope is -6, so x jumps to 6. From 6 the slope is +6, so x jumps back to 0, and so on. A slightly smaller rate settles, a slightly larger one blows up.
+leaves-out: One number to learn, where a real model learns millions at once. The curves are made-up examples, and real loss surfaces cannot be drawn like this. Momentum and Adam are in the training lesson.
+reference: examples/sim-training/dynamics.py
+```
+
 ## Python example
 Fitting a straight line `y = w·x + b` to data that roughly follows `y = 2x + 1`:
 ```python ml_basics.py gd (excerpt)

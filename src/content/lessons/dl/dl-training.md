@@ -102,6 +102,22 @@ answer: 1,000 ÷ 50 = 20 updates per epoch, and 20 × 5 = 100 updates. Smaller b
 - Update the weights | One bad batch can no longer break training | output
 ```
 
+## Live simulation
+Training is gradient descent with extra tricks. The race below shows why those tricks exist.
+
+```sim train The optimiser race on a long narrow valley
+question: Why do people use momentum or Adam instead of plain gradient descent, and what does a noisy gradient do?
+watch: The contour lines are a long narrow valley: steep across, shallow along. All three start at the same point and use the same learning rate.
+watch: Plain gradient descent follows the slope, so it zigzags across the valley or crawls along it. Momentum builds up speed along the valley. Adam scales each direction by its own typical step.
+watch: Raise the gradient noise to see how a small, noisy batch makes every path wander.
+try: blow | Make plain gradient descent blow up (loss above 1000) by raising the learning rate.
+try: momentum | With no noise and learning rate 0.02, run to 60 steps: momentum gets the loss below 0.01 while plain is still above 0.1.
+predict: At learning rate 0.1, what does plain gradient descent do on this valley? | It settles quickly | It keeps jumping from one side of the valley to the other and never settles | It blows up
+answer: 2 | Across the valley the slope is steep, and 0.1 is exactly the rate where each step jumps to the mirror point on the other side. A little higher it blows up, a little lower it settles.
+leaves-out: Two numbers to learn instead of millions. The gradient noise comes from a random-number generator that stands in for a small batch; it is not real mini-batches. Dropout and batch normalisation are not shown here.
+reference: examples/sim-training/dynamics.py
+```
+
 ## Python example
 How dropout works (keep 80% of activations, scale survivors so the average stays the same):
 ```text Output of ai_extras.py dropout (executed)

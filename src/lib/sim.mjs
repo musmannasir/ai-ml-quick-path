@@ -19,9 +19,9 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const SIM_SECTION = 'Live simulation';
-export const SIM_MODULES = ['nn', 'bpe', 'gen', 'attn', 'sup'];
+export const SIM_MODULES = ['nn', 'bpe', 'gen', 'attn', 'sup', 'tf1', 'tf4', 'tf5', 'tf6', 'gd', 'train', 'bp'];
 // Files a module needs, in load order (a module may bring a data file such as trained weights).
-export const SIM_FILES = { attn: ['attn-model.js', 'attn.js'] };
+export const SIM_FILES = { attn: ['attn-model.js', 'attn.js'], tf1: ['attn-model.js', 'attn.js', 'tf1.js'], tf4: ['attn-model.js', 'attn.js', 'tf4.js'], tf5: ['attn-model.js', 'attn.js', 'tf5.js'], tf6: ['attn-model.js', 'attn.js', 'tf6.js'] };
 export const simScripts = (mods) => ['assets/sim.js', ...[...mods].sort().flatMap((m) => (SIM_FILES[m] || [`${m}.js`]).map((f) => `assets/sims/${f}`))];
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 let counter = 0;

@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-19T10:08:35.801Z",
+  "date": "2026-11-19T11:54:26.030Z",
   "browser": "Chromium (Playwright)",
   "pages": 114,
-  "passed": 70,
+  "passed": 77,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 35041 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 35694 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 35041 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 35694 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -331,7 +331,7 @@
       "detail": ""
     },
     {
-      "name": "All five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "name": "All twelve simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
       "pass": true,
       "detail": ""
     },
@@ -347,6 +347,41 @@
     },
     {
       "name": "Generation simulation: ten greedy tokens after \"the cat\" give the same text as the Python program",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Gradient descent simulation: 20 steps at rate 0.1 on the bowl reach x = 2.97 (the Python program gives the same)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Backpropagation simulation: showing all four steps gives a gradient of w of -1.00, the nudge check agrees, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Optimiser race: after 60 steps at rate 0.05 plain and momentum are near 0.017 and Adam is still near 1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Transformer writing simulation: greedy text after \"the cats\" matches the Python program, the cache saves work, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Words-to-numbers simulation: with position numbers off the two \"the\" rows are identical",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Transformer block simulation: switching off the add path drops the chance on agreeing verbs below 60%",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Training-against-using simulation: using mode needs six passes for six words and the challenge ticks",
       "pass": true,
       "detail": ""
     },

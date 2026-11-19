@@ -60,7 +60,7 @@ checks.push(['gen', 'examples/sim-tokens/gen_tokens.py', () => {
 
 // ---- attention ----
 checks.push(['attn', 'examples/sim-attention/attention_forward.py', () => {
-  const Q = load('attn-model.js'); const A = load('attn.js').logic.attn, model = Q.models.attn, out = [];
+  const Q = load('attn-model.js'); const A = load('attn.js').logic.attn, G5 = load('tf5.js').logic.tf5, G6 = load('tf6.js').logic.tf6, model = Q.models.attn, out = [];
   const words = 'the cats near the box sleep .'.split(' '), q = 4, r = A.run(model, words, true, true);
   r.heads.forEach((h, i) => out.push(`head ${i + 1}, row for word ${q + 1} (${words[q]}): ${words.map((w, j) => `${w}:${f(h.A[q][j], 2)}`).join(' ')}`));
   const top = r.P[q].map((p, i) => i).sort((a, b) => r.P[q][b] - r.P[q][a] || a - b).slice(0, 4);
@@ -68,6 +68,17 @@ checks.push(['attn', 'examples/sim-attention/attention_forward.py', () => {
   out.push(`probability on verbs that agree with the plural subject: ${f(['sleep', 'run', 'sit'].reduce((s, v) => s + r.P[q][model.vocab.indexOf(v)], 0), 3)}`);
   const u = A.run(model, words, false, false);
   out.push(`no mask, no scaling, head 1, row for word ${q + 1}: ${words.map((w, j) => `${w}:${f(u.heads[0].A[q][j], 2)}`).join(' ')}`);
+  const b = r.blk[q], f4 = (v) => v.slice(0, 4).map((x) => f(x, 2)).join(' ');
+  out.push(`block at word ${q + 1}: after add+norm ${f4(b.n1)} | feed-forward adds ${f4(b.g)} | final ${f4(b.n2)}`);
+  const agreeP = (o) => ['sleep', 'run', 'sit'].reduce((s, v) => s + o.p[model.vocab.indexOf(v)], 0);
+  const C = r.heads.flatMap((h) => h.O[q]), back = A.vecMat(C, model.Wo);
+  for (const [label, o] of [['no attention', { noAttn: true }], ['no feed-forward', { noFfn: true }], ['no add path', { noRes: true }]]) out.push(`${label}: probability on agreeing verbs ${f(agreeP(A.block(model, r.X[q], back, o)), 3)}`);
+  const wr = (prompt, t, k, mode, seed) => G5.generate(model, prompt.split(' '), t, k, mode, seed).words.join(' ');
+  out.push("greedy from 'the cats': " + wr('the cats', 1, 0, 'greedy', 7));
+  out.push("sampled from 'the', seed 7: " + wr('the', 1, 0, 'sample', 7));
+  out.push("sampled from 'the', seed 7, top-k 3, temperature 0.5: " + wr('the', 0.5, 3, 'sample', 7));
+  const L = G6.losses(model, words);
+  out.push('loss per position: ' + L.map((o) => f(o.loss, 2)).join(' ') + `  average ${f(L.reduce((s, o) => s + o.loss, 0) / L.length, 3)}  random guessing ${f(Math.log(model.vocab.length), 2)}`);
   return out;
 }]);
 
@@ -81,6 +92,30 @@ checks.push(['sup', 'examples/sim-supervised/algorithms.py', () => {
   }
   const tr = P.makeData('blobs', D.trainN, D.trainSeed), te = P.makeData('blobs', D.testN, D.testSeed), k1 = P.fitKnn(tr, 1);
   out.push(`blobs, k=1: train ${f(P.evaluate(k1, tr).acc, 2)} test ${f(P.evaluate(k1, te).acc, 2)}`);
+  return out;
+}]);
+
+// ---- gradient descent and the optimiser race ----
+checks.push(['gd+train', 'examples/sim-training/dynamics.py', () => {
+  const G = load('gd.js').logic.gd, T = load('train.js').logic.train, out = [];
+  const big = (v) => (Math.abs(v) < 1e6 ? v.toFixed(4) : v.toExponential(2));
+  for (const lr of [0.1, 0.9, 1.0, 1.1]) out.push(`bowl, learning rate ${f(lr, 1)}, start 0: ${G.descend('bowl', 0, lr, 5).map((v) => f(v, 3)).join(' ')}`);
+  for (const s of [2, -2]) out.push(`valleys, start ${f(s, 1)}, rate 0.05, 200 steps: ends at ${f(G.descend('valleys', s, 0.05, 200)[200], 3)}`);
+  for (const lr of [0.02, 0.05, 0.1]) out.push(`race, rate ${f(lr, 2)}, no noise, 60 steps: plain ${big(T.race('plain', lr, 0, 60))}, momentum ${big(T.race('momentum', lr, 0, 60))}, Adam ${big(T.race('adam', lr, 0, 60))}`);
+  out.push(`race, rate 0.05, noise 1, 60 steps: plain ${big(T.race('plain', 0.05, 1, 60))}, momentum ${big(T.race('momentum', 0.05, 1, 60))}, Adam ${big(T.race('adam', 0.05, 1, 60))}`);
+  return out;
+}]);
+
+// ---- backpropagation ----
+checks.push(['bp', 'examples/sim-backprop/graph.py', () => {
+  const B = load('bp.js').logic.bp, out = [];
+  let [x, w, b, y] = [2, 0.3, 0.1, 1];
+  const fw = B.forward(x, w, b, y);
+  out.push(`forward: m ${f(fw.m, 4)}  z ${f(fw.z, 4)}  a ${f(fw.a, 4)}  loss ${f(fw.loss, 4)}`);
+  const g = B.backward(x, w, b, y);
+  out.push(`backward: dloss/da ${f(g.a, 4)}  dloss/dz ${f(g.z, 4)}  dloss/dw ${f(g.w, 4)}  dloss/db ${f(g.b, 4)}  dloss/dx ${f(g.x, 4)}`);
+  out.push(`nudge check: w ${f(B.nudge(x, w, b, y, 'w'), 4)}  b ${f(B.nudge(x, w, b, y, 'b'), 4)}`);
+  for (let i = 1; i <= 5; i++) { const h = B.backward(x, w, b, y); w -= 0.1 * h.w; b -= 0.1 * h.b; out.push(`update ${i} (rate 0.1): w ${f(w, 4)}  b ${f(b, 4)}  loss ${f(B.forward(x, w, b, y).loss, 4)}`); }
   return out;
 }]);
 

@@ -127,6 +127,21 @@ note: Read from the bottom up.
 - Input tokens | The text split into pieces | input
 ```
 
+## Live simulation
+The model below is the same tiny Transformer used in the Transformers lesson (21 words, 8 numbers per word, one block). It is a toy, but the loop around it is the loop a large model runs.
+
+```sim tf5 How a Transformer writes one word at a time
+question: How does a Transformer write text one word at a time, and what does the cache save?
+watch: Each step runs the text so far through the model. Only the scores for the last word are used, and they become chances for the next word.
+watch: Temperature and top-k reshape the chances, exactly as in the token-generation simulation. Greedy picks the highest, sampling draws at random.
+watch: The table counts "word passes". Without the cache every step runs all the earlier words again. With the cache, earlier words are kept, so each later step runs only the new word.
+try: cache | Write a text to the end and read the two totals: the cache should save at least 5 word passes.
+predict: A text has 6 words when the model chooses word 7. With no cache, how many words does it run through the model for that step? | Only the new word | All 6 words again | None
+answer: 2 | The model has no memory between steps. Without a cache it processes the whole text again; with a cache it reuses the stored keys and values of the first 6 words and does the work only for the new one.
+leaves-out: This toy model knows 21 words and a text of at most 8 words, so the cache saving is small. For a long text the saving is large, and the cache itself takes memory. The page counts word passes; it does not time anything.
+reference: examples/sim-attention/attention_forward.py
+```
+
 ## Python example
 The simplest possible "language model" counts which word follows which (a bigram model). Real LLMs learn far richer patterns, but the next-word idea is the same:
 ```text Output of quickpath.py bigram (executed)

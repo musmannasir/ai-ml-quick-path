@@ -11,6 +11,21 @@
   function vecMat(v, M) { var out = []; for (var j = 0; j < M[0].length; j++) { var s = 0; for (var i = 0; i < v.length; i++) s += v[i] * M[i][j]; out.push(s); } return out; }
   function softmax(a) { var m = Math.max.apply(null, a), e = a.map(function (x) { return Math.exp(x - m); }), z = 0; e.forEach(function (x) { z += x; }); return e.map(function (x) { return x / z; }); }
 
+  function lnorm(x) { var n = x.length, mu = 0, v = 0, i; for (i = 0; i < n; i++) mu += x[i]; mu /= n; for (i = 0; i < n; i++) v += (x[i] - mu) * (x[i] - mu); var sd = Math.sqrt(v / n + 1e-5); return x.map(function (a) { return (a - mu) / sd; }); }
+  // One Transformer block for one word: attention output "back" joins the word's own vector x (the add), is normalised,
+  // goes through the feed-forward network, is added and normalised again. opts: noAttn, noFfn, noRes (switch parts off).
+  function block(model, x, back, opts) {
+    opts = opts || {};
+    var s1 = opts.noAttn ? x.slice() : x.map(function (v, k) { return opts.noRes ? back[k] : v + back[k]; });
+    var n1 = lnorm(s1);
+    var hid = vecMat(n1, model.W1).map(function (v, i) { return Math.max(0, v + model.b1[i]); });
+    var g = vecMat(hid, model.W2).map(function (v, i) { return v + model.b2[i]; });
+    var s2 = opts.noFfn ? n1.slice() : n1.map(function (v, k) { return opts.noRes ? g[k] : v + g[k]; });
+    var n2 = lnorm(s2);
+    var logits = vecMat(n2, model.Wout).map(function (v, i) { return v + model.b[i]; });
+    return { x: x, back: back, s1: s1, n1: n1, hid: hid, g: g, s2: s2, n2: n2, logits: logits, p: softmax(logits) };
+  }
+
   // words -> everything the page shows. causal: hide later words. scaled: divide scores by sqrt(head size).
   function run(model, words, causal, scaled) {
     var T = words.length, dh = model.dh, ids = words.map(function (w) { return model.vocab.indexOf(w); });
@@ -29,21 +44,50 @@
       }
       heads.push({ Q: Qm, K: Km, V: Vm, raw: raw, scores: sc, A: A, O: O });
     }
-    var P = X.map(function (x, t) {
+    var blk = X.map(function (x, t) {
       var C = []; heads.forEach(function (hd) { C = C.concat(hd.O[t]); });
-      var back = vecMat(C, model.Wo), H = x.map(function (v, k) { return v + back[k]; });
-      var logits = vecMat(H, model.Wout).map(function (v, i) { return v + model.b[i]; });
-      return softmax(logits);
+      return block(model, x, vecMat(C, model.Wo), null);
     });
-    return { words: words, ids: ids, heads: heads, P: P };
+    var P = blk.map(function (b) { return b.p; });
+    return { words: words, ids: ids, X: X, heads: heads, blk: blk, P: P };
   }
-  Q.logic.attn = { run: run, softmax: softmax,
+  Q.logic.attn = { run: run, block: block, lnorm: lnorm, vecMat: vecMat, softmax: softmax,
     SENTENCES: ['the cats near the box sleep .', 'the cat near the boxes sleeps .', 'the dog near the mat runs .', 'the birds near the rugs sit .', 'the dogs near the rug run .', 'the bird near the mats sits .'],
     DEFAULTS: { sentence: 0, head: 1, pos: 4 } };
 
   // ---- page part ----
   if (typeof document === 'undefined') return;
   var P = Q.logic.attn;
+  // Shared by the Transformer series: rows of 8 numbers drawn as coloured cells (colour = sign, strength = size).
+  Q.ui = {
+    cw: 34, ch: 22, lw: 112,
+    legend: function (S, parent) { var u = S.el('ul', { class: 'sim-legend' }); u.appendChild(S.el('li', { class: 'l0' }, [S.el('i'), document.createTextNode('positive number')])); u.appendChild(S.el('li', { class: 'l1' }, [S.el('i'), document.createTextNode('negative number')])); parent.appendChild(u); },
+    vecRows: function (S, svg, rows, scale) {
+      var u = Q.ui, lw = Math.max(64, Math.max.apply(null, rows.map(function (r) { return r.label.length; })) * 6.4 + 12), d = rows.length ? rows[0].vec.length : 8, W = lw + d * u.cw + 4, H = rows.length * (u.ch + 4) + 4;
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      rows.forEach(function (r, i) {
+        var y = 2 + i * (u.ch + 4), g = S.svg('g', { opacity: r.dim ? 0.25 : 1 });
+        g.appendChild(S.svg('text', { x: lw - 6, y: y + u.ch / 2 + 3.5, 'text-anchor': 'end', 'font-weight': r.bold ? 700 : 400, text: r.label }));
+        r.vec.forEach(function (v, k) {
+          var op = Math.min(1, Math.abs(v) / (scale || 2.5)), a = 0.1 + 0.85 * op;
+          g.appendChild(S.svg('rect', { x: lw + k * u.cw, y: y, width: u.cw - 2, height: u.ch, rx: 3, class: v >= 0 ? 'sv-f0' : 'sv-f1', 'fill-opacity': a.toFixed(3) }));
+          g.appendChild(S.svg('text', { x: lw + k * u.cw + (u.cw - 2) / 2, y: y + u.ch / 2 + 3.5, 'text-anchor': 'middle', 'font-size': 10, class: a > 0.6 ? 'inv' : '', text: (Math.abs(v) < 0.05 ? '0.0' : v.toFixed(1)) }));
+        });
+        svg.appendChild(g);
+      });
+    },
+    bars: function (S, ul, vocab, pr, pickId, n, raw) {
+      ul.innerHTML = '';
+      var order = pr.map(function (p, i) { return i; }).sort(function (a, b) { return pr[b] - pr[a] || a - b; }).slice(0, n || 5);
+      order.forEach(function (i) {
+        var li = S.el('li', { class: 'sim-bar' + (i === pickId ? ' pick' : '') }); li.appendChild(S.el('span', { class: 'sim-bar-l', text: vocab[i] }));
+        var tr = S.el('span', { class: 'sim-bar-track' }); if (raw) { var rw = S.el('span', { class: 'sim-bar-fill raw' }); rw.style.width = (raw[i] * 100).toFixed(1) + '%'; tr.appendChild(rw); }
+        var fl = S.el('span', { class: 'sim-bar-fill' }); fl.style.width = (pr[i] * 100).toFixed(1) + '%'; tr.appendChild(fl); li.appendChild(tr);
+        li.appendChild(S.el('span', { class: 'sim-bar-v', text: pct(pr[i]) })); ul.appendChild(li);
+      });
+    }
+  };
   var f2 = function (v) { return (Math.abs(v) < 0.005 ? '0.00' : v.toFixed(2)); };
   var pct = function (v) { return (v * 100).toFixed(v > 0 && v < 0.0095 ? 1 : 0) + '%'; };
 
@@ -63,7 +107,7 @@
     var cardNum = S.card('The arithmetic for the selected word', S.view);
     var tbl = S.el('table', { class: 'sim-table' }); cardNum.appendChild(tbl);
     var outP = S.el('p', { class: 'sim-card-t' }); cardNum.appendChild(outP);
-    var cardPred = S.card('What the whole model predicts after this word (both heads, as trained)', S.view);
+    var cardPred = S.card('What the whole model predicts after this word (whole block, as trained)', S.view);
     var bars = S.el('ul', { class: 'sim-bars', 'aria-label': 'Next-word probabilities' }); cardPred.appendChild(bars);
     var rWho = S.readout('who', 'Looking word'), rMost = S.readout('most', 'Looks most at'), rTrue = S.readout('true', 'Chance on the real next word');
 

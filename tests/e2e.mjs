@@ -601,7 +601,7 @@ for (const w of [320, 390, 768]) {
 
 // 12b. Simulations (public/assets/sim.js and sims/*.js)
 {
-  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup']];
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp']];
   const problems = [];
   for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
     const page = await newPage({ width: w });
@@ -618,7 +618,7 @@ for (const w of [320, 390, 768]) {
     if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
     await page.context().close();
   }
-  expect('All five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+  expect('All twelve simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
 
   // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
   const page = await newPage({ width: 1280 });
@@ -664,6 +664,39 @@ for (const w of [320, 390, 768]) {
   await g.context().close();
 }
 
+
+// 12c. Behaviour of the Phase 1 simulations (Transformer series, gradient descent, optimiser race, backpropagation)
+{
+  const run = async (lesson, mod, fn, arg) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const out = await page.evaluate(fn, { mod, arg });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  const H = `
+    const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+    const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent === n);
+    const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+    const setSel = (label, v) => { const lab = [...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)); const sel = document.getElementById(lab.getAttribute('for')); sel.value = v; sel.dispatchEvent(new Event('change')); };
+    const toggle = (label) => { const lab = [...f.querySelectorAll('.sim-ctl.check label')].find((l) => l.textContent.includes(label)); lab.querySelector('input').click(); };
+  `;
+  const mk = (body) => new Function('a', H + body);
+  let r = await run('ml-learning', 'gd', mk(`btn('Run 20 steps').click(); return reads();`));
+  expect('Gradient descent simulation: 20 steps at rate 0.1 on the bowl reach x = 2.97 (the Python program gives the same)', r.out[1] === '2.97' && !r.errs.length, r.out.join(' ') + r.errs.join('|'));
+  r = await run('dl-backprop', 'bp', mk(`btn('Show all').click(); const d = reads(); return [d[1], d[2], f.querySelector('[data-try="chain"]').classList.contains('done')];`));
+  expect('Backpropagation simulation: showing all four steps gives a gradient of w of -1.00, the nudge check agrees, and the challenge ticks', r.out[0] === '-1.00' && r.out[1] === '-1.00' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-training', 'train', mk(`btn('Run to 60').click(); return reads();`));
+  expect('Optimiser race: after 60 steps at rate 0.05 plain and momentum are near 0.017 and Adam is still near 1', /^0\.01/.test(r.out[0]) && /^0\.01/.test(r.out[1]) && /^0\.9/.test(r.out[2]) && !r.errs.length, r.out.join(' ') + r.errs.join('|'));
+  r = await run('llm-how', 'tf5', mk(`setSel('Start with', '1'); btn('Write to the end').click(); const chips = [...f.querySelectorAll('.sim-chips li')].map((li) => li.firstChild.textContent).join(' '); return [chips, reads(), f.querySelector('[data-try="cache"]').classList.contains('done')];`));
+  expect('Transformer writing simulation: greedy text after "the cats" matches the Python program, the cache saves work, and the challenge ticks', r.out[0] === 'the cats near the boxes sleep .' && Number(r.out[1][1]) < Number(r.out[1][0]) && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-transformers', 'tf1', mk(`toggle('position'); return [reads()[0], f.querySelector('[data-try="same"]').classList.contains('done')];`));
+  expect('Words-to-numbers simulation: with position numbers off the two "the" rows are identical', r.out[0] === '0.00' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-transformers', 'tf4', mk(`toggle('Add path'); return [reads()[1], f.querySelector('[data-try="nores"]').classList.contains('done')];`));
+  expect('Transformer block simulation: switching off the add path drops the chance on agreeing verbs below 60%', parseInt(r.out[0], 10) < 60 && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-transformers', 'tf6', mk(`setSel('Mode', 'use'); for (let i = 0; i < 6; i++) btn('Next word (using mode)').click(); return [reads(), f.querySelector('[data-try="serial"]').classList.contains('done')];`));
+  expect('Training-against-using simulation: using mode needs six passes for six words and the challenge ticks', r.out[0][0] === '6' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
 
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
