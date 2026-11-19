@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-19T12:16:45.007Z",
+  "date": "2026-11-19T12:42:21.758Z",
   "browser": "Chromium (Playwright)",
   "pages": 114,
-  "passed": 84,
+  "passed": 90,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 36020 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 36373 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 36020 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 36373 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -331,7 +331,7 @@
       "detail": ""
     },
     {
-      "name": "All nineteen simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "name": "All twenty-five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
       "pass": true,
       "detail": ""
     },
@@ -417,6 +417,36 @@
     },
     {
       "name": "Anomaly simulation: flagging 5% catches all four real anomalies with one false alarm and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Model builder: the 7-billion-class shape has 6.57 billion parameters and 13.15 GB of weights, and at 4 bits it fits 8 GB and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Learning-to-write simulation: after 120 words the loss on unseen sentences is 2.04 (the Python program gives the same) and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Embedding-training simulation: after 30 steps every word has a same-topic nearest neighbour and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "LoRA simulation: rank 2 leaves 14% of the change and trains 32 of 64 numbers, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Vector-search simulation: the default query near the animals gives \"horse\" first and one topic",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Retrieval simulation: chunks of 20 words find the answer to the first question and all four questions at 20 words sent, and the challenge ticks",
       "pass": true,
       "detail": ""
     },

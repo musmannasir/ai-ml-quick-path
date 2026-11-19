@@ -98,6 +98,22 @@ A **hallucination** is a statement the model makes that the sources do not suppo
 - The model never sees them
 ```
 
+## Live simulation
+Retrieval-augmented generation depends on a step that happens before the model: finding the right text. Try the pipeline on a small document.
+
+```sim rag A retrieval pipeline, step by step
+question: Why does the way a document is split into chunks decide whether the model ever sees the answer?
+watch: Viewpoint 1 is the user's question. Viewpoint 2 is the retriever, which scores each chunk by shared keywords. Viewpoint 3 is what the model would be given.
+watch: The row of cells shows, for every chunk size, whether the answer is inside what the model sees. Green means found.
+watch: Change the overlap and the number of chunks fetched, and watch the words sent to the model.
+try: all | Find settings where all four questions find their answers while sending no more than 40 words.
+try: lost | Make the answer get lost: choose a setting where the context does not hold it.
+predict: For the Saturday closing question, will small chunks of 10 words always find the answer? | Yes, smaller chunks are always better | No, chunk size changes which chunk wins, in both directions
+answer: 2 | At 10 words the best-scoring chunk is not the one holding the answer. Too small and clue words are separated from the answer; too large and the chunk carries unrelated text.
+leaves-out: A made-up document of about 150 words and keyword scoring, not a trained embedding model, and no model writes an answer: the page checks whether the answer text is present in what would be sent. Real systems add meaning-based search, re-ranking and checks on the answer.
+reference: examples/sim-llm/llm.py
+```
+
 ## Python example
 This runs offline: TF-IDF vectors stand in for embeddings and the "answer" is the best passage, so you can see retrieval behaviour without an API key.
 ```python access check before ranking (excerpt)

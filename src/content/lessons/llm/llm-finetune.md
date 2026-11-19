@@ -144,6 +144,35 @@ loop: Repeat until scores stop improving
 - Tune toward higher scores | With a penalty for drifting too far | process
 ```
 
+## Live simulation
+Two ideas make large models cheap to adapt and to run: training small add-on matrices, and storing weights in fewer bits.
+
+```sim lora LoRA: a big change from two thin matrices
+preset: lora
+question: Why can a huge model be adapted by training only a tiny number of new numbers?
+watch: The left grid is the change the model needs (64 numbers). The right grid is what two thin matrices of the chosen rank can make.
+watch: The error left is how much of the change the thin version misses. This change was built from two simple patterns plus a little noise.
+watch: The last readout scales the idea to a 4096 by 4096 layer, where the saving is large.
+try: rank | Find the smallest rank that leaves 15% or less of the change unexplained.
+predict: A layer has 4096 × 4096 weights. LoRA with rank 8 trains two thin matrices instead. About what share of the original weights is that? | About 40% | About 4% | Under 1%
+answer: 3 | Two matrices of 4096 × 8 hold 65,536 numbers, against 16,777,216 in the layer: about 0.39%.
+leaves-out: One small made-up matrix. In a real fine-tune the thin matrices are trained by gradient descent on your data rather than computed from a known change, and the right rank depends on the task. The base model's own weights are not touched.
+reference: examples/sim-llm/llm.py
+```
+
+```sim lora Quantisation: fewer bits per weight
+preset: quant
+question: How much accuracy do we lose when each weight is stored in fewer bits, and how much space do we save?
+watch: Each weight is rounded to the nearest of a few evenly spaced values. Fewer bits mean fewer values.
+watch: The error (RMSE) is the typical size of the rounding mistake, in the same units as the weights.
+watch: The size is shown against a 16-bit copy of the same weights.
+try: bits | Find the fewest bits that keep the rounding error at or below 0.002.
+predict: You go from 8 bits to 4 bits per weight. What happens to the rounding error? | It stays about the same | It grows many times over | It halves
+answer: 2 | Four bits leave only 15 distinct values instead of 255, so each weight is rounded much more coarsely. Here the error grows from about 0.0003 to about 0.0054, roughly 19 times.
+leaves-out: 400 made-up weights that follow a bell-shaped spread. Real quantisation schemes group weights, treat outliers separately and are tested on the model's answers, not only on rounding error. Blending two models is not shown.
+reference: examples/sim-llm/llm.py
+```
+
 ## Python example
 How small LoRA is compared with one full weight matrix:
 ```text Output of quickpath.py lora (executed)

@@ -150,6 +150,31 @@ checks.push(['core', 'examples/sim-core/core.py', () => {
   return out;
 }]);
 
+// ---- Phase 3: model builder, learning to write, embeddings, LoRA, vector search, RAG ----
+checks.push(['llm', 'examples/sim-llm/llm.py', () => {
+  load('gen.js'); const L = load('llm.js').logic.llm, out = [];
+  const r3 = (v) => f(v, 3), gb = (n, b) => f(L.weightBytes(n, b) / 1e9, 2);
+  for (const [name, [l, d, v]] of [['toy', [1, 8, 21]], ['GPT-2 small shape', [12, 768, 50257]], ['7B-class shape', [32, 4096, 32000]], ['70B-class shape', [80, 8192, 32000]]]) {
+    const n = L.params(l, d, v); out.push(`${name}: ${n} parameters, weights ${gb(n, 16)} GB at 16 bits, ${gb(n, 4)} GB at 4 bits, cache ${f(L.kvBytesPerToken(l, d, 16) / 1e3, 0)} KB per token`);
+  }
+  out.push(`training work for the 7B-class shape on 140 billion words of text: ${L.trainFlops(L.params(32, 4096, 32000), 140e9).toExponential(2)} operations`);
+  out.push('held-out loss by training words: ' + [10, 30, 60, 100, L.trainLen()].map((n) => `${n}:${r3(L.holdoutLoss(n))}`).join(' '));
+  const P = L.embInit(), o = [`step 0 loss ${r3(L.embStep(P.map((p) => p.slice()), 0.5, 0))} neighbours ${f(L.embAccuracy(P), 2)}`];
+  for (let s = 1; s <= 100; s++) { const loss = L.embStep(P, 0.5, 0.3); if ([5, 20, 100].includes(s)) o.push(`step ${s} loss ${r3(loss)} neighbours ${f(L.embAccuracy(P), 2)}`); }
+  out.push('embedding training, temperature 0.5: ' + o.join('; '));
+  const M = L.loraTarget();
+  out.push('rank-r error of a made-up update (relative): ' + [1, 2, 3, 4].map((r) => `r=${r}:${r3(L.lowRank(M, r).err)}`).join(' '));
+  out.push(`one 4096 by 4096 layer: ${4096 * 4096} weights to change, LoRA rank 8 trains ${2 * 4096 * 8} (${f(100 * 2 * 4096 * 8 / (4096 * 4096), 2)}%)`);
+  const W = L.quantWeights();
+  out.push('quantisation error (RMSE) by bits: ' + [8, 6, 4, 3, 2].map((b) => `${b}:${f(L.quantRmse(W, b), 5)}`).join(' '));
+  const pts = L.vsPoints();
+  for (const q of [[0.5, 0.45], [0, 0.9]]) out.push(`search near (${f(q[0], 2)}, ${f(q[1], 2)}), 5 nearest: cosine ${L.vsSearch(pts, q, 5, 'cos').map((e) => e.w).join(' ')} | distance ${L.vsSearch(pts, q, 5, 'euclid').map((e) => e.w).join(' ')}`);
+  out.push('chunks of 10, 30, 60 words (no overlap): ' + [10, 30, 60].map((s) => L.chunk(s, 0).length).join(' '));
+  for (const s of [10, 20, 30, 60, 80]) out.push(`size ${s}, no overlap, top 1: answer found for questions ${[0, 1, 2, 3].map((q) => (L.ragHit(s, 0, 1, q) ? 'yes ' : 'no  ')).join('').trim()}`);
+  out.push('size 20, overlap 10, top 2: ' + [0, 1, 2, 3].map((q) => (L.ragHit(20, 10, 2, q) ? 'yes' : 'no')).join(' '));
+  return out;
+}]);
+
 let bad = 0;
 for (const [name, ref, js] of checks) {
   let a, b;

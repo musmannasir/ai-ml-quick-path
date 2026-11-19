@@ -138,6 +138,21 @@ note: One system holds both kinds of data.
 - Only passages this user may read
 ```
 
+## Live simulation
+Search by meaning is a search for the nearest points on a map of embeddings.
+
+```sim vs Embeddings and vector search
+question: How does a search by meaning find related items, and what changes when you fetch more of them?
+watch: Every word has a position. The query is a point on the same map, and search returns the closest stored points.
+watch: Fetch more neighbours and the results soon reach other topics. Move the query between two topics and the results mix.
+watch: Compare the two ways to measure closeness. Cosine similarity looks at direction only; distance also looks at how far away a point is.
+try: mix | Move the query so that the results come from at least two topics with k of 6 or less.
+predict: You ask for 12 neighbours, and each topic has 6 words. What happens to the results? | They stay in one topic | They begin to include other topics | They become more accurate
+answer: 2 | Only 6 words belong to the nearest topic, so neighbours 7 to 12 must come from somewhere else. Fetching more always trades relevance for coverage.
+leaves-out: The positions are made-up numbers on a 2-D map, grouped by topic on purpose. Real embeddings have hundreds of dimensions and come from a trained model, and large collections use approximate search rather than comparing with every item.
+reference: examples/sim-llm/llm.py
+```
+
 ## Python example
 Toy 3-number vectors (real ones have hundreds or thousands of numbers):
 ```text Output of applied_basics.py cosine (executed)

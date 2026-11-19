@@ -104,6 +104,34 @@ note: Retrieval (RAG) is often still better than very long inputs.
 - Facts in the middle | May still be missed | bad
 ```
 
+## Live simulation
+The size of a model follows from a few choices. The first simulation turns those choices into memory and cost. The second shows what "learning to write" looks like.
+
+```sim mb Build a model and see what it costs
+question: How do the number of layers, the width and the vocabulary decide how big a language model is, and what does that cost in memory?
+watch: Parameters grow with layers times width squared, plus the vocabulary times the width. Doubling the width roughly quadruples the layer parameters.
+watch: The weights need memory in proportion to the bits stored for each one. Fewer bits mean a smaller model, with some loss of accuracy (see the quantisation simulation in the fine-tuning lesson).
+watch: The cache holds one key and one value per layer for every token of text kept, so long text costs memory on top of the weights.
+try: fit | Build a shape with at least 6 billion parameters whose weights fit in 8 GB (hint: fewer bits per weight).
+try: wide | Reach at least 1 billion parameters with 12 layers or fewer (hint: make it wide).
+predict: You double the width and keep everything else the same. About how do the parameters in the layers change? | They double | They quadruple | They stay the same
+answer: 2 | Attention and feed-forward weights are matrices with width × width entries, so doubling the width makes each one about four times larger.
+leaves-out: The formulas are simplified: they ignore small parts (biases, normalisation), and real models differ in details such as gated feed-forward layers or sharing keys between heads, which changes the numbers. The shapes are generic examples, not named products. Training memory (16 bytes per parameter) and training work (6 × parameters × tokens, with 20 tokens per parameter) are common rules of thumb, not measurements.
+reference: examples/sim-llm/llm.py
+```
+
+```sim lw Watch a tiny model learn to write
+question: What does it mean for a language model to learn, and how can we see it happen?
+watch: The model reads the first words of a small made-up text and counts which word follows which. Slide the amount it has read.
+watch: The loss is measured on every fourth sentence, which it never reads. A lower loss means it gives the real next word a higher chance.
+watch: The sample text starts with “the cat”. Early on it is close to random words. Later it begins to copy the patterns of the text.
+try: good | Let the model read enough text to bring the loss on unseen text below 2.05.
+predict: As the model reads more text, which number should fall? | The loss on text it has never read | Only the loss on text it has already read | Nothing: reading does not change it
+answer: 1 | Loss on unseen text is the honest measure of learning: it falls when the model has picked up patterns that carry over to new text. Loss on text it has read can fall just by memorising.
+leaves-out: This is a table of counts, not a neural network, and it reads about 160 words. A large model learns by gradient descent over billions of words, and its loss falls in a similar way: fast at first, then slowly. The unseen sentences come from the same made-up text, so they are easier than real unseen writing, and the loss still bumps because each new stretch adds new word pairs.
+reference: examples/sim-llm/llm.py
+```
+
 ## Python example
 Approximate size of three designs (embeddings + positions + 12 × width² per block), with memory for weights in 16-bit and for full training:
 ```text Output of quickpath.py llm_size (executed)

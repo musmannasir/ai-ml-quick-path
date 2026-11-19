@@ -95,6 +95,21 @@ result: At temperature 1 the right answer gets 30.7% of the probability. At temp
 why: A low temperature makes the model pay for every wrong ranking, so it learns fast and can become unstable. A high temperature spreads the probability and learns slowly. Typical embedding training uses a small value.
 ```
 
+## Live simulation
+An embedding is a set of numbers learned so that related items sit close together. You can watch that learning happen.
+
+```sim emb Training embeddings: pull together, push apart
+question: How does a model learn to place related words close together without anyone telling it what the words mean?
+watch: Each dot is a word on a 2-D map. Each word is pulled toward one partner from its topic and pushed away from words of other topics.
+watch: The readout counts how many words have a nearest neighbour from their own topic. It starts near chance.
+watch: Change the temperature. A low value makes the loss care mostly about the closest wrong word; a high value spreads its care over all wrong words.
+try: all | Train until every word's nearest neighbour is from its own topic.
+predict: Related words are pulled together. What stops every word from collapsing onto one point? | Nothing does | Words from other topics are pushed apart | The pairs are chosen at random
+answer: 2 | The loss rewards a word for being closer to its partner than to words of other topics, so pushing the other-topic words away lowers it just as pulling the partner in does.
+leaves-out: Twelve words and two numbers per word; the pairs come from the topics we wrote down. Real embedding models have hundreds of numbers per word, learn from pairs found in large amounts of text or from labelled examples, and use other words in the same batch as the wrong ones.
+reference: examples/sim-llm/llm.py
+```
+
 ## Python example
 Mean pooling of three token vectors, then the cosine similarity table and the contrastive loss for three question and answer pairs, before and after training. The vectors are fixed by hand, so this shows the loss, not a trained network. No neural framework was run.
 
