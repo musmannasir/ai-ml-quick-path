@@ -124,6 +124,21 @@ A **rate limit** caps how many requests one user, key or address may send in a p
 #### PII redaction
 Personal data (PII) should be removed or masked before text goes to a model, a log or a trace. The "Redacting personal data" diagram above and the Python and C# examples below show how. Redact first, then send, so the safe text is the only copy that travels.
 
+## Live simulation
+Text an assistant reads can try to control it. See how guards change the picture.
+
+```sim inj Prompt injection and three guards
+question: How can text that an assistant reads take control of it, and which guards help?
+watch: Three attacks, all invented for this page, are tried against an assistant that can read documents and send email.
+watch: Switch each guard on and see which attacks it stops.
+watch: Look for a combination that stops all three.
+try: safe | Switch guards on until all three attacks are blocked.
+predict: Is one guard enough to stop all three attacks? | Yes | No, you need more than one | Only the third guard
+answer: 2 | Each guard stops only some attacks. Layers matter, and the surest guard is limiting what the assistant can do.
+leaves-out: Three invented attacks and a simple rule for what each guard stops. Real attacks are many and inventive, and real defences are partial, not certain. Nothing here is a recipe for attacking a real system.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 Redacting personal data before text reaches a model or a log:
 ```text Output of quickpath.py pii (executed)

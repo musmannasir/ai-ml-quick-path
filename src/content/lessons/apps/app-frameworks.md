@@ -91,6 +91,20 @@ A company with a .NET platform and a Python data-science team standardised on `I
 - Pin versions | frameworks change quickly | output
 ```
 
+## Live simulation
+A tool standard defines the messages between an assistant app and the tools it can use.
+
+```sim mcp Messages between an assistant, a tool server and a service
+question: How does an assistant app find out what a tool can do, and call it?
+watch: Each arrow is one message. Press Next message to add them one at a time.
+watch: First the app and the server introduce themselves, then the app asks for the tool list.
+watch: The model chooses a tool, the app calls it, and the result goes back to the model.
+try: ask | Switch on the question to the person and show all nine messages.
+predict: Why do apps often ask the person before a tool is called? | Tools are slow | A tool can act in the real world, so a mistake can have consequences | The model needs permission to think
+answer: 2 | A tool can send an email, change a file or spend money. A person approving the call limits the damage from a wrong or manipulated request.
+leaves-out: A simplified, made-up exchange with shortened fields and one tool. The real protocol has more kinds of message, other ways to connect, and security checks on who may call what. The message names shown follow a common tool-calling standard, but check the specification before building on them.
+```
+
 ## Python example
 A LangChain tool-using agent (requires `langchain` and a provider package; names follow the documented API, which changes between versions):
 ```python agent.py (conceptual)

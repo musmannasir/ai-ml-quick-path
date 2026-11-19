@@ -219,6 +219,28 @@ checks.push(['ai', 'examples/sim-ai/ai.py', () => {
   return out;
 }]);
 
+// ---- Phase 6: rules against learning, project loop, splits, cleaning, scaling, label noise, API call, agent, patches, injection, test size, fairness ----
+checks.push(['fnd', 'examples/sim-apps/apps.py', () => {
+  load('sup.js'); const F = load('fnd.js').logic.fnd, out = [], r2 = (v) => f(v, 2), r3 = (v) => f(v, 3);
+  for (const ws of [['free', 'win', 'prize', 'urgent'], F.KEYWORDS]) out.push(`rules ${ws.join('+')}: train ${r3(F.ruleAccuracy(ws, F.SPAM_TRAIN, F.HAM_TRAIN))}, new messages ${r3(F.ruleAccuracy(ws, F.SPAM_TEST, F.HAM_TEST))}`);
+  const m = F.nbModel(); out.push(`learned word weights: train ${r3(F.nbAccuracy(m, F.SPAM_TRAIN, F.HAM_TRAIN))}, new messages ${r3(F.nbAccuracy(m, F.SPAM_TEST, F.HAM_TEST))}`);
+  out.push('project loop, stages repeated: ' + F.FAULTS.map((x) => `${x[0]} -> ${x[1] - x[2] + 1}`).join('; '));
+  for (const mode of ['random', 'time']) out.push(`split ${mode}: error with the day number ${r2(F.splitMae(mode, 'day'))}, with a leaked column ${r2(F.splitMae(mode, 'leak'))}`);
+  for (const meth of ['drop', 'mean', 'median', 'zero']) { const c = F.cleanStats(meth); out.push(`fill ${meth}: ${c.n} values, mean ${r2(c.mean)}, median ${r2(c.median)}, spread ${r2(c.sd)}`); }
+  for (const sc of [false, true]) { const n = F.nearestPerson([48, 60000], sc); out.push(`nearest person to age 48, income 60000, ${sc ? 'scaled' : 'unscaled'}: person ${n.i + 1}, distance ${r3(n.d)}`); }
+  out.push('accuracy with noisy labels: ' + [0, 0.1, 0.3, 0.45].map((n) => `${r2(n)}:${r3(F.noisyAccuracy(n))}`).join(' '));
+  out.push(`two annotators agree, each wrong 10% / 30%: ${r3(F.agreement(0.1, 11))} ${r3(F.agreement(0.3, 12))}`);
+  for (const fail of [0, 0.3, 0.6]) { const a = F.apiCalls(fail); out.push(`20 calls, failure rate ${f(fail, 1)}, up to 3 retries: ${a.ok} succeeded, ${a.attempts} attempts, ${a.wait} seconds waiting, cost of successful calls ${f(a.cost, 4)}`); }
+  out.push(`agent success: 5 steps ${r3(F.agentSuccess(0.9, 5, 0))}, 10 steps ${r3(F.agentSuccess(0.9, 10, 0))}, 10 steps with checks ${r3(F.agentSuccess(0.9, 10, 0.8))}`);
+  out.push('patches of 1, 2, 4, 8 pixels give 64, 16, 4, 1 tokens; first patch strengths ' + [2, 4, 8].map((s) => r2(F.patches(s)[0][0])).join(' '));
+  for (const g of [[], ['sep'], ['sep', 'approve'], ['sep', 'approve', 'least']]) { const o = F.injection(g); out.push(`attacks that work with guards ${g.join('+') || 'none'}: ${F.ATTACKS.filter((a) => o[a]).join(' ') || 'none'}`); }
+  out.push(`margin of error at 80%: 20 cases ${r3(F.margin(0.8, 20))}, 100 cases ${r3(F.margin(0.8, 100))}, 500 cases ${r3(F.margin(0.8, 500))}`);
+  for (const n of [20, 100, 500]) { const sr = F.sampleRates(n); out.push(`10 test sets of ${n} cases, observed pass rate from ${r2(Math.min(...sr))} to ${r2(Math.max(...sr))}`); }
+  const [ga, gb] = F.groups();
+  for (const [ta, tb] of [[0.5, 0.5], [0.5, 0.15]]) { const a = F.fairMetrics(ga, ta), b = F.fairMetrics(gb, tb); out.push(`thresholds ${r2(ta)} and ${r2(tb)}: selected ${r3(a.sel)} / ${r3(b.sel)}, caught ${r3(a.tpr)} / ${r3(b.tpr)}, correct ${r3(a.acc)} / ${r3(b.acc)}`); }
+  return out;
+}]);
+
 let bad = 0;
 for (const [name, ref, js] of checks) {
   let a, b;

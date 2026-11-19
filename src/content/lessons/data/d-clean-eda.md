@@ -99,6 +99,22 @@ try: After you fix a broken import, only 1 age is still missing. What is the mis
 answer: 1 ÷ 20 = 0.05 = 5%. The data did not change in the real world; the pipeline was losing values. Always ask why data is missing before deciding how to fill it.
 ```
 
+## Live simulation
+Cleaning choices change the numbers you report. Compare them on one small set.
+
+```sim cln Missing values and an extreme value
+question: What do the ways of handling missing values and extreme values do to a summary?
+watch: Choose how to treat the two missing values. Hollow dots are the ones that were filled in.
+watch: The solid line is the mean and the dashed line is the median.
+watch: Remove the extreme value and see which summary moves.
+try: outlier | Drop the missing values, remove the extreme value, and bring the mean below 36.
+try: zero | Fill the missing values with zero and see what it does to the mean.
+predict: One value in twenty is 120 while the rest are about 35. Which summary is least affected by it? | The mean | The median | Both the same
+answer: 2 | The median is the middle value, so one extreme value barely moves it. The mean adds every value, so it is pulled toward the extreme one.
+leaves-out: Twenty made-up monthly incomes with two missing and one extreme value. Real cleaning also asks why a value is missing and whether the extreme value is an error or a real case, which no formula can decide.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 ```python ml_basics.py quality (excerpt)
 df = df.drop_duplicates("ticket_id")

@@ -82,6 +82,21 @@ try: The model correctly finds 6 of the 10 customers who left. The baseline find
 answer: 6 ÷ 10 = 0.6 = 60%. This is called recall. On this measure the model is far better than the baseline (60% against 0%), even though accuracy differs by only 2 points.
 ```
 
+## Live simulation
+A project is a loop, not a line. A fault found late sends you a long way back.
+
+```sim loop Inject a fault and see what repeats
+question: When something goes wrong in a machine learning project, how far back does the work have to go?
+watch: Pick a fault. A red dot shows the stage where it is noticed and a blue dot shows the stage where it must be fixed.
+watch: The shaded stages are repeated. The later it is noticed and the earlier its cause, the more is repeated.
+watch: Compare the faults.
+try: worst | Find the fault that makes all seven stages repeat.
+predict: Which fault costs the most repeated work? | Wrong labels, noticed at evaluation | A success measure nobody needed, noticed after launch | They cost the same
+answer: 2 | A wrong success measure is noticed only when the system is used, and it sends the project back to the first stage. Wrong labels are caught earlier and fixed at the data stage.
+leaves-out: Five typical faults, each placed at one stage by hand. Real projects vary, and some faults can be caught earlier with checks along the way. Counting stages is a rough guide to work, not a measure of time or cost.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 The whole loop on 2,000 synthetic customers:
 ```python quickpath.py lifecycle (excerpt)

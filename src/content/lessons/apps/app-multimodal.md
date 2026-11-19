@@ -85,6 +85,21 @@ try: A meeting recording is 30 minutes long. How many samples is that?
 answer: 30 minutes is 30 × 60 = 1,800 seconds, and 16,000 × 1,800 = 28,800,000 samples. Long recordings are cut into short pieces before transcription for this reason.
 ```
 
+## Live simulation
+To read a picture, a model first turns it into tokens.
+
+```sim mm An image cut into patches
+question: How does a model that reads text turn a picture into tokens, and what does it cost?
+watch: The picture is cut into square patches. Each patch becomes one token.
+watch: The number in a patch is its average brightness, standing in for the numbers a real model computes.
+watch: Attention compares every token with every other, so the cost grows with the square of the token count.
+try: cost | Choose patches of 1 pixel and see the number of pairs attention compares.
+predict: You halve the patch side from 4 pixels to 2. How does the number of tokens change? | It doubles | It quadruples | It stays the same
+answer: 2 | Halving the side makes four times as many patches: 4 tokens become 16.
+leaves-out: A tiny 8 by 8 picture with no colour. Real models use patches of 14 to 16 pixels on images of hundreds of pixels, turn each patch into a long list of learned numbers, and use ways to cut the cost of attention.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 Sending an image to a vision-capable model through an OpenAI-compatible API (requires `openai` and a model that accepts images):
 ```python read_invoice.py (conceptual)

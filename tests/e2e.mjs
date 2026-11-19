@@ -601,7 +601,7 @@ for (const w of [320, 390, 768]) {
 
 // 12b. Simulations (public/assets/sim.js and sims/*.js)
 {
-  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl'], ['ml-recommenders', 'rec'], ['ml-timeseries', 'ts'], ['ml-bayes', 'bay'], ['ml-causal', 'cau'], ['ai-search', 'srch'], ['ai-logic-plan', 'csp']];
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl'], ['ml-recommenders', 'rec'], ['ml-timeseries', 'ts'], ['ml-bayes', 'bay'], ['ml-causal', 'cau'], ['ai-search', 'srch'], ['ai-logic-plan', 'csp'], ['s-what-is-ai', 'rul'], ['s-lifecycle', 'loop'], ['d-basics', 'spl'], ['d-collect', 'lab'], ['d-clean-eda', 'cln'], ['d-features', 'feat'], ['app-llm-api', 'api'], ['app-agents', 'agent'], ['app-multimodal', 'mm'], ['app-security', 'inj'], ['app-evals', 'evl'], ['app-responsible', 'fair'], ['app-frameworks', 'mcp']];
   const problems = [];
   for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
     const page = await newPage({ width: w });
@@ -618,7 +618,7 @@ for (const w of [320, 390, 768]) {
     if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
     await page.context().close();
   }
-  expect('All thirty-eight simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+  expect('All fifty-one simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
 
   // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
   const page = await newPage({ width: 1280 });
@@ -826,6 +826,54 @@ for (const w of [320, 390, 768]) {
   expect('Search simulation: A* examines 14 cells and finds the 13-step path (the Python program gives the same), and the challenge ticks', r.out[0][0] === '14' && r.out[0][1] === '13 steps' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('ai-logic-plan', 'csp', `setSel('Which region', 'smart'); btn('Run to the end').click(); return [reads(), done('smart')];`);
   expect('Backtracking simulation: most constrained first solves the puzzle with 11 colours tried and no backtracks, and the challenge ticks', r.out[0][0] === '11' && r.out[0][1] === '0' && r.out[0][2] === 'solved' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12h. Behaviour of the Phase 6 simulations (start, data and application lessons)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const tog = (text) => [...f.querySelectorAll('.sim-ctl.check label')].find((l) => l.textContent.includes(text)).querySelector('input').click();
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  const check = (name, r, ok) => expect(name, ok && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  let r = await run('s-what-is-ai', 'rul', `tog('learned'); return [reads(), done('learn')];`);
+  check('Rules-against-learning simulation: the learned word weights get 100% of the training messages and 88% of the new ones (the Python program gives the same), and the challenge ticks', r, r.out[0][0] === '100%' && r.out[0][1] === '88%' && r.out[1] === true);
+  r = await run('s-lifecycle', 'loop', `setSel('Inject', '1'); return [reads()[2], done('worst')];`);
+  check('Project-loop simulation: a wrong success measure repeats all seven stages and the challenge ticks', r, r.out[0] === '7' && r.out[1] === true);
+  r = await run('d-basics', 'spl', `setSel('How to split', 'time'); return [reads()[0], done('time')];`);
+  check('Splits-and-leakage simulation: the time split gives an error of 4.46 against 3.31 for the random split, and the challenge ticks', r, r.out[0] === '4.46' && r.out[1] === true);
+  r = await run('d-clean-eda', 'cln', `const q = reads()[1]; setSel('Missing values', 'zero'); return [q, reads()[1], done('zero')];`);
+  check('Cleaning simulation: dropping missing values gives a mean of 39.06, filling with zero gives 35.15, and the challenge ticks', r, r.out[0] === '39.06' && r.out[1] === '35.15' && r.out[2] === true);
+  r = await run('d-features', 'feat', `const q = reads(); tog('same scale'); return [q[1], q[2], done('flip')];`);
+  check('Scaling simulation: the closest person is person 5 without scaling and person 6 with it, and the challenge ticks', r, r.out[0] === 'Person 5' && r.out[1] === 'Person 6' && r.out[2] === true);
+  r = await run('d-collect', 'lab', `setRange('Share of training', 0.3); return [reads()[0], done('drop')];`);
+  check('Label-noise simulation: with 30% wrong labels the test accuracy is 63% (the Python program gives the same), and the challenge ticks', r, r.out[0] === '63%' && r.out[1] === true);
+  r = await run('app-llm-api', 'api', `return reads();`);
+  check('LLM-call simulation: at 30% failures and 3 retries all 20 calls succeed after 31 attempts and 14 seconds of waiting', r, r.out[0] === '20 of 20' && r.out[1] === '31' && r.out[2] === '14');
+  r = await run('app-agents', 'agent', `setRange('Steps in the task', 10); setRange('Chance a check', 0.8); return [reads()[0], done('long')];`);
+  check('Agent-chain simulation: ten steps with a check chance of 80% finish 75% of the time, and the challenge ticks', r, r.out[0] === '75%' && r.out[1] === true);
+  r = await run('app-multimodal', 'mm', `setSel('Patch size', '1'); return [reads()[0], reads()[1], done('cost')];`);
+  check('Patch simulation: patches of one pixel give 64 tokens and 4096 pairs, and the challenge ticks', r, r.out[0] === '64' && r.out[1] === '4096' && r.out[2] === true);
+  r = await run('app-security', 'inj', `const q = reads()[0]; tog('Guard 1'); tog('Guard 2'); return [q, reads()[0], done('safe')];`);
+  check('Prompt-injection simulation: with no guards three attacks work, with two guards none do, and the challenge ticks', r, r.out[0] === '3 of 3' && r.out[1] === '0 of 3' && r.out[2] === true);
+  r = await run('app-evals', 'evl', `return [reads()[0], reads()[1]];`);
+  check('Test-size simulation: 20 cases give a margin of 17.5 points and ten scores from 70% to 95% (the Python program gives the same)', r, r.out[0] === '± 17.5 points' && r.out[1] === '70% to 95%');
+  r = await run('app-responsible', 'fair', `tog('one threshold'); setRange('Threshold for group B', 0.15); return [reads()[0], done('equal')];`);
+  check('Fairness simulation: with group B at threshold 0.15 the share of qualified people found is equal, and the challenge ticks', r, r.out[0] === '0 points' && r.out[1] === true);
+  r = await run('app-frameworks', 'mcp', `tog('asks the person'); setRange('Messages shown', 9); return [reads()[0], done('ask')];`);
+  check('Tool-messages simulation: all nine messages shown with the question to the person, and the challenge ticks', r, r.out[0] === '9 of 9' && r.out[1] === true);
 }
 
 // 13. Screenshots

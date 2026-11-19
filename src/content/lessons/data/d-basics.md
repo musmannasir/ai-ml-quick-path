@@ -76,6 +76,22 @@ try: You have only 500 rows and choose an 80 / 10 / 10 split. How many rows are 
 answer: 500 × 0.8 = 400 for training, 500 × 0.1 = 50 for validation and 50 for test. Check: 400 + 50 + 50 = 500. A test set of 50 rows is small, so its score will be jumpy.
 ```
 
+## Live simulation
+How you split data decides whether your test score means anything.
+
+```sim spl Random split, time split and a leaked column
+question: Why can a model score well on a test and still fail in real use?
+watch: Choose how to hold back test days. A random split scatters them; a time split holds back the latest days.
+watch: Choose what the model may look at. The extra column was worked out from the answer.
+watch: Compare the error for each setting.
+try: leak | Use the random split with the leaked column and get an error below 1.
+try: time | Use the time split with the day number and see the error rise above the random split's.
+predict: Which split gives a more honest idea of how the model will do on tomorrow's data? | A random split | A split by time | Both are the same
+answer: 2 | In real use the model predicts days that have not happened. Holding back the latest days copies that. A random split lets each test day sit between training days, which is easier than the real task.
+leaves-out: A made-up sales series with a trend and a weekly pattern, and a one-nearest-neighbour model that copies the closest training day. Real models are more flexible, but the lesson holds: split the way the model will be used, and never give it columns that come from the answer.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 ```python quickpath.py data (excerpt)
 df = pd.DataFrame({

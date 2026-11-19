@@ -339,6 +339,21 @@ Prompt injection means text that tries to give the model new orders, for example
 - Limits stop the harm | Least privilege, approval and a sandbox | output
 ```
 
+## Live simulation
+An agent chains many steps, and chances multiply along a chain.
+
+```sim agent Why long chains of steps fail
+question: Why does an agent that is usually right at each step often fail at the whole task?
+watch: Set the chance each step works and the number of steps. The first line shows the chance of finishing when nothing is checked.
+watch: Add checks that catch a failed step and retry it, and see the second line rise.
+watch: Read the simulated result against the arithmetic.
+try: long | Reach a task of 10 or more steps that finishes at least 70% of the time with steps that work 90% or less, using checks.
+predict: Each step works 90% of the time and the task has 10 steps. About how often does the whole task work? | About 90% | About 35% | About 60%
+answer: 2 | Every step must work, so the chances multiply: 0.9 ten times is about 0.35.
+leaves-out: Steps are treated as independent and either right or wrong. Real agent steps depend on each other, some failures are harmless, and others are costly. A person approving risky steps is not modelled, though it works like a perfect check on those steps.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 The whole workflow in plain Python, run against every path:
 ```text Output of returns_workflow.py (executed)

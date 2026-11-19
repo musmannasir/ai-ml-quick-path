@@ -84,6 +84,21 @@ try: What is the z-score of a new customer with 8 orders, using the same average
 answer: (8 − 4) ÷ 1.63 ≈ 2.45. The customer is about two and a half typical distances above average. Values beyond about 3 are often checked as possible outliers.
 ```
 
+## Live simulation
+A model sees only numbers, so how you scale and code them changes its answers.
+
+```sim feat Scaling changes who is closest
+question: Why does a model need its columns on a similar scale, and what is wrong with coding a colour as 1, 2, 3?
+watch: Set an age and an income. The table shows the distance to eight people and boxes the closest.
+watch: Switch scaling on and see whether the closest person changes.
+watch: The small table shows how number codes and one-hot codes differ for colours.
+try: flip | Switch scaling on and see the closest person change (the starting values already do).
+predict: Income is in dollars (tens of thousands) and age is in years. Without scaling, which column decides who is closest? | Age | Income | Both equally
+answer: 2 | A difference of a few thousand dollars is a far bigger number than a difference of a few years, so the distance is almost all income and age is ignored.
+leaves-out: Eight made-up people and a plain distance. Scaling here means standardising each column. Other methods exist, and some models (such as decision trees) do not need scaling at all.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 ```python ml_basics.py features (excerpt)
 df["tenure_days"] = (pd.Timestamp("2026-10-30") - df["signup"]).dt.days   # derived feature

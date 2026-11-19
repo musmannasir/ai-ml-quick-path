@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-19T19:12:13.047Z",
+  "date": "2026-11-19T19:28:18.239Z",
   "browser": "Chromium (Playwright)",
   "pages": 114,
-  "passed": 103,
+  "passed": 116,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 37283 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 37938 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 37283 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 37938 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -331,7 +331,7 @@
       "detail": ""
     },
     {
-      "name": "All thirty-eight simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "name": "All fifty-one simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
       "pass": true,
       "detail": ""
     },
@@ -512,6 +512,71 @@
     },
     {
       "name": "Backtracking simulation: most constrained first solves the puzzle with 11 colours tried and no backtracks, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Rules-against-learning simulation: the learned word weights get 100% of the training messages and 88% of the new ones (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Project-loop simulation: a wrong success measure repeats all seven stages and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Splits-and-leakage simulation: the time split gives an error of 4.46 against 3.31 for the random split, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cleaning simulation: dropping missing values gives a mean of 39.06, filling with zero gives 35.15, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Scaling simulation: the closest person is person 5 without scaling and person 6 with it, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Label-noise simulation: with 30% wrong labels the test accuracy is 63% (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "LLM-call simulation: at 30% failures and 3 retries all 20 calls succeed after 31 attempts and 14 seconds of waiting",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Agent-chain simulation: ten steps with a check chance of 80% finish 75% of the time, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Patch simulation: patches of one pixel give 64 tokens and 4096 pairs, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Prompt-injection simulation: with no guards three attacks work, with two guards none do, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Test-size simulation: 20 cases give a margin of 17.5 points and ten scores from 70% to 95% (the Python program gives the same)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Fairness simulation: with group B at threshold 0.15 the share of qualified people found is equal, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Tool-messages simulation: all nine messages shown with the question to the person, and the challenge ticks",
       "pass": true,
       "detail": ""
     },

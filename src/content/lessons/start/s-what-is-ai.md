@@ -105,6 +105,22 @@ try: In a second sample of 10 tickets, 5 are urgent. What is the rate when you p
 answer: Urgent tickets: 3 + 5 = 8. All tickets: 10 + 10 = 20. Rate: 8 ÷ 20 = 0.4 = 40%. More data changed the estimate, which is normal and is why bigger samples are trusted more.
 ```
 
+## Live simulation
+A rule is something you write. A model is something that learns the rule from examples. Try both on the same job.
+
+```sim rul Rules against learning
+question: Why do hand-written rules break on new messages, and what changes when the filter learns from examples?
+watch: Tick keywords to build a spam rule. The tables show every message and whether the filter got it right.
+watch: The top table holds the messages the rules were written from. The lower table holds new ones, including some tricks.
+watch: Switch to the learned word weights and compare the two scores.
+try: gap | Choose rules that get every training message right but 40% or fewer of the new messages.
+try: learn | Use the learned word weights and get at least 85% of the new messages right.
+predict: Your rules score 100% on the messages you wrote them from. How will they do on new messages? | About the same | Worse, often much worse | Better
+answer: 2 | The rules were tuned to the messages in front of you. New messages spell words differently, use other words, or use a spammy word innocently, so the rules miss spam and flag good mail.
+leaves-out: Twenty-four short made-up messages and a simple word-count model. The learned model is also tested on only eight new messages, so its score is rough. Real filters learn from millions of messages, and spammers change tactics, so they must be retrained.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 A hand-written rule against a learned model on 240 synthetic messages (half spam). The model learns from 120 messages and is tested on the other 120:
 ```python quickpath.py rules_vs_ml (excerpt)

@@ -104,6 +104,21 @@ note: Raw data stays where it is. Only model updates are sent and combined.
 - Identify later | anyone can check where it came from | output
 ```
 
+## Live simulation
+Fairness measures can pull in different directions. See what moves when you change a threshold.
+
+```sim fair One threshold or one per group
+question: What happens to different groups when a decision uses one score threshold, and what can be changed?
+watch: Each bar shows a rate for each group: who is selected, how many qualified people are found, and how often the decision is right.
+watch: In this data the score is less informative for group B, so one threshold finds fewer qualified people there.
+watch: Switch to separate thresholds and move group B's.
+try: equal | Use separate thresholds so that the share of qualified people found in group B is within 3 points of group A's.
+predict: Group B's scores separate qualified people less well. With one threshold for both groups, what happens? | Both groups are treated equally | Fewer qualified people are found in group B | More are found in group B
+answer: 2 | The same cut-off lands in a different place relative to group B's qualified people, so a smaller share is found: 49% against 73% here.
+leaves-out: Made-up scores for two groups of 200, built so that the score is weaker for one group. Real fairness work has many definitions that cannot all hold together, and choosing between them is a decision about people and law, not a calculation. Using a group as an input may itself be restricted.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 A deliberately biased score on synthetic applicants, where both groups are equally qualified:
 ```text Output of quickpath.py fairness (executed)

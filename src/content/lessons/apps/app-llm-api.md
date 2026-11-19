@@ -172,6 +172,21 @@ note: Change the biggest driver first. Measure before guessing.
 - Retries | Each retry pays again | bad
 ```
 
+## Live simulation
+A call to a language-model service is a request, a streamed answer, and a plan for when it fails.
+
+```sim api A call to a language-model service
+question: What happens in a call to a hosted language model, and what do failures and retries cost?
+watch: The request names a model, sends messages and asks for a streamed answer. Nothing is sent anywhere here.
+watch: Set how often a call fails and how many retries are allowed. The table shows how the 20 calls ended.
+watch: The costs use made-up prices of $3 and $15 per million tokens.
+try: rescue | Set the failure rate to 60% or more and raise the retries until all 20 calls succeed.
+predict: A call fails 30% of the time and you allow 3 retries. About how many of 20 calls end up succeeding? | About 14 | All or nearly all 20 | About 6
+answer: 2 | A call has to fail four times in a row to be lost, which has a chance of about 1 in 100 at 30%. Here all 20 succeed, after 31 attempts.
+leaves-out: No model or service is called. The failures, waits and costs are simulated, and the prices and speeds are placeholders, not any provider's. Real services also return other errors (invalid requests, rate limits) that should not simply be retried.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 ```python summarize.py (excerpt; any OpenAI-compatible endpoint, configured by environment variables)
 response = client.chat.completions.create(

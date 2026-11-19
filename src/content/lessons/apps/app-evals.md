@@ -154,6 +154,21 @@ note: Start with a small share for B, then grow it if B holds up.
 - Compare agreed measures | success, feedback, cost, errors | output
 ```
 
+## Live simulation
+A score from a small test set is uncertain. See how much.
+
+```sim evl How many test cases do you need?
+question: How big must a test set be before a score can be trusted?
+watch: Each dot is the score on a different test set. The app truly passes 80% of the time every time.
+watch: The band is the 95% margin of error. It narrows with the square root of the number of cases.
+watch: The last readout asks whether 82% and 78% can be told apart at this size.
+try: tell | Find the number of test cases at which 82% can be told apart from 78%.
+predict: Two apps score 82% and 78% on a test of 100 cases. Can you say the first is better? | Yes | No: the margins of error overlap | Only if the first is cheaper
+answer: 2 | At 100 cases each score is uncertain by about 8 points either way, so the two ranges overlap heavily. You would need over 1,500 cases to separate a 4-point gap.
+leaves-out: Each case is treated as pass or fail, drawn independently. Real test sets are not random draws, cases differ in difficulty, and an evaluation of text answers adds the uncertainty of the person or model that judges them.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 ```text Output of applied_basics.py evals (executed)
 t1: json=ok priority=ok fact=ok
