@@ -66,7 +66,9 @@ scripts/verify-code.mjs  Compiles every C# lesson sample (dotnet) and runs/synta
                          qa/code-status.json, which the build reads for the status pills on each lesson
 scripts/check-links.mjs  Opens every address in src/data/sources.mjs; writes src/data/source-status.json
 scripts/check-maths.mjs  Parses every lesson and checks every "calculation = result" in the maths text
+scripts/check-sims.mjs   Runs each simulation's calculation in Node and compares it with its Python program (examples/sim-*)
 scripts/shot.mjs         Page or element screenshots for design review
+src/lib/sim.mjs          Parses and renders ```sim blocks (simulations); public/assets/sim.js is the engine, public/assets/sims/<module>.js the modules
 src/lib/maths.mjs        Safe arithmetic evaluator, maths-moment renderer, prose arithmetic scanner, calculator definitions
 src/design/tokens.mjs    The only place theme tokens are defined; the build writes them into dist/assets/app.css
 src/data/sources.mjs     Register of vetted outside sources (SOURCES) and the references shown per lesson (LESSON_REFS)
@@ -105,6 +107,7 @@ npm run test:e2e       # browser tests (first time: npm install && npx playwrigh
 npm run test:examples  # needs Python 3.10+ with numpy, pandas, scikit-learn
 npm run extract:code   # after editing any code block in a lesson
 npm run verify:code    # after extract:code: really compiles C# and runs Python; updates qa/code-status.json (needs .NET SDK, internet for NuGet)
+npm run check:sims     # every simulation's JavaScript calculation equals its Python program's numbers (also part of npm test)
 npm run check:maths    # every maths moment and Applied Maths calculation adds up (also part of npm test)
 npm run check:links    # after adding or changing a source in src/data/sources.mjs (needs internet)
 npm run package        # release ZIPs into release/
@@ -225,6 +228,19 @@ A step is `step: what we do | calculation = result`; use × ÷ − and write pow
 if it is wrong (rounded results use `≈`). Widgets: `mean`, `line`, `confusion`, `gradient`, `dot`, `softmax`, `weighted`, `memory`
 (see WIDGETS in src/lib/maths.mjs), for example `widget: mean 2,4,6`. Numbers must be small enough to check in the head, the
 situation everyday, and the `why:` must tie the result to the lesson. Put the block where the idea is first needed.
+
+### 4.9 Simulations (live, in the lesson; plan in docs/SIMULATIONS_FULL_PLAN.md)
+An optional lesson section `## Live simulation` (after "How it works", before "Python example") holds one or more fenced blocks
+`sim <module> <Title>` with keys `preset:`, `question:`, `watch:` (1-4), `try: id | goal` (0-4), `predict: question | option | option` with
+`answer: n | explanation`, `leaves-out:` (required) and `reference: examples/.../file.py`. The build renders readable static markup; `public/assets/sim.js`
+(engine: controls, narrator live region, readouts, loop, challenges, theme colours) and the module file `public/assets/sims/<module>.js` bring it to life.
+Modules so far: `nn` (neural network playground), `bpe` (tokens), `gen` (text generation loop), `attn` (one attention layer, tiny trained model in
+`attn-model.js`), `sup` (supervised algorithms). Register a new module in `SIM_MODULES` (src/lib/sim.mjs).
+Rules: the calculation is real, repeatable (LCG random numbers) and kept in `AIQPSim.logic.<module>` so Node can run it; every module has a Python
+program in `examples/sim-*` that prints the same headline numbers and `scripts/check-sims.mjs` compares them; data is made up and labelled; a "What this leaves
+out" note is required; colours come from the `--sim-*` tokens; no inline styles or scripts; reduced motion is respected; the default settings must not already
+satisfy a `try:` goal. Challenge ticks are stored under a separate key `aimlqp.sim.v1` (not yet in the progress export). The trained weights of the attention model are
+produced by `examples/sim-attention/train_tiny.py` (NumPy, hand-written gradients checked numerically). C# versions of the simulation calculations are not written yet.
 
 ## 5. Design system and UI rules
 - Theme tokens live ONLY in `src/design/tokens.mjs` (each colour once, as [light, dark]); the build writes them at the top of

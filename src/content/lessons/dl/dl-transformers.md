@@ -95,6 +95,22 @@ answer: 0.5 × 10 + 0.5 × 2 = 5 + 1 = 6. With equal attention the result sits h
 deeper: In real self-attention each token is turned into three vectors: a query, a key and a value. The score between two tokens is the dot product of one token's query with the other's key, divided by the square root of the vector length. Softmax turns each token's scores into weights that add up to 1, and the output is the weighted sum of the value vectors.
 ```
 
+## Live simulation
+Attention is easiest to understand with real numbers. The tiny model below was trained for this guide on made-up sentences. It has one attention layer with two heads. The page runs its real forward pass, so every weight in the grid is calculated, not drawn.
+
+```sim attn One attention layer, step by step
+question: When a word is about to be followed by a verb, which earlier word does the model look at, and how do the numbers decide it?
+watch: Each row of the grid is one word looking back. The weights in a row add up to 1, and a darker cell means more attention.
+watch: Open the arithmetic table: each weight comes from a score (query times key, divided by 2) turned into a weight by softmax.
+watch: Compare the two heads. Head 1 spreads its attention over nearby words. Head 2, at the word before the verb, looks back at the plural subject when there is one.
+try: subject | Choose Head 2 and a plural sentence, select the word before the verb, and find the row where the subject gets at least 90% of the attention.
+try: future | Switch off the causal mask and see weights appear on words that come later in the sentence.
+predict: In "the cats near the box ...", the next word is a verb. To choose "sleep" rather than "sleeps", which earlier word must the model use? | the | cats | near | box
+answer: 2 | The verb must agree with its subject, "cats", and not with the nearest noun, "box". The model has to carry the subject's number forward to the word before the verb.
+leaves-out: This model has 21 words, 8 numbers per word, one layer and two heads, and it learned only one thing: verbs agree in number with their subject. A large model has thousands of numbers per word, dozens of layers and many heads, plus feed-forward layers and normalisation that are left out here. Turning off the mask or the scaling shows what the scores would do, but the trained model always uses both.
+reference: examples/sim-attention/attention_forward.py
+```
+
 ## Python example
 A hand-made toy (not a real model) where the query for "it" is chosen to look for animals:
 ```text Output of attention_toy.py (executed)

@@ -145,6 +145,23 @@ note: Each model sees a different random re-sample of the same data.
 - Vote or average | Classes vote; numbers are averaged | output
 ```
 
+## Live simulation
+Four of the algorithms in this lesson, side by side on the same made-up points. Each is written out in the page, so you can change the data, change one setting, and see the decision boundary and the accuracy change.
+
+```sim sup Supervised algorithms on the same points
+question: Does one algorithm win on every kind of data?
+watch: The background colour is what the chosen algorithm predicts at each place. Filled points were used for learning, hollow points are kept back to test.
+watch: Change the pattern in the data and read the table: the best algorithm changes.
+watch: Push the main setting (k, or tree depth) to an extreme. Training accuracy goes up while test accuracy can go down.
+try: moons | On the two-moons data, find an algorithm and a setting that reach at least 90% on the test points.
+try: overfit | Make the training accuracy 100% while the test accuracy is at least 5 points lower. A small k or a deep tree will do it.
+try: line | On the circle-in-a-ring data, show that logistic regression stays under 75% on the test points.
+predict: On the circle-inside-a-ring data, which algorithm will do worst? | k-nearest neighbours | Logistic regression | Decision tree | Naive Bayes
+answer: 2 | Logistic regression draws one straight boundary, and no straight line separates a circle from the ring around it. Here it gets about 52%, no better than guessing.
+leaves-out: There are 100 learning points and 60 test points in two dimensions, so the pictures are clear. Real data has many more columns, and the settings are normally chosen with a separate validation set and cross-validation, not by looking at the test points. Other algorithms from this lesson (boosting, support vector machines) are not included.
+reference: examples/sim-supervised/algorithms.py
+```
+
 ## Python example
 Five algorithms on curved, overlapping synthetic data ("two moons"), 5-fold cross-validation:
 ```text Output of ai_extras.py algos (executed)

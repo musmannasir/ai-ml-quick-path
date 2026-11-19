@@ -29,6 +29,16 @@ for (const f of files) {
   const rel = f.slice(DIST.length + 1);
   if (!/<html lang="en"/.test(html)) problems.push(`${rel}: missing lang`);
   if ((html.match(/<h1[\s>]/g) || []).length !== 1) problems.push(`${rel}: expected exactly one h1`);
+  if (/<figure class="sim"/.test(html)) {
+    // Simulations (src/lib/sim.mjs): static markup must be complete, with no inline style, and the engine and module files must exist.
+    for (const s of html.match(/<figure class="sim"[\s\S]*?<\/figure>/g) || []) {
+      if (/\sstyle=/.test(s)) problems.push(rel + ': a simulation has an inline style attribute');
+      if (!/class="sim-leaves"/.test(s)) problems.push(rel + ': a simulation has no "What this leaves out" note');
+      if (!/class="sim-watch"/.test(s)) problems.push(rel + ': a simulation has no "What to watch" list');
+    }
+    if (!/<script src="[^"]*assets\/sim\.js" defer>/.test(html)) problems.push(rel + ': has a simulation but does not load assets/sim.js');
+    for (const m of html.matchAll(/<script src="([^"]*assets\/sims\/[^"]+)" defer>/g)) if (!existsSync(normalize(join(dirname(f), m[1])))) problems.push(rel + ': missing simulation file ' + m[1]);
+  }
   if (/^lessons[\\/]/.test(rel)) { const nd = (html.match(/<figure class="diagram /g) || []).length; if (nd < 3) problems.push(`${rel}: needs at least 3 diagrams, has ${nd}`); }
   // Maths at the point of need: every lesson that asks for any maths has at least one worked maths moment,
   // each with hand steps and a tie-back to AI; a lesson marked "No maths" must not carry one.

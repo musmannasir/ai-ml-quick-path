@@ -15,6 +15,7 @@ import * as P from '../src/pages/pages.mjs';
 import { tokensCss } from '../src/design/tokens.mjs';
 import { SOURCES, LESSON_REFS } from '../src/data/sources.mjs';
 import { resetMathSeq } from '../src/lib/maths.mjs';
+import { simScripts } from '../src/lib/sim.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (p, fallback) => { try { return JSON.parse(readFileSync(join(ROOT, p), 'utf8')); } catch { return fallback; } };
@@ -310,6 +311,7 @@ ${adSlot('end')}
   emit(path, {
     title: l.title, description: l.goal, body, crumbs: [[mod.short, mod.page], [l.title, path]],
     section: mod.short, bodyClass: 'is-lesson', lessonId: id,
+    scripts: ctx.sims && ctx.sims.size ? simScripts(ctx.sims) : [],
     keywords: `${l.goal} ${plain.slice(0, 600)}`,
   });
 });

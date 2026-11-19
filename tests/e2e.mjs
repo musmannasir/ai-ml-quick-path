@@ -599,6 +599,72 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+// 12b. Simulations (public/assets/sim.js and sims/*.js)
+{
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup']];
+  const problems = [];
+  for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
+    const page = await newPage({ width: w });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(500);
+    const info = await page.evaluate((m) => {
+      const f = document.querySelector('figure.sim[data-sim="' + m + '"]');
+      const unlabelled = [...f.querySelectorAll('input:not([type=radio]), select')].filter((e) => !(e.labels && e.labels.length) && !e.getAttribute('aria-label')).length;
+      return { live: f.classList.contains('sim-live'), over: document.documentElement.scrollWidth > window.innerWidth + 1, unlabelled, narr: f.querySelector('.sim-narr-t') ? f.querySelector('.sim-narr-t').textContent : '', live2: f.querySelector('.sim-narr') ? f.querySelector('.sim-narr').getAttribute('aria-live') : '' };
+    }, mod);
+    if (!info.live) problems.push(mod + '@' + w + ' did not start');
+    if (info.over) problems.push(mod + '@' + w + ' scrolls sideways');
+    if (info.unlabelled) problems.push(mod + '@' + w + ' has ' + info.unlabelled + ' unlabelled controls');
+    if (info.live2 !== 'polite') problems.push(mod + '@' + w + ' narrator is not a polite live region');
+    if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
+    await page.context().close();
+  }
+  expect('All five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+
+  // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/dl-neural-nets.html#live-simulation')); await page.waitForTimeout(400);
+  await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+  await page.reload(); await page.waitForTimeout(400);
+  const fig = page.locator('figure.sim[data-sim="nn"]');
+  await page.evaluate(() => { const b = [...document.querySelectorAll('figure.sim[data-sim="nn"] .sim-btns button')].find((x) => x.textContent === 'One epoch'); for (let i = 0; i < 400; i++) b.click(); });
+  const read = await fig.locator('.sim-readouts dd').allInnerTexts();
+  const ticked = await fig.locator('[data-try="xor"].done').count();
+  await page.reload(); await page.waitForTimeout(400);
+  const remembered = await page.locator('figure.sim[data-sim="nn"] [data-try="xor"].done').count();
+  await page.locator('figure.sim[data-sim="nn"] .sim-predict input[value="1"]').check();
+  await page.locator('figure.sim[data-sim="nn"] [data-sim-check]').click();
+  const wrong = await page.locator('figure.sim[data-sim="nn"] .sim-reveal').getAttribute('class');
+  await page.locator('figure.sim[data-sim="nn"] .sim-predict input[value="2"]').check();
+  await page.locator('figure.sim[data-sim="nn"] [data-sim-check]').click();
+  const right = await page.locator('figure.sim[data-sim="nn"] .sim-reveal').getAttribute('class');
+  expect('Neural network playground: 400 epochs of real training reach 100% accuracy (as the Python program prints), the XOR challenge ticks and is remembered, and the predict check marks wrong and right guesses',
+    read[0] === '400' && read[1] === '0.042' && read[3] === '100%' && read[4] === '100%' && ticked === 1 && remembered === 1 && /no/.test(wrong) && /ok/.test(right),
+    'readouts=' + read + ' ticked=' + ticked + ' remembered=' + remembered + ' wrong=' + wrong + ' right=' + right);
+  await page.context().close();
+
+  // With reduced motion the Train button does a block of epochs at once and nothing animates.
+  const rmPage = await newPage({ width: 390, reducedMotion: 'reduce' });
+  await rmPage.goto(url('lessons/dl-neural-nets.html#live-simulation')); await rmPage.waitForTimeout(400);
+  await rmPage.evaluate(() => { [...document.querySelectorAll('figure.sim[data-sim="nn"] .sim-btns button')].find((x) => x.textContent === 'Train').click(); });
+  const rmRead = await rmPage.locator('figure.sim[data-sim="nn"] .sim-readouts dd').first().innerText();
+  expect('With reduced motion the Train button runs a block of 50 epochs at once instead of animating', rmRead === '50', 'epoch=' + rmRead);
+  await rmPage.context().close();
+
+  // The generation loop: greedy choice is repeatable, and the supervised playground opens on an algorithm that struggles.
+  const g = await newPage({ width: 1280 });
+  await g.goto(url('lessons/llm-tokens.html#live-simulation')); await g.waitForTimeout(400);
+  const text = await g.evaluate(() => {
+    const f = document.querySelector('figure.sim[data-sim="gen"]');
+    const sel = f.querySelectorAll('select')[0]; sel.value = 'greedy'; sel.dispatchEvent(new Event('change'));
+    const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent === n);
+    for (let i = 0; i < 10; i++) btn('Write next token').click();
+    return f.querySelectorAll('.sim-card-t')[1].textContent;
+  });
+  expect('Generation simulation: ten greedy tokens after "the cat" give the same text as the Python program', /Text: the cat sat on the mat. the cat sat on the$/.test(text), text);
+  await g.context().close();
+}
+
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],

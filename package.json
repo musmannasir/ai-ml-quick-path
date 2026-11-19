@@ -20,9 +20,10 @@
     "check:links": "node scripts/check-links.mjs",
     "check:maths": "node scripts/check-maths.mjs",
     "check:diagrams": "node scripts/check-diagrams.mjs",
-    "test": "npm run build && npm run check:maths && npm run check:diagrams && npm run test:static && npm run test:e2e",
+    "test": "npm run build && npm run check:maths && npm run check:diagrams && npm run check:sims && npm run test:static && npm run test:e2e",
     "package": "node scripts/package.mjs",
-    "extract:code": "python scripts/extract_lesson_code.py"
+    "extract:code": "python scripts/extract_lesson_code.py",
+    "check:sims": "node scripts/check-sims.mjs"
   },
   "devDependencies": {
     "playwright": "^1.56.0"

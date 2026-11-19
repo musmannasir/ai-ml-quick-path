@@ -81,7 +81,7 @@ function sidebar(groups, current, root) {
 </nav>`;
 }
 
-export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '' }) {
+export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [] }) {
   const depth = path.split('/').length - 1;
   const root = depth ? '../'.repeat(depth) : '';
   const fullTitle = path === 'index.html' ? SITE.name : `${title} | ${SITE.short}`;
@@ -149,7 +149,8 @@ ${FOOTER_AD_PAGES.test(path) ? adSlot('footer') : ''}
 </div>
 <button type="button" class="to-top btn" hidden>Back to top</button>
 <script src="${root}assets/search-index.js" defer></script>
-<script src="${root}assets/app.js" defer></script>
+<script src="${root}assets/app.js" defer></script>${(scripts || []).map((s) => `
+<script src="${root}${s}" defer></script>`).join('')}
 </body>
 </html>`;
 }

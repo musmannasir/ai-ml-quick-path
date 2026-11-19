@@ -40,6 +40,9 @@ export const COLOURS = {
   // Code and maths surfaces
   '--code-bg': ['#f1f4f8', '#111820'], '--code-ink': ['#142030', '#e8edf2'],
   '--math-bg': ['#f3f8f7', '#14232a'], '--math-line': ['#0f766e', '#2dd4bf'],
+  // Simulations: scene surface, grid lines and four data colours that stay apart for common colour-vision differences
+  '--sim-bg': ['#f8fafc', '#121a22'], '--sim-grid': ['#cfd8e3', '#2c3845'],
+  '--sim-c0': ['#1a56b0', '#7fb0ff'], '--sim-c1': ['#b45309', '#f4a259'], '--sim-c2': ['#0f766e', '#2dd4bf'], '--sim-c3': ['#6d3fc0', '#c4a8ff'],
 };
 
 const block = (i) => Object.entries(COLOURS).map(([k, v]) => `${k}: ${v[i]};`).join(' ');

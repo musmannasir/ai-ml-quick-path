@@ -79,6 +79,23 @@ try: Change the second weight from −1 to 1. What does the neuron output now?
 answer: 0.5 × 2 = 1 and 1 × 3 = 3, so the sum is 1 + 3 + 1 = 5. ReLU keeps positive numbers, so the output is 5. Changing one weight switched the neuron from silent to active, which is exactly what training does.
 ```
 
+## Live simulation
+The network below is real. It is trained in this page with the same steps as in the examples: a forward pass, a loss, a backward pass and a small change to every weight. Use it to see what the weights, the hidden neurons and the learning rate actually do.
+
+```sim nn Train a small neural network
+question: What must a network be able to do before it can learn a pattern that no straight line can separate?
+watch: The lines are the weights. Blue is positive, orange is negative, and a thicker line is a larger weight. They change a little on every epoch.
+watch: The coloured map shows what the network predicts at each place. The dots are made-up points: filled ones are used for learning, hollow ones are kept back to test.
+watch: The loss curve should fall while the network learns. The dashed line is the loss on test points the network never trained on.
+try: xor | Train on the XOR pattern (opposite corners share a class) until training and test accuracy are both at least 95%.
+try: circle | Train on the circle pattern until both accuracies are at least 95%. It needs more epochs than XOR, or more neurons.
+try: one | Choose 1 neuron for XOR, train for at least 300 epochs, and see the test accuracy stay under 80%.
+predict: Can a network with only one hidden neuron learn the XOR pattern? | Yes, with enough training | No, however long it trains
+answer: 2 | One hidden neuron can only cut the plane with a single straight line, and no straight line separates XOR.
+leaves-out: This is a tiny network on 100 made-up points with two inputs. Real networks have millions of weights and many more inputs, and are trained on small batches with extra tricks. The calculation is real, but the numbers belong to this toy problem.
+reference: examples/sim-nn/nn_playground.py
+```
+
 ## Python example
 A network with 2 inputs, 4 hidden neurons and 1 output, written with NumPy so every step is visible:
 ```python ai_extras.py nn (excerpt)

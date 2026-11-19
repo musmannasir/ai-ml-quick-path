@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-19T04:34:31.119Z",
+  "date": "2026-11-19T10:08:35.801Z",
   "browser": "Chromium (Playwright)",
   "pages": 114,
-  "passed": 66,
+  "passed": 70,
   "failed": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 34580 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 35041 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -21,7 +21,7 @@
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 34580 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 35041 text elements checked",
       "pass": true,
       "detail": ""
     },
@@ -327,6 +327,26 @@
     },
     {
       "name": "Study plan and roadmap steps show reading and exercise progress separately",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "All five simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Neural network playground: 400 epochs of real training reach 100% accuracy (as the Python program prints), the XOR challenge ticks and is remembered, and the predict check marks wrong and right guesses",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "With reduced motion the Train button runs a block of 50 epochs at once instead of animating",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Generation simulation: ten greedy tokens after \"the cat\" give the same text as the Python program",
       "pass": true,
       "detail": ""
     },
