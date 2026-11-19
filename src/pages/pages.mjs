@@ -6,7 +6,7 @@ const TRACK_LABEL = { applied: 'AI application', ml: 'Machine learning', lm: 'La
 
 export function allPages(S) {
   return [
-    home(S), plan(S), roles(S), roadmaps(S), catalogue(S), solve(S), maths(S),
+    home(S), plan(S), roles(S), roadmaps(S), catalogue(S), solve(S), maths(S), simulations(S),
     ...S.MODULES.map((m) => modulePage(S, m)),
     projectsIndex(S), ...S.PROJECTS.map((p) => projectPage(S, p)),
     casesIndex(S), ...S.CASES.map((c) => casePage(S, c)),
@@ -313,6 +313,34 @@ ${table(S, 'Problem to approach table', ['If the problem is…', 'Start with', '
 <div class="track-grid">${worked.map((w) => `<article class="track-card"><h3 class="track-name">${S.esc(w.t)}</h3><p>${S.esc(w.a)}</p><p class="small">Lessons: ${w.lessons.map(L).join(', ')}</p></article>`).join('')}</div>
 <p>For real, documented examples from companies, see the <a href="cases.html">case studies</a>. Practise by applying the nine steps to each one before reading its suggested workflow.</p></section>`;
   return { path: 'solve.html', title: 'Solve any case: decision guide', body, crumbs: [['Solve any case', 'solve.html']], wide: true, section: 'Practice', keywords: 'decision guide which approach rag fine-tuning classification regression agent choose problem case' };
+}
+
+// ---------- Simulation lab (built from every lesson's "Live simulation" section) ----------
+function simulations(S) {
+  const groups = [];
+  let total = 0;
+  for (const m of S.MODULES) {
+    const items = [];
+    for (const id of m.groups.flatMap((g) => g.lessons)) {
+      const sec = S.lessons[id].sections.find((x) => x.title === 'Live simulation');
+      if (!sec) continue;
+      const re = /```sim\s+(\w+)\s+([^\n]+)\n([\s\S]*?)```/g;
+      let k;
+      while ((k = re.exec(sec.body))) {
+        const q = (k[3].match(/^question:\s*(.+)$/m) || [])[1] || '';
+        items.push({ id, title: k[2].trim(), q, tries: (k[3].match(/^try:/gm) || []).length });
+      }
+    }
+    if (items.length) { groups.push({ m, items }); total += items.length; }
+  }
+  const strip = (t) => S.esc(String(t).replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[`*]/g, ''));
+  const body = `
+<h1>Simulation lab</h1>
+<p class="lead">${total} live simulations, one or more in most lessons. Each lets you change a setting and watch the calculation respond. Every simulation asks you to guess first, offers small goals to try, and says what it leaves out. The numbers are made up, and each one is checked against a Python program.</p>
+<p class="small muted">A simulation needs JavaScript. Without it, the lesson still shows what the simulation is about and what to watch.</p>
+${groups.map((g) => `<section aria-labelledby="simlab-${S.esc(g.m.id)}"><h2 id="simlab-${S.esc(g.m.id)}">${S.esc(g.m.title)} <span class="small muted">(${g.items.length})</span></h2>
+<ul class="sim-lab">${g.items.map((i) => `<li><a class="sim-lab-t" href="lessons/${i.id}.html#live-simulation">${strip(i.title)}</a><p>${strip(i.q)}</p><p class="small muted">In the lesson: ${S.esc(S.lessons[i.id].title)}${i.tries ? ` · ${i.tries} goal${i.tries > 1 ? 's' : ''} to try` : ''}</p></li>`).join('')}</ul></section>`).join('\n')}`;
+  return { path: 'simulations.html', title: 'Simulation lab', body, crumbs: [['Simulation lab', 'simulations.html']], wide: true, section: 'Reference', keywords: 'simulation simulations interactive lab try watch explore live' };
 }
 
 // ---------- Maths names map (built from each lesson's "Maths behind it" section) ----------

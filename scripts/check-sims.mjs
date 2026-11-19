@@ -241,6 +241,19 @@ checks.push(['fnd', 'examples/sim-apps/apps.py', () => {
   return out;
 }]);
 
+// ---- Phase 7: data checks, safe release, drift alerts, serving and scaling, a production request, scoring a language model ----
+checks.push(['ops', 'examples/sim-ops/ops.py', () => {
+  load('gen.js'); load('llm.js'); const O = load('ops.js').logic.ops, L = globalThis.window.AIQPSim.logic.llm, out = [], r2 = (v) => f(v, 2), r3 = (v) => f(v, 3);
+  for (const [en, ren] of [[O.CHECKS.slice(1), false], [['email', 'country'], false], [O.CHECKS, true], [['email', 'country'], true]]) { const v = O.validate(en, ren); out.push(`checks ${en.filter((c) => c !== 'schema' || true).join('+')}, column renamed ${ren ? 'yes' : 'no'}: ${v.pass} of 10 rows pass, failures ${Object.keys(v.fails).map((k) => `${k}:${v.fails[k]}`).join(' ')}${v.stopped ? ', pipeline stopped' : ''}`); }
+  for (const [sc, sh, th] of [['same', 0.05, 3], ['slight', 0.05, 2], ['bad', 0.05, 3], ['bad', 0.01, 3], ['slight', 0.05, 4]]) { const v = O.release(sc, sh, th); out.push(`release ${sc}, ${Math.round(sh * 100)}% canary, roll back above ${th} points: canary ${v.cn} requests with ${v.ce} wrong (${r3(v.rc)}), others ${r3(v.rk)}, decision ${v.decision}`); }
+  for (const [sh, w, th] of [[5, 7, 3], [5, 3, 2], [2, 14, 3], [0, 3, 2]]) { const v = O.drift(sh, w, th); out.push(`drift, shift ${sh}, window ${w}, alert above ${th}: false alarms ${v.false}, days to alert ${v.delay === null ? 'none' : v.delay}`); }
+  for (const [lam, s, b, a] of [[6, 1, 1, false], [6, 1, 4, false], [6, 2, 1, false], [12, 1, 4, true], [8, 1, 4, false]]) { const v = O.serve(lam, s, b, a); out.push(`serving, ${lam} requests a second, ${s} server(s), batch ${b}, autoscaling ${a ? 'on' : 'off'}: served ${v.served}, median ${r2(v.p50)} s, slowest 5% over ${r2(v.p95)} s, waiting at end ${v.queue}, cost per hour $${r2(v.cost)}`); }
+  for (const p of O.PARTS) out.push(`if ${p} breaks: ${O.EFFECT[p][0]}`);
+  out.push(`perplexity after reading 10, 60 and ${L.trainLen()} words: ` + [10, 60, L.trainLen()].map((n) => r2(Math.exp(L.holdoutLoss(n)))).join(' '));
+  for (const k of ['exact', 'normalised', 'contains', 'f1']) out.push(`scoring by ${k}: ` + O.ANSWERS.map((e) => r2(O.score(k, e[0], e[1]))).join(' '));
+  return out;
+}]);
+
 let bad = 0;
 for (const [name, ref, js] of checks) {
   let a, b;

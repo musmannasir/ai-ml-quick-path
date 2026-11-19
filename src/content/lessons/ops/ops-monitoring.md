@@ -149,6 +149,21 @@ note: Prices come from your provider, not from this guide.
 - Feature and customer labels | who and what used them | store
 ```
 
+## Live simulation
+Monitoring is a trade-off between noticing change quickly and crying wolf.
+
+```sim mon Watching for drift
+question: How does a monitor notice that the world has changed, and what does it cost to notice sooner?
+watch: The line is a daily number the model depends on. On day 60 it shifts.
+watch: The monitor checks a recent average against the first 40 days. Red marks show alert days.
+watch: Try a lower threshold or a shorter window and count the false alarms.
+try: fast | With a shift of 5 or more, find settings with no false alarms and an alert within 5 days.
+predict: You make the alert more sensitive (a lower threshold and a shorter window). What happens? | Faster alerts, but more false alarms | Slower alerts and fewer false alarms | Nothing changes
+answer: 2 | A more sensitive monitor reacts sooner but also reacts to ordinary ups and downs. With a shift of 5, a threshold of 2 and a window of 3 alerts after 4 days but raises a false alarm; a threshold of 3 and a window of 7 takes 8 days and raises none.
+leaves-out: One made-up number with steady noise and one sudden shift. Real drift is often gradual, appears in many inputs at once, and is judged with several tests. An alert starts an investigation; it does not prove the model is wrong.
+reference: examples/sim-ops/ops.py
+```
+
 ## Python example
 A drift check: PSI between the training distribution and two batches of live data:
 ```text Output of ml_basics.py drift (executed)

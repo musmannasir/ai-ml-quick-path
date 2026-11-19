@@ -116,6 +116,22 @@ note: Every change triggers all three kinds of test.
 - Service tests | API tests | process
 ```
 
+## Live simulation
+A safe release sends a small share of traffic first, and rolls back by itself when something is wrong.
+
+```sim rel A canary release with a rollback gate
+question: How can a new model be released without risking everyone at once?
+watch: A small share of traffic, the canary, goes to the new model. The rest stays on the old one.
+watch: The gate compares wrong answers and rolls back if the new model is worse by more than the limit you set.
+watch: With very little traffic the gate cannot judge and waits.
+try: catch | With the clearly worse model, get a rollback while sending 10% or less of traffic to it.
+try: wait | Send so little traffic that the gate cannot decide.
+predict: The new model is clearly worse. You send 1% of traffic to it. What will the gate probably do? | Roll back at once | Wait, because it has seen too few requests | Promote it
+answer: 2 | At 1% only about 22 of 2,000 requests reach the new model, which is too few to judge. At 5% there are about 90, and the gate rolls back.
+leaves-out: A 2,000-request simulation with fixed error rates. A real gate watches several measures (errors, speed, cost, user complaints), waits for a minimum time as well as a minimum number of requests, and accounts for chance with a proper test, not a fixed number of points.
+reference: examples/sim-ops/ops.py
+```
+
 ## Python example
 A tiny registry: three candidates are trained on the same data (same hash) and must beat the champion by at least 0.005 AUC (a ranking-quality score from 0.5 to 1, see [Evaluation](lesson:ml-evaluation)):
 ```text Output of quickpath.py registry (executed)

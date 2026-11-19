@@ -1,32 +1,32 @@
 {
-  "date": "2026-11-19T19:28:18.239Z",
+  "date": "2026-11-19T20:06:24.297Z",
   "browser": "Chromium (Playwright)",
-  "pages": 114,
-  "passed": 116,
+  "pages": 115,
+  "passed": 124,
   "failed": 0,
   "results": [
     {
-      "name": "No uncaught JS errors on all 114 pages (light)",
+      "name": "No uncaught JS errors on all 115 pages (light)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 37938 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 38504 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No uncaught JS errors on all 114 pages (dark)",
+      "name": "No uncaught JS errors on all 115 pages (dark)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 37938 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 38504 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 114 pages",
+      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 115 pages",
       "pass": true,
       "detail": ""
     },
@@ -41,7 +41,7 @@
       "detail": ""
     },
     {
-      "name": "No document-level horizontal scroll (471 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
+      "name": "No document-level horizontal scroll (482 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
       "pass": true,
       "detail": ""
     },
@@ -331,7 +331,7 @@
       "detail": ""
     },
     {
-      "name": "All fifty-one simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "name": "All fifty-seven simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
       "pass": true,
       "detail": ""
     },
@@ -577,6 +577,46 @@
     },
     {
       "name": "Tool-messages simulation: all nine messages shown with the question to the person, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Data-check simulation: after the column is renamed, row checks alone pass 7 of 10 rows with nothing noticed (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Safe-release simulation: with a clearly worse model and a 5% canary, 93 requests and 14 wrong answers lead to a rollback, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Drift simulation: a window of 7 days and a threshold of 2.5 give no false alarms and an alert 4 days after the shift, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Serving simulation: 6 requests a second on one server leaves 530 waiting, and batches of 4 keep up at 8 a second, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Architecture simulation: breaking the logging leaves the request working but worse, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Model-scoring simulation: perplexity falls from 23.3 to 7.1 as the model reads more, and exact match marks only 1 of 4 answers right, and both challenges tick",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Simulation lab page lists every simulation with a link to its lesson, one main heading, and the lessons it links to match the lessons that have a live simulation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Every simulation, in light and dark themes, starts, labels its pictures, buttons and controls, has an announcing narrator and a text status for each goal, keeps its controls in the keyboard order, and raises no errors",
       "pass": true,
       "detail": ""
     },

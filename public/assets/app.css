@@ -984,3 +984,8 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .sim-merges { margin: 0; padding-left: 1.6rem; max-height: 14rem; overflow: auto; font-family: var(--mono); font-size: .85rem; }
 .sim-merges .sim-last { font-weight: 800; color: var(--accent); }
 .sim-none { color: var(--ink-2); font-size: .85rem; list-style: none; }
+
+.sim-lab { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: var(--s-3); }
+.content .sim-lab li { max-width: none; margin: 0; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.sim-lab p { margin: .3rem 0 0; max-width: none; }
+.sim-lab-t { font-weight: 700; }

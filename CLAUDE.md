@@ -86,11 +86,11 @@ public/assets/app.css    The only stylesheet
 public/assets/app.js     The only client script
 examples/                Runnable code; examples/quickpath/quickpath.py is the main demo file
 tests/static-checks.mjs  HTML checks on dist/ (including zero external links)
-tests/e2e.mjs            59 Playwright checks; writes qa/e2e-results.json and qa/screenshots/
+tests/e2e.mjs            124 Playwright checks; writes qa/e2e-results.json and qa/screenshots/
 ```
 
-**Pages (114):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
-maths (maths names map, generated from every lesson's maths section), 7 part pages (`part-1-start.html` …
+**Pages (115):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
+maths (maths names map, generated from every lesson's maths section), simulations (the Simulation lab catalogue), 7 part pages (`part-1-start.html` …
 `part-7-production.html`), 72 lessons, projects + 8 capstones, cases + 11, hardware, glossary, assessment,
 progress, about, 404. Output uses **relative links** and works from `file://`.
 
@@ -238,7 +238,7 @@ Modules so far: `nn` (neural network playground), `bpe` (tokens), `gen` (text ge
 `attn-model.js`), `sup` (supervised algorithms), the Transformer series `tf1` (words to numbers), `tf4` (one block stage by stage), `tf5` (writing one word at a time, cache),
 `tf6` (training against using), all on the same tiny model (21 words, one block with 2 heads, feed-forward and layer norm), plus `gd` (gradient descent), `train` (optimiser race) and `bp`
 (backpropagation), and the Phase 2 set `reg`, `cls`, `bv`, `cv`, `km` (k-means and DBSCAN), `pca`, `anom`, whose shared calculations are in `core.js` (Python twin
-`examples/sim-core/core.py`; helper `AIQPSim.plot`), and the Phase 3 set `mb` (model builder), `lw` (a count model learning to write), `emb` (embedding training), `lora` (LoRA and quantisation), `vs` (vector search), `rag` (retrieval), whose calculations are in `llm.js` (Python twin `examples/sim-llm/llm.py`), and the Phase 4 set `cnn` (convolution), `seq` (running state), `txt` (TF-IDF), `ae` (autoencoder and diffusion noise), `gnn` (message passing), `spec` (spectrogram with a real Fourier transform), `rl` (Q-learning grid world and bandit), whose calculations are in `dl.js` (Python twin `examples/sim-dl/dl.py`), and the Phase 5 set `rec` (recommender), `ts` (forecasting), `bay` (probability of a test result), `cau` (Simpson's paradox), `srch` (maze search and a game tree), `csp` (backtracking), whose calculations are in `ai.js` (Python twin `examples/sim-ai/ai.py`), and the Phase 6 set `rul`, `loop`, `spl`, `cln`, `feat`, `lab`, `api`, `agent`, `mm`, `inj`, `evl`, `fair`, `mcp` for the start, data and application lessons, whose calculations are in `fnd.js` (Python twin `examples/sim-apps/apps.py`; `mcp` is a step-through with no calculation). Register a new module in `SIM_MODULES` (src/lib/sim.mjs); a module that needs the shared model lists `attn-model.js` and `attn.js` in `SIM_FILES`. The shared UI helpers
+`examples/sim-core/core.py`; helper `AIQPSim.plot`), and the Phase 3 set `mb` (model builder), `lw` (a count model learning to write), `emb` (embedding training), `lora` (LoRA and quantisation), `vs` (vector search), `rag` (retrieval), whose calculations are in `llm.js` (Python twin `examples/sim-llm/llm.py`), and the Phase 4 set `cnn` (convolution), `seq` (running state), `txt` (TF-IDF), `ae` (autoencoder and diffusion noise), `gnn` (message passing), `spec` (spectrogram with a real Fourier transform), `rl` (Q-learning grid world and bandit), whose calculations are in `dl.js` (Python twin `examples/sim-dl/dl.py`), and the Phase 5 set `rec` (recommender), `ts` (forecasting), `bay` (probability of a test result), `cau` (Simpson's paradox), `srch` (maze search and a game tree), `csp` (backtracking), whose calculations are in `ai.js` (Python twin `examples/sim-ai/ai.py`), and the Phase 6 set `rul`, `loop`, `spl`, `cln`, `feat`, `lab`, `api`, `agent`, `mm`, `inj`, `evl`, `fair`, `mcp` for the start, data and application lessons, whose calculations are in `fnd.js` (Python twin `examples/sim-apps/apps.py`; `mcp` is a step-through with no calculation), and the Phase 7 set `val`, `rel`, `mon`, `srv`, `arch` (production lessons) and `ppl` (perplexity and answer scoring), whose calculations are in `ops.js` (Python twin `examples/sim-ops/ops.py`). `simulations.html` ("Simulation lab") is generated from every lesson's `## Live simulation` section, so a new simulation appears there by itself. Register a new module in `SIM_MODULES` (src/lib/sim.mjs); a module that needs the shared model lists `attn-model.js` and `attn.js` in `SIM_FILES`. The shared UI helpers
 (`AIQPSim.ui.vecRows`, `bars`, `legend`) live in `attn.js`.
 Rules: the calculation is real, repeatable (LCG random numbers) and kept in `AIQPSim.logic.<module>` so Node can run it; every module has a Python
 program in `examples/sim-*` that prints the same headline numbers and `scripts/check-sims.mjs` compares them; data is made up and labelled; a "What this leaves
@@ -289,7 +289,7 @@ claim untested code works, use root-absolute `/` links, or add inline styles/scr
   are syntax-checked only; the example programmes they quote do run. See `qa/code-status.json`.
 - The lesson text has had no independent subject review. The older Applied Maths topics are verified numerically but not yet
   rewritten step by step. Open work is listed in `IMPLEMENTATION_PROGRESS.md`.
-- Browser tests run in Microsoft Edge and Google Chrome (e2e); Firefox was checked by screenshots only (no automated run, Playwright cannot drive stock Firefox); Safari/WebKit is untested. No screen-reader testing yet; no independent subject-matter review.
+- Browser tests run in Microsoft Edge and Google Chrome (e2e); Firefox was checked by screenshots only (no automated run, Playwright cannot drive stock Firefox); Safari/WebKit is untested. Every simulation passes automated structural accessibility checks in light and dark themes (labelled pictures, buttons and controls, an announcing status line, text status for goals, keyboard order), but no real screen-reader session has been run and there is no independent subject-matter review.
 - Search is simple term matching. The 404 page uses relative links.
 
 ---

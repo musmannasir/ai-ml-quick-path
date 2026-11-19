@@ -87,6 +87,22 @@ try: You have 200 requests. Which one is the p99?
 answer: 200 × 0.99 = 198, so the 198th fastest request is the p99, and only 2 requests were slower. Higher percentiles need more requests before they mean anything.
 ```
 
+## Live simulation
+A service keeps up only if it can handle the arrival rate. Watch what happens when it cannot.
+
+```sim srv Serving, queues, batching and scaling
+question: What decides whether a model service keeps up, and what does keeping up cost?
+watch: Requests arrive at random times. Each server takes about 0.2 seconds plus 0.05 seconds per request in a batch (made-up figures).
+watch: If arrivals exceed what the servers can handle, the queue grows and latency explodes.
+watch: Batching and autoscaling are two ways to keep up. Compare the cost.
+try: batch | At 8 or more requests a second, keep up with a single server by raising the batch size.
+try: scale | At 12 or more requests a second, use autoscaling to keep the slowest 5% under 3 seconds.
+predict: Six requests a second arrive. One server handles one request at a time in 0.25 seconds. What happens? | It keeps up | The queue grows without limit | It slows down a little
+answer: 2 | One server can finish at most 4 requests a second, so 2 more arrive every second than leave. After 200 seconds more than 500 are still waiting.
+leaves-out: A made-up server time and price ($2 an hour), arrivals at a steady average rate, and a simple rule for autoscaling. Real services also have start-up time for new servers, uneven traffic, and limits on memory and on the number of requests a model can hold at once.
+reference: examples/sim-ops/ops.py
+```
+
 ## Python example
 This demo starts a real HTTP server with Python's standard library, loads a churn model once, and calls it:
 ```text Output of quickpath.py serving (executed)

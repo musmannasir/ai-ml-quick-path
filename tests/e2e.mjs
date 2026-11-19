@@ -19,7 +19,7 @@ const url = (p) => { const [f, h] = p.split('#'); return pathToFileURL(join(DIST
 const ALL = (function walk(d, pre = '') { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p, pre + f + '/') : f.endsWith('.html') ? [pre + f] : []; }); })(DIST).sort();
 const ML_LESSONS = (readFileSync(join(DIST, 'index.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
 const LESSONS = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p)).length;   // read from dist/, not typed
-const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
+const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
 const results = [];
@@ -601,7 +601,7 @@ for (const w of [320, 390, 768]) {
 
 // 12b. Simulations (public/assets/sim.js and sims/*.js)
 {
-  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl'], ['ml-recommenders', 'rec'], ['ml-timeseries', 'ts'], ['ml-bayes', 'bay'], ['ml-causal', 'cau'], ['ai-search', 'srch'], ['ai-logic-plan', 'csp'], ['s-what-is-ai', 'rul'], ['s-lifecycle', 'loop'], ['d-basics', 'spl'], ['d-collect', 'lab'], ['d-clean-eda', 'cln'], ['d-features', 'feat'], ['app-llm-api', 'api'], ['app-agents', 'agent'], ['app-multimodal', 'mm'], ['app-security', 'inj'], ['app-evals', 'evl'], ['app-responsible', 'fair'], ['app-frameworks', 'mcp']];
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl'], ['ml-recommenders', 'rec'], ['ml-timeseries', 'ts'], ['ml-bayes', 'bay'], ['ml-causal', 'cau'], ['ai-search', 'srch'], ['ai-logic-plan', 'csp'], ['s-what-is-ai', 'rul'], ['s-lifecycle', 'loop'], ['d-basics', 'spl'], ['d-collect', 'lab'], ['d-clean-eda', 'cln'], ['d-features', 'feat'], ['app-llm-api', 'api'], ['app-agents', 'agent'], ['app-multimodal', 'mm'], ['app-security', 'inj'], ['app-evals', 'evl'], ['app-responsible', 'fair'], ['app-frameworks', 'mcp'], ['ops-data-debt', 'val'], ['ops-mlops', 'rel'], ['ops-monitoring', 'mon'], ['ops-serving', 'srv'], ['ops-architecture', 'arch'], ['llm-eval', 'ppl']];
   const problems = [];
   for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
     const page = await newPage({ width: w });
@@ -618,7 +618,7 @@ for (const w of [320, 390, 768]) {
     if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
     await page.context().close();
   }
-  expect('All fifty-one simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+  expect('All fifty-seven simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
 
   // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
   const page = await newPage({ width: 1280 });
@@ -874,6 +874,76 @@ for (const w of [320, 390, 768]) {
   check('Fairness simulation: with group B at threshold 0.15 the share of qualified people found is equal, and the challenge ticks', r, r.out[0] === '0 points' && r.out[1] === true);
   r = await run('app-frameworks', 'mcp', `tog('asks the person'); setRange('Messages shown', 9); return [reads()[0], done('ask')];`);
   check('Tool-messages simulation: all nine messages shown with the question to the person, and the challenge ticks', r, r.out[0] === '9 of 9' && r.out[1] === true);
+}
+
+// 12i. Behaviour of the Phase 7 simulations (production lessons and model scoring)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const tog = (text) => [...f.querySelectorAll('.sim-ctl.check label')].find((l) => l.textContent.includes(text)).querySelector('input').click();
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  const check = (name, r, ok) => expect(name, ok && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  let r = await run('ops-data-debt', 'val', `tog('renamed'); return [reads(), done('silent')];`);
+  check('Data-check simulation: after the column is renamed, row checks alone pass 7 of 10 rows with nothing noticed (the Python program gives the same), and the challenge ticks', r, r.out[0][0] === '7 of 10' && r.out[0][1] === 'nothing noticed' && r.out[1] === true);
+  r = await run('ops-mlops', 'rel', `setSel('The new model', 'bad'); return [reads(), done('catch')];`);
+  check('Safe-release simulation: with a clearly worse model and a 5% canary, 93 requests and 14 wrong answers lead to a rollback, and the challenge ticks', r, r.out[0][0] === '93' && r.out[0][1] === '14' && r.out[0][2] === 'roll back' && r.out[1] === true);
+  r = await run('ops-monitoring', 'mon', `setRange('Days averaged', 7); setRange('Alert when', 2.5); return [reads(), done('fast')];`);
+  check('Drift simulation: a window of 7 days and a threshold of 2.5 give no false alarms and an alert 4 days after the shift, and the challenge ticks', r, r.out[0][0] === '0' && r.out[0][1] === '4 days' && r.out[1] === true);
+  r = await run('ops-serving', 'srv', `const q = reads(); setRange('Requests handled together', 4); setRange('Requests arriving', 8); return [q[3], reads()[3], reads()[2], done('batch')];`);
+  check('Serving simulation: 6 requests a second on one server leaves 530 waiting, and batches of 4 keep up at 8 a second, and the challenge ticks', r, r.out[0] === '530' && r.out[1] === '2' && r.out[2] === '2.94 s' && r.out[3] === true);
+  r = await run('ops-architecture', 'arch', `setSel('Break this part', 'Logging'); return [reads()[0], done('blind')];`);
+  check('Architecture simulation: breaking the logging leaves the request working but worse, and the challenge ticks', r, r.out[0] === 'works, but worse' && r.out[1] === true);
+  r = await run('llm-eval', 'ppl', `const q = reads()[0]; setRange('Words of text', 160); setSel('Score the answers', 'exact'); return [q, reads()[0], reads()[1], done('low'), done('strict')];`);
+  check('Model-scoring simulation: perplexity falls from 23.3 to 7.1 as the model reads more, and exact match marks only 1 of 4 answers right, and both challenges tick', r, r.out[0] === '23.3' && r.out[1] === '7.1' && r.out[2] === '1.00 of 4' && r.out[3] === true && r.out[4] === true);
+}
+
+// 12j. Simulation lab page and structural accessibility checks for every simulation
+{
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('simulations.html')); await page.waitForTimeout(300);
+  const lab = await page.evaluate(() => ({ items: document.querySelectorAll('.sim-lab li').length, groups: document.querySelectorAll('main section h2').length, h1: document.querySelectorAll('h1').length, bad: [...document.querySelectorAll('.sim-lab a')].filter((a) => !/^lessons\/[a-z0-9-]+\.html#live-simulation$/.test(a.getAttribute('href'))).length }));
+  const figs = await page.evaluate(async () => { const out = []; for (const a of document.querySelectorAll('.sim-lab a')) out.push(a.getAttribute('href').split('#')[0]); return [...new Set(out)]; });
+  expect('Simulation lab page lists every simulation with a link to its lesson, one main heading, and the lessons it links to match the lessons that have a live simulation', lab.items >= 57 && lab.h1 === 1 && lab.bad === 0 && figs.length >= 50, JSON.stringify(lab) + ' lessons=' + figs.length);
+  await page.context().close();
+  const problems = [];
+  for (const href of figs) {
+    for (const scheme of ['light', 'dark']) {
+      const pg = await newPage({ width: 1024, scheme });
+      await pg.goto(url(href + '#live-simulation')); await pg.waitForTimeout(250);
+      const r = await pg.evaluate(() => {
+        const bad = [];
+        document.querySelectorAll('figure.sim').forEach((f) => {
+          const id = f.getAttribute('data-sim');
+          if (!f.classList.contains('sim-live')) bad.push(id + ' did not start');
+          f.querySelectorAll('svg').forEach((s) => { if (s.getAttribute('role') !== 'img' || !(s.getAttribute('aria-label') || '').trim()) bad.push(id + ' svg without role img and a label'); });
+          f.querySelectorAll('button').forEach((b) => { if (!(b.textContent || '').trim() && !b.getAttribute('aria-label')) bad.push(id + ' unnamed button'); });
+          f.querySelectorAll('input:not([type=radio]), select').forEach((c) => { if (!(c.labels && c.labels.length) && !c.getAttribute('aria-label')) bad.push(id + ' unlabelled control'); });
+          f.querySelectorAll('canvas').forEach((c) => { if (!c.getAttribute('aria-label')) bad.push(id + ' canvas without a label'); });
+          const n = f.querySelector('.sim-narr'); if (!n || n.getAttribute('aria-live') !== 'polite' || !(f.querySelector('.sim-narr-t').textContent || '').trim()) bad.push(id + ' narrator missing or empty');
+          f.querySelectorAll('.sim-stage [tabindex="-1"]').forEach(() => bad.push(id + ' control removed from the keyboard order'));
+          f.querySelectorAll('.sim-try li').forEach((li) => { if (!li.querySelector('.sim-tick-word')) bad.push(id + ' goal without a text status'); });
+          const cs = getComputedStyle(f.querySelector('.sim-narr-x')); if (cs.color === getComputedStyle(f.querySelector('.sim-narr')).backgroundColor) bad.push(id + ' narrator text same colour as background');
+        });
+        return bad;
+      });
+      r.forEach((x) => problems.push(href + ' (' + scheme + '): ' + x));
+      if (pg.errors.length) problems.push(href + ' (' + scheme + ') errors: ' + pg.errors.join(' | '));
+      await pg.context().close();
+    }
+  }
+  expect('Every simulation, in light and dark themes, starts, labels its pictures, buttons and controls, has an announcing narrator and a text status for each goal, keeps its controls in the keyboard order, and raises no errors', !problems.length, problems.slice(0, 8).join('; '));
 }
 
 // 13. Screenshots

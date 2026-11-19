@@ -89,6 +89,22 @@ result: There are 15 pairs to think about, and the number grows quickly: 12 inpu
 why: This is one reason that changing one input can change the model in unexpected ways, and why tests and documentation for the whole pipeline matter.
 ```
 
+## Live simulation
+Data checks are cheap insurance. See what they catch, and what they cannot.
+
+```sim val Data checks and a schema change
+question: How do checks on incoming data protect a model, and what do they miss?
+watch: Each check is a small rule. Turn them on and off and see which rows fail which rule.
+watch: Rename a column, as a data supplier might without warning.
+watch: Compare a run with a column check against a run with only row checks.
+try: stop | Turn on the column check, rename the column, and see the pipeline stop.
+try: silent | Rename the column with only the email and country checks on, and see rows pass with nothing noticed.
+predict: A data supplier renames a column. You have row checks only on the other columns. What happens? | The pipeline stops with a clear message | Nothing is noticed, and the model silently loses a column | The model fixes it by itself
+answer: 2 | The renamed column simply looks empty, and no check looks at it. Seven rows still pass. A check on the shape of the data (the columns) is what catches this.
+leaves-out: Ten made-up rows and five hand-written checks. Real pipelines use a validation library, check statistics as well as rules, and decide what to do with failing rows (reject, repair or quarantine).
+reference: examples/sim-ops/ops.py
+```
+
 ## Python example
 Ten rows with deliberate problems, four rules, a unique-id check, and a comparison of the live average with the training average. It uses only the standard library. Libraries such as Great Expectations or Pandera let you write the same kind of rules in a reusable way, but they were not run for this lesson.
 

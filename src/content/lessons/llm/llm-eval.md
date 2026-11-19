@@ -93,6 +93,22 @@ try: On a larger set of 400 questions, A gets 300 right and B gets 330. Are the 
 answer: A: 300 ÷ 400 = 0.75 = 75%. B: 330 ÷ 400 = 0.825 = 82.5%. The percentages are identical, but the gap is now 30 questions instead of 3, so it is far less likely to be chance. The same percentage can deserve very different amounts of trust.
 ```
 
+## Live simulation
+Evaluating a language model starts with what you measure. Two measures, side by side.
+
+```sim ppl Scoring language models
+question: How do we score a language model, and why does the scoring method matter?
+watch: Perplexity measures how well a model predicts text it has never read. It falls as the tiny model reads more.
+watch: Perplexity says how many equally likely words the model is torn between. It does not say whether answers are right.
+watch: For answers to questions, a few ways of scoring give different results on the same four answers.
+try: low | Let the model read enough text to bring perplexity to 8 or less.
+try: strict | Choose exact match and see correct answers marked wrong.
+predict: A model answers “The capital is Paris.” and the gold answer is “Paris”. Does exact match mark it right? | Yes | No | Only after tidying
+answer: 2 | The two strings differ, and tidying capitals and punctuation does not make them equal. A looser rule (contains the answer, or word overlap) accepts it, but a looser rule also accepts some wrong answers. State how you scored.
+leaves-out: A count model with about 160 words of made-up text, and four hand-written answers to one question. Real evaluations use many questions, check the scoring method against human judgement, and are often scored by another model or by people.
+reference: examples/sim-ops/ops.py
+```
+
 ## Python example
 Perplexity is the exponential of the average loss. From the tiny model trained on a laptop:
 ```text Computed from the executed tiny-model losses

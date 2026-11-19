@@ -155,6 +155,22 @@ Moving an AI app from a laptop to the cloud means packaging it in a **container*
 - Logs and a cost limit with alerts | see problems and spending early | output
 ```
 
+## Live simulation
+A production system is a chain of parts. What happens when one stops?
+
+```sim arch Following a request, and breaking a part
+question: What happens to a person's request when one part of a system stops working?
+watch: A request passes through seven parts in turn. Slide to follow it.
+watch: Break one part. Some breaks stop the request, and others only make it slower, costlier or blind.
+watch: Note which breaks the person would notice.
+try: blind | Break the logging and see that the person notices nothing.
+try: safe | Break the sign-in check and see that the system refuses requests.
+predict: Which broken part would users not notice at first? | The model server | The logging | The sign-in check
+answer: 2 | Logging only records what happened. Requests still work, but errors and costs go unseen, so a problem can grow before anyone knows.
+leaves-out: One simple line of seven parts. Real systems have many more, with fallbacks, retries and several copies of each part. The effects shown are typical, not universal, and depend on how the system was built.
+reference: examples/sim-ops/ops.py
+```
+
 ## Python example
 The Python side: a versioned model service with service-to-service authentication and a health check:
 ```python classifier_service.py (FastAPI; not run here)

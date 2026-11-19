@@ -53,7 +53,7 @@ export function navGroups(lessonsById) {
     { href: 'solve.html', label: 'Solve any case: decision guide' }, { href: 'cases.html', label: 'Real-world cases' },
     { href: 'projects.html', label: 'Capstone projects' }, { href: 'assessment.html', label: 'Quick checks and readiness' } ] });
   groups.push({ id: 'reference', title: 'Reference', items: [
-    { href: 'maths.html', label: 'Maths map' }, { href: 'hardware.html', label: 'Hardware: laptop to cloud' },
+    { href: 'simulations.html', label: 'Simulation lab' }, { href: 'maths.html', label: 'Maths map' }, { href: 'hardware.html', label: 'Hardware: laptop to cloud' },
     { href: 'glossary.html', label: 'Glossary' }, { href: 'progress.html', label: 'My progress and calendar' },
     { href: 'about.html', label: 'About this guide' } ] });
   return groups;
