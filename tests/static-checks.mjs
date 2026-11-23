@@ -14,6 +14,7 @@ import { SOURCES } from '../src/data/sources.mjs';
 
 const ADSENSE = !!(process.env.ADSENSE_CLIENT || '').trim();
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/$/, '');
+const CLEAN_URLS = process.env.CLEAN_URLS === 'on' || !!process.env.WORKERS_CI || !!process.env.CF_PAGES;
 const DIST = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const files = (function walk(d) { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : p.endsWith('.html') ? [p] : []; }); })(DIST);
 const ids = new Map();
@@ -28,6 +29,11 @@ for (const f of files) {
   const html = readFileSync(f, 'utf8');
   const rel = f.slice(DIST.length + 1);
   if (!/<html lang="en"/.test(html)) problems.push(`${rel}: missing lang`);
+  if (SITE_URL) {   // the canonical tag must name the address the host really serves (no .html where the host uses clean addresses)
+    const relUrl = rel.split('\\').join('/'), want = `${SITE_URL}/${relUrl === 'index.html' ? '' : CLEAN_URLS ? relUrl.replace(/\.html$/, '') : relUrl}`;
+    const got = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
+    if (got !== want) problems.push(`${rel}: canonical is ${got || 'missing'}, expected ${want}`);
+  }
   if ((html.match(/<h1[\s>]/g) || []).length !== 1) problems.push(`${rel}: expected exactly one h1`);
   if (/<figure class="sim"/.test(html)) {
     // Simulations (src/lib/sim.mjs): static markup must be complete, with no inline style, and the engine and module files must exist.
