@@ -1,6 +1,6 @@
 # Plan: cover the topics from `InitialData/topics` that the guide does not explain yet
 
-Status 2026-11-23: plan only, nothing is built. Source: 34 pictures in `D:\ClaudeApps\AIGuideApp\InitialData\topics`
+Status 2026-11-23: batches A to D are built, merged and live (PRs 6 to 9). Batch E was skipped by the owner. Source: 34 pictures in `D:\ClaudeApps\AIGuideApp\InitialData\topics`
 (32 topic pictures and 2 cover or end slides). Result of the check: 26 topics are explained, 6 are only partly covered,
 4 are not covered. This plan closes all of the gaps in four batches, plus one optional batch.
 
