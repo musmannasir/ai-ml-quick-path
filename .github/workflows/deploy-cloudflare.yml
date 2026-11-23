@@ -1,0 +1,77 @@
+name: Deploy to Cloudflare Pages (production)
+
+# Every push to main (for example a merged pull request) builds the site, runs the fast checks, and deploys dist/ to the
+# Cloudflare Pages project "aimlquickpath". It can also be started by hand from the Actions tab.
+#
+# One-time setup in GitHub (Settings > Secrets and variables > Actions):
+#   Secret   CLOUDFLARE_API_TOKEN   an API token with the permission Account > Cloudflare Pages > Edit
+#   Secret   CLOUDFLARE_ACCOUNT_ID  your Cloudflare account id
+#   Variable SITE_URL               the public address, for example https://www.aimlquickpath.com
+#                                   (leave it unset until that address works: without it no sitemap and no canonical tags are written)
+# Never put these values in the repository.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A newer push replaces a deploy that is still waiting, but a deploy that has started is never cut off half-way.
+concurrency:
+  group: cloudflare-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks-and-deploy:
+    name: Build, check and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+      - name: Maths, simulation and static checks
+        run: |
+          npm run check:maths
+          npm run check:sims
+          npm run test:static
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+      - name: Deploy dist/ to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=aimlquickpath --branch=main --commit-dirty=true
+
+  # The full browser tests run too, but they do not hold up a deploy. Read their result in the Actions tab.
+  browser-tests:
+    name: Browser tests (report only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qa
+          path: qa/
