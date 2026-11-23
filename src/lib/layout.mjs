@@ -7,8 +7,14 @@ export const SITE = {
   name: 'AI & ML Quick Path: From Concepts to Industry',
   short: 'AI & ML Quick Path',
   url: (process.env.SITE_URL || '').replace(/\/$/, ''),
+  // Hosts such as Cloudflare serve page.html at /page and redirect page.html to /page. On those hosts the canonical tag and the
+  // sitemap should name the address that loads without a redirect. Set automatically on Cloudflare builds, or by CLEAN_URLS=on.
+  cleanUrls: process.env.CLEAN_URLS === 'on' || !!process.env.WORKERS_CI || !!process.env.CF_PAGES,
   description: 'A free, plain-language guide to AI and machine learning concepts and how industry builds them, with small worked maths, Python and .NET examples, from first steps to advanced systems.',
 };
+
+// The address a page is public at: no file name for the home page, and no .html where the host serves clean addresses.
+export const publicPath = (path) => (path === 'index.html' ? '' : SITE.cleanUrls ? path.replace(/\.html$/, '') : path);
 
 // ---------- optional Google AdSense (owner decision 2026-11-05) ----------
 // Everything is OFF unless ADSENSE_CLIENT is set. Stage 1 (approval): ADSENSE_CLIENT only -> Google loader script,
@@ -85,7 +91,7 @@ export function page({ path, title, description, body, crumbs = [], groups, toc 
   const depth = path.split('/').length - 1;
   const root = depth ? '../'.repeat(depth) : '';
   const fullTitle = path === 'index.html' ? SITE.name : `${title} | ${SITE.short}`;
-  const canonical = SITE.url ? `${SITE.url}/${path === 'index.html' ? '' : path}` : '';
+  const canonical = SITE.url ? `${SITE.url}/${publicPath(path)}` : '';
   const desc = description || SITE.description;
   return `<!doctype html>
 <html lang="en" dir="ltr">

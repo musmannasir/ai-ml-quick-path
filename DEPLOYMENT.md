@@ -32,7 +32,9 @@ The live site is the Cloudflare Worker `ai-ml-quick-path` (static assets only), 
 `npx wrangler deploy`. `wrangler.jsonc` in the repository root tells wrangler to publish `dist/` and to serve `dist/404.html` for
 unknown addresses. No GitHub Action and no secret is needed. Cloudflare runs only the build, so run `npm test` locally before merging.
 In the Cloudflare dashboard (Workers & Pages, ai-ml-quick-path, Settings, Builds) add the build variable `SITE_URL` (for example
-`https://www.aimlquickpath.com`, once that address works) so the sitemap and canonical tags are written. If the dashboard shows
+`https://www.aimlquickpath.com`, once that address works) so the sitemap and canonical tags are written. Cloudflare serves `page.html`
+at `/page` and redirects the `.html` form, so on Cloudflare builds (`WORKERS_CI` or `CF_PAGES` is set) the canonical tags and the sitemap
+name the address without `.html`. Set `CLEAN_URLS=on` to get the same on another host that does this. `npm run test:static` checks it. If the dashboard shows
 "disconnected from your Git account", open Manage next to the repository and give the "Cloudflare Workers and Pages" GitHub app
 access to the repository. A Worker with only static assets cannot have runtime variables; build variables are the only ones used.
 

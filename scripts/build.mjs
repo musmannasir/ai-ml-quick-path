@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { INLINE_SCRIPT } from '../src/lib/layout.mjs';
 import { APPLIED_MATHS, esc, md, parseLesson, parseQA, slug } from '../src/lib/markdown.mjs';
-import { navGroups, page, SITE, ADS, adSlot } from '../src/lib/layout.mjs';
+import { navGroups, page, SITE, ADS, adSlot, publicPath } from '../src/lib/layout.mjs';
 import { LEVELS, LESSON_ORDER, MODULES, REVIEWED, ROADMAPS, ROUTES, STARTS, moduleOfLesson } from '../src/data/curriculum.mjs';
 import { CASES, CASE_CHECKS } from '../src/data/cases.mjs';
 import { PROJECTS, STARTERS } from '../src/data/projects.mjs';
@@ -35,7 +35,7 @@ function walk(dir) {
 const lessons = {};
 for (const file of walk(join(ROOT, 'src/content/lessons'))) {
   try {
-    const l = parseLesson(readFileSync(file, 'utf8'), file.slice(ROOT.length + 1).split(/[\\/]/).join('/'));
+    const l = parseLesson(readFileSync(file, 'utf8').replace(/\r\n/g, '\n'), file.slice(ROOT.length + 1).split(/[\\/]/).join('/'));
     if (lessons[l.id]) errors.push(`duplicate lesson id ${l.id}`);
     lessons[l.id] = l;
   } catch (e) { errors.push(e.message); }
@@ -345,6 +345,6 @@ if (ADS.client) writeFileSync(join(DIST, 'ads.txt'), `google.com, ${ADS.client.r
 `);
 if (SITE.url) {
   writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${
-    pages.filter((p) => p.path !== '404.html').map((p) => `  <url><loc>${SITE.url}/${p.path === 'index.html' ? '' : p.path}</loc><lastmod>${REVIEWED}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+    pages.filter((p) => p.path !== '404.html').map((p) => `  <url><loc>${SITE.url}/${publicPath(p.path)}</loc><lastmod>${REVIEWED}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 }
 console.log(`Built ${pages.length} pages (${LESSON_ORDER.length} lessons, ${PROJECTS.length} capstones, ${CASES.length} case studies) into dist/${ADS.client ? ` [AdSense ${ADS.client}; ad slots ${ADS.slotsOn ? 'ON' : 'OFF'}]` : ''}${SITE.url ? ' with sitemap for ' + SITE.url : ' (set SITE_URL to emit sitemap.xml and canonical URLs)'}`);
