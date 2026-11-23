@@ -26,6 +26,16 @@ Do not set `ADSENSE_CLIENT` until the steps in `MONETIZATION_READINESS.md` are d
 `npm test` locally before pushing. Not yet tried on Cloudflare; after the first deploy click through nested pages, because
 Cloudflare serves `page.html` at `/page`.
 
+### Deploy from GitHub Actions (production, from 2026-11-23)
+`.github/workflows/deploy-cloudflare.yml` deploys to the Cloudflare Pages project `aimlquickpath` on every push to `main` (and
+by hand from the Actions tab). It builds the site, runs `check:maths`, `check:sims` and `test:static`, then runs
+`wrangler pages deploy dist`. The browser tests run in a separate job that reports but does not block the deploy.
+One-time setup in GitHub, Settings, Secrets and variables, Actions: secrets `CLOUDFLARE_API_TOKEN` (permission Account, Cloudflare
+Pages, Edit) and `CLOUDFLARE_ACCOUNT_ID`, and the variable `SITE_URL` (set it only once that address works). Never commit these values.
+A Pages project is either connected to Git in the Cloudflare dashboard or uses direct upload, not both. This workflow needs a
+direct-upload project. If `aimlquickpath` is connected to GitHub in the dashboard, Cloudflare already builds on every push to `main`,
+and you should use one method only.
+
 ## Netlify
 Build command `npm run build`, publish directory `dist`. `_headers` is applied automatically.
 
