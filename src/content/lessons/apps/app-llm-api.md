@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Call a language model from Python and C#, request structured JSON, validate it, handle failures, stream answers and control cost.
 prereqs: llm-how
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: The same support-email summarizer working in Python and C#, rejecting invalid output, with token use and latency logged for 20 test emails.
 code: Python validator executed 2026-11-02 (examples/llm-summarizer/python, offline mode and 4 unit tests); live model calls not run (no API key)
 ---
@@ -137,6 +137,22 @@ Streaming sends the reply to your application in small pieces as the model write
 - Pieces keep arriving | Show them as they come | output
 - Stream breaks | Keep the partial text and mark it incomplete | warn
 - Retry or fall back | Try again or show a clear message | process
+```
+
+Two numbers describe the speed of a stream. **Time to first token (TTFT)** is the wait until the first piece arrives; it is mostly the model reading your prompt (prefill, see [How LLMs work](lesson:llm-how)), so longer prompts raise it. **Inter-token latency (ITL)** is the average gap between one piece and the next; it is mostly the model writing (decode), so it does not depend on prompt length as much. Someone reading a stream feels TTFT as "is it working?" and ITL as "how fast does it type?".
+
+```maths Time to first token and inter-token latency
+situation: A streamed reply has 101 tokens. The first token arrives 0.5 seconds after the request. The last token arrives 5.5 seconds after the request. These times are made up.
+find: What is the inter-token latency?
+step: Time between the first and the last token | 5.5 − 0.5 = 5
+step: Number of gaps between 101 tokens | 101 − 1 = 100
+step: Average gap | 5 ÷ 100 = 0.05
+result: Time to first token is **0.5 s**. Inter-token latency is **0.05 s**, which is 50 milliseconds per token.
+formula: ITL = (time of last token − time of first token) ÷ (tokens − 1)
+why: The two numbers answer different questions and are fixed by different work, so you measure and improve them separately: shorten the prompt to cut TTFT; use a smaller model or faster serving to cut ITL.
+caution: Real systems report averages and percentiles over many requests; one request tells you little.
+try: The same reply is 201 tokens long and the last token arrives at 10.5 seconds, with the first still at 0.5. What is the ITL?
+answer: (10.5 − 0.5) ÷ (201 − 1) = 10 ÷ 200 = 0.05 s. The pace stayed the same; the reply was just twice as long.
 ```
 
 #### Picking a model

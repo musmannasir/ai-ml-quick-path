@@ -49,10 +49,14 @@ export const WORKLOADS = [
 // ---- Glossary: [term, plain definition, lesson id where it is explained] ----
 export const GLOSSARY = [
   ['Accuracy', 'The share of predictions that are correct. Misleading when one class is rare.', 'ml-evaluation'],
+  ['Decode', 'The phase in which a language model writes its answer one token at a time, reusing the stored keys and values. Usually limited by memory speed.', 'llm-how'],
+  ['Chat template', 'The fixed recipe that turns system, user and assistant messages into the single token list a model reads, using special marker tokens.', 'llm-how'],
   ['Active learning', 'Letting the model pick the examples it is least sure about for people to label.', 'd-collect'],
   ['Generative AI', 'AI that makes new content, such as text, images, sound or code, from a request called a prompt.', 'app-genai-agentic'],
   ['Agentic AI', 'AI that works toward a goal in several steps, using tools and taking actions, with limits and human approval for risky steps.', 'app-genai-agentic'],
   ['Batch normalisation', 'A step inside a neural network that rescales each layer’s numbers to a steady range, which usually makes training faster and steadier.', 'dl-training'],
+  ['Inter-token latency (ITL)', 'The average time between one streamed piece of an answer and the next.', 'app-llm-api'],
+  ['Prefill', 'The phase in which a language model reads the whole prompt at once and builds its cache. Usually limited by arithmetic speed.', 'llm-how'],
   ['Gradient clipping', 'Limiting how large a training step can be, so one huge gradient cannot throw the model off course.', 'dl-training'],
   ['Learning-rate schedule', 'A plan for changing the learning rate during training, for example starting small, rising, then shrinking.', 'dl-training'],
   ['Bagging', 'Training many models on random re-samples of the data and combining them by voting or averaging.', 'ml-algorithms'],
@@ -64,6 +68,7 @@ export const GLOSSARY = [
   ['Anomaly detection', 'Finding rare, unusual records such as fraud or faults, often without labels.', 'ml-unsupervised'],
   ['API (application programming interface)', 'A web address and agreed format that programs use to talk to each other.', 'ops-serving'],
   ['Artificial intelligence (AI)', 'Computer systems that do tasks we associate with human intelligence, such as understanding language or recognising images.', 's-what-is-ai'],
+  ['Time to first token (TTFT)', 'How long a user waits before the first piece of a streamed answer arrives.', 'app-llm-api'],
   ['Attention', 'The transformer step in which every token looks at the other tokens and takes in what is relevant.', 'dl-transformers'],
   ['AUC (area under the ROC curve)', 'A score from 0.5 (random) to 1 (perfect) for how well a model ranks positives above negatives.', 'ml-evaluation'],
   ['Backpropagation', 'The method that works out how much each weight contributed to the error so it can be adjusted.', 'dl-neural-nets'],

@@ -8,7 +8,7 @@ maths: algebra
 goal: Watch a live model or LLM app for data drift, falling quality, latency and cost, and decide when to alert, retrain or roll back.
 prereqs: ops-mlops, app-evals
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: A monitoring sheet for one model listing each signal, its threshold, the action it triggers, and a drift check run on your own data.
 code: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency)
 ---
@@ -137,6 +137,18 @@ note: The allowances add up to the target response time. Set yours from your own
 - Retrieval | its own time allowance and timeout | process
 - Model call | usually the largest allowance, with streaming | model
 - Checks and formatting | its own small allowance | process
+```
+
+#### Time to first token and inter-token latency
+For a model that streams its answer, one total time hides two different experiences. **Time to first token (TTFT)** is how long the user waits before anything appears. **Inter-token latency (ITL)** is the average gap between pieces after that. Record both, as percentiles such as p50 and p95, next to the total time. A rise in TTFT often points to longer prompts or a busy queue; a rise in ITL often points to an overloaded model server. Set an alert for each, from your own measurements.
+
+```diagram compare Two latency signals for a streamed answer
+## Time to first token | process
+- Wait before the first piece
+- Grows with prompt length and queueing
+## Inter-token latency | model
+- Average gap between pieces
+- Grows when the model server is overloaded
 ```
 
 #### Token cost tracking
