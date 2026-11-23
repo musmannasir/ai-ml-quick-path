@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain how tokenisers split text, why tokens drive cost and limits, and how temperature and top-p change generated text.
 prereqs: llm-how
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: Token counts for the same paragraph in two languages, and the same prompt run at three temperatures with your observations.
 code: Python executed 2026-11-02 (quickpath.py bpe and sampling)
 ---
@@ -90,6 +90,50 @@ answer: Only "blue" is kept: 0.5 ÷ 0.5 = 1 = 100%. The model always picks its m
 deeper: The model first produces raw scores called logits. Softmax turns them into probabilities: each probability is e raised to the score, divided by the sum of e raised to every score. Temperature divides the scores before softmax, so a temperature below 1 widens the gaps between scores and a temperature above 1 narrows them.
 ```
 
+```maths Softmax without overflow
+situation: A model gives two next-token scores, 1000 and 1001. Softmax would work out e to the power of each score. A computer cannot store e^1000: the number is too large and the program fails or returns "not a number". The fix is to subtract the largest score from every score first.
+find: What are the probabilities, without ever building a huge number?
+step: Subtract the largest score from each score (the scores become 1000 − 1001 = −1 and 0) | 1000 − 1001 = −1
+step: Powers of e: e^0 = 1 and e^−1 is about 0.368; add them | 1 + 0.368 = 1.368
+step: Probability of the larger score | 1 ÷ 1.368 ≈ 0.731
+step: Probability of the smaller score | 0.368 ÷ 1.368 ≈ 0.269
+result: The probabilities are **0.731** and **0.269**, the same as for the scores 1 and 2, because only the gap between the scores matters.
+formula: softmax(x) = e^(x − max) ÷ sum of e^(x − max)
+why: Softmax only depends on the differences between scores, so shifting all of them by the same amount changes nothing. Subtracting the largest makes every power at most 1, which a computer can always store. Every real library does this.
+caution: A score gap of 1 is used so the numbers are easy to check. Real scores differ more and use many tokens.
+try: The scores are 5 and 5. What are the probabilities?
+answer: After subtracting 5 both become 0, so each power is 1 and each probability is 1 ÷ 2 = 0.5. Equal scores give equal chances.
+```
+
+```python stable_softmax.py
+import math
+
+def softmax_naive(scores):
+    exps = [math.exp(s) for s in scores]
+    total = sum(exps)
+    return [e / total for e in exps]
+
+def softmax_stable(scores):
+    biggest = max(scores)                      # subtract the largest score first
+    exps = [math.exp(s - biggest) for s in scores]
+    total = sum(exps)
+    return [e / total for e in exps]
+
+print("small scores, naive :", [round(p, 3) for p in softmax_naive([1, 2])])
+print("small scores, stable:", [round(p, 3) for p in softmax_stable([1, 2])])
+try:
+    softmax_naive([1000, 1001])
+except OverflowError as error:
+    print("large scores, naive : fails with OverflowError:", error)
+print("large scores, stable:", [round(p, 3) for p in softmax_stable([1000, 1001])])
+```
+```text Output of stable_softmax.py (executed 2026-11-23)
+small scores, naive : [0.269, 0.731]
+small scores, stable: [0.269, 0.731]
+large scores, naive : fails with OverflowError: math range error
+large scores, stable: [0.269, 0.731]
+```
+
 ## Live simulation
 Two small simulations show the two halves of this lesson. The first builds a tokeniser from a short text so you can watch text turn into tokens. The second writes text one token at a time so you can see what temperature, top-k and top-p do. Both are tiny stand-ins: they run the same loop as a large language model, on a model small enough to read in full.
 
@@ -156,6 +200,31 @@ foreach (double t in new[] { 0.2, 1.0, 2.0 })
     double sum = exp.Sum();
     Console.WriteLine($"T={t}: " + string.Join(", ", words.Zip(exp, (w, e) => $"{w} {e / sum:F2}")));
 }
+```
+
+The same stable softmax in C#. Here the naive version does not raise an error: it quietly returns "not a number" (NaN), which is worse.
+```cs StableSoftmax.cs
+static double[] SoftmaxNaive(double[] scores)
+{
+    var exps = scores.Select(Math.Exp).ToArray();
+    double total = exps.Sum();
+    return exps.Select(e => e / total).ToArray();
+}
+
+static double[] SoftmaxStable(double[] scores)
+{
+    double biggest = scores.Max();              // subtract the largest score first
+    var exps = scores.Select(s => Math.Exp(s - biggest)).ToArray();
+    double total = exps.Sum();
+    return exps.Select(e => e / total).ToArray();
+}
+
+string Show(double[] p) => string.Join(", ", p.Select(v => v.ToString("F3")));
+
+Console.WriteLine("small scores, naive : " + Show(SoftmaxNaive(new[] { 1.0, 2.0 })));
+Console.WriteLine("small scores, stable: " + Show(SoftmaxStable(new[] { 1.0, 2.0 })));
+Console.WriteLine("large scores, naive : " + Show(SoftmaxNaive(new[] { 1000.0, 1001.0 })));
+Console.WriteLine("large scores, stable: " + Show(SoftmaxStable(new[] { 1000.0, 1001.0 })));
 ```
 
 ## Applied Maths - Statistics

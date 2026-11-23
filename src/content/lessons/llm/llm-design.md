@@ -8,7 +8,7 @@ maths: advanced optional
 goal: Choose tokeniser, vocabulary, width, depth, heads and context length for a model, estimate its size and memory, and plan experiments.
 prereqs: llm-tokens, dl-transformers
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: A design sheet for a small model with parameter count, memory estimate, training data plan and three experiments that each change one setting.
 code: Python executed 2026-11-02 (quickpath.py llm_size)
 ---
@@ -86,6 +86,20 @@ answer: 1,000 × 32 = 32,000. Doubling the embedding length doubles this table. 
 - **Mixture of experts (MoE)**: instead of one large feed-forward block per layer, the model has many smaller "expert" blocks and a router that sends each token to only a few of them. The model has many parameters in total but uses only a fraction per token, so it is cheaper to run than a dense model of the same total size. All experts must still fit in memory.
 - **Dense model**: the usual design, where every parameter is used for every token.
 - **Long context**: models that accept hundreds of thousands of tokens. Longer context costs more memory (the KV cache grows with length) and models may still miss facts in the middle of very long inputs, so retrieval (RAG) is often still better.
+- **Grouped-query attention (GQA)**: in ordinary multi-head attention every head keeps its own keys and values in the cache. In GQA, several query heads share one set of keys and values, so the cache is smaller by the group size and long text needs less memory. Sharing one set across all heads is called multi-query attention. The model may lose a little accuracy, so builders compare. The model-builder simulation below has a setting for it.
+
+```diagram compare Multi-head, grouped-query and multi-query attention
+note: Eight query heads, with made-up group sizes.
+## Multi-head | model
+- 8 query heads, 8 key-value heads
+- Largest cache
+## Grouped-query | process
+- 8 query heads, 2 key-value heads
+- Cache 4 times smaller
+## Multi-query | output
+- 8 query heads, 1 key-value head
+- Cache 8 times smaller
+```
 
 ```diagram compare Dense model versus mixture of experts
 ## Dense model | model
@@ -117,7 +131,7 @@ try: fit | Build a shape with at least 6 billion parameters whose weights fit in
 try: wide | Reach at least 1 billion parameters with 12 layers or fewer (hint: make it wide).
 predict: You double the width and keep everything else the same. About how do the parameters in the layers change? | They double | They quadruple | They stay the same
 answer: 2 | Attention and feed-forward weights are matrices with width × width entries, so doubling the width makes each one about four times larger.
-leaves-out: The formulas are simplified: they ignore small parts (biases, normalisation), and real models differ in details such as gated feed-forward layers or sharing keys between heads, which changes the numbers. The shapes are generic examples, not named products. Training memory (16 bytes per parameter) and training work (6 × parameters × tokens, with 20 tokens per parameter) are common rules of thumb, not measurements.
+leaves-out: The formulas are simplified: they ignore small parts (biases, normalisation), and real models differ in details such as gated feed-forward layers or sharing keys between heads (the setting here assumes the cache shrinks exactly by the group size), which changes the numbers. The shapes are generic examples, not named products. Training memory (16 bytes per parameter) and training work (6 × parameters × tokens, with 20 tokens per parameter) are common rules of thumb, not measurements.
 reference: examples/sim-llm/llm.py
 ```
 

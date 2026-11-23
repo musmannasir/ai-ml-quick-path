@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain attention with queries, keys and values, the parts of a transformer block, and the three transformer families (encoder, decoder, encoder-decoder).
 prereqs: dl-sequences
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: The attention toy reproduced by hand for one word, and a table matching three of your tasks to a transformer family.
 code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 ---
@@ -94,6 +94,59 @@ widget: weighted 0.75,10,0.25,2
 try: The weights change to 0.5 and 0.5. What does "it" receive now?
 answer: 0.5 × 10 + 0.5 × 2 = 5 + 1 = 6. With equal attention the result sits halfway between the two words. Attention is useful because the weights are not equal: the model learns where to look.
 deeper: In real self-attention each token is turned into three vectors: a query, a key and a value. The score between two tokens is the dot product of one token's query with the other's key, divided by the square root of the vector length. Softmax turns each token's scores into weights that add up to 1, and the output is the weighted sum of the value vectors.
+```
+
+### Related concepts
+
+#### Cross-attention (how a decoder reads an encoder)
+In an encoder-decoder model such as a translator, the **encoder** reads the whole input first and turns each input word into a vector. The **decoder** then writes the output one word at a time. **Cross-attention** is the step where the decoder looks back at the encoder: the **queries** come from the words the decoder has written so far, and the **keys and values** come from the encoder's output. Ordinary self-attention looks within one text; cross-attention looks from one text to another. Made-up example: the decoder is about to write the English word after "the". Its query matches the French word "chat" best, so it takes most of its information from there.
+
+```diagram flow Cross-attention in a translator
+note: Weights are made up for illustration: chat 0.8, le 0.1, dort 0.1.
+- Encoder reads "le chat dort" | One vector per French word | input
+- Keys and values | Come from the encoder output | store
+- Decoder has written "the" | Its current state becomes the query | process
+- Cross-attention | The query is scored against every French word's key | model
+- Next word: "cat" | Mostly taken from the vector for "chat" | output
+```
+
+#### RMSNorm (a simpler normalisation)
+A transformer keeps its numbers in a steady range by **normalising** them. Classic layer normalisation subtracts the average and then divides by the spread. **RMSNorm** skips the subtraction and divides only by the **root mean square** (square every number, take the average, then the square root). It is cheaper and works about as well, so many recent models use it.
+
+```maths RMSNorm of two numbers
+situation: A tiny vector has two numbers, 1 and 7.
+find: What is the vector after RMSNorm?
+step: Square each number | 1 × 1 = 1
+step: Square the second number | 7 × 7 = 49
+step: Average of the squares | (1 + 49) ÷ 2 = 25
+step: Root mean square: the number that times itself gives 25 | 5 × 5 = 25
+step: Divide the first number by 5 | 1 ÷ 5 = 0.2
+step: Divide the second number by 5 | 7 ÷ 5 = 1.4
+result: The vector becomes **0.2 and 1.4**.
+formula: RMSNorm(x) = x ÷ √(average of x²)   (real layers also multiply by a learned scale)
+why: The numbers keep their proportions (the second is still 7 times the first) but now have a steady size, which keeps training stable.
+caution: Real vectors have thousands of numbers, and a learned scale is applied afterwards.
+```
+
+#### RoPE (position by rotation)
+A transformer must know word order. **RoPE** (rotary position embedding) does this by rotating each word's query and key vectors by an angle that depends on the word's position. When two words are compared, the result then depends on how far apart they are, not on where they stand in the text. Many recent models use it. Everyday example: two clock hands; what matters is the angle between them, not the time on the clock.
+
+```diagram flow RoPE: position by rotation
+- Query and key for a word | Vectors made from the word | input
+- Rotate by the word's position | A bigger position means a bigger angle | process
+- Compare two rotated vectors | The score depends on the distance between the words | model
+- Attention weights | Nearby and far words are treated by their gap | output
+```
+
+#### SwiGLU (a gated feed-forward layer)
+Each block has a small **feed-forward** network after attention. In the older design it is two matrices with one bending step between them. **SwiGLU** adds a **gate**: one path computes a value, a second path computes how much of it to let through, and the two are multiplied number by number. It uses three matrices instead of two, and many recent models use it because it tends to work better at the same size.
+
+```diagram flow SwiGLU: a feed-forward layer with a gate
+- Input vector | One word's numbers after attention | input
+- Value path | A matrix gives the candidate numbers | process
+- Gate path | A second matrix and a smooth bend decide how much passes | model
+- Multiply, then project back | Gate times value, then a third matrix | process
+- Output vector | Same size as the input | output
 ```
 
 ## Live simulation

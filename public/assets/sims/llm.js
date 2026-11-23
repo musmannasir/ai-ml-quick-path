@@ -13,6 +13,8 @@
   L.params = function (layers, d, vocab) { return 12 * layers * d * d + vocab * d; };
   L.weightBytes = function (n, bits) { return n * bits / 8; };
   L.kvBytesPerToken = function (layers, d, bits) { return 2 * layers * d * bits / 8; };
+  // Grouped-query attention: `group` query heads share one key and one value head, so the cache is `group` times smaller (group 1 = every head has its own).
+  L.kvBytesGrouped = function (layers, d, bits, group) { return L.kvBytesPerToken(layers, d, bits) / group; };
   L.trainFlops = function (n, tokens) { return 6 * n * tokens; };
 
   // ---- learning to write ----

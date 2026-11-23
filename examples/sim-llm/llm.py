@@ -30,6 +30,10 @@ def kv_bytes_per_token(layers, d, bits):
     return 2 * layers * d * bits / 8                  # one key and one value vector per layer
 
 
+def kv_bytes_grouped(layers, d, bits, group):
+    return kv_bytes_per_token(layers, d, bits) / group  # group query heads share one key and value head
+
+
 def train_flops(n, tokens):
     return 6 * n * tokens
 
@@ -263,6 +267,7 @@ if __name__ == "__main__":
     M = lora_target()
     print("rank-r error of a made-up update (relative): " + " ".join("r=%d:%.3f" % (r, low_rank_error(M, r)) for r in (1, 2, 3, 4)))
     print("one 4096 by 4096 layer: %d weights to change, LoRA rank 8 trains %d (%.2f%%)" % (4096 * 4096, 2 * 4096 * 8, 100 * 2 * 4096 * 8 / (4096 * 4096)))
+    print("cache per token, 7B-class shape at 16 bits, query heads per key-value head 1/4/8: " + " ".join("%.1f KB" % (kv_bytes_grouped(32, 4096, 16, g) / 1e3) for g in (1, 4, 8)))
     for d, r in ((4096, 8), (4096, 64), (768, 8)):
         v = lora_variants(d, r)
         print("LoRA variants, %d by %d layer, rank %d: LoRA %d, LoRA-FA %d, VeRA %d, LoRA+ %d, Delta-LoRA %d" % (d, d, r, v["lora"], v["fa"], v["vera"], v["plus"], v["delta"]))

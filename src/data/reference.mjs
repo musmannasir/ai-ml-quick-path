@@ -49,6 +49,10 @@ export const WORKLOADS = [
 // ---- Glossary: [term, plain definition, lesson id where it is explained] ----
 export const GLOSSARY = [
   ['Accuracy', 'The share of predictions that are correct. Misleading when one class is rare.', 'ml-evaluation'],
+  ['Grouped-query attention (GQA)', 'Attention in which several query heads share one set of keys and values, which makes the cache smaller.', 'llm-design'],
+  ['RMSNorm', 'A simple normalisation that divides each vector by its root mean square, without subtracting the average.', 'dl-transformers'],
+  ['RoPE (rotary position embedding)', 'Giving a model word order by rotating query and key vectors by an angle that depends on position.', 'dl-transformers'],
+  ['Cross-attention', 'Attention in which the queries come from one text (the decoder) and the keys and values from another (the encoder output).', 'dl-transformers'],
   ['Decode', 'The phase in which a language model writes its answer one token at a time, reusing the stored keys and values. Usually limited by memory speed.', 'llm-how'],
   ['Chat template', 'The fixed recipe that turns system, user and assistant messages into the single token list a model reads, using special marker tokens.', 'llm-how'],
   ['Active learning', 'Letting the model pick the examples it is least sure about for people to label.', 'd-collect'],
@@ -69,6 +73,7 @@ export const GLOSSARY = [
   ['API (application programming interface)', 'A web address and agreed format that programs use to talk to each other.', 'ops-serving'],
   ['Artificial intelligence (AI)', 'Computer systems that do tasks we associate with human intelligence, such as understanding language or recognising images.', 's-what-is-ai'],
   ['Time to first token (TTFT)', 'How long a user waits before the first piece of a streamed answer arrives.', 'app-llm-api'],
+  ['SwiGLU', 'A feed-forward layer with a gate: one path decides how many of the numbers from the other path pass through.', 'dl-transformers'],
   ['Attention', 'The transformer step in which every token looks at the other tokens and takes in what is relevant.', 'dl-transformers'],
   ['AUC (area under the ROC curve)', 'A score from 0.5 (random) to 1 (perfect) for how well a model ranks positives above negatives.', 'ml-evaluation'],
   ['Backpropagation', 'The method that works out how much each weight contributed to the error so it can be adjusted.', 'dl-neural-nets'],

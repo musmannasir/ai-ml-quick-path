@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19",
+ "generated": "2026-11-23",
  "machine": "win32",
  "tools": {
   "dotnet": "10.0.400",
@@ -21,245 +21,329 @@
    "command": "python spam_classifier.py",
    "cwd": "examples/spam-classifier",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python attention_toy.py",
    "cwd": "examples/attention",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python tiny_char_lm_numpy.py",
    "cwd": "examples/tiny-lm",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python memory_estimate.py",
    "cwd": "examples/memory-estimate",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python rag_leave_policy.py",
    "cwd": "examples/rag-leave-policy",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python returns_workflow.py",
    "cwd": "examples/agent-returns",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python summarize.py --offline",
    "cwd": "examples/llm-summarizer/python",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python -m unittest test_summary_schema.py",
    "cwd": "examples/llm-summarizer/python",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python ml_basics.py",
    "cwd": "examples/ml-basics",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python applied_basics.py",
    "cwd": "examples/applied-ai-basics",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python quickpath.py",
    "cwd": "examples/quickpath",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python math_for_ai.py",
    "cwd": "examples/math",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python ai_extras.py",
    "cwd": "examples/ai-extras",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python gap_topics.py",
    "cwd": "examples/gap-topics",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python generalisation.py",
    "cwd": "examples/generalisation",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python model_compare.py",
    "cwd": "examples/model-compare",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python linear_deeper.py",
    "cwd": "examples/linear-deeper",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python adaboost.py",
    "cwd": "examples/boosting",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python clustering.py",
    "cwd": "examples/clustering",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python see_data.py",
    "cwd": "examples/seeing-data",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python patterns.py",
    "cwd": "examples/patterns",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python autograd.py",
    "cwd": "examples/backprop",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python text_basics.py",
    "cwd": "examples/nlp-classic",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python vision_more.py",
    "cwd": "examples/vision-more",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python gen_more.py",
    "cwd": "examples/gen-more",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python rl_value.py",
    "cwd": "examples/rl-value",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python rl_policy.py",
    "cwd": "examples/rl-policy",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python search.py",
    "cwd": "examples/search-games",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python logic.py",
    "cwd": "examples/logic-planning",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python causal.py",
    "cwd": "examples/causal",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python bayes.py",
    "cwd": "examples/bayes",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python validate.py",
    "cwd": "examples/data-validation",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python embed_train.py",
    "cwd": "examples/embed-train",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python paradigms.py",
    "cwd": "examples/paradigms",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
    "detail": ""
   },
   {
    "command": "python refresher_python.py refresher_csharp.py",
    "cwd": "examples/refreshers",
    "result": "ran",
-   "date": "2026-11-19",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python nn_playground.py",
+   "cwd": "examples/sim-nn",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python bpe_tokens.py gen_tokens.py",
+   "cwd": "examples/sim-tokens",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python attention_forward.py",
+   "cwd": "examples/sim-attention",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python algorithms.py",
+   "cwd": "examples/sim-supervised",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python dynamics.py",
+   "cwd": "examples/sim-training",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python graph.py",
+   "cwd": "examples/sim-backprop",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python core.py",
+   "cwd": "examples/sim-core",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python llm.py",
+   "cwd": "examples/sim-llm",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python dl.py",
+   "cwd": "examples/sim-dl",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python ai.py",
+   "cwd": "examples/sim-ai",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python apps.py",
+   "cwd": "examples/sim-apps",
+   "result": "ran",
+   "date": "2026-11-23",
+   "detail": ""
+  },
+  {
+   "command": "python ops.py",
+   "cwd": "examples/sim-ops",
+   "result": "ran",
+   "date": "2026-11-23",
    "detail": ""
   }
  ],
@@ -267,8 +351,8 @@
   "app-agents": {
    "python": [
     {
-     "file": "examples/lesson-code/python/apps-app-agents/snippet33.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/apps-app-agents/snippet34.py",
+     "date": "2026-11-23",
      "result": "fragment",
      "detail": "Part of a larger programme; not valid Python on its own."
     }
@@ -276,14 +360,14 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-agents/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
       "Microsoft.Agents.AI": "1.28.0",
-      "Microsoft.Extensions.AI": "11.0.0",
-      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI",
@@ -301,7 +385,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-embeddings/embed_search.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'openai'"
     }
@@ -309,12 +393,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-embeddings/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI": "11.0.1",
       "OllamaSharp": "5.5.2",
       "System.Numerics.Tensors": "11.0.0"
      },
@@ -335,12 +419,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-evals/Judge.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI"
@@ -356,7 +440,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-frameworks/agent.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'langchain'"
     }
@@ -364,13 +448,13 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-frameworks/ToolCalling.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
-      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI",
@@ -383,7 +467,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/apps-app-frameworks/McpServer/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -409,7 +493,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-llm-api/summarize.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -417,13 +501,13 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-llm-api/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk.Web",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
-      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI",
@@ -440,7 +524,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-multimodal/read_invoice.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'openai'"
     }
@@ -448,13 +532,13 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-multimodal/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
-      "Microsoft.Extensions.AI.OpenAI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1",
+      "Microsoft.Extensions.AI.OpenAI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI",
@@ -472,12 +556,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-prompting/PromptV3.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI"
@@ -492,8 +576,8 @@
   "app-rag": {
    "python": [
     {
-     "file": "examples/lesson-code/python/apps-app-rag/snippet8.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/apps-app-rag/snippet9.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -501,12 +585,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-rag/RagService.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI": "11.0.1",
       "System.Numerics.Tensors": "11.0.0"
      },
      "wanted": [
@@ -524,7 +608,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-rag-advanced/snippet20.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -532,12 +616,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-rag-advanced/HybridSearch.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0"
+      "Microsoft.Extensions.AI": "11.0.1"
      },
      "wanted": [
       "Microsoft.Extensions.AI"
@@ -552,8 +636,8 @@
   "app-responsible": {
    "python": [
     {
-     "file": "examples/lesson-code/python/apps-app-responsible/snippet10.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/apps-app-responsible/snippet11.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -561,7 +645,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-responsible/Fairness.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
@@ -579,7 +663,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-security/Safety.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
@@ -596,7 +680,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-basics/quickpath.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -604,7 +688,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/data-d-basics/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -625,13 +709,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-clean-eda/ml_basics.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
-     "file": "examples/lesson-code/python/data-d-clean-eda/snippet11.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/data-d-clean-eda/snippet12.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -639,7 +723,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/data-d-clean-eda/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -657,7 +741,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-collect/gap_topics.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -665,7 +749,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/data-d-collect/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -686,7 +770,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/data-d-features/ml_basics.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -694,7 +778,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/data-d-features/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -716,7 +800,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-generative/generate.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'diffusers'"
     }
@@ -724,7 +808,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-generative/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -741,8 +825,8 @@
   "dl-graphs": {
    "python": [
     {
-     "file": "examples/lesson-code/python/dl-dl-graphs/snippet8.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/dl-dl-graphs/snippet9.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -750,7 +834,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-graphs/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -768,13 +852,13 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-neural-nets/ai_extras.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
-     "file": "examples/lesson-code/python/dl-dl-neural-nets/snippet9.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/dl-dl-neural-nets/snippet10.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -782,7 +866,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-neural-nets/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -804,12 +888,12 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-rl/epsilon_greedy.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     },
     {
-     "file": "examples/lesson-code/python/dl-dl-rl/snippet10.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/dl-dl-rl/snippet12.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -817,7 +901,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-rl/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -831,7 +915,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/dl-dl-rl/EpsilonGreedy.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -850,7 +934,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-sequences/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -864,7 +948,7 @@
      "errorCount": 0,
      "run": "ran",
      "runDetail": "",
-     "output": "0.33, 0.35, 0.31"
+     "output": "0.29, 0.34, 0.37"
     }
    ]
   },
@@ -872,7 +956,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-speech/transcribe.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'transformers'"
     }
@@ -880,7 +964,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-speech/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -901,20 +985,20 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-training/train.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
      "file": "examples/lesson-code/python/dl-dl-training/training_tricks.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-training/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -932,7 +1016,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/dl-dl-training/TrainingTricks.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
@@ -948,8 +1032,8 @@
   "dl-transformers": {
    "python": [
     {
-     "file": "examples/lesson-code/python/dl-dl-transformers/snippet9.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/dl-dl-transformers/snippet17.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -957,7 +1041,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-transformers/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -979,20 +1063,20 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-vision/fine_tune.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'torchvision'"
     },
     {
      "file": "examples/lesson-code/python/dl-dl-vision/transfer_augment.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-vision/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1011,7 +1095,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/dl-dl-vision/TransferAugment.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1028,15 +1112,15 @@
   "llm-design": {
    "python": [
     {
-     "file": "examples/lesson-code/python/llm-llm-design/snippet10.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/llm-llm-design/snippet13.py",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-design/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1053,15 +1137,15 @@
   "llm-eval": {
    "python": [
     {
-     "file": "examples/lesson-code/python/llm-llm-eval/snippet9.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/llm-llm-eval/snippet10.py",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-eval/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1079,20 +1163,20 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-finetune/finetune.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'datasets'"
     },
     {
      "file": "examples/lesson-code/python/llm-llm-finetune/qlora_dpo_rlhf.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-finetune/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1106,7 +1190,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/llm-llm-finetune/TuningIdeas.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1123,8 +1207,8 @@
   "llm-how": {
    "python": [
     {
-     "file": "examples/lesson-code/python/llm-llm-how/snippet12.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/llm-llm-how/snippet17.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1132,7 +1216,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-how/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1150,7 +1234,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-local/local_chat.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'openai'"
     }
@@ -1158,12 +1242,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-local/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI": "11.0.1",
       "OllamaSharp": "5.5.2"
      },
      "wanted": [
@@ -1181,7 +1265,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-scale/train_scaled.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1189,7 +1273,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-scale/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1204,11 +1288,17 @@
    ]
   },
   "llm-tokens": {
-   "python": [],
+   "python": [
+    {
+     "file": "examples/lesson-code/python/llm-llm-tokens/stable_softmax.py",
+     "date": "2026-11-23",
+     "result": "ran"
+    }
+   ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-tokens/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1227,6 +1317,20 @@
      "run": "ran",
      "runDetail": "",
      "output": "13 tokens: 8256 18376 2569 220 41040 899 26 290 11022 10408 18157 72291 13\r\nT=0.2: refund 0.92, replacement 0.08, discount 0.00, apology 0.00, banana 0.00\r\nT=1: refund 0.51, replacement 0.31, discount 0.11, apology 0.07, banana 0.00\r\nT=2: refund 0.37, replacement 0.29, discount 0.17, apology 0.14, banana 0.03"
+    },
+    {
+     "file": "examples/lesson-code/dotnet/llm-llm-tokens/StableSoftmax.cs",
+     "date": "2026-11-23",
+     "result": "compiled",
+     "kind": "console programme",
+     "sdk": "Microsoft.NET.Sdk",
+     "packages": {},
+     "wanted": [],
+     "errors": [],
+     "errorCount": 0,
+     "run": "ran",
+     "runDetail": "",
+     "output": "small scores, naive : 0.269, 0.731\r\nsmall scores, stable: 0.269, 0.731\r\nlarge scores, naive : NaN, NaN\r\nlarge scores, stable: 0.269, 0.731"
     }
    ]
   },
@@ -1234,7 +1338,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-train-laptop/tiny_gpt_pytorch.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1242,7 +1346,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-train-laptop/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1263,12 +1367,12 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-algorithms/bagging_demo.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     },
     {
-     "file": "examples/lesson-code/python/ml-ml-algorithms/snippet12.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/ml-ml-algorithms/snippet13.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1276,7 +1380,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-algorithms/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1297,7 +1401,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/ml-ml-algorithms/BaggingDemo.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1315,7 +1419,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-classification/spam_classifier.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1323,7 +1427,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-classification/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1345,7 +1449,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-evaluation/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1368,7 +1472,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-improve/snippet12.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1376,7 +1480,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-improve/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1399,7 +1503,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-learning/ml_basics.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1407,7 +1511,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-learning/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1424,8 +1528,8 @@
   "ml-recommenders": {
    "python": [
     {
-     "file": "examples/lesson-code/python/ml-ml-recommenders/snippet10.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/ml-ml-recommenders/snippet11.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1433,7 +1537,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-recommenders/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1456,7 +1560,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-regression/gap_topics.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1464,7 +1568,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-regression/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1486,8 +1590,8 @@
   "ml-timeseries": {
    "python": [
     {
-     "file": "examples/lesson-code/python/ml-ml-timeseries/snippet11.py",
-     "date": "2026-11-19",
+     "file": "examples/lesson-code/python/ml-ml-timeseries/snippet12.py",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1495,7 +1599,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-timeseries/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1518,20 +1622,20 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-unsupervised/quickpath.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     },
     {
      "file": "examples/lesson-code/python/ml-ml-unsupervised/kmeans_step.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-unsupervised/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1548,7 +1652,7 @@
     },
     {
      "file": "examples/lesson-code/dotnet/ml-ml-unsupervised/KMeansStep.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1566,7 +1670,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-architecture/classifier_service.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'fastapi'"
     }
@@ -1574,7 +1678,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ops-ops-architecture/ClassifierClient.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk.Web",
@@ -1591,7 +1695,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-mlops/train.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'mlflow'"
     }
@@ -1599,7 +1703,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ops-ops-mlops/TrainAndGate.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1623,7 +1727,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ops-ops-monitoring/Monitoring.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
@@ -1640,7 +1744,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-scale/export_onnx.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'skl2onnx'"
     }
@@ -1648,12 +1752,12 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ops-ops-scale/FastScoring.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "class library (no entry point)",
      "sdk": "Microsoft.NET.Sdk",
      "packages": {
-      "Microsoft.Extensions.AI": "11.0.0",
+      "Microsoft.Extensions.AI": "11.0.1",
       "Microsoft.Extensions.Caching.Memory": "11.0.0",
       "Microsoft.ML": "6.0.0",
       "Microsoft.ML.OnnxRuntime": "1.32.0"
@@ -1675,7 +1779,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-serving/serve.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run: No module named 'fastapi'"
     }
@@ -1683,7 +1787,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ops-ops-serving/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk.Web",
@@ -1706,7 +1810,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-lifecycle/quickpath.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1714,7 +1818,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/start-s-lifecycle/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1737,14 +1841,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-setup/snippet7.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/start-s-setup/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1766,7 +1870,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-what-is-ai/quickpath.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Excerpt of a larger programme (needs names or files defined elsewhere); syntax is valid."
     }
@@ -1774,7 +1878,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/start-s-what-is-ai/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1796,7 +1900,7 @@
    "python": [
     {
      "file": "examples/lesson-code/python/apps-app-genai-agentic/agent_loop.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "syntax-ok",
      "detail": "Not run to completion here: EOFError: EOF when reading a line"
     }
@@ -1804,7 +1908,7 @@
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/apps-app-genai-agentic/AgentLoop.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1822,14 +1926,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-generalisation/generalisation.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-generalisation/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1847,14 +1951,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-clustering/clustering.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-clustering/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1872,14 +1976,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-linear-deeper/linear_deeper.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-linear-deeper/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1897,14 +2001,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-model-compare/model_compare.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-model-compare/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1922,14 +2026,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-patterns/patterns.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-patterns/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1947,14 +2051,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-see-data/see_data.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-see-data/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1972,14 +2076,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-trees-more/adaboost.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-trees-more/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -1997,14 +2101,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-backprop/autograd.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-backprop/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2022,14 +2126,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-gen-more/gen_more.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-gen-more/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2047,14 +2151,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-nlp-classic/text_basics.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-nlp-classic/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2072,14 +2176,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-rl-policy/rl_policy.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-rl-policy/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2097,14 +2201,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-rl-value/rl_value.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-rl-value/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2122,14 +2226,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/dl-dl-vision-more/vision_more.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/dl-dl-vision-more/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2147,14 +2251,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ai-logic-plan/logic.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ai-logic-plan/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2172,14 +2276,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ai-search/search.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ai-search/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2197,14 +2301,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-bayes/bayes.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-bayes/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2222,14 +2326,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ml-ml-causal/causal.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ml-ml-causal/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2247,14 +2351,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/ops-ops-data-debt/validate.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/ops-ops-data-debt/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2272,14 +2376,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-embed-train/embed_train.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-embed-train/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2297,14 +2401,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/llm-llm-paradigms/paradigms.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/llm-llm-paradigms/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2322,14 +2426,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-csharp-refresher/refresher_csharp.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/start-s-csharp-refresher/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",
@@ -2347,14 +2451,14 @@
    "python": [
     {
      "file": "examples/lesson-code/python/start-s-python-refresher/refresher_python.py",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "ran"
     }
    ],
    "csharp": [
     {
      "file": "examples/lesson-code/dotnet/start-s-python-refresher/Program.cs",
-     "date": "2026-11-19",
+     "date": "2026-11-23",
      "result": "compiled",
      "kind": "console programme",
      "sdk": "Microsoft.NET.Sdk",

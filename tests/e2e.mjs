@@ -752,6 +752,8 @@ for (const w of [320, 390, 768]) {
   expect('Model builder: the 7-billion-class shape has 6.57 billion parameters and 13.15 GB of weights, and at 4 bits it fits 8 GB and the challenge ticks', r.out[0] === '6.57 billion' && r.out[1] === '13.15 GB' && r.out[2] === '3.29 GB' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('llm-design', 'lw', `setRange('Words of text', 120); return [reads()[1], done('good')];`);
   expect('Learning-to-write simulation: after 120 words the loss on unseen sentences is 2.04 (the Python program gives the same) and the challenge ticks', r.out[0] === '2.04' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('llm-design', 'mb', `setSel('Start from', 'b7'); const a1 = reads()[2]; setSel('Query heads sharing', '4'); return [a1, reads()[2]];`);
+  expect('Model builder: letting 4 query heads share one key-value head makes the cache for the same text 4 times smaller', Math.abs(((x) => parseFloat(x) * (/GB/.test(x) ? 1000 : /MB/.test(x) ? 1 : 0.001))(r.out[0]) / ((x) => parseFloat(x) * (/GB/.test(x) ? 1000 : /MB/.test(x) ? 1 : 0.001))(r.out[1]) - 4) < 0.1 && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('llm-embed-train', 'emb', `btn('Run 10').click(); btn('Run 10').click(); btn('Run 10').click(); return [reads(), done('all')];`);
   expect('Embedding-training simulation: after 30 steps every word has a same-topic nearest neighbour and the challenge ticks', r.out[0][2] === '100%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('llm-finetune', 'lora', `setRange('LoRA rank', 2); return [reads()[0], reads()[1], done('rank')];`);
