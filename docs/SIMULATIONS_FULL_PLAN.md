@@ -274,3 +274,4 @@ New for this plan:
 - 2026-11-23: `lora` module gained a third view, "LoRA variants" (trained numbers of LoRA, LoRA-FA, VeRA, LoRA+ and Delta-LoRA for one square layer; calculation `loraVariants` in `llm.js`, Python twin `lora_variants` in `llm.py`, compared by `check-sims`). `llm-finetune` now has three `lora` blocks.
 - 2026-11-23: `tf5` table now labels the first step "prefill" and later steps "decode" (labels only; the calculation is unchanged).
 - 2026-11-23: `mb` gained a setting "Query heads sharing one key-value head" (grouped-query attention): the cache readout is the usual cache divided by the group size (`kvBytesGrouped` in `llm.js`, Python twin `kv_bytes_grouped`). Default 1 leaves every earlier number unchanged.
+- 2026-11-23: `sup` decision tree gained a switch "Gini impurity or entropy" (`fitTree(d, depth, measure)` in `sup.js`, `fit_tree(..., measure)` in `algorithms.py`; default Gini leaves every earlier number unchanged).

@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain in plain words how linear models, k-nearest neighbours, decision trees, random forests, gradient boosting, support vector machines and naive Bayes work, and choose between them.
 prereqs: ml-regression, ml-classification
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: A cross-validated comparison of at least four algorithms on one dataset, with your choice explained by accuracy, speed and explainability.
 code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); added technique snippets (2026-11-05) not run
 ---
@@ -146,6 +146,71 @@ note: Each model sees a different random re-sample of the same data.
 - Vote or average | Classes vote; numbers are averaged | output
 ```
 
+#### Entropy and information gain (a second way to measure a mixed group)
+A decision tree asks yes/no questions so that each answer leaves groups that are less mixed. The Applied Maths section shows one way to measure "mixed", Gini impurity. The other common way is **entropy**: a number that is 0 for a group with only one class and highest (1 for two classes) for an even mix. The **information gain** of a question is the entropy before the question minus the average entropy of the groups after it, weighted by group size. The tree picks the question with the largest gain. Both measures usually pick similar questions, so this is a detail you can try in the simulation below.
+
+```maths Entropy and information gain of one split
+situation: A group of 10 emails has 5 spam and 5 not spam. A question ("does it contain the word free?") splits it into two groups of 5: one with 4 spam and 1 not spam, the other with 1 spam and 4 not spam. The numbers are made up. Entropy in bits uses the base-2 logarithm; the two values needed are taken from a calculator: −log2(0.8) is about 0.322 and −log2(0.2) is about 2.322.
+find: How much does the question reduce the mix (the information gain)?
+step: Entropy of the 5 and 5 group, which is the most mixed | 0.5 × 1 + 0.5 × 1 = 1
+step: Entropy of a 4 and 1 group (and, in the same way, a 1 and 4 group) | 0.8 × 0.322 + 0.2 × 2.322 = 0.722
+step: Average entropy after the question, weighted by group size | (5 × 0.722 + 5 × 0.722) ÷ 10 = 0.722
+step: Information gain is the drop | 1 − 0.722 = 0.278
+result: The question gives an information gain of about **0.278** bits.
+formula: entropy = − sum of (share × log2 of share); gain = entropy before − weighted entropy after
+why: A tree tries every possible question and keeps the one with the highest gain, so each step makes the groups as pure as it can. Gini impurity does the same job with a simpler calculation: here the Gini of the 4 and 1 group is 1 − (0.8^2 + 0.2^2) = 0.32, down from 0.5.
+caution: A tree that keeps splitting until every group is pure memorises the training data, so limit its depth (see the simulation).
+try: A question splits the 5 and 5 group into one group of 5 spam and one group of 5 not spam. What is the information gain?
+answer: Each new group has only one class, so its entropy is 0. The weighted entropy after is 0, and the gain is 1 − 0 = 1, the largest possible here.
+```
+
+```diagram flow Choosing a split by information gain
+- Group before the question | Measure its entropy | input
+- Try a possible question | Split the group in two | process
+- Measure the two new groups | Weighted average of their entropy | process
+- Gain is before minus after | Larger means purer groups | model
+- Keep the question with the largest gain | Repeat on each new group | output
+```
+
+#### Support vector machine: the soft margin and the setting C
+A support vector machine puts the boundary where the gap between the classes is widest. Real data rarely allows a perfectly clean gap: a few points sit on the wrong side or very close to the line. A **soft margin** lets some points break the rules, at a price. The setting **C** is that price. A **small C** is cheap: the model accepts some mistakes and keeps a wide gap, which usually generalises better and can underfit. A **large C** is expensive: the model works hard to classify every training point, the gap becomes narrow, and it can overfit to noise. Choose C on a validation set, as with any setting.
+
+```diagram compare The setting C in a support vector machine
+note: Both choose a boundary; they differ in how much they punish a point on the wrong side.
+## Small C | process
+- Wide gap, some points allowed on the wrong side
+- Simpler boundary; may underfit
+## Large C | warn
+- Narrow gap, almost no mistakes allowed
+- Follows the training points closely; may overfit
+```
+
+#### Naive Bayes, worked by hand
+**Naive Bayes** gives each class a score and picks the highest. A class score is how common the class is, multiplied by how likely each word is within that class. It is **naive** because it treats the words as independent clues, as if seeing "free" told you nothing about whether "meeting" also appears. That is not true of real text, yet the method often works well as a fast baseline.
+
+```maths Naive Bayes on two words
+situation: Among 10 past emails, 5 were spam and 5 were not. The word "free" appeared in 4 of the 5 spam emails and in 1 of the 5 other emails. The word "meeting" appeared in 1 of the 5 spam emails and in 3 of the 5 other emails. A new email contains both "free" and "meeting". The counts are made up.
+find: Is the new email more likely spam or not spam?
+step: Spam score: how common spam is, times how common each word is in spam | 0.5 × 0.8 × 0.2 = 0.08
+step: Not-spam score, built the same way | 0.5 × 0.2 × 0.6 = 0.06
+step: Add the two scores | 0.08 + 0.06 = 0.14
+step: Turn the spam score into a share | 0.08 ÷ 0.14 ≈ 0.571
+result: The email is spam with a chance of about **57%** (and 43% not spam).
+formula: score(class) = share of the class × chance of word 1 in the class × chance of word 2 in the class
+why: The independence assumption lets the model multiply one simple count per word, so it trains in a single pass and works with thousands of words.
+caution: A word never seen in a class would make its score 0. Real implementations add a small count to every word (smoothing) to avoid that.
+try: The new email contains only "meeting". What are the two scores?
+answer: Spam: 0.5 × 0.2 = 0.1. Not spam: 0.5 × 0.6 = 0.3. So this email looks like not spam.
+```
+
+```diagram flow Naive Bayes: score each class, pick the highest
+- Share of each class | How common spam and not spam are | input
+- Chance of each word in each class | From counts in past examples | store
+- Multiply them per class | Treat the words as independent clues | process
+- Compare the scores | Convert to shares if you want chances | model
+- Pick the highest | The predicted class | output
+```
+
 ## Live simulation
 Four of the algorithms in this lesson, side by side on the same made-up points. Each is written out in the page, so you can change the data, change one setting, and see the decision boundary and the accuracy change.
 
@@ -153,6 +218,7 @@ Four of the algorithms in this lesson, side by side on the same made-up points. 
 question: Does one algorithm win on every kind of data?
 watch: The background colour is what the chosen algorithm predicts at each place. Filled points were used for learning, hollow points are kept back to test.
 watch: Change the pattern in the data and read the table: the best algorithm changes.
+watch: With the decision tree chosen, switch between Gini impurity and entropy. The two measures usually draw nearly the same boundary.
 watch: Push the main setting (k, or tree depth) to an extreme. Training accuracy goes up while test accuracy can go down.
 try: moons | On the two-moons data, find an algorithm and a setting that reach at least 90% on the test points.
 try: overfit | Make the training accuracy 100% while the test accuracy is at least 5 points lower. A small k or a deep tree will do it.

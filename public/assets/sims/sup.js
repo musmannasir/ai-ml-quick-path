@@ -44,7 +44,10 @@
     return function (p) { return 1 / (1 + Math.exp(-(w[0] * (p[0] - m[0]) / sd[0] + w[1] * (p[1] - m[1]) / sd[1] + b))); };
   }
   function gini(ones, n) { if (!n) return 0; var p = ones / n; return 2 * p * (1 - p); }
-  function buildTree(X, y, idx, depth, maxDepth) {
+  // Entropy in bits: 0 for a pure group, 1 for a 50/50 mix of two classes.
+  function entropy(ones, n) { if (!n) return 0; var p = ones / n; return p <= 0 || p >= 1 ? 0 : -(p * Math.log2(p) + (1 - p) * Math.log2(1 - p)); }
+  function buildTree(X, y, idx, depth, maxDepth, measure) {
+    var imp = measure === 'entropy' ? entropy : gini;
     var ones = 0; idx.forEach(function (i) { ones += y[i]; });
     var node = { p: idx.length ? ones / idx.length : 0.5 };
     if (depth >= maxDepth || ones === 0 || ones === idx.length || idx.length < 2) return node;
@@ -54,18 +57,18 @@
       for (var k = 0; k + 1 < s.length; k++) {
         left1 += y[s[k]];
         if (X[s[k]][f] === X[s[k + 1]][f]) continue;
-        var nl = k + 1, nr = s.length - nl, score = (nl * gini(left1, nl) + nr * gini(ones - left1, nr)) / s.length;
+        var nl = k + 1, nr = s.length - nl, score = (nl * imp(left1, nl) + nr * imp(ones - left1, nr)) / s.length;
         if (best === null || score < best.score - 1e-12) best = { score: score, f: f, t: (X[s[k]][f] + X[s[k + 1]][f]) / 2 };
       }
     }
     if (!best) return node;
     var L = [], R = []; idx.forEach(function (i) { (X[i][best.f] <= best.t ? L : R).push(i); });
     if (!L.length || !R.length) return node;
-    node.f = best.f; node.t = best.t; node.l = buildTree(X, y, L, depth + 1, maxDepth); node.r = buildTree(X, y, R, depth + 1, maxDepth);
+    node.f = best.f; node.t = best.t; node.l = buildTree(X, y, L, depth + 1, maxDepth, measure); node.r = buildTree(X, y, R, depth + 1, maxDepth, measure);
     return node;
   }
-  function fitTree(d, depth) {
-    var root = buildTree(d.X, d.y, d.X.map(function (q, i) { return i; }), 0, depth);
+  function fitTree(d, depth, measure) {
+    var root = buildTree(d.X, d.y, d.X.map(function (q, i) { return i; }), 0, depth, measure);
     return function (p) { var n = root; while (n.l) n = p[n.f] <= n.t ? n.l : n.r; return n.p; };
   }
   function fitNB(d) {
@@ -86,7 +89,7 @@
     return { acc: hit / d.X.length, tp: tp, fp: fp, fn: fn, tn: tn };
   }
   var ALGS = { knn: ['k-nearest neighbours', function (d, o) { return fitKnn(d, o.k); }], logistic: ['Logistic regression', function (d, o) { return fitLogistic(d, o.steps); }],
-    tree: ['Decision tree', function (d, o) { return fitTree(d, o.depth); }], nb: ['Naive Bayes', function (d) { return fitNB(d); }] };
+    tree: ['Decision tree', function (d, o) { return fitTree(d, o.depth, o.measure); }], nb: ['Naive Bayes', function (d) { return fitNB(d); }] };
   Q.logic.sup = { lcg: lcg, makeData: makeData, fitKnn: fitKnn, fitLogistic: fitLogistic, fitTree: fitTree, fitNB: fitNB, evaluate: evaluate, ALGS: ALGS,
     DEFAULTS: { trainN: 100, testN: 60, trainSeed: 3, testSeed: 17, k: 5, depth: 3, steps: 300 } };
 
@@ -107,6 +110,7 @@
     var cAlg = S.select('alg', 'Algorithm', Object.keys(P.ALGS).map(function (k) { return [k, P.ALGS[k][0]]; }), st.alg, function (v) { st.alg = v; showSettings(); draw(); });
     var cK = S.range('k', 'k: how many neighbours vote', { min: 1, max: 25, step: 1, value: D.k, onChange: function () { draw(); } });
     var cDepth = S.range('depth', 'Maximum depth of the tree', { min: 1, max: 8, step: 1, value: D.depth, onChange: function () { draw(); } });
+    var cMeasure = S.select('measure', 'How the tree measures a mixed group', [['gini', 'Gini impurity'], ['entropy', 'Entropy (information gain)']], 'gini', function () { draw(); });
     var cSteps = S.range('steps', 'Training steps (gradient descent)', { min: 5, max: 500, step: 5, value: D.steps, onChange: function () { draw(); } });
     var cAdd = S.select('add', 'Clicking the map adds a training point of', [['off', 'nothing'], ['1', 'class 1 (circle)'], ['0', 'class 0 (square)']], 'off', function (v) { st.add = v; });
     var B = S.buttons([
@@ -114,7 +118,7 @@
       { id: 'a0', label: 'Add 5 random class 0 points', onClick: function () { addRandom(0); } },
       { id: 'reset', label: 'Reset the points', onClick: function () { resetData(); } }
     ]);
-    function showSettings() { cK.input.closest('.sim-ctl').hidden = st.alg !== 'knn'; cDepth.input.closest('.sim-ctl').hidden = st.alg !== 'tree'; cSteps.input.closest('.sim-ctl').hidden = st.alg !== 'logistic'; }
+    function showSettings() { cK.input.closest('.sim-ctl').hidden = st.alg !== 'knn'; cDepth.input.closest('.sim-ctl').hidden = st.alg !== 'tree'; cMeasure.input.closest('.sim-ctl').hidden = st.alg !== 'tree'; cSteps.input.closest('.sim-ctl').hidden = st.alg !== 'logistic'; }
 
     var row = S.row();
     var cardMap = S.card('What the algorithm decides at each place (click to add a point if you chose a class)', row);
@@ -126,7 +130,7 @@
     var tc = S.el('table', { class: 'sim-table' }); cardCm.appendChild(tc);
     var rTr = S.readout('tr', 'Training accuracy'), rTe = S.readout('te', 'Test accuracy'), rN = S.readout('n', 'Training points');
 
-    function settings() { return { k: cK.get(), depth: cDepth.get(), steps: cSteps.get() }; }
+    function settings() { return { k: cK.get(), depth: cDepth.get(), steps: cSteps.get(), measure: cMeasure.get() }; }
     function resetData() { st.tr = P.makeData(st.data, D.trainN, D.trainSeed); st.te = P.makeData(st.data, D.testN, D.testSeed); st.extra = 0; draw(); }
     function addRandom(c) {
       var r = P.lcg(100 + st.extra * 7 + c), src = P.makeData(st.data, 40, 500 + st.extra * 13 + c), added = 0;

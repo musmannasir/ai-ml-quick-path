@@ -90,6 +90,7 @@ checks.push(['sup', 'examples/sim-supervised/algorithms.py', () => {
     const fits = [['k-nearest (k=5)', P.fitKnn(tr, 5)], ['logistic (300 steps)', P.fitLogistic(tr, 300)], ['tree (depth 3)', P.fitTree(tr, 3)], ['naive Bayes', P.fitNB(tr)]];
     out.push(kind + ': ' + fits.map(([n, fn]) => `${n} train ${f(P.evaluate(fn, tr).acc, 2)} test ${f(P.evaluate(fn, te).acc, 2)}`).join('; '));
   }
+  for (const kind of ['blobs', 'moons', 'circles']) { const a = P.makeData(kind, D.trainN, D.trainSeed), b = P.makeData(kind, D.testN, D.testSeed), t = P.fitTree(a, 3, 'entropy'); out.push(`${kind}, tree (depth 3, entropy): train ${f(P.evaluate(t, a).acc, 2)} test ${f(P.evaluate(t, b).acc, 2)}`); }
   const tr = P.makeData('blobs', D.trainN, D.trainSeed), te = P.makeData('blobs', D.testN, D.testSeed), k1 = P.fitKnn(tr, 1);
   out.push(`blobs, k=1: train ${f(P.evaluate(k1, tr).acc, 2)} test ${f(P.evaluate(k1, te).acc, 2)}`);
   return out;

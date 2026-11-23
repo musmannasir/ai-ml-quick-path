@@ -760,6 +760,8 @@ for (const w of [320, 390, 768]) {
   expect('LoRA simulation: rank 2 leaves 14% of the change and trains 32 of 64 numbers, and the challenge ticks', r.out[0] === '14%' && r.out[1] === '32' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('llm-finetune', 'lora', `const q = reads(); setRange('Rank for the variants', 21); return [q[0], q[1], q[2], done('share')];`, 2);
   expect('LoRA-variants simulation: at width 4096 and rank 8, LoRA trains 65,536, LoRA-FA 32,768 and VeRA 4,104 (the Python program gives the same), and rank 21 ticks the challenge', r.out[0].startsWith('65,536') && r.out[1] === '32,768' && r.out[2] === '4,104' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-algorithms', 'sup', `setSel('Algorithm', 'tree'); setSel('How the tree measures', 'entropy'); return [reads()[0], reads()[1]];`);
+  expect('Supervised simulation: a depth-3 tree on the two-moons points, split by entropy, scores 88% on the training points and 83% on the test points (the Python program gives the same)', r.out[0] === '88%' && r.out[1] === '83%' && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('app-embeddings', 'vs', `return [reads()[1], reads()[0]];`);
   expect('Vector-search simulation: the default query near the animals gives "horse" first and one topic', r.out[0] === 'horse' && r.out[1] === '1' && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('app-rag', 'rag', `setRange('Chunk size', 20); return [reads(), done('all')];`);
