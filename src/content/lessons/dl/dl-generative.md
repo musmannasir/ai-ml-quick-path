@@ -8,6 +8,7 @@ maths: advanced optional
 goal: Explain how autoencoders, variational autoencoders, GANs and diffusion models create new data, and when industry uses each.
 prereqs: dl-vision
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A one-page comparison of four generative model families with one business use for each, plus the noise-schedule demo run and explained.
 code: Python executed 2026-11-02 (ai_extras.py diffusion)
 ---

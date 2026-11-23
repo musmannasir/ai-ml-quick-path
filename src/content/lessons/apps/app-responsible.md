@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Measure fairness between groups, protect privacy, explain decisions, keep people in control, and document models with model cards and risk registers.
 prereqs: ml-evaluation, app-security
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A risk register and a fairness check (approval rates and error rates by group) for one of your models, with an owner for each risk.
 code: Python executed 2026-11-02 (quickpath.py fairness)
 ---

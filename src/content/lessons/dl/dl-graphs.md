@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Represent data as nodes and edges, explain message passing, and classify nodes from very few labels using their neighbours.
 prereqs: dl-neural-nets
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A small graph you build with node predictions explained by each node's neighbours.
 code: Python executed 2026-11-02 (gap_topics.py gnn)
 ---

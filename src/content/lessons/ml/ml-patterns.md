@@ -8,6 +8,7 @@ maths: algebra
 goal: Use Mahalanobis distance to judge how unusual a point is given how the features move together, use a kernel density estimate to see where data is crowded, and find shopping-basket rules with support, confidence and lift.
 prereqs: ml-unsupervised
 reviewed: 2026-11-18
+updated: 2026-11-19
 evidence: A small table showing two points at the same straight-line distance but different Mahalanobis distances, and the support, confidence and lift of one rule on a dataset you choose.
 code: Python executed 2026-11-18 (examples/patterns/patterns.py); the C# version prints the same numbers
 ---

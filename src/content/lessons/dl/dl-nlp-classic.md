@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Clean and normalise text with tokens, stop words and stemming, score generated text with BLEU, and explain how a hidden Markov model with the Viterbi algorithm finds the best tags for a sentence.
 prereqs: dl-sequences
 reviewed: 2026-11-18
+updated: 2026-11-19
 evidence: A short pipeline that tokenises, removes stop words and stems a sentence, a BLEU-2 score worked out by hand for one candidate sentence, and a Viterbi table for three words.
 code: Python executed 2026-11-18 (examples/nlp-classic/text_basics.py, standard library only); the C# version prints the same output
 ---

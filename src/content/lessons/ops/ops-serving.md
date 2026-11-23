@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Turn a saved model into a web API that loads the model once, validates input, returns a versioned answer and reports its health, in Python and in ASP.NET Core.
 prereqs: s-lifecycle, ml-classification
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A running prediction API with /health and /predict, input validation that returns 400 for bad input, and a latency measurement (p50 and p95) from your machine.
 code: Python executed 2026-11-02 (quickpath.py serving, standard-library HTTP server); FastAPI not run (FastAPI not installed in the build environment)
 ---

@@ -109,6 +109,29 @@ for (const f of files) {
       problems.push(`${rel}: missing anchor ${url}`);
   }
 }
+// ---- SEO and AI-search files (only with SITE_URL, because they need full addresses) ----
+if (SITE_URL) {
+  for (const f of files) {
+    const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1).split('\\').join('/');
+    for (const b of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+      let j; try { j = JSON.parse(b[1]); } catch { problems.push(`${rel}: JSON-LD does not parse`); continue; }
+      if (j['@context'] !== 'https://schema.org' || !Array.isArray(j['@graph'])) problems.push(`${rel}: JSON-LD needs @context schema.org and an @graph`);
+    }
+    if (rel.startsWith('lessons/') && !html.includes('"@type":"LearningResource"')) problems.push(`${rel}: lesson has no LearningResource data`);
+    if (!new RegExp('<meta property="og:image" content="' + SITE_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '/assets/og-image\\.png">').test(html)) problems.push(`${rel}: missing og:image`);
+    if (!html.includes('<meta name="twitter:card" content="summary_large_image">')) problems.push(`${rel}: missing twitter:card`);
+    const t = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || '';
+    if (t.replace(/&amp;/g, '&').length > 70) problems.push(`${rel}: title is ${t.length} characters (search results cut it): ${t}`);
+  }
+  if (!existsSync(join(DIST, 'assets/og-image.png'))) problems.push('assets/og-image.png is missing');
+  const sm = readFileSync(join(DIST, 'sitemap.xml'), 'utf8'), dates = [...sm.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((m) => m[1]);
+  if (dates.some((d) => !/^\d{4}-\d{2}-\d{2}$/.test(d))) problems.push('sitemap.xml has a lastmod that is not a date');
+  if (new Set(dates).size < 2) problems.push('sitemap.xml: every lastmod is the same date');
+  const llms = existsSync(join(DIST, 'llms.txt')) ? readFileSync(join(DIST, 'llms.txt'), 'utf8') : '';
+  if (!llms.startsWith('# ')) problems.push('llms.txt is missing or does not start with a title');
+  const lessonLinks = (llms.match(/\(https:\/\/[^)]*\/lessons\/[^)]+\)/g) || []).length;
+  if (lessonLinks < 70) problems.push(`llms.txt lists only ${lessonLinks} lessons`);
+}
 for (const u of external) problems.push(`outside address not registered in src/data/sources.mjs: ${u}`);
 console.log(`Checked ${files.length} pages, ${links} internal links, ${outside} outside reference links to ${usedSources.size} registered sources, ${external.size} unregistered outside addresses or outside resources (must be 0).`);
 if (problems.length) { console.error(problems.join('\n')); process.exit(1); }

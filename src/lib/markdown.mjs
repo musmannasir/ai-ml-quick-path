@@ -137,6 +137,7 @@ export function parseLesson(raw, file) {
   for (const key of ['id', 'title', 'module', 'level', 'minutes', 'goal', 'reviewed', 'evidence']) {
     if (!meta[key]) throw new Error(`${file}: front matter is missing "${key}"`);
   }
+  if (meta.updated && (!/^\d{4}-\d{2}-\d{2}$/.test(meta.updated) || meta.updated < meta.reviewed)) throw new Error(`${file}: front matter "updated" must be a date (YYYY-MM-DD) that is not earlier than "reviewed"`);
   const list = (v) => (v ? v.split(',').map((x) => x.trim()).filter(Boolean) : []);
   meta.prereqs = list(meta.prereqs);
   meta.minutes = Number(meta.minutes);

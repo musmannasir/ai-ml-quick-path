@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Call a language model from Python and C#, request structured JSON, validate it, handle failures, stream answers and control cost.
 prereqs: llm-how
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: The same support-email summarizer working in Python and C#, rejecting invalid output, with token use and latency logged for 20 test emails.
 code: Python validator executed 2026-11-02 (examples/llm-summarizer/python, offline mode and 4 unit tests); live model calls not run (no API key)
 ---

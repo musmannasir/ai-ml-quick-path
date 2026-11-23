@@ -8,6 +8,7 @@ maths: algebra
 goal: Explain neurons, layers, activations and backpropagation in plain words, and train a small network in Python and C#.
 prereqs: ml-learning
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Your own network that learns XOR in Python or C#, and a note on what changed when you used a different random seed.
 code: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch not run (not installed in the build environment)
 ---

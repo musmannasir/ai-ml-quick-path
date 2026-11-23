@@ -8,6 +8,7 @@ maths: algebra
 goal: Explain what a model, parameters and a loss are, how training reduces the loss step by step, and how to spot overfitting and underfitting.
 prereqs: d-basics
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Your own run of the training loop with a printed loss that falls, and a train-versus-validation comparison that shows overfitting.
 code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py gd and cv)
 ---

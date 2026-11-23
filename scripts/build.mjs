@@ -114,7 +114,7 @@ function emit(path, opts) {
   const out = join(DIST, path);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
-  pages.push({ path, title: opts.title, section: opts.section || '', keywords: opts.keywords || '' });
+  pages.push({ path, title: opts.title, section: opts.section || '', keywords: opts.keywords || '', modified: opts.modified || '' });
 }
 
 function tocFor(sections) {
@@ -311,6 +311,7 @@ ${adSlot('end')}
   emit(path, {
     title: l.title, description: l.goal, body, crumbs: [[mod.short, mod.page], [l.title, path]],
     section: mod.short, bodyClass: 'is-lesson', lessonId: id,
+    modified: l.updated || l.reviewed, lessonMeta: { level: l.level, minutes: l.minutes, modified: l.updated || l.reviewed, part: [mod.title, mod.page] },
     scripts: ctx.sims && ctx.sims.size ? simScripts(ctx.sims) : [],
     keywords: `${l.goal} ${plain.slice(0, 600)}`,
   });
@@ -343,8 +344,15 @@ writeFileSync(join(DIST, 'staticwebapp.config.json'), JSON.stringify({ globalHea
 writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n${SITE.url ? `Sitemap: ${SITE.url}/sitemap.xml\n` : ''}`);
 if (ADS.client) writeFileSync(join(DIST, 'ads.txt'), `google.com, ${ADS.client.replace('ca-pub-', 'pub-')}, DIRECT, f08c47fec0942fa0
 `);
+const newestLesson = LESSON_ORDER.map((id) => lessons[id].updated || lessons[id].reviewed).sort().pop();
 if (SITE.url) {
   writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${
-    pages.filter((p) => p.path !== '404.html').map((p) => `  <url><loc>${SITE.url}/${publicPath(p.path)}</loc><lastmod>${REVIEWED}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+    pages.filter((p) => p.path !== '404.html').map((p) => `  <url><loc>${SITE.url}/${publicPath(p.path)}</loc><lastmod>${p.modified || newestLesson}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+  // llms.txt: a plain list of the main pages for AI tools (an optional, still unproven convention; it costs nothing).
+  const at = (p) => `${SITE.url}/${publicPath(p)}`;
+  const main = [['Simulation lab', 'simulations.html', 'Live, interactive simulations that explain the main ideas'], ['All lessons', 'lessons.html', 'The lesson catalogue with filters'], ['Visual roadmaps', 'roadmaps.html', 'Three paths through the lessons'], ['Glossary', 'glossary.html', 'Plain-words definitions of the terms'], ['Real-world cases', 'cases.html', 'How companies use AI, with sources'], ['Capstone projects', 'projects.html', 'Eight projects to build']];
+  writeFileSync(join(DIST, 'llms.txt'), [`# ${SITE.name}`, '', `> ${SITE.description}`, '', 'Every lesson explains a concept in plain words, shows how industry uses it, and has Python and .NET (C#) examples. Where a calculation matters, it is worked out by hand with small numbers. Many lessons have a live simulation.', '', '## Start here', ...main.map(([t, p, d]) => `- [${t}](${at(p)}): ${d}`),
+    ...MODULES.flatMap((m) => ['', `## ${m.title}`, ...m.groups.flatMap((g) => g.lessons).map((id) => `- [${lessons[id].title}](${at(`lessons/${id}.html`)}): ${lessons[id].goal}`)]),
+    '', '## Optional', `- [About this guide](${at('about.html')}): Who it is for and how it was checked`, `- [Privacy](${at('privacy.html')}): What the site does and does not collect`, ''].join('\n'));
 }
 console.log(`Built ${pages.length} pages (${LESSON_ORDER.length} lessons, ${PROJECTS.length} capstones, ${CASES.length} case studies) into dist/${ADS.client ? ` [AdSense ${ADS.client}; ad slots ${ADS.slotsOn ? 'ON' : 'OFF'}]` : ''}${SITE.url ? ' with sitemap for ' + SITE.url : ' (set SITE_URL to emit sitemap.xml and canonical URLs)'}`);

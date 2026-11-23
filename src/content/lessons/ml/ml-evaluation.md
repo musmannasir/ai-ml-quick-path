@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Choose the right metric for the problem, use cross-validation, read ROC and precision-recall results, and handle rare classes with thresholds and class weights.
 prereqs: ml-classification, ml-regression
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: An evaluation report with the metric choice justified, cross-validated scores with spread, and a threshold table for one classifier.
 code: Python executed 2026-11-02 (ml_basics.py metrics, gap_topics.py roc)
 ---

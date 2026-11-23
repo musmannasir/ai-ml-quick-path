@@ -148,6 +148,8 @@ code: Python executed 2026-11-02 (quickpath.py chunking); C# not compiled (no .N
 ```
 Titles may be written with or without surrounding double quotes; the parser removes them.
 
+Optional front matter `updated: YYYY-MM-DD` is the date the lesson's content last changed (it feeds the sitemap `lastmod` and the lesson's structured data; not earlier than `reviewed`). SEO and AI-search details are in `docs/SEO_AND_GEO.md`.
+
 Optional front matter `maths:` is one of `none`, `basic arithmetic` (default), `algebra`, `advanced optional`; it is shown on
 the lesson and is a catalogue filter. The `code:` line is a human note about Python and about tools that were not run; it must
 not state a C# result, because the pills come from `qa/code-status.json`.

@@ -8,6 +8,7 @@ maths: algebra
 goal: Train regression models that predict numbers, judge them with MAE, RMSE and R², and choose the right model complexity.
 prereqs: ml-learning, d-features
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A regression model on a dataset you choose with MAE, RMSE and R² on a test set, compared with a baseline that predicts the average.
 code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py regression)
 ---

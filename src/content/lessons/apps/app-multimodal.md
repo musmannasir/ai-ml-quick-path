@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Send images and documents to vision-capable models, build image-and-text search, and add speech input and output to an application.
 prereqs: app-llm-api, dl-vision, dl-speech
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: An app that accepts a photo or scanned document and returns validated structured fields, tested on 20 examples with field accuracy reported.
 code: Conceptual (no model access in the build environment)
 ---

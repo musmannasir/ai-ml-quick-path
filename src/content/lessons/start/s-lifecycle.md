@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Walk through the full project lifecycle (problem, data, baseline, model, evaluation, deployment, monitoring) and run every step on a small example.
 prereqs: s-what-is-ai
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: The lifecycle script run on your machine, plus a written problem statement for a project idea with its success measure and baseline.
 code: Python executed 2026-11-02 (quickpath.py lifecycle)
 ---

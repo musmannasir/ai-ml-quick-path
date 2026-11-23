@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Build a collaborative-filtering recommender with matrix factorisation, compare it with simple baselines, and list the real-world issues (cold start, ranking, diversity).
 prereqs: ml-evaluation
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A recommender on rating or click data with held-out error against two baselines and top-5 recommendations for three users.
 code: Python executed 2026-11-02 (gap_topics.py recsys)
 ---

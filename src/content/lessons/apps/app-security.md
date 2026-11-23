@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Recognise the main risks to LLM applications (prompt injection, data leakage, excessive agency and others), apply layered defences, and redact personal data before it reaches a model.
 prereqs: app-agents, app-rag
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A threat list for one of your apps plus 15 adversarial tests (injection, data leakage, unsafe output, cost abuse) with results and fixes.
 code: Python executed 2026-11-02 (quickpath.py pii)
 ---

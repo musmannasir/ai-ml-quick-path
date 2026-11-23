@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain the two ways a model goes wrong (too simple, too flexible), read training and test error to tell which one you have, and know why more features and more data change the answer.
 prereqs: ml-learning, ml-evaluation
 reviewed: 2026-11-18
+updated: 2026-11-19
 evidence: A table of training and test error for at least five settings of one model dial, with a written sentence saying which setting you would ship and why.
 code: Python executed 2026-11-18 (examples/generalisation/generalisation.py); the C# version prints the same numbers
 ---

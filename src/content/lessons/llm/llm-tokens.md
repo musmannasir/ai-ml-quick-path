@@ -8,6 +8,7 @@ maths: algebra
 goal: Explain how tokenisers split text, why tokens drive cost and limits, and how temperature and top-p change generated text.
 prereqs: llm-how
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Token counts for the same paragraph in two languages, and the same prompt run at three temperatures with your observations.
 code: Python executed 2026-11-02 (quickpath.py bpe and sampling)
 ---

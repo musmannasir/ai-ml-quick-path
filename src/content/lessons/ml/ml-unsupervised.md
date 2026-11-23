@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Group similar items with clustering, compress many columns with PCA, and flag unusual records with anomaly detection, all without labels.
 prereqs: ml-algorithms
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A clustering or anomaly-detection result on your own data, with each group or flag explained in business words.
 code: Python executed 2026-11-02 (ml_basics.py kmeans, quickpath.py pca and anomaly); added technique snippets (2026-11-05) not run
 ---

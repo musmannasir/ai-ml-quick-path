@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Write simple validation rules that stop bad rows reaching a model, compare training data with live data to catch shifts, and name the kinds of technical debt that build up in machine-learning systems.
 prereqs: ops-mlops
 reviewed: 2026-11-19
+updated: 2026-11-19
 evidence: A validation report for a small dataset (rule, rows failing, rows kept) and a comparison of one feature's average in training and live data with a sentence on what you would do.
 code: Python executed 2026-11-19 (examples/data-validation/validate.py, standard library only); the C# version prints the same output
 ---

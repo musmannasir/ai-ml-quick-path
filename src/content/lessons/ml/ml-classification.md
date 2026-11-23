@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Train a classifier, read its probabilities and confusion matrix, and choose a decision threshold that fits the business.
 prereqs: ml-learning, d-features
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A text or tabular classifier with a confusion matrix, precision and recall, and a chosen threshold explained by the cost of each mistake.
 code: Python executed 2026-11-02 (examples/spam-classifier/spam_classifier.py)
 ---

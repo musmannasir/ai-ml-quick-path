@@ -8,6 +8,7 @@ maths: algebra
 goal: Use batches, epochs, learning rates, optimisers, dropout, normalisation, early stopping, checkpoints and GPUs to train networks reliably.
 prereqs: dl-neural-nets
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Two training runs of one model (with and without regularisation) with training and validation loss curves and the best checkpoint saved.
 code: Python dropout demo executed 2026-11-02 (ai_extras.py dropout); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---

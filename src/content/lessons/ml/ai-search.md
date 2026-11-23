@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain how breadth-first search and A* find a route through a maze, why a good guess about the remaining distance saves work, and how minimax with alpha-beta pruning chooses a move in a two-player game.
 prereqs: s-what-is-ai
 reviewed: 2026-11-19
+updated: 2026-11-19
 evidence: A maze solved by breadth-first search and by A* with the number of cells each looked at, and a small game tree solved by minimax with the number of leaves alpha-beta skipped.
 code: Python executed 2026-11-19 (examples/search-games/search.py, standard library only); the C# version prints the same output
 ---

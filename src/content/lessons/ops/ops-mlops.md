@@ -8,6 +8,7 @@ maths: algebra
 goal: Make model training repeatable and releases safe by versioning data, code and models, recording metrics in a registry, and promoting a new model only when it passes a gate.
 prereqs: ops-serving, ml-evaluation
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A training pipeline that records data hash, parameters and metrics for every run, plus a promotion rule that rejected at least one candidate.
 code: Python executed 2026-11-02 (quickpath.py registry); MLflow not run (MLflow not installed in the build environment)
 ---

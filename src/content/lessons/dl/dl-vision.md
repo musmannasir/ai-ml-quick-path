@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain convolutional networks, transfer learning, object detection, segmentation and vision transformers, and run a trained vision model from Python and C#.
 prereqs: dl-training
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A fine-tuned image classifier (or detector) evaluated on images from a different session than training, exported to ONNX and called from C# or Python.
 code: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---

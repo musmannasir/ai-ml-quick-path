@@ -8,6 +8,7 @@ maths: algebra
 goal: Explain attention with queries, keys and values, the parts of a transformer block, and the three transformer families (encoder, decoder, encoder-decoder).
 prereqs: dl-sequences
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: The attention toy reproduced by hand for one word, and a table matching three of your tasks to a transformer family.
 code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 ---

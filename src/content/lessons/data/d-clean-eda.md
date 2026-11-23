@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Find and fix duplicates, missing values, impossible values and messy categories, and explore data with summaries and charts before modelling.
 prereqs: d-basics
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A cleaning report for a dataset you choose, listing each problem, how many rows it affected and what you decided, plus two charts with one finding each.
 code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py quality, gap_topics.py viz)
 ---

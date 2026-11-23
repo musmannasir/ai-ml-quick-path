@@ -8,6 +8,7 @@ maths: algebra
 goal: Watch a live model or LLM app for data drift, falling quality, latency and cost, and decide when to alert, retrain or roll back.
 prereqs: ops-mlops, app-evals
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A monitoring sheet for one model listing each signal, its threshold, the action it triggers, and a drift check run on your own data.
 code: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency)
 ---

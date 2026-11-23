@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain in plain words how linear models, k-nearest neighbours, decision trees, random forests, gradient boosting, support vector machines and naive Bayes work, and choose between them.
 prereqs: ml-regression, ml-classification
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A cross-validated comparison of at least four algorithms on one dataset, with your choice explained by accuracy, speed and explainability.
 code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); added technique snippets (2026-11-05) not run
 ---

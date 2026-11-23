@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain the difference between AI, machine learning, deep learning, generative AI and large language models, and name the four ways machines learn.
 prereqs:
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A one-page note that sorts five products you use (for example a spam filter, a map app, a chat assistant) into the right AI family, with one sentence each.
 code: Python executed 2026-11-02 (examples/quickpath/quickpath.py rules_vs_ml)
 ---

@@ -8,6 +8,7 @@ maths: algebra
 goal: Follow the chain rule through a small calculation by hand, see how automatic differentiation does the same thing for any model, and recognise why gradients can vanish in deep stacks of layers.
 prereqs: dl-neural-nets
 reviewed: 2026-11-18
+updated: 2026-11-19
 evidence: A hand-worked gradient for a one-neuron model that matches a program's gradient and a tiny numerical check, plus a sentence on why sigmoid stacks lose gradient.
 code: Python executed 2026-11-18 (examples/backprop/autograd.py, standard library only); PyTorch was not run for this lesson; the C# version prints the same numbers
 ---
