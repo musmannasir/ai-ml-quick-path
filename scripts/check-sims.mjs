@@ -165,6 +165,7 @@ checks.push(['llm', 'examples/sim-llm/llm.py', () => {
   const M = L.loraTarget();
   out.push('rank-r error of a made-up update (relative): ' + [1, 2, 3, 4].map((r) => `r=${r}:${r3(L.lowRank(M, r).err)}`).join(' '));
   out.push(`one 4096 by 4096 layer: ${4096 * 4096} weights to change, LoRA rank 8 trains ${2 * 4096 * 8} (${f(100 * 2 * 4096 * 8 / (4096 * 4096), 2)}%)`);
+  for (const [d, r] of [[4096, 8], [4096, 64], [768, 8]]) { const v = L.loraVariants(d, r); out.push(`LoRA variants, ${d} by ${d} layer, rank ${r}: LoRA ${v.lora}, LoRA-FA ${v.fa}, VeRA ${v.vera}, LoRA+ ${v.plus}, Delta-LoRA ${v.delta}`); }
   const W = L.quantWeights();
   out.push('quantisation error (RMSE) by bits: ' + [8, 6, 4, 3, 2].map((b) => `${b}:${f(L.quantRmse(W, b), 5)}`).join(' '));
   const pts = L.vsPoints();

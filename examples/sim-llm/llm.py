@@ -142,6 +142,10 @@ def low_rank_error(M, rank):
     return frob(R) / base
 
 
+def lora_variants(d, r):
+    return {"lora": 2 * d * r, "fa": d * r, "vera": d + r, "plus": 2 * d * r, "delta": 2 * d * r}
+
+
 # ---- quantisation: store each weight in fewer bits ----
 def quant_weights():
     r = lcg(9)
@@ -259,6 +263,9 @@ if __name__ == "__main__":
     M = lora_target()
     print("rank-r error of a made-up update (relative): " + " ".join("r=%d:%.3f" % (r, low_rank_error(M, r)) for r in (1, 2, 3, 4)))
     print("one 4096 by 4096 layer: %d weights to change, LoRA rank 8 trains %d (%.2f%%)" % (4096 * 4096, 2 * 4096 * 8, 100 * 2 * 4096 * 8 / (4096 * 4096)))
+    for d, r in ((4096, 8), (4096, 64), (768, 8)):
+        v = lora_variants(d, r)
+        print("LoRA variants, %d by %d layer, rank %d: LoRA %d, LoRA-FA %d, VeRA %d, LoRA+ %d, Delta-LoRA %d" % (d, d, r, v["lora"], v["fa"], v["vera"], v["plus"], v["delta"]))
     W = quant_weights()
     print("quantisation error (RMSE) by bits: " + " ".join("%d:%.5f" % (b, quant_rmse(W, b)) for b in (8, 6, 4, 3, 2)))
     pts = vs_points()
