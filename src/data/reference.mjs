@@ -48,7 +48,10 @@ export const WORKLOADS = [
 
 // ---- Glossary: [term, plain definition, lesson id where it is explained] ----
 export const GLOSSARY = [
+  ['C (support vector machine setting)', 'The price of a point on the wrong side of the margin: small C allows more mistakes and a wider gap; large C allows fewer.', 'ml-algorithms'],
   ['Accuracy', 'The share of predictions that are correct. Misleading when one class is rare.', 'ml-evaluation'],
+  ['Information gain', 'How much a question reduces the entropy of a group. A decision tree picks the question with the largest gain.', 'ml-algorithms'],
+  ['Entropy', 'A number that measures how mixed a group is: 0 when it holds one class only, and highest for an even mix.', 'ml-algorithms'],
   ['Grouped-query attention (GQA)', 'Attention in which several query heads share one set of keys and values, which makes the cache smaller.', 'llm-design'],
   ['RMSNorm', 'A simple normalisation that divides each vector by its root mean square, without subtracting the average.', 'dl-transformers'],
   ['RoPE (rotary position embedding)', 'Giving a model word order by rotating query and key vectors by an angle that depends on position.', 'dl-transformers'],
@@ -73,6 +76,7 @@ export const GLOSSARY = [
   ['API (application programming interface)', 'A web address and agreed format that programs use to talk to each other.', 'ops-serving'],
   ['Artificial intelligence (AI)', 'Computer systems that do tasks we associate with human intelligence, such as understanding language or recognising images.', 's-what-is-ai'],
   ['Time to first token (TTFT)', 'How long a user waits before the first piece of a streamed answer arrives.', 'app-llm-api'],
+  ['Soft margin', 'A support vector machine boundary that allows some points on the wrong side, at a price set by C.', 'ml-algorithms'],
   ['SwiGLU', 'A feed-forward layer with a gate: one path decides how many of the numbers from the other path pass through.', 'dl-transformers'],
   ['Attention', 'The transformer step in which every token looks at the other tokens and takes in what is relevant.', 'dl-transformers'],
   ['AUC (area under the ROC curve)', 'A score from 0.5 (random) to 1 (perfect) for how well a model ranks positives above negatives.', 'ml-evaluation'],

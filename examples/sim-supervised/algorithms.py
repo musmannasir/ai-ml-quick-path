@@ -81,7 +81,15 @@ def gini(ones, n):
     return 2 * p * (1 - p)
 
 
-def build_tree(X, y, idx, depth, max_depth):
+def entropy(ones, n):
+    if not n:
+        return 0.0
+    p = ones / n
+    return 0.0 if p <= 0 or p >= 1 else -(p * math.log2(p) + (1 - p) * math.log2(1 - p))
+
+
+def build_tree(X, y, idx, depth, max_depth, measure="gini"):
+    imp = entropy if measure == "entropy" else gini
     ones = sum(y[i] for i in idx)
     node = {"p": ones / len(idx) if idx else 0.5}
     if depth >= max_depth or ones == 0 or ones == len(idx) or len(idx) < 2:
@@ -95,7 +103,7 @@ def build_tree(X, y, idx, depth, max_depth):
             if X[s[k]][f] == X[s[k + 1]][f]:
                 continue
             nl, nr = k + 1, len(s) - k - 1
-            score = (nl * gini(left1, nl) + nr * gini(ones - left1, nr)) / len(s)
+            score = (nl * imp(left1, nl) + nr * imp(ones - left1, nr)) / len(s)
             if best is None or score < best[0] - 1e-12:
                 best = (score, f, (X[s[k]][f] + X[s[k + 1]][f]) / 2)
     if best is None:
@@ -105,12 +113,12 @@ def build_tree(X, y, idx, depth, max_depth):
     R = [i for i in idx if not X[i][f] <= t]
     if not L or not R:
         return node
-    node.update(f=f, t=t, l=build_tree(X, y, L, depth + 1, max_depth), r=build_tree(X, y, R, depth + 1, max_depth))
+    node.update(f=f, t=t, l=build_tree(X, y, L, depth + 1, max_depth, measure), r=build_tree(X, y, R, depth + 1, max_depth, measure))
     return node
 
 
-def fit_tree(X, y, depth):
-    root = build_tree(X, y, list(range(len(X))), 0, depth)
+def fit_tree(X, y, depth, measure="gini"):
+    root = build_tree(X, y, list(range(len(X))), 0, depth, measure)
     def predict(p):
         n = root
         while "l" in n:
@@ -156,6 +164,11 @@ if __name__ == "__main__":
         fits = {"k-nearest (k=5)": fit_knn(trX, trY, 5), "logistic (300 steps)": fit_logistic(trX, trY, 300),
                 "tree (depth 3)": fit_tree(trX, trY, 3), "naive Bayes": fit_nb(trX, trY)}
         print(kind + ": " + "; ".join("%s train %.2f test %.2f" % (name, accuracy(f, trX, trY), accuracy(f, teX, teY)) for name, f in fits.items()))
+    for kind in ("blobs", "moons", "circles"):
+        trX, trY = make_data(kind, 100, 3)
+        teX, teY = make_data(kind, 60, 17)
+        f = fit_tree(trX, trY, 3, "entropy")
+        print(kind + ", tree (depth 3, entropy): train %.2f test %.2f" % (accuracy(f, trX, trY), accuracy(f, teX, teY)))
     trX, trY = make_data("blobs", 100, 3)
     teX, teY = make_data("blobs", 60, 17)
     f = fit_knn(trX, trY, 1)
