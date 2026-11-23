@@ -989,3 +989,30 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .content .sim-lab li { max-width: none; margin: 0; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .sim-lab p { margin: .3rem 0 0; max-width: none; }
 .sim-lab-t { font-weight: 700; }
+
+/* ---- Diagram tabs: "Boxes" (the diagram) and "Visual" (a drawn picture). Without the script both panels show one under the other. ---- */
+.vz { margin: 1.1rem 0; }
+.vz-bar { display: flex; gap: .4rem; margin: 0 0 .6rem; }
+.vz-bar[hidden] { display: none; }
+.vz-tab { min-height: 38px; padding: .35rem .9rem; font-size: .9rem; }
+.vz-label { margin: 0 0 .3rem; font-size: .8rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-3); }
+.vz-on .vz-label { display: none; }
+.vz-panel[hidden] { display: none; }
+.vz-panel + .vz-panel { margin-top: 1rem; }
+.vz-panel > .diagram, .vz-panel > .vz-fig { margin: 0; }
+.vz-fig { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--s-4); }
+.vz-fig figcaption { margin-top: .7rem; font-size: .9rem; color: var(--ink-2); max-width: none; }
+.vz-svg { display: block; width: 100%; height: auto; min-width: 600px; max-width: 780px; margin: 0 auto; font-family: var(--sans); }
+.vz-box { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 2; }
+.vz-b0 { stroke: var(--sim-c0); stroke-width: 4; }
+.vz-b1 { stroke: var(--sim-c1); stroke-width: 4; }
+.vz-hid { fill: none; stroke-dasharray: 6 5; }
+.vz-t { fill: var(--ink); font-size: 20px; font-weight: 650; }
+.vz-dim { fill: var(--ink-3); }
+.vz-arc { fill: none; stroke: var(--sim-c0); stroke-linecap: round; }
+.vz-head { fill: var(--sim-c0); }
+.vz-lab-bg { fill: var(--surface); stroke: var(--line); stroke-width: 1; }
+.vz-w { fill: var(--ink); font-size: 20px; font-weight: 700; }
+.vz-n { fill: var(--ink-2); font-size: 14px; }
+.vz-note { fill: var(--ink-3); font-size: 13px; }
+@media print { .vz-bar { display: none; } .vz-panel[hidden] { display: block; } .vz-on .vz-label { display: block; } .vz-fig { break-inside: avoid; } }

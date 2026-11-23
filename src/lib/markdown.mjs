@@ -6,6 +6,7 @@
 import { renderDiagram } from './diagram.mjs';
 import { renderMathMoment } from './maths.mjs';
 import { renderSim, SIM_SECTION } from './sim.mjs';
+import { renderVisualTab } from './visual.mjs';
 
 export const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -46,6 +47,7 @@ export function md(src, ctx) {
       while (i < lines.length && !lines[i].startsWith('```')) body.push(lines[i++]);
       i++;
       if (lang === 'diagram') { out.push(renderDiagram(title, body, inline, ctx, ctx.file || 'lesson')); continue; }
+      if (lang === 'visual') { out.push(renderVisualTab(title, body, out.pop(), (t) => inline(t, ctx), ctx, ctx.file || 'lesson')); continue; }
       if (lang === 'sim') { out.push(renderSim(title, body, inline, ctx, ctx.file || 'lesson')); continue; }
       if (lang === 'maths') {
         const mm = renderMathMoment(title, body, inline, ctx, ctx.file || 'lesson');

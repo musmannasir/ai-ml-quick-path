@@ -79,6 +79,12 @@ note: Taken from the toy run in this lesson.
 - tired | Weight 0 because it is hidden | bad
 ```
 
+```visual Words that "it" takes from
+file: attention-it
+alt: The sentence "The cat sat because it was tired" with one box per word. Two arcs run from "cat" and "sat" to "it"; the arc from "cat" is much thicker and is labelled 0.75, the one from "sat" is labelled 0.25. "The" and "because" are about 0. The words "was" and "tired" have dashed outlines because the causal mask hides them, so their weight is 0.
+caption: "it" takes most of its information from "cat" (0.75) and some from "sat" (0.25). The words after it are hidden. The weights are made up, as in the maths box below.
+```
+
 ```maths Attention as a weighted mix
 situation: In the sentence "The cat sat because it was tired", the model is working on the word "it". Attention lets "it" take information from other words. Suppose, with invented weights, it gives 0.75 of its attention to "cat" and 0.25 to "sat". To keep the sum small, each word's information is one number here: 10 for "cat" and 2 for "sat".
 find: What does "it" receive after mixing the two words?

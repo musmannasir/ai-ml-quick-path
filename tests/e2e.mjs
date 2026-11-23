@@ -952,6 +952,30 @@ for (const w of [320, 390, 768]) {
   expect('Every simulation, in light and dark themes, starts, labels its pictures, buttons and controls, has an announcing narrator and a text status for each goal, keeps its controls in the keyboard order, and raises no errors', !problems.length, problems.slice(0, 8).join('; '));
 }
 
+// 12k. Diagram tabs (Boxes and Visual)
+{
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/dl-transformers.html')); await page.waitForTimeout(300);
+  await page.evaluate(() => { localStorage.removeItem('aimlqp.v1'); }); await page.reload(); await page.waitForTimeout(300);
+  const st = () => page.evaluate(() => { const b = document.querySelector('[data-vz]'); return { tabs: [...b.querySelectorAll('[role=tab]')].map((t) => t.textContent + ':' + t.getAttribute('aria-selected')).join(','), boxes: !b.querySelector('[data-vz-panel=boxes]').hidden, visual: !b.querySelector('[data-vz-panel=visual]').hidden, bar: !b.querySelector('.vz-bar').hidden, title: (b.querySelector('svg title') || {}).textContent || '' }; });
+  const a = await st();
+  expect('Diagram tabs: the page opens on "Boxes" with the diagram shown and the visual hidden', a.tabs === 'Boxes:true,Visual:false' && a.boxes && !a.visual && a.bar, JSON.stringify(a));
+  await page.click('[data-vz-tab=visual]');
+  const c = await st();
+  expect('Diagram tabs: clicking "Visual" shows the picture, hides the boxes, and the picture has a text alternative', c.tabs === 'Boxes:false,Visual:true' && !c.boxes && c.visual && c.title.length > 40, JSON.stringify(c));
+  await page.reload(); await page.waitForTimeout(300);
+  const d = await st();
+  expect('Diagram tabs: the chosen tab is remembered after a reload; the arrow keys switch back', d.visual && !d.boxes, JSON.stringify(d));
+  await page.focus('[data-vz-tab=visual]'); await page.keyboard.press('ArrowLeft');
+  const e = await st();
+  expect('Diagram tabs: the left arrow key returns to "Boxes"', e.boxes && !e.visual && e.tabs === 'Boxes:true,Visual:false', JSON.stringify(e));
+  await page.setViewportSize({ width: 320, height: 800 }); await page.click('[data-vz-tab=visual]');
+  const f = await page.evaluate(() => ({ page: document.documentElement.scrollWidth <= document.documentElement.clientWidth }));
+  expect('Diagram tabs: at 320 px the page does not scroll sideways', f.page, JSON.stringify(f));
+  expect('Diagram tabs: no script errors', !page.errors.length, page.errors.join('|'));
+  await page.context().close();
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
