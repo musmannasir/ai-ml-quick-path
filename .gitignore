@@ -3,3 +3,5 @@ dist/
 release/
 qa/screenshots/
 *.log
+__pycache__/
+*.pyc

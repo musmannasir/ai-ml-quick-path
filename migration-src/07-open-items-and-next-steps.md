@@ -40,3 +40,10 @@ See 06-testing-and-quality.md and CLAUDE.md section 8.
 - Never tested against the real AdSense service: only the build output and static checks were verified with fake ids. Check the live site after approval (layout shift, console CSP reports, consent message).
 - A contact page was not added; set `CONTACT_EMAIL` to show an address on the privacy page. AdSense reviewers may expect one.
 - The e2e suite is for the default (no-ads) build. Add an ads-build e2e (slot placement, contrast of the label, no horizontal scroll) once real ids exist.
+
+## Status update 2026-11-23
+
+- The project is under git (github.com/musmannasir/ai-ml-quick-path) and live at https://www.aimlquickpath.com/ on a Cloudflare Worker; every push to `main` deploys. See DEPLOYMENT.md and docs/SEO_AND_GEO.md.
+- 72 lessons, 62 live simulations; the new-topics plan (docs/NEW_TOPICS_PLAN.md) is done except the optional Batch E (SQL validation), which the owner skipped.
+- Open owner items: Search Console reports in a week, AdSense later, optional Bing and workers.dev switch-off, design mock-up decision (qa/mockups, untracked).
+- Not done: real screen-reader test, C# versions of simulation maths, simulation goal ticks in the progress export, some preset blocks.
