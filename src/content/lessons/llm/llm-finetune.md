@@ -8,6 +8,7 @@ maths: advanced optional
 goal: Decide between prompting, RAG and fine-tuning, prepare instruction data, and fine-tune an open model with LoRA or QLoRA, then compare it fairly with the base model.
 prereqs: llm-scale, llm-how
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A decision note (prompt, RAG or fine-tune), a JSONL training set of at least 200 examples with a separate test set, and a base-versus-adapter comparison.
 code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; added technique snippets (2026-11-05) not run
 ---

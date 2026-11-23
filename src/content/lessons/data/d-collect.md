@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Pull training data from a database with SQL, plan where data comes from and whether you may use it, and measure how consistently people label it.
 prereqs: d-basics
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Three SQL queries that build a one-row-per-customer feature table, and a labelling guide tested by two people with an agreement score.
 code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py sql and viz)
 ---

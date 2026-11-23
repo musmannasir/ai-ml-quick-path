@@ -8,6 +8,7 @@ maths: none
 goal: Know what LangChain, LangGraph, Microsoft.Extensions.AI, Semantic Kernel, Microsoft Agent Framework and the Model Context Protocol do, and when plain code is better.
 prereqs: app-agents
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A short decision note for one project choosing a framework (or none) in your main language, with three reasons.
 code: Conceptual (framework packages not installed in the build environment)
 ---

@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Build a retrieval-augmented generation (RAG) system that checks permissions, retrieves evidence, answers with citations, says "I don't know" when evidence is missing, and is measured with an evaluation set.
 prereqs: app-embeddings, app-prompting
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A working RAG assistant in Python or C# that passes an evaluation set of answerable, unanswerable and forbidden questions, with failures explained.
 code: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings)
 ---

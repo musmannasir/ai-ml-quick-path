@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Let a model call tools safely, design an agent workflow with explicit state, permission checks, human approval, retries, idempotency and an audit trail, in Python and C#.
 prereqs: app-llm-api, app-prompting
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A refund workflow (in either language) passing scripted tests for success, decline, wrong owner, outside policy, service failure and duplicate requests.
 code: Python framework-free workflow executed 2026-11-02 (examples/agent-returns/returns_workflow.py); LangGraph not run (not installed in the build environment)
 ---

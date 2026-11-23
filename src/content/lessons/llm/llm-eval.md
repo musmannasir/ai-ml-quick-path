@@ -8,6 +8,7 @@ maths: algebra
 goal: Evaluate language models with perplexity, benchmarks and your own task tests, and avoid contamination and misleading comparisons.
 prereqs: llm-train-laptop
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: An evaluation report for two models on your own 50-question task set, with failure examples and a recommendation.
 code: Perplexity values computed 2026-11-02 from the executed tiny-model run
 ---

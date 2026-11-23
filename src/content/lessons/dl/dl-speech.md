@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain how audio becomes features, how speech recognition and text-to-speech work, and measure transcription quality with word error rate.
 prereqs: dl-transformers
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Transcripts of five of your own short recordings with word error rate against your reference text, and a note on which errors matter for the task.
 code: Python signal demo and WER executed 2026-11-02 (gap_topics.py speech); Whisper not run (not installed in the build environment)
 ---

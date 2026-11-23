@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain why a plain comparison of treated and untreated groups can mislead, remove the bias by adjusting for a confounder or by randomising, and read a simple causal diagram.
 prereqs: ml-evaluation
 reviewed: 2026-11-19
+updated: 2026-11-19
 evidence: A table showing the naive effect, the adjusted effect and the randomised effect for one dataset, with a sentence saying which you trust and why.
 code: Python executed 2026-11-19 (examples/causal/causal.py, NumPy only); the C# version prints the same output
 ---

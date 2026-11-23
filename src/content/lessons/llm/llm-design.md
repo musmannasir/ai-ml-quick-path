@@ -8,6 +8,7 @@ maths: advanced optional
 goal: Choose tokeniser, vocabulary, width, depth, heads and context length for a model, estimate its size and memory, and plan experiments.
 prereqs: llm-tokens, dl-transformers
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A design sheet for a small model with parameter count, memory estimate, training data plan and three experiments that each change one setting.
 code: Python executed 2026-11-02 (quickpath.py llm_size)
 ---

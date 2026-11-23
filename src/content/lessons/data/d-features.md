@@ -8,6 +8,7 @@ maths: algebra
 goal: Encode categories, scale numbers, create useful features from dates and text, and avoid data leakage by using pipelines.
 prereqs: d-clean-eda
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A pipeline that prepares a mixed dataset (numbers, categories, dates, text) and one new feature that measurably improves a model.
 code: Python executed 2026-11-02 (ml_basics.py features)
 ---

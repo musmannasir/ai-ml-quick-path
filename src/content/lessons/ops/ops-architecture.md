@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Design a complete AI system (a .NET application calling a Python model service and an LLM), with containers, secrets, fallbacks, security and a clear checklist, so you can plan any industry case.
 prereqs: ops-serving, ops-monitoring, app-rag, app-security
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: An architecture diagram and one-page design note for a capstone, covering components, contract, failure modes, security, monitoring and cost.
 code: FastAPI service not run (FastAPI not installed in the build environment); Dockerfile not built (no Docker in the build environment)
 ---

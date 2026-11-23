@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain how text becomes numbers (tokens and embeddings), how word vectors capture meaning, and how recurrent networks process sequences and why transformers replaced them.
 prereqs: dl-neural-nets, d-features
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Word vectors trained on a small corpus you choose, with nearest neighbours for five words and a note on one surprising result.
 code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn)
 ---

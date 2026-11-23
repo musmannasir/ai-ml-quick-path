@@ -87,10 +87,36 @@ function sidebar(groups, current, root) {
 </nav>`;
 }
 
-export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [] }) {
+// A 1200 x 630 picture for links shared on social media and in chat apps. It needs the full address, so only with SITE_URL.
+const socialImage = (title, desc) => (SITE.url ? `
+<meta property="og:image" content="${esc(SITE.url)}/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI &amp; ML Quick Path: a free guide to AI and machine learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${esc(SITE.url)}/assets/og-image.png">` : '');
+
+// Structured data (JSON-LD, schema.org) tells search engines and AI tools what a page is. It is a data block, not a script
+// that runs, so the strict Content-Security-Policy is unaffected. Needs the full address, so only with SITE_URL.
+function structuredData({ path, title, desc, crumbs, lessonMeta, canonical }) {
+  if (!SITE.url) return '';
+  const org = { '@type': 'Organization', name: SITE.short, url: `${SITE.url}/` };
+  const graph = [];
+  if (path === 'index.html') graph.push({ '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, alternateName: SITE.short, url: `${SITE.url}/`, description: SITE.description, inLanguage: 'en', publisher: org });
+  if (crumbs.length) graph.push({ '@type': 'BreadcrumbList', itemListElement: [['Home', 'index.html'], ...crumbs].map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: `${SITE.url}/${publicPath(p)}` })) });
+  if (lessonMeta) graph.push({ '@type': 'LearningResource', name: title, description: desc, url: canonical, inLanguage: 'en', isAccessibleForFree: true, learningResourceType: 'lesson', educationalLevel: lessonMeta.level, timeRequired: `PT${lessonMeta.minutes}M`, dateModified: lessonMeta.modified, isPartOf: { '@type': 'CreativeWork', name: lessonMeta.part[0], url: `${SITE.url}/${publicPath(lessonMeta.part[1])}` }, publisher: org });
+  if (!graph.length) return '';
+  return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>`;
+}
+
+export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [], lessonMeta = null }) {
   const depth = path.split('/').length - 1;
   const root = depth ? '../'.repeat(depth) : '';
-  const fullTitle = path === 'index.html' ? SITE.name : `${title} | ${SITE.short}`;
+  // The brand is added only when the whole title fits in about 60 characters; search results cut longer titles.
+  const branded = `${title} | ${SITE.short}`;
+  const fullTitle = path === 'index.html' ? SITE.name : branded.length <= 60 ? branded : title;
   const canonical = SITE.url ? `${SITE.url}/${publicPath(path)}` : '';
   const desc = description || SITE.description;
   return `<!doctype html>
@@ -107,7 +133,8 @@ ${canonical ? `<link rel="canonical" href="${esc(canonical)}">\n<meta property="
 <meta property="og:type" content="${path.startsWith('lessons/') ? 'article' : 'website'}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:site_name" content="${esc(SITE.name)}">
+<meta property="og:site_name" content="${esc(SITE.name)}">${socialImage(title, desc)}
+${structuredData({ path, title, desc, crumbs, lessonMeta, canonical })}
 <link rel="icon" href="${root}favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="${root}assets/app.css">
 ${ADS.client ? `<meta name="google-adsense-account" content="${esc(ADS.client)}">

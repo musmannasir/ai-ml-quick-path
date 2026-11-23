@@ -8,6 +8,7 @@ maths: advanced optional
 goal: Explain agents, actions, rewards and policies, implement Q-learning and a policy-gradient agent, and connect reinforcement learning to how chat models are tuned.
 prereqs: ml-learning
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A Q-learning or policy-gradient agent for a small problem you design, with its learned policy explained and averaged over several seeds.
 code: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); added technique snippets (2026-11-05) not run
 ---

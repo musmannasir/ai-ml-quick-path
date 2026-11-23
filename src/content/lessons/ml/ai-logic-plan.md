@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Solve a constraint problem by backtracking, check a logical rule with a truth table, describe how a planner turns a goal into steps, and see how a genetic algorithm searches by mutation and selection.
 prereqs: ai-search
 reviewed: 2026-11-19
+updated: 2026-11-19
 evidence: A map coloured by backtracking with the count of choices tried, a truth table that proves or refutes one rule, and the best and average fitness over generations of a small genetic algorithm.
 code: Python executed 2026-11-19 (examples/logic-planning/logic.py, standard library only); the C# version prints the same output
 ---

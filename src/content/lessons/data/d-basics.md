@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Recognise the main kinds of data, tell features from labels, and split data into training, validation and test sets.
 prereqs: s-lifecycle
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A table of three datasets from your own work or life, with their data type, features, label and how you would split them.
 code: Python executed 2026-11-02 (quickpath.py data)
 ---

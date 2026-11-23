@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain embeddings, find similar text by cosine similarity, and store and search vectors in a vector database from Python and C#.
 prereqs: app-llm-api, dl-sequences
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: Twenty passages embedded with a real embedding model, five differently worded questions, and the rank of the correct passage for each.
 code: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls not run (no model in the build environment)
 ---

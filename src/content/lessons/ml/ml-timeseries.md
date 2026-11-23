@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Forecast values over time with trend and seasonality, beat simple baselines, and always test on the future.
 prereqs: ml-regression, ml-evaluation
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A forecast for a series you choose, compared with naive and seasonal-naive baselines on a later period, with MAE for each.
 code: Python executed 2026-11-02 (gap_topics.py timeseries)
 ---

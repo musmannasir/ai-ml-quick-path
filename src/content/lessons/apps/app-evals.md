@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Build an evaluation set, write automatic checks, use an LLM as a judge carefully, detect hallucinations, and compare versions with A/B tests.
 prereqs: app-rag
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: An evaluation script with thresholds that runs on every change, plus one regression it caught.
 code: Python executed 2026-11-02 (applied_basics.py evals, examples/math/math_for_ai.py abtest)
 ---

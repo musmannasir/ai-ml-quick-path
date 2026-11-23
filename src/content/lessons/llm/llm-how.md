@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Explain pretraining, next-token prediction, context windows, instruction tuning, open-weight versus hosted models, and why LLMs sometimes make things up.
 prereqs: dl-transformers
 reviewed: 2026-11-02
+updated: 2026-11-19
 evidence: A one-page explanation, for a non-technical colleague, of how a chat assistant produces an answer and why it can be confidently wrong.
 code: Python executed 2026-11-02 (quickpath.py bigram)
 ---

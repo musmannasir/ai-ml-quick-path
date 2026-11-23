@@ -8,6 +8,7 @@ maths: algebra
 goal: Update a belief with Bayes' rule, read a small Bayesian network, explain how a Markov chain Monte Carlo sampler explores a distribution, and follow a one-number Kalman filter.
 prereqs: ml-evaluation
 reviewed: 2026-11-19
+updated: 2026-11-19
 evidence: Bayes' rule worked for a test with its false alarms, a probability of rain given wet grass from a small network, and the estimate and uncertainty after each measurement of a Kalman filter.
 code: Python executed 2026-11-19 (examples/bayes/bayes.py, standard library only); the C# version prints the same output
 ---
