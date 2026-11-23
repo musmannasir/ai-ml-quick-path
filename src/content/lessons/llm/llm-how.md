@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain pretraining, next-token prediction, context windows, instruction tuning, open-weight versus hosted models, and why LLMs sometimes make things up.
 prereqs: dl-transformers
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: A one-page explanation, for a non-technical colleague, of how a chat assistant produces an answer and why it can be confidently wrong.
 code: Python executed 2026-11-02 (quickpath.py bigram)
 ---
@@ -93,7 +93,49 @@ try: You add more text in which "thank" is followed by "them" 10 times. What is 
 answer: "thank" now appears 8 + 2 + 10 = 20 times, so "you" is 8 ÷ 20 = 0.4 = 40%. The data changed, so the probabilities changed. A model reflects the text it was trained on.
 ```
 
+```maths A sentence as a chain of next-word chances
+situation: A model has read "the cat" and has made-up chances for what comes next. The chance that the first word is "the" is 0.1. After "the", the chance of "cat" is 0.05. After "the cat", the chance of "sat" is 0.2.
+find: How likely is the whole text "the cat sat"?
+step: Chance of "the" then "cat" | 0.1 × 0.05 = 0.005
+step: Multiply by the chance of "sat" after "the cat" | 0.005 × 0.2 = 0.001
+result: The chance of the whole text is **0.001**, which is 1 in 1,000.
+formula: P(w1 w2 w3) = P(w1) × P(w2 given w1) × P(w3 given w1 w2)
+why: A language model never scores a whole sentence in one go. It gives one chance per next token, and the chance of a whole text is those chances multiplied. This is also why a long text has a tiny chance, and why programs add the logarithms of the chances instead of multiplying them: adding avoids numbers too small for a computer to store.
+caution: These chances are made up for the example. Real models give a chance to every token in the vocabulary at every step.
+try: Each of 3 words had chance 0.1 instead. What is the chance of the text?
+answer: 0.1 × 0.1 × 0.1 = 0.001. The same total can come from different chances per word.
+```
+
 ### Related concepts
+
+#### Two phases: prefill and decode
+When you send a prompt, the model works in two phases. **Prefill** reads the whole prompt at once and builds the stored keys and values (the KV cache). All prompt tokens can be processed side by side, so the computer is kept busy doing arithmetic: this phase is **compute-bound**, which means the arithmetic speed is the limit. **Decode** then writes the answer one token at a time. Each new token needs the model's weights and the cache to be read from memory again for very little arithmetic, so this phase is usually **memory-bound**, which means memory speed is the limit. Prefill decides how long you wait for the first token; decode decides how fast the rest of the answer streams.
+
+```diagram flow Two phases of answering one request
+note: Prefill runs once per request. Decode repeats once per new token.
+- Prompt arrives | System message, history, documents and question | input
+- Prefill | Reads all prompt tokens at once; builds the cache; limited by arithmetic speed | process
+- First token | Time to first token ends here | output
+- Decode | Writes one token per pass, reusing the cache; limited by memory speed | model
+- Reply complete | Stops at an end-of-text token or the length limit | output
+```
+
+#### The chat template
+The model only reads one long list of tokens. A **chat template** is the fixed recipe that turns your separate messages (system, user, assistant) into that one list, using special marker tokens to show where each message starts and ends. Every model family has its own template, so use the one that comes with the model: a wrong template makes a good model answer badly. The markers below are made up to show the idea.
+
+```text A made-up chat template
+<|system|>  You summarise support emails.  <|end|>
+<|user|>    My order has not arrived.       <|end|>
+<|assistant|>
+```
+
+```diagram layers From messages to one token list
+note: The markers are made up for illustration; real models use their own.
+- Model continues from here | After the assistant marker, it writes the reply token by token | model
+- Assistant marker | Tells the model it is now its turn | process
+- User message | Wrapped in its own start and end markers | input
+- System message | Rules, wrapped in its own start and end markers | input
+```
 
 #### Context window
 The context window is the most text, counted in tokens, that the model can look at in one request. It holds your instructions, the documents you add, the conversation so far and the answer being written. When it is full, something has to go: the provider may refuse the request, or your code must cut the oldest or least useful text. Cut text is simply not seen by the model. Longer contexts also take more time and memory, because the model has to relate every token to the others. So send only what the task needs. Look up the limit for your model; do not assume one.
@@ -136,6 +178,7 @@ question: How does a Transformer write text one word at a time, and what does th
 watch: Each step runs the text so far through the model. Only the scores for the last word are used, and they become chances for the next word.
 watch: Temperature and top-k reshape the chances, exactly as in the token-generation simulation. Greedy picks the highest, sampling draws at random.
 watch: The table counts "word passes". Without the cache every step runs all the earlier words again. With the cache, earlier words are kept, so each later step runs only the new word.
+watch: The first step is the prefill: the whole starting text goes through at once. Every later step is a decode step: one new word, using the cache.
 try: cache | Write a text to the end and read the two totals: the cache should save at least 5 word passes.
 predict: A text has 6 words when the model chooses word 7. With no cache, how many words does it run through the model for that step? | Only the new word | All 6 words again | None
 answer: 2 | The model has no memory between steps. Without a cache it processes the whole text again; with a cache it reuses the stored keys and values of the first 6 words and does the work only for the new one.
