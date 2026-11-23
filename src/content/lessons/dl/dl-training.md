@@ -4,11 +4,12 @@ title: Training deep networks well
 module: dl
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Use batches, epochs, learning rates, optimisers, dropout, normalisation, early stopping, checkpoints and GPUs to train networks reliably.
 prereqs: dl-neural-nets
 reviewed: 2026-11-02
 evidence: Two training runs of one model (with and without regularisation) with training and validation loss curves and the best checkpoint saved.
-code: Python dropout demo executed 2026-11-02 (ai_extras.py dropout); PyTorch and C# (TorchSharp) not run (not installed in the build environment); added technique snippets (2026-11-05) not run
+code: Python dropout demo executed 2026-11-02 (ai_extras.py dropout); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 Training a network well is a craft with a standard toolkit. Data is fed in small **batches** (for example 32 examples); one full pass over the data is an **epoch**. The **learning rate** sets the step size; a **schedule** often warms it up and then lowers it. The **optimiser** (SGD, Adam, AdamW) decides how each step is taken. **Dropout** randomly switches off some neurons during training so the network cannot rely on one path. **Batch or layer normalisation** keeps numbers inside the network in a stable range. **Data augmentation** creates realistic variations (flipped photos, cropped images). **Early stopping** keeps the version with the best **validation** score and stops when it stops improving. **Checkpoints** save progress. A **GPU** runs the maths many times faster, and **mixed precision** uses smaller number formats to save memory and time.
@@ -62,6 +63,17 @@ loop: Repeat for the next epoch until early stopping triggers
 - Measure loss only | output
 ```
 
+```maths Batches, steps and epochs
+situation: You train on 1,000 examples. The model sees them in batches of 100 and updates its weights after every batch. You train for 5 epochs (5 full passes over the data).
+find: How many times are the weights updated in total?
+step: Updates in one pass over the data | 1,000 ÷ 100 = 10
+step: Updates over 5 passes | 10 × 5 = 50
+result: The weights are updated **50 times**.
+why: Training logs count in steps, and settings such as the learning-rate schedule are written in steps. This sum connects "5 epochs" in your head with "step 50" on the screen.
+try: You halve the batch size to 50 and keep 5 epochs. How many updates now?
+answer: 1,000 ÷ 50 = 20 updates per epoch, and 20 × 5 = 100 updates. Smaller batches give more, noisier updates for the same data; larger batches give fewer, smoother ones and need more memory.
+```
+
 ### Related concepts
 - **Batch normalisation**: rescales each layer's outputs over a mini-batch so training is more stable and can use higher learning rates. Common in image models. **Layer normalisation** does the same per example and is used in transformers.
   Everyday example: a class has test scores of 2, 4, 6 and 8. Batch normalisation first finds the average (5) and then shifts and shrinks every score so the group is centred on 0 with a spread of about 1. The numbers inside the network then stay small and tidy, whatever the layer before produced.
@@ -88,6 +100,22 @@ loop: Repeat for the next epoch until early stopping triggers
 - Compare it with the limit | Is it longer than the limit? | process
 - If too long, shrink it to the limit | The direction stays the same | model
 - Update the weights | One bad batch can no longer break training | output
+```
+
+## Live simulation
+Training is gradient descent with extra tricks. The race below shows why those tricks exist.
+
+```sim train The optimiser race on a long narrow valley
+question: Why do people use momentum or Adam instead of plain gradient descent, and what does a noisy gradient do?
+watch: The contour lines are a long narrow valley: steep across, shallow along. All three start at the same point and use the same learning rate.
+watch: Plain gradient descent follows the slope, so it zigzags across the valley or crawls along it. Momentum builds up speed along the valley. Adam scales each direction by its own typical step.
+watch: Raise the gradient noise to see how a small, noisy batch makes every path wander.
+try: blow | Make plain gradient descent blow up (loss above 1000) by raising the learning rate.
+try: momentum | With no noise and learning rate 0.02, run to 60 steps: momentum gets the loss below 0.01 while plain is still above 0.1.
+predict: At learning rate 0.1, what does plain gradient descent do on this valley? | It settles quickly | It keeps jumping from one side of the valley to the other and never settles | It blows up
+answer: 2 | Across the valley the slope is steep, and 0.1 is exactly the rate where each step jumps to the mirror point on the other side. A little higher it blows up, a little lower it settles.
+leaves-out: Two numbers to learn instead of millions. The gradient noise comes from a random-number generator that stands in for a small batch; it is not real mini-batches. Dropout and batch normalisation are not shown here.
+reference: examples/sim-training/dynamics.py
 ```
 
 ## Python example
@@ -152,6 +180,9 @@ using static TorchSharp.torch;
 using static TorchSharp.torch.nn;
 
 var device = cuda.is_available() ? CUDA : CPU;
+// Made-up data so the sample is complete: 256 training rows and 64 validation rows, 20 features, 2 classes.
+Tensor trainX = randn(256, 20), trainY = randint(0, 2, new long[] { 256 });
+Tensor valX = randn(64, 20), valY = randint(0, 2, new long[] { 64 });
 var model = Sequential(("in", Linear(20, 64)), ("relu", ReLU()), ("drop", Dropout(0.3)), ("out", Linear(64, 2)));
 model.to(device);
 var optimizer = optim.AdamW(model.parameters(), lr: 1e-3, weight_decay: 0.01);
@@ -176,7 +207,17 @@ for (int epoch = 0; epoch < 100 && badEpochs < 5; epoch++)
         else badEpochs++;                                                               // early stopping counter
     }
 }
-// Batches(...) splits tensors into shuffled mini-batches; trainX/trainY/valX/valY are your tensors.
+// Splits the rows into shuffled mini-batches.
+static IEnumerable<(Tensor x, Tensor y)> Batches(Tensor x, Tensor y, int batchSize)
+{
+    long rows = x.shape[0];
+    var order = randperm(rows);
+    for (long start = 0; start < rows; start += batchSize)
+    {
+        var pick = order.narrow(0, start, Math.Min(batchSize, rows - start));
+        yield return (x.index_select(0, pick), y.index_select(0, pick));
+    }
+}
 ```
 
 ### More techniques in C#: batch normalisation, gradient clipping, learning-rate schedule

@@ -4,11 +4,12 @@ title: What AI, machine learning, deep learning and generative AI are
 module: start
 level: Beginner
 minutes: 60
+maths: basic arithmetic
 goal: Explain the difference between AI, machine learning, deep learning, generative AI and large language models, and name the four ways machines learn.
 prereqs:
 reviewed: 2026-11-02
 evidence: A one-page note that sorts five products you use (for example a spam filter, a map app, a chat assistant) into the right AI family, with one sentence each.
-code: Python executed 2026-11-02 (examples/quickpath/quickpath.py rules_vs_ml); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/quickpath/quickpath.py rules_vs_ml)
 ---
 ## In plain words
 **Artificial intelligence (AI)** is the big idea: computers doing tasks that normally need human judgement, such as reading, seeing, deciding or talking. Old AI used **rules written by people**: "if the email contains 'free prize', mark it as spam". **Machine learning (ML)** is a part of AI where the computer **learns the rules from examples** instead. You show it thousands of emails already marked spam or not spam, and it works out the pattern. **Deep learning** is a part of ML that uses large **neural networks**, which are very good with messy data such as photos, sound and text. **Generative AI** creates new content (text, images, code, audio). **Large language models (LLMs)** such as the ones behind chat assistants are generative deep-learning models trained on huge amounts of text. Think of nested boxes: AI ⊃ ML ⊃ deep learning ⊃ generative models ⊃ LLMs.
@@ -79,6 +80,45 @@ note: Follows the story in the paragraph above.
 - Train | The computer adjusts itself until answers match the examples | model
 - Test | Use examples the model has never seen | process
 - Use and watch | Keep checking it after release | output
+```
+
+```maths Accuracy: the share of answers that are right
+situation: A spam filter looks at 10 emails. It labels 8 of them correctly and gets 2 wrong.
+find: What share of the emails did the filter get right?
+step: Divide the right answers by all the answers | 8 ÷ 10 = 0.8 = 80%
+result: The filter's accuracy is **80%**.
+formula: accuracy = right answers ÷ all answers
+why: Accuracy is the first number most people use to say how good a model is. When this guide says a model "scores 80%", this is the sum behind it.
+caution: Accuracy can mislead when one answer is rare. If only 1 email in 100 is spam, a filter that never says "spam" is 99% accurate and completely useless. Later lessons add better measures.
+try: The filter improves and now gets 9 of the 10 emails right. What is its accuracy?
+answer: 9 ÷ 10 = 0.9 = 90%. One more correct email moved the score by 10 points, because the test set is tiny. Small test sets give jumpy scores.
+```
+
+```maths Probability from counting: how often something happens
+situation: A support team picks 10 tickets at random. 3 of them are urgent.
+find: What share of these tickets is urgent?
+step: Divide the urgent tickets by all the tickets | 3 ÷ 10 = 0.3 = 30%
+result: In this sample, **30%** of tickets are urgent.
+why: Many models do not answer "yes" or "no". They answer with a number like 0.3, meaning "about 3 in 10 cases like this one were urgent". You then choose what to do with that number.
+caution: Ten tickets is a small sample. It does not prove that the next ticket has exactly a 30% chance of being urgent. A different ten tickets could give 2 or 4 urgent ones.
+try: In a second sample of 10 tickets, 5 are urgent. What is the rate when you put both samples together?
+answer: Urgent tickets: 3 + 5 = 8. All tickets: 10 + 10 = 20. Rate: 8 ÷ 20 = 0.4 = 40%. More data changed the estimate, which is normal and is why bigger samples are trusted more.
+```
+
+## Live simulation
+A rule is something you write. A model is something that learns the rule from examples. Try both on the same job.
+
+```sim rul Rules against learning
+question: Why do hand-written rules break on new messages, and what changes when the filter learns from examples?
+watch: Tick keywords to build a spam rule. The tables show every message and whether the filter got it right.
+watch: The top table holds the messages the rules were written from. The lower table holds new ones, including some tricks.
+watch: Switch to the learned word weights and compare the two scores.
+try: gap | Choose rules that get every training message right but 40% or fewer of the new messages.
+try: learn | Use the learned word weights and get at least 85% of the new messages right.
+predict: Your rules score 100% on the messages you wrote them from. How will they do on new messages? | About the same | Worse, often much worse | Better
+answer: 2 | The rules were tuned to the messages in front of you. New messages spell words differently, use other words, or use a spammy word innocently, so the rules miss spam and flag good mail.
+leaves-out: Twenty-four short made-up messages and a simple word-count model. The learned model is also tested on only eight new messages, so its score is rough. Real filters learn from millions of messages, and spammers change tactics, so they must be retrained.
+reference: examples/sim-apps/apps.py
 ```
 
 ## Python example

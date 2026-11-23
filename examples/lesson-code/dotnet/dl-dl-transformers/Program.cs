@@ -1,4 +1,4 @@
-// From lesson 'dl-transformers' (dl). Code status: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py); C# (TorchSharp) not run (not installed in the build environment)
+// From lesson 'dl-transformers' (dl). Code status: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 using TorchSharp;
 using static TorchSharp.torch;
 

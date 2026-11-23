@@ -4,11 +4,12 @@ title: RAG: answering from your own documents
 module: apps
 level: Intermediate
 minutes: 120
+maths: basic arithmetic
 goal: Build a retrieval-augmented generation (RAG) system that checks permissions, retrieves evidence, answers with citations, says "I don't know" when evidence is missing, and is measured with an evaluation set.
 prereqs: app-embeddings, app-prompting
 reviewed: 2026-11-02
 evidence: A working RAG assistant in Python or C# that passes an evaluation set of answerable, unanswerable and forbidden questions, with failures explained.
-code: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings)
 ---
 ## In plain words
 **Retrieval-augmented generation (RAG)** answers a question by first **finding** relevant passages in your own documents and then asking the model to answer **using only those passages**, with **citations**. The model's weights do not change; the knowledge lives in documents you can update, delete and protect. That makes RAG the standard choice for company policies, manuals, contracts and knowledge bases. RAG has two halves. **Ingestion**: split documents into **chunks**, embed them, and store them with metadata (source, version, who may read it). **Answering**: check who is asking, retrieve only chunks that person may read, put them into the prompt, generate an answer that cites chunk ids, and refuse politely when the best evidence is weak. You then **evaluate** with three kinds of questions: answerable, unanswerable, and forbidden for this user.
@@ -56,6 +57,16 @@ note: Access is checked before ranking, so restricted text never reaches the mod
 - Evaluate | Answerable, unanswerable and forbidden questions | output
 ```
 
+```maths How many chunks fit in the prompt?
+situation: Your prompt has room for 2,000 tokens of retrieved text. Each chunk of a document is about 400 tokens long.
+find: How many chunks can you include?
+step: Divide the room by the size of one chunk | 2,000 ÷ 400 = 5
+result: You can include **5 chunks**.
+why: Retrieval returns a ranked list of chunks, and you must decide how many to pass to the model. Too few and the answer may be missing; too many and you pay for tokens that distract the model.
+try: You change the chunk size to 250 tokens. How many chunks fit now?
+answer: 2,000 ÷ 250 = 8 chunks. Smaller chunks let you include more separate passages, but each one carries less surrounding text, so a single chunk may no longer contain a complete answer.
+```
+
 ### Related concepts
 
 #### Citations
@@ -85,6 +96,22 @@ A **hallucination** is a statement the model makes that the sources do not suppo
 ## Filter before ranking | output
 - Restricted chunks are never retrieved
 - The model never sees them
+```
+
+## Live simulation
+Retrieval-augmented generation depends on a step that happens before the model: finding the right text. Try the pipeline on a small document.
+
+```sim rag A retrieval pipeline, step by step
+question: Why does the way a document is split into chunks decide whether the model ever sees the answer?
+watch: Viewpoint 1 is the user's question. Viewpoint 2 is the retriever, which scores each chunk by shared keywords. Viewpoint 3 is what the model would be given.
+watch: The row of cells shows, for every chunk size, whether the answer is inside what the model sees. Green means found.
+watch: Change the overlap and the number of chunks fetched, and watch the words sent to the model.
+try: all | Find settings where all four questions find their answers while sending no more than 40 words.
+try: lost | Make the answer get lost: choose a setting where the context does not hold it.
+predict: For the Saturday closing question, will small chunks of 10 words always find the answer? | Yes, smaller chunks are always better | No, chunk size changes which chunk wins, in both directions
+answer: 2 | At 10 words the best-scoring chunk is not the one holding the answer. Too small and clue words are separated from the answer; too large and the chunk carries unrelated text.
+leaves-out: A made-up document of about 150 words and keyword scoring, not a trained embedding model, and no model writes an answer: the page checks whether the answer text is present in what would be sent. Real systems add meaning-based search, re-ranking and checks on the answer.
+reference: examples/sim-llm/llm.py
 ```
 
 ## Python example

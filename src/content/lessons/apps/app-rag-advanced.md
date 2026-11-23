@@ -4,11 +4,12 @@ title: Advanced RAG: chunking, hybrid search, re-ranking and evaluation
 module: apps
 level: Advanced
 minutes: 90
+maths: basic arithmetic
 goal: Improve RAG quality with better chunking, hybrid keyword-plus-vector search, reciprocal rank fusion, re-ranking, query rewriting and metadata filters, and measure each change.
 prereqs: app-rag
 reviewed: 2026-11-02
 evidence: A before-and-after table of retrieval hit rate (correct passage in top 5) on at least 30 questions for vector-only versus hybrid retrieval with re-ranking.
-code: Python executed 2026-11-02 (quickpath.py chunking and hybrid); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py chunking and hybrid)
 ---
 ## In plain words
 The model cannot cite a passage it never receives, so **retrieval quality decides RAG quality**. Five techniques fix most problems. **Chunking**: split by meaning (paragraphs or headings) rather than blindly every N words, add a little **overlap**, and put the document title in each chunk. **Hybrid search**: run **keyword search** (BM25 finds exact codes, names and rare words) and **vector search** (finds meaning) together and merge the lists, commonly with **reciprocal rank fusion (RRF)**, which rewards items ranked high in either list. **Re-ranking**: a slower, more accurate model re-scores the top 20–50 candidates. **Query rewriting**: an LLM turns a vague or conversational question into a clear search query, or into several sub-questions. **Metadata filters**: restrict by permission, product, region or date before ranking. Some teams also use knowledge graphs (**GraphRAG**) for questions about relationships. Measure every change with **retrieval** metrics (is the right passage in the top k?) and **answer** metrics (is the answer faithful to the sources?).
@@ -82,6 +83,17 @@ note: Counts are the example values from the steps above.
 - Merge with RRF | One list | process
 - Re-ranker | Top 5 | model
 - LLM | Answers from 5 passages | output
+```
+
+```maths Recall@k: did retrieval find the right chunks?
+situation: For one test question, 3 chunks in your documents contain the answer. Retrieval returns its top 5 chunks, and 2 of those 3 are among them.
+find: What share of the useful chunks did retrieval find?
+step: Useful chunks found divided by useful chunks that exist | 2 ÷ 3 ≈ 0.67 = 67%
+result: Recall@5 is about **67%**.
+formula: recall@k = relevant chunks in the top k ÷ all relevant chunks
+why: If retrieval does not find the right text, the model cannot answer from it, however good the model is. Recall@k measures the retrieval step alone, so you can fix it separately from the prompt.
+try: With hybrid search switched on, all 3 useful chunks appear in the top 5. What is recall@5 now?
+answer: 3 ÷ 3 = 1 = 100%. Retrieval now finds everything it should for this question. Check the same number across many questions before deciding that the change helped.
 ```
 
 ### Related concepts

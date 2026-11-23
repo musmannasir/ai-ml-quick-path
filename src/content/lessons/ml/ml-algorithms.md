@@ -4,11 +4,12 @@ title: The main ML algorithms and when to use each
 module: ml
 level: Intermediate
 minutes: 90
+maths: basic arithmetic
 goal: Explain in plain words how linear models, k-nearest neighbours, decision trees, random forests, gradient boosting, support vector machines and naive Bayes work, and choose between them.
 prereqs: ml-regression, ml-classification
 reviewed: 2026-11-02
 evidence: A cross-validated comparison of at least four algorithms on one dataset, with your choice explained by accuracy, speed and explainability.
-code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); C# not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 You do not need dozens of algorithms. These cover most industry work with tables of data:
@@ -96,6 +97,21 @@ note: Matches the paragraph above: accuracy and explainability pull in different
 - Tune the best one or two | See the lesson on improving models | output
 ```
 
+```maths Distance between two examples (k-nearest neighbours)
+situation: Each customer is described by two numbers: visits per month and items per visit. A known customer is (1, 2). A new customer is (4, 6). The k-nearest-neighbours method needs to know how far apart they are.
+find: What is the straight-line distance between the two customers?
+step: Difference in visits | 4 − 1 = 3
+step: Difference in items | 6 − 2 = 4
+step: Square both differences and add them | 3^2 + 4^2 = 25
+step: Take the square root | sqrt(25) = 5
+result: The two customers are **5** units apart.
+formula: distance = square root of (sum of squared differences)
+why: k-nearest neighbours predicts by looking at the closest known examples. "Closest" means the smallest distance by this sum. The same idea of distance is used in clustering and in searching embeddings.
+caution: If one column is measured in thousands and another in single units, the big column decides the distance alone. Scale the columns first (see the feature engineering lesson).
+try: A third customer is (4, 2). How far is it from the known customer (1, 2), and which of the two is the nearer neighbour?
+answer: Differences: 4 − 1 = 3 and 2 − 2 = 0. Distance: sqrt(9 + 0) = 3. That is smaller than 5, so (4, 2) is the nearer neighbour.
+```
+
 ### Related concepts
 Other problem types you will meet in industry:
 - **Uplift modelling**: predicts who will change behaviour *because of* an action (for example a discount), not just who will buy. It needs data from an experiment with a control group.
@@ -127,6 +143,23 @@ note: Each model sees a different random re-sample of the same data.
 - Random re-samples | Pick rows with replacement, many times | process
 - One model per sample | Each model learns slightly different quirks | model
 - Vote or average | Classes vote; numbers are averaged | output
+```
+
+## Live simulation
+Four of the algorithms in this lesson, side by side on the same made-up points. Each is written out in the page, so you can change the data, change one setting, and see the decision boundary and the accuracy change.
+
+```sim sup Supervised algorithms on the same points
+question: Does one algorithm win on every kind of data?
+watch: The background colour is what the chosen algorithm predicts at each place. Filled points were used for learning, hollow points are kept back to test.
+watch: Change the pattern in the data and read the table: the best algorithm changes.
+watch: Push the main setting (k, or tree depth) to an extreme. Training accuracy goes up while test accuracy can go down.
+try: moons | On the two-moons data, find an algorithm and a setting that reach at least 90% on the test points.
+try: overfit | Make the training accuracy 100% while the test accuracy is at least 5 points lower. A small k or a deep tree will do it.
+try: line | On the circle-in-a-ring data, show that logistic regression stays under 75% on the test points.
+predict: On the circle-inside-a-ring data, which algorithm will do worst? | k-nearest neighbours | Logistic regression | Decision tree | Naive Bayes
+answer: 2 | Logistic regression draws one straight boundary, and no straight line separates a circle from the ring around it. Here it gets about 52%, no better than guessing.
+leaves-out: There are 100 learning points and 60 test points in two dimensions, so the pictures are clear. Real data has many more columns, and the settings are normally chosen with a separate validation set and cross-validation, not by looking at the test points. Other algorithms from this lesson (boosting, support vector machines) are not included.
+reference: examples/sim-supervised/algorithms.py
 ```
 
 ## Python example

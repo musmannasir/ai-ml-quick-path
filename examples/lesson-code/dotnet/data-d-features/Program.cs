@@ -1,4 +1,4 @@
-// From lesson 'd-features' (data). Code status: Python executed 2026-11-02 (ml_basics.py features); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'd-features' (data). Code status: Python executed 2026-11-02 (ml_basics.py features)
 using Microsoft.ML;
 
 var ml = new MLContext(seed: 0);

@@ -1,4 +1,4 @@
-// From lesson 'd-basics' (data). Code status: Python executed 2026-11-02 (quickpath.py data); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'd-basics' (data). Code status: Python executed 2026-11-02 (quickpath.py data)
 using Microsoft.ML;
 using Microsoft.ML.Data;
 

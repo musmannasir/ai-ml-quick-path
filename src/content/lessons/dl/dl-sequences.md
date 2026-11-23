@@ -4,11 +4,12 @@ title: Text and sequences: tokens, embeddings and RNNs
 module: dl
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Explain how text becomes numbers (tokens and embeddings), how word vectors capture meaning, and how recurrent networks process sequences and why transformers replaced them.
 prereqs: dl-neural-nets, d-features
 reviewed: 2026-11-02
 evidence: Word vectors trained on a small corpus you choose, with nearest neighbours for five words and a note on one surprising result.
-code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn); C# (TorchSharp) not run (not installed in the build environment)
+code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn)
 ---
 ## In plain words
 Text, speech and sensor readings are **sequences**: order matters. To use text, you first split it into **tokens** (words or pieces of words) and give each an id. Each id is then turned into an **embedding**: a list of numbers that represents meaning, so that "cat" and "dog" end up close together. Early **word vectors** (word2vec, GloVe) learned this from the idea that words used in similar places have similar meanings. A **recurrent neural network (RNN)** reads a sequence one step at a time and keeps a **hidden state**, a running memory. **LSTMs** and **GRUs** improved that memory. Their weakness is speed and long memory: each step waits for the previous one, and early words fade. **Transformers** (next lesson) read all positions at once with attention, which is why almost all modern language models use them.
@@ -24,6 +25,7 @@ Text, speech and sensor readings are **sequences**: order matters. To use text, 
 ```diagram loop A recurrent network reading a sequence
 - Read the next token | One step at a time | input
 - Update the hidden state | The running memory | model
+- Pass the state on | It becomes the input to the next step | store
 loop: Repeat for every token, then use the final state to predict
 ```
 
@@ -59,6 +61,31 @@ A job site wanted "software developer" searches to also find "programmer" listin
 - First token | Its effect may have faded | warn
 - Middle tokens | Mixed into the memory step by step | process
 - Last token | Added most recently | input
+```
+
+```maths How many numbers are in an embedding table?
+situation: A model knows a vocabulary of 10,000 tokens. It stores each token as a list of 100 numbers (its embedding).
+find: How many numbers must the model learn just for this table?
+step: Tokens times numbers per token | 10,000 × 100 = 1,000,000
+result: The embedding table holds **1,000,000** numbers.
+why: Text enters a network as token ids, and the first thing the network does is look up each id in this table. The table is learned during training, and for small models it is a large part of the total size.
+try: You make each embedding 300 numbers long instead of 100. How big is the table?
+answer: 10,000 × 300 = 3,000,000 numbers. Longer embeddings can hold more meaning but cost memory and training time in direct proportion.
+```
+
+## Live simulation
+A running state is the simplest way to read a sequence. You can set its memory and watch what it keeps.
+
+```sim seq A running state that reads a sentence
+question: How can a network read a sentence one word at a time and still remember the start?
+watch: The bars show one number, the state, after each word. Positive words push it up, negative words push it down.
+watch: Memory sets how much of the old state is kept at each step. A high memory lets early words still count at the end.
+watch: Set the memory to zero and see that only the latest word is left.
+try: forget | For the first sentence, turn the memory down until the final verdict becomes "unsure".
+predict: The first sentence ends with a neutral word ("ending"). With a strong memory of 0.9, what is the verdict at the end? | Positive | Negative | Unsure
+answer: 2 | The state still carries the negative words "dull" and "slow" just before the neutral last word, so it ends negative (about -0.67). The early positive word has mostly faded.
+leaves-out: One number for the state, with weights set by hand. A real recurrent network keeps many numbers and learns its weights from data, and the long-memory versions (LSTM, GRU) add gates to keep information for longer. Transformers replaced this one-word-at-a-time reading with attention. The embedding map is not shown here.
+reference: examples/sim-dl/dl.py
 ```
 
 ## Python example

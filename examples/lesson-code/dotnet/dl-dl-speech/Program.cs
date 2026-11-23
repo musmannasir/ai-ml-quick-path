@@ -1,4 +1,4 @@
-// From lesson 'dl-speech' (dl). Code status: Python signal demo and WER executed 2026-11-02 (gap_topics.py speech); Whisper and C# (Whisper.net) not run (not installed in the build environment)
+// From lesson 'dl-speech' (dl). Code status: Python signal demo and WER executed 2026-11-02 (gap_topics.py speech); Whisper not run (not installed in the build environment)
 using Whisper.net;
 
 using var factory = WhisperFactory.FromPath("ggml-base.bin");

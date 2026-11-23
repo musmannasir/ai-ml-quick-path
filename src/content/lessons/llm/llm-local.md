@@ -4,11 +4,12 @@ title: Running language models on your own machine
 module: llm
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Run an open-weight model locally, understand quantization and memory needs, and call the local model from Python and .NET through the same interfaces used for hosted models.
 prereqs: llm-how
 reviewed: 2026-11-02
 evidence: A local model answering through both a Python and a C# client, with memory use and tokens per second noted for two quantization levels.
-code: Python memory arithmetic executed 2026-11-02 (memory_estimate.py); local model calls not run (no model runner in the build environment); C# not compiled (no .NET SDK)
+code: Python memory arithmetic executed 2026-11-02 (memory_estimate.py); local model calls not run (no model runner in the build environment)
 ---
 ## In plain words
 You do not always need a cloud API. **Open-weight models** can run on your laptop, a workstation or your own servers, which keeps data in-house and can lower cost. Memory is the limit: model weights need parameters × bytes per weight. **Quantization** stores weights in fewer bits (8-bit, 4-bit) so a model fits in less memory, with a small loss in quality that you must measure. Popular tools: **Ollama** and **llama.cpp** run quantized models (GGUF files) on laptops and desktops, with or without a GPU; **ONNX Runtime GenAI** runs models in many languages; **vLLM** serves models to many users on GPUs. Many of these expose an **OpenAI-compatible API**, so the same code works for a local or hosted model by changing the address. A rough guide: a 7–8-billion-parameter model at 4 bits needs about 4–5 GB just for weights, plus memory for the conversation (the **KV cache**).
@@ -84,6 +85,20 @@ A law firm cannot send client documents to an outside service. It runs an open m
 - Start the runner | It exposes a local API | process
 - Point your client | Python or .NET, at the local address | process
 - Measure | Tokens per second, memory and quality on your examples | output
+```
+
+```maths How much memory do a model's weights need?
+situation: A model has 8 billion parameters. Stored at 16-bit precision, each parameter takes 2 bytes. One billion bytes is one gigabyte (GB).
+find: How much memory do the weights need at 16-bit, and after 4-bit quantisation?
+step: At 16-bit: billions of parameters times bytes each | 8 × 2 = 16 GB
+step: At 4-bit, each parameter takes half a byte | 8 × 0.5 = 4 GB
+result: About **16 GB** at 16-bit, about **4 GB** at 4-bit.
+formula: weight memory in GB ≈ parameters in billions × bytes per parameter
+why: This sum tells you in seconds whether a model can fit on your laptop or graphics card at all, and why quantised versions exist.
+caution: This is the weights alone. Running the model needs more: memory for the conversation so far (the KV cache), working memory and the program itself. Leave a clear margin, and expect training to need several times more than running.
+widget: memory 8,2
+try: Your graphics card has 8 GB of memory. Can it hold a 3 billion parameter model at 16-bit?
+answer: 3 × 2 = 6 GB for the weights. That is under 8 GB, so it can load, with about 2 GB left for the conversation and working memory. Long conversations may still run out, so a 4-bit version (3 × 0.5 = 1.5 GB) gives much more room.
 ```
 
 ### Related concepts

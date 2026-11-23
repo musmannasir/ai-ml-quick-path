@@ -16,9 +16,14 @@
     "test:e2e": "node tests/e2e.mjs",
     "test:e2e:edge": "node tests/e2e.mjs --channel=msedge",
     "test:examples": "node scripts/run-examples.mjs",
-    "test": "npm run build && npm run test:static && npm run test:e2e",
+    "verify:code": "node scripts/verify-code.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:maths": "node scripts/check-maths.mjs",
+    "check:diagrams": "node scripts/check-diagrams.mjs",
+    "test": "npm run build && npm run check:maths && npm run check:diagrams && npm run check:sims && npm run test:static && npm run test:e2e",
     "package": "node scripts/package.mjs",
-    "extract:code": "python3 scripts/extract_lesson_code.py"
+    "extract:code": "python scripts/extract_lesson_code.py",
+    "check:sims": "node scripts/check-sims.mjs"
   },
   "devDependencies": {
     "playwright": "^1.56.0"

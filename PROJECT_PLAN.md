@@ -40,3 +40,9 @@ and no external links.
 - Diagrams for every lesson (352), renderer `src/lib/diagram.mjs`, styles in `app.css`, rules in CLAUDE.md 4.7.
 - Browser tests run in installed Microsoft Edge (`npm run test:e2e:edge`); the site is deployed to local IIS
   through `scripts/deploy.ps1` as plain static files with a generated web.config (site "AIGuide"; no exe).
+
+## 2026-11 upgrade (V2 specification)
+
+Stage-by-stage status, the requirements-to-test matrix, the acceptance checklist and the ordered list of open work are kept in
+`IMPLEMENTATION_PROGRESS.md`. Baseline: `docs/audits/BASELINE_2026_UPGRADE.md`. Summary on 2026-11-13: Stages 0 and 1 done;
+Stages 2, 3, 4 and 6 partly done; Stage 5 not started apart from case source links; nothing deployed.

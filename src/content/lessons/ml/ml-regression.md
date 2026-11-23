@@ -4,11 +4,12 @@ title: Regression: predicting a number
 module: ml
 level: Beginner
 minutes: 75
+maths: algebra
 goal: Train regression models that predict numbers, judge them with MAE, RMSE and R², and choose the right model complexity.
 prereqs: ml-learning, d-features
 reviewed: 2026-11-02
 evidence: A regression model on a dataset you choose with MAE, RMSE and R² on a test set, compared with a baseline that predicts the average.
-code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py regression); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py regression)
 ---
 ## In plain words
 **Regression** predicts a number: a price, a delivery time, next month's energy use. **Linear regression** draws the best straight line (or flat surface) through the data. More flexible models, such as decision trees, boosted trees or polynomial curves, can follow bends. You judge regression with three numbers. **MAE** (mean absolute error) is the average size of a mistake, in the same units as the target ("we are 5,000 off on average"). **RMSE** (root mean squared error) punishes big mistakes more. **R²** says how much of the variation the model explains: 1 is perfect, 0 is no better than always predicting the average. The right complexity is the one with the best error on **test** data, not training data.
@@ -45,6 +46,21 @@ note: Smaller error is better for MAE and RMSE. R² is better the closer it is t
 - Share of the variation explained
 - 1 is perfect
 - 0 is no better than the average
+```
+
+```maths A straight-line prediction, step by step
+situation: A tiny model predicts a price from a size with the rule "price = 2 × size + 1". The numbers are scaled toy values, not real property prices.
+find: What does the model predict for a home of size 3?
+step: Multiply the size by the slope | 2 × 3 = 6
+step: Add the intercept | 6 + 1 = 7
+result: The predicted price is **7**.
+formula: prediction = slope × input + intercept
+means: The slope (2) says how much the price rises for each extra unit of size. The intercept (1) is the prediction when the size is 0.
+why: Training a linear regression means finding the two numbers 2 and 1 from data. The model "learns" by adjusting them until its predictions are close to the real prices.
+caution: A straight line is only trustworthy inside the range of sizes it was trained on. It will happily predict a price for size 1,000 even if it never saw anything bigger than 10.
+widget: line 2,1,3
+try: Keep the same rule. What does the model predict for size 5, and by how much did the prediction change from size 3?
+answer: 2 × 5 = 10, then 10 + 1 = 11. The size went up by 2 and the prediction went up by 4, which is 2 units of size × the slope 2. The slope is the price of one extra unit.
 ```
 
 ## Real-world example
@@ -84,6 +100,39 @@ note: Matches the run below: training error keeps falling, test error is best at
 - Training error is very low
 - Test error rises: it memorised noise
 - Degree 15 in the run below
+```
+
+```maths Mean absolute error (MAE) with three homes
+situation: The model predicts prices for three homes. The first prediction is 1 too low, the second is 2 too high and the third is 3 too low. For MAE the direction does not matter, only the size of each mistake.
+find: How big is a typical mistake?
+table: Home | Actual | Predicted | Size of mistake
+row: A | 8 | 7 | 1
+row: B | 10 | 12 | 2
+row: C | 15 | 12 | 3
+step: Mistake for home A | 8 − 7 = 1
+step: Mistake for home B (predicted minus actual, to keep it positive) | 12 − 10 = 2
+step: Mistake for home C | 15 − 12 = 3
+step: Average the three mistakes | (1 + 2 + 3) ÷ 3 = 2
+result: The MAE is **2**: on average the model is 2 price units away from the truth.
+why: MAE is in the same units as the thing you predict, so it is easy to explain: "we are 2 off on average". The code below prints it for the test homes.
+try: Home C's mistake becomes 9 instead of 3. What is the new MAE?
+answer: (1 + 2 + 9) ÷ 3 = 4. One bad prediction doubled the MAE. RMSE, the other measure in this lesson, would rise even more, because it squares each mistake before averaging.
+```
+
+## Live simulation
+Fitting a line is easier to understand when you try it yourself and then see what the best fit does.
+
+```sim reg Fit a line by hand, then compare with the best fit
+question: How does a regression line get chosen, and how much can one odd point or a penalty change it?
+watch: The dashed lines are residuals, the gaps between each point and your line. The error (MSE) is the average of their squares.
+watch: The best-fit line is the one with the smallest possible MSE. R² says how much of the spread in the answers the line explains (1 is all of it).
+watch: Add the outlier and see the best-fit line move. Then raise the ridge penalty and watch the slope shrink toward zero.
+try: close | Move the sliders by hand until your error is within 10% of the best fit.
+try: outlier | Add the outlier and see the best-fit slope change by more than 0.3.
+predict: One extra point is added far below the others, at the right edge. What happens to the best-fit slope? | It stays the same | It moves toward the odd point, so the slope falls | It goes to zero
+answer: 2 | Least squares squares every gap, so a point far from the line pulls hard. Here the slope falls from about 1.62 to about 1.02 because of one point out of 13.
+leaves-out: One input and made-up points (the true rule behind them is slope 1.5, intercept 0.3, plus noise). Real regression has many inputs, and the ridge penalty here is applied to the slope only. The lasso penalty, which can set weights exactly to zero, is not shown.
+reference: examples/sim-core/core.py
 ```
 
 ## Python example

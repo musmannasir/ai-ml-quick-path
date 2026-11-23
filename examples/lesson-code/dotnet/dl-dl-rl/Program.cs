@@ -1,4 +1,4 @@
-// From lesson 'dl-rl' (dl). Code status: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+// From lesson 'dl-rl' (dl). Code status: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); added technique snippets (2026-11-05) not run
 var rng = new Random(3);
 var Q = new double[5, 2];                   // 5 cells x (left, right)
 double alpha = 0.5, gamma = 0.9, epsilon = 0.2;

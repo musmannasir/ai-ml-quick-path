@@ -4,11 +4,12 @@ title: Evaluating language models
 module: llm
 level: Advanced
 minutes: 60
+maths: algebra
 goal: Evaluate language models with perplexity, benchmarks and your own task tests, and avoid contamination and misleading comparisons.
 prereqs: llm-train-laptop
 reviewed: 2026-11-02
 evidence: An evaluation report for two models on your own 50-question task set, with failure examples and a recommendation.
-code: Perplexity values computed 2026-11-02 from the executed tiny-model run; C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+code: Perplexity values computed 2026-11-02 from the executed tiny-model run
 ---
 ## In plain words
 Different questions need different tests. **Perplexity** turns a model's loss on held-out text into "how many equally likely choices it is unsure between": lower is better. It is useful for comparing models that share a tokeniser on the same text, but says little about usefulness. **Benchmarks** are standard test sets for skills such as knowledge, reasoning or coding; they allow comparisons between models but can be **contaminated** (the test questions leaked into training data) and may not match your work. **Task evaluations** test exactly what your product needs, on your own examples; they decide in practice. **Human evaluation** catches quality that numbers miss. Results go into a **model card**: intended use, data, results and known limits.
@@ -77,6 +78,35 @@ y: Quick number | Realistic use
 - Benchmarks | Standard, but may be contaminated | store
 - Not enough on its own | Numbers can miss quality | warn
 - Task test plus human review | Decides whether it ships | output
+```
+
+```maths Comparing two models on a small test set
+situation: You test two models on the same 40 questions. Model A answers 30 correctly. Model B answers 33 correctly.
+find: What is each model's accuracy, and how big is the real difference?
+step: Model A | 30 ÷ 40 = 0.75 = 75%
+step: Model B | 33 ÷ 40 = 0.825 = 82.5%
+step: Difference in questions | 33 − 30 = 3
+result: B scores **82.5%** against A's **75%**, but the whole gap is **3 questions**.
+why: Evaluation scores decide which model or prompt you ship. This sum reminds you what is behind a percentage: on a small test set, a few questions swing the result.
+caution: With only 40 questions, a 3-question gap can easily be luck. Before trusting it, use more questions, or check whether the same questions are answered differently when you run the test again.
+try: On a larger set of 400 questions, A gets 300 right and B gets 330. Are the percentages different from before?
+answer: A: 300 ÷ 400 = 0.75 = 75%. B: 330 ÷ 400 = 0.825 = 82.5%. The percentages are identical, but the gap is now 30 questions instead of 3, so it is far less likely to be chance. The same percentage can deserve very different amounts of trust.
+```
+
+## Live simulation
+Evaluating a language model starts with what you measure. Two measures, side by side.
+
+```sim ppl Scoring language models
+question: How do we score a language model, and why does the scoring method matter?
+watch: Perplexity measures how well a model predicts text it has never read. It falls as the tiny model reads more.
+watch: Perplexity says how many equally likely words the model is torn between. It does not say whether answers are right.
+watch: For answers to questions, a few ways of scoring give different results on the same four answers.
+try: low | Let the model read enough text to bring perplexity to 8 or less.
+try: strict | Choose exact match and see correct answers marked wrong.
+predict: A model answers “The capital is Paris.” and the gold answer is “Paris”. Does exact match mark it right? | Yes | No | Only after tidying
+answer: 2 | The two strings differ, and tidying capitals and punctuation does not make them equal. A looser rule (contains the answer, or word overlap) accepts it, but a looser rule also accepts some wrong answers. State how you scored.
+leaves-out: A count model with about 160 words of made-up text, and four hand-written answers to one question. Real evaluations use many questions, check the scoring method against human judgement, and are often scored by another model or by people.
+reference: examples/sim-ops/ops.py
 ```
 
 ## Python example

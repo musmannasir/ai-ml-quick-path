@@ -1,0 +1,378 @@
+{
+ "ms-openai": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "ms-investmentnews": {
+  "result": "blocked",
+  "http": 403,
+  "checked": "2026-11-13",
+  "lastOk": null
+ },
+ "klarna-press": {
+  "result": "blocked",
+  "http": 403,
+  "checked": "2026-11-13",
+  "lastOk": null
+ },
+ "klarna-entrepreneur": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "indeed-openai": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "indeed-lead": {
+  "result": "blocked",
+  "http": 403,
+  "checked": "2026-11-13",
+  "lastOk": null
+ },
+ "duolingo-max": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "duolingo-techcrunch": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://techcrunch.com/2023/03/14/duolingo-launches-new-subscription-tier-with-access-to-ai-tutor-powered-by-gpt-4/",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "deere-press": {
+  "result": "moved",
+  "http": 200,
+  "final": "https://www.deere.com/en-us/content-library",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "deere-uaex": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "deepmind-blog": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "deepmind-techcrunch": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "intercom-blog": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "intercom-compare": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "moderna-openai": {
+  "result": "blocked",
+  "http": 403,
+  "checked": "2026-11-13",
+  "lastOk": null
+ },
+ "moderna-biospace": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "lowes-openai": {
+  "result": "blocked",
+  "http": 403,
+  "checked": "2026-11-13",
+  "lastOk": null
+ },
+ "lowes-prnewswire": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "copilot-research": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "copilot-arxiv": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "toyota-gcloud": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://cloud.google.com/blog/ja/topics/hybrid-cloud/toyota-ai-platform-manufacturing-efficiency?hl=ja",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "toyota-logistics": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "python-tutorial": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "dotnet-ai": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://learn.microsoft.com/en-us/dotnet/ai/",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "meai": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "mlnet": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://learn.microsoft.com/en-us/dotnet/machine-learning/",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "aspnet-minimal": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "agent-framework": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://learn.microsoft.com/en-us/agent-framework/",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "google-mlcc": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "pandas-start": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sqlite-docs": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-guide": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-linear": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-metrics": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-cv": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-preprocessing": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-clustering": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "sklearn-ensemble": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "pytorch-tutorials": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "torchsharp": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "onnxruntime": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "hf-llm-course": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "hf-transformers": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "hf-peft": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "attention-paper": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "lora-paper": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "cs336": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "ollama": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "vllm": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://docs.vllm.ai/en/latest/",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "langgraph": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "mcp": {
+  "result": "ok",
+  "http": 200,
+  "final": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro",
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "fastapi": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "mlflow": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "opentelemetry": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "owasp-llm": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "nist-ai-rmf": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "gymnasium": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "pyg": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "whisper": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "docker-start": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ },
+ "wcag22": {
+  "result": "ok",
+  "http": 200,
+  "checked": "2026-11-13",
+  "lastOk": "2026-11-13"
+ }
+}

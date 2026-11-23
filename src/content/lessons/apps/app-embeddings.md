@@ -4,11 +4,12 @@ title: Embeddings and vector search
 module: apps
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Explain embeddings, find similar text by cosine similarity, and store and search vectors in a vector database from Python and C#.
 prereqs: app-llm-api, dl-sequences
 reviewed: 2026-11-02
 evidence: Twenty passages embedded with a real embedding model, five differently worded questions, and the rank of the correct passage for each.
-code: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls and C# not run (no model or .NET SDK in the build environment)
+code: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls not run (no model in the build environment)
 ---
 ## In plain words
 An **embedding** is a list of numbers (a vector) that represents the **meaning** of a piece of text, an image or a product. An embedding model is trained so that similar meanings get similar vectors: "vacation days" and "annual leave" end up close even though they share no words. **Cosine similarity** measures how close two vectors point (1 means same direction, 0 unrelated). **Vector search** embeds all your passages once, stores them, embeds each question, and returns the passages with the highest similarity. A **vector database** (pgvector in PostgreSQL, Azure AI Search, Qdrant, Elasticsearch and others) stores vectors with their text and metadata, and uses **approximate nearest-neighbour (ANN)** indexes such as **HNSW** to search millions of vectors quickly. Always embed questions and documents with the **same model**.
@@ -78,6 +79,19 @@ note: For the help-desk example above.
 - Measure | Is the right passage in the top 3? | output
 ```
 
+```maths Comparing two embeddings with a dot product
+situation: An embedding is a list of numbers that stands for a piece of text. Take two very short toy embeddings: a = [1, 2] and b = [3, 4]. Real embeddings have hundreds of numbers.
+find: What is the dot product of a and b?
+step: Multiply the numbers in the same position, then add | 1 × 3 + 2 × 4 = 11
+result: The dot product is **11**.
+formula: dot product = a₁ × b₁ + a₂ × b₂ + … (one product per position)
+why: Vector search finds the stored texts whose embeddings give the highest score with the embedding of your question. For embeddings scaled to length 1, that score is the dot product.
+caution: A dot product also grows when the lists simply contain bigger numbers, so 11 on its own does not mean "very similar". Real systems divide by the lengths of the two lists (cosine similarity) or scale every embedding to length 1 first. These toy numbers are not a measured similarity between two texts.
+widget: dot 1,2,3,4
+try: Compare a = [1, 2] with c = [2, −1]. What is the dot product, and what does it suggest?
+answer: 1 × 2 + 2 × (−1) = 2 − 2 = 0. A dot product of 0 means the two lists point in unrelated directions: knowing one tells you nothing about the other.
+```
+
 ### Related concepts
 
 #### Embedding models
@@ -122,6 +136,21 @@ note: One system holds both kinds of data.
 ## With filter | output
 - Only matching source, date, language and product
 - Only passages this user may read
+```
+
+## Live simulation
+Search by meaning is a search for the nearest points on a map of embeddings.
+
+```sim vs Embeddings and vector search
+question: How does a search by meaning find related items, and what changes when you fetch more of them?
+watch: Every word has a position. The query is a point on the same map, and search returns the closest stored points.
+watch: Fetch more neighbours and the results soon reach other topics. Move the query between two topics and the results mix.
+watch: Compare the two ways to measure closeness. Cosine similarity looks at direction only; distance also looks at how far away a point is.
+try: mix | Move the query so that the results come from at least two topics with k of 6 or less.
+predict: You ask for 12 neighbours, and each topic has 6 words. What happens to the results? | They stay in one topic | They begin to include other topics | They become more accurate
+answer: 2 | Only 6 words belong to the nearest topic, so neighbours 7 to 12 must come from somewhere else. Fetching more always trades relevance for coverage.
+leaves-out: The positions are made-up numbers on a 2-D map, grouped by topic on purpose. Real embeddings have hundreds of dimensions and come from a trained model, and large collections use approximate search rather than comparing with every item.
+reference: examples/sim-llm/llm.py
 ```
 
 ## Python example

@@ -4,11 +4,12 @@ title: How large language models work
 module: llm
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Explain pretraining, next-token prediction, context windows, instruction tuning, open-weight versus hosted models, and why LLMs sometimes make things up.
 prereqs: dl-transformers
 reviewed: 2026-11-02
 evidence: A one-page explanation, for a non-technical colleague, of how a chat assistant produces an answer and why it can be confidently wrong.
-code: Python executed 2026-11-02 (quickpath.py bigram); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py bigram)
 ---
 ## In plain words
 A **large language model (LLM)** is a decoder-only transformer with billions of weights. It is built in stages. **Pretraining**: the model reads a huge amount of text and learns one skill, predicting the **next token** (word piece). To do that well it has to absorb grammar, facts, reasoning patterns and code. **Instruction tuning** (supervised fine-tuning) then trains it on examples of questions and good answers, and **preference tuning** (such as RLHF or DPO) makes it prefer helpful, safe answers. When you chat, the model repeatedly predicts the next token, adds it to the text, and predicts again. The **context window** is how much text (your prompt, documents, conversation and its answer) it can consider at once. **Hosted models** are used through a provider's API; **open-weight models** can be downloaded and run on your own hardware. Because the model generates likely text rather than looking facts up, it can **hallucinate**: produce fluent, confident statements that are wrong. Giving it real documents (RAG, Part 6) and checking outputs reduce this.
@@ -78,6 +79,19 @@ note: Each stage adds behaviour on top of the one below.
 - Pretraining | Learns grammar, facts, reasoning patterns and code by predicting the next token | model
 ```
 
+```maths Next-token probability from counting
+situation: In a tiny collection of text, the word "thank" appears 10 times. It is followed by "you" 8 times and by "goodness" 2 times.
+find: After "thank", how likely is each next word?
+step: Count how often "thank" was followed by anything | 8 + 2 = 10
+step: Share of "you" | 8 ÷ 10 = 0.8 = 80%
+step: Share of "goodness" | 2 ÷ 10 = 0.2 = 20%
+result: After "thank": **"you" 80%**, "goodness" 20%.
+why: A language model does one job: for the text so far, give a probability to every possible next token. This box does it by counting. A large language model does it with a neural network, so it can also handle text it has never seen, but the output has the same form: a list of probabilities that add up to 100%.
+caution: This is a counting toy, not how a transformer computes. It also knows nothing about meaning: it would give the same answer after "No thank" and "Please thank".
+try: You add more text in which "thank" is followed by "them" 10 times. What is the probability of "you" now?
+answer: "thank" now appears 8 + 2 + 10 = 20 times, so "you" is 8 ÷ 20 = 0.4 = 40%. The data changed, so the probabilities changed. A model reflects the text it was trained on.
+```
+
 ### Related concepts
 
 #### Context window
@@ -111,6 +125,21 @@ note: Read from the bottom up.
 - Many repeated blocks | Each block applies attention and then a small network | model
 - Token embeddings | Each token becomes a list of numbers | process
 - Input tokens | The text split into pieces | input
+```
+
+## Live simulation
+The model below is the same tiny Transformer used in the Transformers lesson (21 words, 8 numbers per word, one block). It is a toy, but the loop around it is the loop a large model runs.
+
+```sim tf5 How a Transformer writes one word at a time
+question: How does a Transformer write text one word at a time, and what does the cache save?
+watch: Each step runs the text so far through the model. Only the scores for the last word are used, and they become chances for the next word.
+watch: Temperature and top-k reshape the chances, exactly as in the token-generation simulation. Greedy picks the highest, sampling draws at random.
+watch: The table counts "word passes". Without the cache every step runs all the earlier words again. With the cache, earlier words are kept, so each later step runs only the new word.
+try: cache | Write a text to the end and read the two totals: the cache should save at least 5 word passes.
+predict: A text has 6 words when the model chooses word 7. With no cache, how many words does it run through the model for that step? | Only the new word | All 6 words again | None
+answer: 2 | The model has no memory between steps. Without a cache it processes the whole text again; with a cache it reuses the stored keys and values of the first 6 words and does the work only for the new one.
+leaves-out: This toy model knows 21 words and a text of at most 8 words, so the cache saving is small. For a long text the saving is large, and the cache itself takes memory. The page counts word passes; it does not time anything.
+reference: examples/sim-attention/attention_forward.py
 ```
 
 ## Python example

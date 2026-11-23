@@ -4,11 +4,12 @@ title: Unsupervised learning: groups, compression and anomalies
 module: ml
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Group similar items with clustering, compress many columns with PCA, and flag unusual records with anomaly detection, all without labels.
 prereqs: ml-algorithms
 reviewed: 2026-11-02
 evidence: A clustering or anomaly-detection result on your own data, with each group or flag explained in business words.
-code: Python executed 2026-11-02 (ml_basics.py kmeans, quickpath.py pca and anomaly); C# not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python executed 2026-11-02 (ml_basics.py kmeans, quickpath.py pca and anomaly); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 Often you have data but no answers attached. **Unsupervised learning** finds structure anyway. **Clustering** puts similar items into groups: k-means picks k group centres and moves them until each item is near its centre. **Dimensionality reduction** squeezes many related columns into a few: **PCA** (principal component analysis) finds the main directions in which the data varies. It is useful for charts, speed and noise removal. **Anomaly detection** flags records that do not fit the normal pattern, such as an unusual payment or a strange sensor reading; **Isolation Forest** does this by noticing that odd points are easy to separate from the rest. Results need a person to interpret them: a cluster is only useful if someone can name it and act on it.
@@ -78,6 +79,45 @@ note: Analysts' decisions become labels, so unsupervised work later feeds superv
 - Run the method | Clusters, PCA or anomaly detector | model
 - Interpret | Name each group, review the most unusual records | process
 - Validate with people | Do the groups or flags make business sense? | output
+```
+
+```maths The centre of a cluster (what k-means recalculates)
+situation: Three points have been placed in the same cluster: (1, 2), (3, 4) and (5, 6).
+find: Where is the centre of this cluster?
+step: Average of the first numbers | (1 + 3 + 5) ÷ 3 = 3
+step: Average of the second numbers | (2 + 4 + 6) ÷ 3 = 4
+result: The centre is **(3, 4)**.
+why: k-means repeats two steps: put each point in the cluster with the nearest centre, then move every centre to the average of its points. This box is the second step. Repeating both steps is the whole algorithm.
+try: A new point (7, 4) joins the cluster. Where does the centre move to?
+answer: First numbers: (1 + 3 + 5 + 7) ÷ 4 = 4. Second numbers: (2 + 4 + 6 + 4) ÷ 4 = 4. The centre moves from (3, 4) to (4, 4), towards the new point.
+```
+
+## Live simulation
+Without labels, a method must find structure on its own. Two of the main ideas are grouping and squeezing.
+
+```sim km Clustering: k-means and DBSCAN
+question: How do clustering methods find groups when nobody gave them labels, and when do they fail?
+watch: k-means alternates two steps. Assign: each point joins its nearest centre. Move: each centre goes to the middle of its points. It stops when nothing changes.
+watch: The elbow chart shows total squared distance for k = 1 to 8. It falls fast until the right number of groups and slowly after.
+watch: Switch to the curved groups. k-means cuts them with a straight line, while DBSCAN follows the curves.
+try: three | On the three round groups, run k-means with k = 3 to the end.
+try: moons | On the curved groups, find DBSCAN settings that give exactly 2 clusters.
+predict: The data has three real groups. If you pick k = 5, what happens to the total squared distance? | It goes up | It goes down, because the extra centres split real groups | It stays the same
+answer: 2 | More centres always reduce the distance, so the number alone cannot choose k. The elbow is where the drop slows: here, from 16.8 at k = 2 to 3.0 at k = 3, and only to 2.4 at k = 5.
+leaves-out: Made-up points in two dimensions. Real data has many columns, so groups cannot be seen and the scaling of the columns matters. Hierarchical clustering is not shown, and a good number of clusters is a judgement, not a result.
+reference: examples/sim-core/core.py
+```
+
+```sim pca PCA: the axis that keeps the most spread
+question: How can two numbers per point become one with the least loss, and what is a principal component?
+watch: Each point drops a shadow onto the axis. The shadows are the new one-number version of the data.
+watch: "Spread kept" is the share of the data's variation that the shadows still show. Turn the axis and see it change.
+watch: The best axis lines up with the long direction of the cloud. That direction is the first principal component.
+try: axis | Turn the axis by hand until it is within 5 degrees of the best one.
+predict: Two numbers per point become one (the shadow). Which axis loses the least? | The horizontal one | The one where the shadows stay most spread out | The vertical one
+answer: 2 | The shadows lose the least information when they stay as spread out as possible, which happens along the long direction of the cloud. Here that axis keeps 95% of the spread; the horizontal axis keeps 72%.
+leaves-out: Two dimensions, so you can see the cloud. PCA is used when there are dozens or thousands of columns. It finds directions of large spread, which are not always the directions that matter for your task, and the columns should be on comparable scales first.
+reference: examples/sim-core/core.py
 ```
 
 ## Python example

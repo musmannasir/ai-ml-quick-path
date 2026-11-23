@@ -4,11 +4,12 @@ title: Security for AI applications
 module: apps
 level: Advanced
 minutes: 75
+maths: basic arithmetic
 goal: Recognise the main risks to LLM applications (prompt injection, data leakage, excessive agency and others), apply layered defences, and redact personal data before it reaches a model.
 prereqs: app-agents, app-rag
 reviewed: 2026-11-02
 evidence: A threat list for one of your apps plus 15 adversarial tests (injection, data leakage, unsafe output, cost abuse) with results and fixes.
-code: Python executed 2026-11-02 (quickpath.py pii); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py pii)
 ---
 ## In plain words
 AI apps add new ways to be attacked. **Prompt injection** is text that tries to make the model ignore its instructions: typed by a user (**direct**) or hidden in a document, web page or email the system reads (**indirect**). Other key risks, as listed in the OWASP Top 10 for LLM Applications (2025 edition): sensitive information disclosure, supply-chain risks (untrusted models and packages), data and model poisoning, improper output handling (showing model output as HTML or running it as code), **excessive agency** (tools with too much power), system prompt leakage, weaknesses in vector stores and embeddings, misinformation, and unbounded consumption (runaway cost). The core rule: treat everything going into and coming out of the model as **untrusted**, and enforce security **in code**, not in the prompt. **Redact personal data** you do not need before sending text to a model.
@@ -85,6 +86,17 @@ note: No single layer is enough. Lower layers are enforced in code.
 - Least privilege | read-only tools, separate credentials | process
 ```
 
+```maths Worst-case spend with a rate limit
+situation: You limit each user to 10 requests per minute. Suppose one request costs you 0.01 (an invented price for this sum).
+find: If someone abuses one account for a full hour, what is the most it can cost you?
+step: Most requests in one hour | 10 × 60 = 600
+step: Cost of those requests | 600 × 0.01 = 6
+result: One account can cost at most **6 per hour**.
+why: A rate limit turns "unlimited damage" into a number you chose. Security for AI applications includes protecting your budget, because every model call costs money.
+try: An attacker creates 50 accounts. What is the worst case per hour now?
+answer: 50 × 6 = 300 per hour. A per-user limit alone is not enough: you also need a limit for the whole application and a way to stop cheap account creation.
+```
+
 ### Related concepts
 - **Jailbreak**: a prompt crafted to make a model ignore its safety rules (for example role-play tricks). It is a form of direct prompt injection.
 - **Guardrails**: checks placed around the model: input filters (block or flag attacks and off-topic requests), output filters (block personal data, unsafe content or invalid formats), and policy rules in code. They reduce risk but never replace least privilege and approval.
@@ -111,6 +123,21 @@ A **rate limit** caps how many requests one user, key or address may send in a p
 
 #### PII redaction
 Personal data (PII) should be removed or masked before text goes to a model, a log or a trace. The "Redacting personal data" diagram above and the Python and C# examples below show how. Redact first, then send, so the safe text is the only copy that travels.
+
+## Live simulation
+Text an assistant reads can try to control it. See how guards change the picture.
+
+```sim inj Prompt injection and three guards
+question: How can text that an assistant reads take control of it, and which guards help?
+watch: Three attacks, all invented for this page, are tried against an assistant that can read documents and send email.
+watch: Switch each guard on and see which attacks it stops.
+watch: Look for a combination that stops all three.
+try: safe | Switch guards on until all three attacks are blocked.
+predict: Is one guard enough to stop all three attacks? | Yes | No, you need more than one | Only the third guard
+answer: 2 | Each guard stops only some attacks. Layers matter, and the surest guard is limiting what the assistant can do.
+leaves-out: Three invented attacks and a simple rule for what each guard stops. Real attacks are many and inventive, and real defences are partial, not certain. Nothing here is a recipe for attacking a real system.
+reference: examples/sim-apps/apps.py
+```
 
 ## Python example
 Redacting personal data before text reaches a model or a log:

@@ -1,4 +1,4 @@
-# From lesson 'ops-serving' (ops). Code status: Python executed 2026-11-02 (quickpath.py serving, standard-library HTTP server); FastAPI and C# not run (FastAPI not installed and no .NET SDK in the build environment)
+# From lesson 'ops-serving' (ops). Code status: Python executed 2026-11-02 (quickpath.py serving, standard-library HTTP server); FastAPI not run (FastAPI not installed in the build environment)
 import joblib
 from fastapi import FastAPI
 from pydantic import BaseModel, Field

@@ -1,4 +1,4 @@
-// From lesson 'app-embeddings' (apps). Code status: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls and C# not run (no model or .NET SDK in the build environment)
+// From lesson 'app-embeddings' (apps). Code status: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls not run (no model in the build environment)
 using System.Numerics.Tensors;
 using Microsoft.Extensions.AI;
 using OllamaSharp;

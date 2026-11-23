@@ -4,11 +4,12 @@ title: Multimodal AI apps: images, documents and voice
 module: apps
 level: Intermediate
 minutes: 60
+maths: basic arithmetic
 goal: Send images and documents to vision-capable models, build image-and-text search, and add speech input and output to an application.
 prereqs: app-llm-api, dl-vision, dl-speech
 reviewed: 2026-11-02
 evidence: An app that accepts a photo or scanned document and returns validated structured fields, tested on 20 examples with field accuracy reported.
-code: Conceptual (no model access in the build environment); C# not compiled (no .NET SDK)
+code: Conceptual (no model access in the build environment)
 ---
 ## In plain words
 **Multimodal** models handle more than one kind of input or output: text with images, documents, audio or video. A **vision-language model** reads a photo or scanned page together with your instructions and answers in text, for example "extract the invoice number, date and total as JSON". **Document AI** combines text recognition (OCR) with layout understanding to read forms, invoices and receipts. **Image-and-text search** uses a shared embedding space (models trained like CLIP) so a text query can find matching photos. **Voice apps** chain speech-to-text, an LLM and text-to-speech, or use models that handle audio directly. The same rules apply as for text: validate structured output, keep a person in the loop for important decisions, and treat images and audio as personal data when they show or record people.
@@ -74,6 +75,31 @@ note: Low-confidence or high-value cases go to a person.
 loop: Repeat for every new upload
 ```
 
+```maths How much data is in a short recording?
+situation: Speech models usually expect audio with 16,000 samples per second. A voice message is 10 seconds long.
+find: How many numbers (samples) describe this recording?
+step: Samples per second times seconds | 16,000 × 10 = 160,000
+result: The recording is **160,000** numbers.
+why: Audio, images and video are much larger inputs than text. This affects upload size, processing time and cost, so apps shorten, resize or split media before sending it to a model.
+try: A meeting recording is 30 minutes long. How many samples is that?
+answer: 30 minutes is 30 × 60 = 1,800 seconds, and 16,000 × 1,800 = 28,800,000 samples. Long recordings are cut into short pieces before transcription for this reason.
+```
+
+## Live simulation
+To read a picture, a model first turns it into tokens.
+
+```sim mm An image cut into patches
+question: How does a model that reads text turn a picture into tokens, and what does it cost?
+watch: The picture is cut into square patches. Each patch becomes one token.
+watch: The number in a patch is its average brightness, standing in for the numbers a real model computes.
+watch: Attention compares every token with every other, so the cost grows with the square of the token count.
+try: cost | Choose patches of 1 pixel and see the number of pairs attention compares.
+predict: You halve the patch side from 4 pixels to 2. How does the number of tokens change? | It doubles | It quadruples | It stays the same
+answer: 2 | Halving the side makes four times as many patches: 4 tokens become 16.
+leaves-out: A tiny 8 by 8 picture with no colour. Real models use patches of 14 to 16 pixels on images of hundreds of pixels, turn each patch into a long list of learned numbers, and use ways to cut the cost of attention.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 Sending an image to a vision-capable model through an OpenAI-compatible API (requires `openai` and a model that accepts images):
 ```python read_invoice.py (conceptual)
@@ -93,6 +119,12 @@ print(reply.choices[0].message.content)     # validate before use, as in the LLM
 Microsoft.Extensions.AI sends images as `DataContent` inside a normal chat message, with typed output:
 ```cs Program.cs
 using Microsoft.Extensions.AI;
+using OpenAI;
+
+// Any chat client that accepts images works. This one talks to an OpenAI-compatible service;
+// the key comes from an environment variable, never from the code.
+IChatClient chat = new OpenAIClient(Environment.GetEnvironmentVariable("LLM_API_KEY")!)
+    .GetChatClient("your-vision-model").AsIChatClient();
 
 byte[] image = await File.ReadAllBytesAsync("invoice.png");
 var message = new ChatMessage(ChatRole.User,

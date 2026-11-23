@@ -1,4 +1,4 @@
-// From lesson 'app-rag-advanced' (apps). Code status: Python executed 2026-11-02 (quickpath.py chunking and hybrid); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'app-rag-advanced' (apps). Code status: Python executed 2026-11-02 (quickpath.py chunking and hybrid)
 using Microsoft.Extensions.AI;
 
 public static class HybridSearch

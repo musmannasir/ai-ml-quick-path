@@ -4,6 +4,8 @@
 // Internal link schemes: lesson:id, project:id, case:id, page:file.html#anchor.
 
 import { renderDiagram } from './diagram.mjs';
+import { renderMathMoment } from './maths.mjs';
+import { renderSim, SIM_SECTION } from './sim.mjs';
 
 export const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -44,6 +46,12 @@ export function md(src, ctx) {
       while (i < lines.length && !lines[i].startsWith('```')) body.push(lines[i++]);
       i++;
       if (lang === 'diagram') { out.push(renderDiagram(title, body, inline, ctx, ctx.file || 'lesson')); continue; }
+      if (lang === 'sim') { out.push(renderSim(title, body, inline, ctx, ctx.file || 'lesson')); continue; }
+      if (lang === 'maths') {
+        const mm = renderMathMoment(title, body, inline, ctx, ctx.file || 'lesson');
+        (ctx.moments ||= []).push(mm.summary);
+        out.push(mm.html); continue;
+      }
       if (lang === 'formula') {
         out.push(`<div class="formula" role="group" aria-label="Formula${title ? ': ' + esc(title) : ''}"><p class="formula-title">${esc(title || 'Formula')}</p><pre tabindex="0"><code>${esc(body.join('\n'))}</code></pre></div>`);
         continue;
@@ -112,7 +120,11 @@ export const REQUIRED_SECTIONS = [
 ];
 
 // Optional section: collapsible maths topics, each with a formula block and at least two worked examples.
+// It holds the extra worked examples; the first, simplest calculation of each idea is a ```maths moment placed
+// inside the lesson where the idea is used.
 export const APPLIED_MATHS = 'Applied Maths - Statistics';
+// How much maths a lesson asks of the reader (front matter `maths:`), shown on the lesson and used as a filter.
+export const MATHS_LEVELS = ['none', 'basic arithmetic', 'algebra', 'advanced optional'];
 
 export function parseLesson(raw, file) {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -120,7 +132,7 @@ export function parseLesson(raw, file) {
   const meta = {};
   for (const line of m[1].split('\n')) {
     const kv = line.match(/^(\w+):\s*(.*)$/);
-    if (kv) meta[kv[1]] = kv[2].trim();
+    if (kv) meta[kv[1]] = kv[2].trim().replace(/^"(.*)"$/, '$1');
   }
   for (const key of ['id', 'title', 'module', 'level', 'minutes', 'goal', 'reviewed', 'evidence']) {
     if (!meta[key]) throw new Error(`${file}: front matter is missing "${key}"`);
@@ -128,6 +140,8 @@ export function parseLesson(raw, file) {
   const list = (v) => (v ? v.split(',').map((x) => x.trim()).filter(Boolean) : []);
   meta.prereqs = list(meta.prereqs);
   meta.minutes = Number(meta.minutes);
+  meta.maths = meta.maths || 'basic arithmetic';
+  if (!MATHS_LEVELS.includes(meta.maths)) throw new Error(`${file}: front matter "maths" must be one of: ${MATHS_LEVELS.join(', ')}`);
   const sections = [];
   // Split on "## Title" lines, ignoring any that sit inside a fenced block (diagram columns use "## ").
   let inFence = false, current = null;
@@ -151,8 +165,15 @@ export function parseLesson(raw, file) {
     const examples = (s.body.match(/^\*\*Example \d/gm) || []).length;
     if (topics < 1 || formulas < topics) throw new Error(`${file}: every "${APPLIED_MATHS}" topic needs a formula block`);
     if (examples < topics * 2) throw new Error(`${file}: every "${APPLIED_MATHS}" topic needs at least 2 "**Example n" lines`);
-    const net = sections.findIndex((x) => x.title === '.NET (C#) example'), mb = sections.findIndex((x) => x.title === 'Maths behind it');
-    if (!(net < am && am < mb)) throw new Error(`${file}: "${APPLIED_MATHS}" must sit between the .NET example and "Maths behind it"`);
+    // Learning flow decides the position: anywhere after "How it works" and before "Maths behind it".
+    const how = sections.findIndex((x) => x.title === 'How it works'), mb = sections.findIndex((x) => x.title === 'Maths behind it');
+    if (!(how < am && am < mb)) throw new Error(`${file}: "${APPLIED_MATHS}" must sit after "How it works" and before "Maths behind it"`);
+  }
+  const si = sections.findIndex((x) => x.title === SIM_SECTION);
+  if (si >= 0) {
+    const how = sections.findIndex((x) => x.title === 'How it works'), py = sections.findIndex((x) => x.title === 'Python example');
+    if (!(how < si && si < py)) throw new Error(`${file}: "${SIM_SECTION}" must sit after "How it works" and before "Python example"`);
+    if (!/^```sim /m.test(sections[si].body)) throw new Error(`${file}: "${SIM_SECTION}" needs at least one sim block`);
   }
   const order = sections.map((s) => s.title).filter((t) => REQUIRED_SECTIONS.includes(t));
   if (order.join('|') !== REQUIRED_SECTIONS.join('|')) throw new Error(`${file}: sections out of order: ${order.join(', ')}`);

@@ -1,4 +1,4 @@
-// From lesson 'llm-scale' (llm). Code status: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual; C# is plain .NET and was not compiled (no .NET SDK in the build environment)
+// From lesson 'llm-scale' (llm). Code status: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual
 double parameters = 8e9;
 int gpus = 8; double gpuMemoryGb = 80;
 

@@ -4,11 +4,12 @@ title: Neural networks in plain words
 module: dl
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Explain neurons, layers, activations and backpropagation in plain words, and train a small network in Python and C#.
 prereqs: ml-learning
 reviewed: 2026-11-02
 evidence: Your own network that learns XOR in Python or C#, and a note on what changed when you used a different random seed.
-code: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch and C# (TorchSharp) not run (not installed in the build environment)
+code: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch not run (not installed in the build environment)
 ---
 ## In plain words
 A **neural network** is many tiny calculators, called **neurons**, arranged in **layers**. Each neuron takes numbers in, multiplies each by a **weight**, adds them up, and passes the result through an **activation function** (such as ReLU or tanh) that lets the network bend and combine patterns. The first layer receives the input (pixels, words, numbers); **hidden layers** in the middle build up more and more abstract patterns; the **output layer** gives the answer. "Deep" learning simply means many hidden layers. Training works like any model: predict, measure the loss, then **backpropagation** works out how much each weight contributed to the error, and the optimiser nudges every weight a little. A classic test is **XOR** (output 1 when exactly one of two inputs is 1). A straight-line model cannot learn it; a network with one small hidden layer can.
@@ -61,6 +62,38 @@ A manufacturer photographs every product on the line. Hand-written rules for scr
 - Loss | Compare with the right answers | process
 - Backward pass | Backpropagation: how each weight should change | model
 - Update weights | Optimiser such as Adam; repeat | output
+```
+
+```maths What one neuron computes
+situation: A neuron receives two inputs, 2 and 3. Its weights are 0.5 and −1, and its bias is 1. These are invented numbers; training is what finds real ones.
+find: What number does the neuron pass on?
+step: First input times its weight | 0.5 × 2 = 1
+step: Second input times its weight | −1 × 3 = −3
+step: Add both results and the bias | 1 + (−3) + 1 = −1
+note: The activation function ReLU keeps positive numbers and turns negative numbers into 0. The sum is −1, so ReLU gives 0.
+result: The neuron outputs **0**: for this input it stays silent.
+formula: output = ReLU(weight₁ × input₁ + weight₂ × input₂ + bias)
+means: Each weight says how much one input matters and in which direction. The bias shifts the result up or down. ReLU decides whether the neuron "fires".
+why: A neural network is thousands or millions of these small sums stacked in layers. Training changes the weights and biases until the last layer gives useful answers.
+try: Change the second weight from −1 to 1. What does the neuron output now?
+answer: 0.5 × 2 = 1 and 1 × 3 = 3, so the sum is 1 + 3 + 1 = 5. ReLU keeps positive numbers, so the output is 5. Changing one weight switched the neuron from silent to active, which is exactly what training does.
+```
+
+## Live simulation
+The network below is real. It is trained in this page with the same steps as in the examples: a forward pass, a loss, a backward pass and a small change to every weight. Use it to see what the weights, the hidden neurons and the learning rate actually do.
+
+```sim nn Train a small neural network
+question: What must a network be able to do before it can learn a pattern that no straight line can separate?
+watch: The lines are the weights. Blue is positive, orange is negative, and a thicker line is a larger weight. They change a little on every epoch.
+watch: The coloured map shows what the network predicts at each place. The dots are made-up points: filled ones are used for learning, hollow ones are kept back to test.
+watch: The loss curve should fall while the network learns. The dashed line is the loss on test points the network never trained on.
+try: xor | Train on the XOR pattern (opposite corners share a class) until training and test accuracy are both at least 95%.
+try: circle | Train on the circle pattern until both accuracies are at least 95%. It needs more epochs than XOR, or more neurons.
+try: one | Choose 1 neuron for XOR, train for at least 300 epochs, and see the test accuracy stay under 80%.
+predict: Can a network with only one hidden neuron learn the XOR pattern? | Yes, with enough training | No, however long it trains
+answer: 2 | One hidden neuron can only cut the plane with a single straight line, and no straight line separates XOR.
+leaves-out: This is a tiny network on 100 made-up points with two inputs. Real networks have millions of weights and many more inputs, and are trained on small batches with extra tricks. The calculation is real, but the numbers belong to this toy problem.
+reference: examples/sim-nn/nn_playground.py
 ```
 
 ## Python example

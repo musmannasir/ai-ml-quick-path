@@ -17,8 +17,14 @@ GitHub Pages cannot set custom headers; everything else works. A workflow is inc
 `.github/workflows/deploy.yml`. In the repository settings choose Pages → Source: GitHub Actions, then push to `main`.
 Set the repository variable `SITE_URL` (for example `https://<user>.github.io/<repo>`) to emit the sitemap.
 
-## Cloudflare Pages
-Build command `npm run build`, output directory `dist`, Node 18+. `_headers` is applied automatically.
+## Cloudflare Pages (planned host, free plan)
+Connect the GitHub repository in Workers & Pages. Framework preset: None. Build command `npm run build`, build output directory
+`dist`, production branch `main`. Node 22 is pinned by the `.node-version` file. Set the variable `SITE_URL` to the real
+address once it is chosen (without it no sitemap and no canonical tags are written, which is the safe default).
+`_headers` is applied automatically; `404.html` is served for unknown addresses. The build needs no network access.
+Do not set `ADSENSE_CLIENT` until the steps in `MONETIZATION_READINESS.md` are done. Cloudflare runs only the build: run
+`npm test` locally before pushing. Not yet tried on Cloudflare; after the first deploy click through nested pages, because
+Cloudflare serves `page.html` at `/page`.
 
 ## Netlify
 Build command `npm run build`, publish directory `dist`. `_headers` is applied automatically.

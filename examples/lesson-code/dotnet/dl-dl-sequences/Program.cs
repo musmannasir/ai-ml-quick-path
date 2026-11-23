@@ -1,4 +1,4 @@
-// From lesson 'dl-sequences' (dl). Code status: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn); C# (TorchSharp) not run (not installed in the build environment)
+// From lesson 'dl-sequences' (dl). Code status: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn)
 using TorchSharp;
 using static TorchSharp.torch;
 using static TorchSharp.torch.nn;

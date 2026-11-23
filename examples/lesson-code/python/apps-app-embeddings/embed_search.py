@@ -1,4 +1,4 @@
-# From lesson 'app-embeddings' (apps). Code status: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls and C# not run (no model or .NET SDK in the build environment)
+# From lesson 'app-embeddings' (apps). Code status: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls not run (no model in the build environment)
 import numpy as np
 from openai import OpenAI
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="not-needed-locally")

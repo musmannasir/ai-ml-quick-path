@@ -1,32 +1,32 @@
 {
-  "date": "2026-11-11T09:57:15.689Z",
+  "date": "2026-11-19T20:06:24.297Z",
   "browser": "Chromium (Playwright)",
-  "pages": 92,
-  "passed": 52,
+  "pages": 115,
+  "passed": 124,
   "failed": 0,
   "results": [
     {
-      "name": "No uncaught JS errors on all 92 pages (light)",
+      "name": "No uncaught JS errors on all 115 pages (light)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (light): 22446 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (light): 38504 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No uncaught JS errors on all 92 pages (dark)",
+      "name": "No uncaught JS errors on all 115 pages (dark)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Text contrast WCAG AA on all pages (dark): 22446 text elements checked",
+      "name": "Text contrast WCAG AA on all pages (dark): 38504 text elements checked",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Self-contained: no external links, scripts, styles or images on any of the 92 pages",
+      "name": "Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all 115 pages",
       "pass": true,
       "detail": ""
     },
@@ -41,7 +41,7 @@
       "detail": ""
     },
     {
-      "name": "No document-level horizontal scroll (427 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
+      "name": "No document-level horizontal scroll (482 page × width combinations; widths 320, 360, 390, 430, 768, 1024, 1280, 1440, 1920)",
       "pass": true,
       "detail": ""
     },
@@ -186,6 +186,11 @@
       "detail": ""
     },
     {
+      "name": "Catalogue maths-level filter covers every lesson exactly once; progress filter separates finished from unfinished",
+      "pass": true,
+      "detail": ""
+    },
+    {
       "name": "Header search returns relevant results, supports arrow keys and Escape",
       "pass": true,
       "detail": ""
@@ -196,12 +201,12 @@
       "detail": ""
     },
     {
-      "name": "Lesson completion updates sidebar count (1/9)",
+      "name": "Lesson completion updates the sidebar count (1 of the Part 3 lessons)",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Export produces versioned JSON (schema aimlqp-progress, version 1)",
+      "name": "Export produces versioned JSON (schema aimlqp-progress, version 2)",
       "pass": true,
       "detail": ""
     },
@@ -257,6 +262,361 @@
     },
     {
       "name": "Reduced-motion preference removes transitions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Maths moment calculator: correct default result, reacts to one change, rejects empty input with a message, resets, answer opens by keyboard, readable in dark at 390 px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "All 8 calculator types show the same result as the worked steps in their lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Code language switch: C# only hides the Python section and its contents entry, survives reload, deep link to the hidden section shows it; C# status pill comes from the compile record",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Search finds text inside lessons, marks the words and opens the matching section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Start chooser sets the first lesson and code language, is remembered and can be cleared; home page offers to resume the last lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Version 1 browser data migrates to version 2 with theme, layout and all completion marks intact",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Roadmap steps show what to finish first, a progress count and a checkpoint link; Continue points to the first unfinished lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "12-week plan shows finished lessons per week; progress page offers to resume the last lesson",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Assessment page is one column, question text sits inside its box, and print hides the check buttons and navigation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Print layout hides top bar and check buttons",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Quiz retry: a wrong answer can be changed, a right answer locks and reports its try, the score counts first tries, Retry resets the quiz",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Study plan and roadmap steps show reading and exercise progress separately",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "All fifty-seven simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Neural network playground: 400 epochs of real training reach 100% accuracy (as the Python program prints), the XOR challenge ticks and is remembered, and the predict check marks wrong and right guesses",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "With reduced motion the Train button runs a block of 50 epochs at once instead of animating",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Generation simulation: ten greedy tokens after \"the cat\" give the same text as the Python program",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Gradient descent simulation: 20 steps at rate 0.1 on the bowl reach x = 2.97 (the Python program gives the same)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Backpropagation simulation: showing all four steps gives a gradient of w of -1.00, the nudge check agrees, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Optimiser race: after 60 steps at rate 0.05 plain and momentum are near 0.017 and Adam is still near 1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Transformer writing simulation: greedy text after \"the cats\" matches the Python program, the cache saves work, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Words-to-numbers simulation: with position numbers off the two \"the\" rows are identical",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Transformer block simulation: switching off the add path drops the chance on agreeing verbs below 60%",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Training-against-using simulation: using mode needs six passes for six words and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Regression simulation: \"Use the best fit\" gives R² 0.93 and slope 1.62, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Classification simulation: at 0.5 precision and recall are 84%; at 0.2 recall is 94% and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Bias and variance simulation: degree 9 with 15 points trains well and does far worse on new points, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cross-validation simulation: five folds with k = 3 give an average of 85% (the Python program gives the same folds) and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Clustering simulation: k-means with k = 3 on three groups ends at a total squared distance of 3.04 and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "PCA simulation: the best axis keeps 95% of the spread at 30 degrees and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Anomaly simulation: flagging 5% catches all four real anomalies with one false alarm and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Model builder: the 7-billion-class shape has 6.57 billion parameters and 13.15 GB of weights, and at 4 bits it fits 8 GB and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Learning-to-write simulation: after 120 words the loss on unseen sentences is 2.04 (the Python program gives the same) and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Embedding-training simulation: after 30 steps every word has a same-topic nearest neighbour and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "LoRA simulation: rank 2 leaves 14% of the change and trains 32 of 64 numbers, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Vector-search simulation: the default query near the animals gives \"horse\" first and one topic",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Retrieval simulation: chunks of 20 words find the answer to the first question and all four questions at 20 words sent, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Convolution simulation: the vertical bar with the vertical-edge filter gives a 6 × 6 map with strongest response 3, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Running-state simulation: with memory 0.9 the first sentence ends at -0.67 (negative), with no memory it is unsure, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Word-weight simulation: for review 4 with rarity weighting the top word is \"ending\" and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Autoencoder simulation: one number in the middle loses 54.3% and two lose 7.5% (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Graph simulation: after 10 rounds the values differ by 0.02 and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Spectrogram simulation: a window of 128 reads the first pitch as 102 Hz and the second as 250 Hz, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reinforcement-learning simulation: after 50 episodes the best path reaches the goal in 6 moves (the Python program gives the same path) and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recommender simulation: User 1 and Film C is predicted at 4.50 with k = 2 and 3.93 with k = 3 (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Forecasting simulation: trend plus pattern over 12 months misses by 2.32 against 5.26 for repeating the last value, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Test-probability simulation: at 1% prevalence a positive test means 8.8% chance of illness, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Treatment-paradox simulation: B looks better overall (A 74%, B 81%), and with the same mix A comes out ahead at 80%, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Search simulation: A* examines 14 cells and finds the 13-step path (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Backtracking simulation: most constrained first solves the puzzle with 11 colours tried and no backtracks, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Rules-against-learning simulation: the learned word weights get 100% of the training messages and 88% of the new ones (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Project-loop simulation: a wrong success measure repeats all seven stages and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Splits-and-leakage simulation: the time split gives an error of 4.46 against 3.31 for the random split, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cleaning simulation: dropping missing values gives a mean of 39.06, filling with zero gives 35.15, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Scaling simulation: the closest person is person 5 without scaling and person 6 with it, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Label-noise simulation: with 30% wrong labels the test accuracy is 63% (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "LLM-call simulation: at 30% failures and 3 retries all 20 calls succeed after 31 attempts and 14 seconds of waiting",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Agent-chain simulation: ten steps with a check chance of 80% finish 75% of the time, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Patch simulation: patches of one pixel give 64 tokens and 4096 pairs, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Prompt-injection simulation: with no guards three attacks work, with two guards none do, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Test-size simulation: 20 cases give a margin of 17.5 points and ten scores from 70% to 95% (the Python program gives the same)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Fairness simulation: with group B at threshold 0.15 the share of qualified people found is equal, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Tool-messages simulation: all nine messages shown with the question to the person, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Data-check simulation: after the column is renamed, row checks alone pass 7 of 10 rows with nothing noticed (the Python program gives the same), and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Safe-release simulation: with a clearly worse model and a 5% canary, 93 requests and 14 wrong answers lead to a rollback, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Drift simulation: a window of 7 days and a threshold of 2.5 give no false alarms and an alert 4 days after the shift, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Serving simulation: 6 requests a second on one server leaves 530 waiting, and batches of 4 keep up at 8 a second, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Architecture simulation: breaking the logging leaves the request working but worse, and the challenge ticks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Model-scoring simulation: perplexity falls from 23.3 to 7.1 as the model reads more, and exact match marks only 1 of 4 answers right, and both challenges tick",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Simulation lab page lists every simulation with a link to its lesson, one main heading, and the lessons it links to match the lessons that have a live simulation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Every simulation, in light and dark themes, starts, labels its pictures, buttons and controls, has an announcing narrator and a text status for each goal, keeps its controls in the keyboard order, and raises no errors",
       "pass": true,
       "detail": ""
     },

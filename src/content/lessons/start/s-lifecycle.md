@@ -4,11 +4,12 @@ title: How an AI or ML project runs from idea to production
 module: start
 level: Beginner
 minutes: 75
+maths: basic arithmetic
 goal: Walk through the full project lifecycle (problem, data, baseline, model, evaluation, deployment, monitoring) and run every step on a small example.
 prereqs: s-what-is-ai
 reviewed: 2026-11-02
 evidence: The lifecycle script run on your machine, plus a written problem statement for a project idea with its success measure and baseline.
-code: Python executed 2026-11-02 (quickpath.py lifecycle); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py lifecycle)
 ---
 ## In plain words
 Every AI or ML project, small or huge, follows the same loop. **First, define the problem** in business terms and decide how success will be measured ("reduce customer churn; catch at least half of customers who will leave"). **Second, get data** and check it. **Third, build a baseline**: the simplest possible answer, such as "nobody will leave". **Fourth, train a model** and **evaluate** it on data it has not seen, comparing with the baseline. **Fifth, deploy** it so people or systems can use it. **Sixth, monitor** it, because the world changes and models get worse over time. Then you repeat. Most project time goes into data and evaluation, not into choosing a fancy algorithm. LLM projects follow the same loop: the "model" step may be a prompt, retrieval or fine-tuning, but you still need data to test it and monitoring after launch.
@@ -66,6 +67,34 @@ A phone company loses customers every month. The team agrees on a goal: find cus
 ## After the model
 - Deploy | Serve as an API or batch job | output
 - Monitor | Quality, data changes, cost | warn
+```
+
+```maths Is the model better than a simple guess?
+situation: A company has 100 customers. Last month 90 stayed and 10 left. A new model predicts who leaves, and it is right for 92 of the 100 customers.
+find: Is 92% good? Compare it with the simplest possible guess: "everyone stays".
+step: Score of the simple guess "everyone stays" | 90 ÷ 100 = 0.9 = 90%
+step: Score of the model | 92 ÷ 100 = 0.92 = 92%
+step: How much better the model is | 92 − 90 = 2
+result: The model beats the simple guess by only **2 percentage points**.
+why: Every project in this guide starts with a baseline: the simplest rule you could use without any AI. A model is worth building only if it clearly beats that baseline on what matters.
+caution: The baseline here finds none of the 10 customers who left, so the business question ("who will leave?") needs a second measure, not just accuracy.
+try: The model correctly finds 6 of the 10 customers who left. The baseline finds 0. What share of the leavers does the model find?
+answer: 6 ÷ 10 = 0.6 = 60%. This is called recall. On this measure the model is far better than the baseline (60% against 0%), even though accuracy differs by only 2 points.
+```
+
+## Live simulation
+A project is a loop, not a line. A fault found late sends you a long way back.
+
+```sim loop Inject a fault and see what repeats
+question: When something goes wrong in a machine learning project, how far back does the work have to go?
+watch: Pick a fault. A red dot shows the stage where it is noticed and a blue dot shows the stage where it must be fixed.
+watch: The shaded stages are repeated. The later it is noticed and the earlier its cause, the more is repeated.
+watch: Compare the faults.
+try: worst | Find the fault that makes all seven stages repeat.
+predict: Which fault costs the most repeated work? | Wrong labels, noticed at evaluation | A success measure nobody needed, noticed after launch | They cost the same
+answer: 2 | A wrong success measure is noticed only when the system is used, and it sends the project back to the first stage. Wrong labels are caught earlier and fixed at the data stage.
+leaves-out: Five typical faults, each placed at one stage by hand. Real projects vary, and some faults can be caught earlier with checks along the way. Counting stages is a rough guide to work, not a measure of time or cost.
+reference: examples/sim-apps/apps.py
 ```
 
 ## Python example

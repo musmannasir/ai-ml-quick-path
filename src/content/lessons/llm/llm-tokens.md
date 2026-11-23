@@ -4,11 +4,12 @@ title: Tokens and sampling settings
 module: llm
 level: Intermediate
 minutes: 60
+maths: algebra
 goal: Explain how tokenisers split text, why tokens drive cost and limits, and how temperature and top-p change generated text.
 prereqs: llm-how
 reviewed: 2026-11-02
 evidence: Token counts for the same paragraph in two languages, and the same prompt run at three temperatures with your observations.
-code: Python executed 2026-11-02 (quickpath.py bpe and sampling); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py bpe and sampling)
 ---
 ## In plain words
 LLMs read and write **tokens**, not words. A **tokeniser** splits text into pieces from a fixed **vocabulary**: common words are one token, rare words are split into several. Most use **byte-pair encoding (BPE)**: start from characters and repeatedly merge the most frequent neighbouring pair into a new token. Tokens matter in practice: providers **charge per token**, the **context window** is counted in tokens, and some languages need more tokens for the same meaning. When the model generates, it gives a probability for every possible next token, and **sampling settings** choose one. **Temperature** makes choices sharper (low, more predictable) or flatter (high, more varied). **Top-p** keeps only the most likely tokens whose probabilities add up to p. For extraction and classification use low temperature; for brainstorming, higher.
@@ -71,6 +72,50 @@ note: The loop that writes every answer.
 - Top-p or top-k | Remove unlikely tokens | process
 - Sample one token | Pick from what is left | output
 loop: Append the token and repeat until a stop token or the length limit
+```
+
+```maths Top-k sampling: keep the best few tokens, then rescale
+situation: For the next token, the model gives "blue" a probability of 0.5, "grey" 0.3 and "loud" 0.2. With top-k set to 2, only the two most likely tokens are kept.
+find: What are the probabilities of "blue" and "grey" after "loud" is removed?
+step: Add up what is kept | 0.5 + 0.3 = 0.8
+step: New share of "blue" | 0.5 ÷ 0.8 = 0.625
+step: New share of "grey" | 0.3 ÷ 0.8 = 0.375
+step: Check that the new shares add up to 1 | 0.625 + 0.375 = 1
+result: "blue" **62.5%**, "grey" **37.5%**, and "loud" can no longer be picked.
+why: Sampling settings shape how a model chooses among its probabilities. Top-k and top-p remove unlikely tokens; temperature makes the choice sharper or flatter. The calculator below shows temperature at work on three scores.
+widget: softmax 2,1,0,1
+try: With top-k set to 1, what happens?
+answer: Only "blue" is kept: 0.5 ÷ 0.5 = 1 = 100%. The model always picks its most likely token, so the same prompt gives the same answer every time. That is useful for extraction tasks and dull for creative writing.
+deeper: The model first produces raw scores called logits. Softmax turns them into probabilities: each probability is e raised to the score, divided by the sum of e raised to every score. Temperature divides the scores before softmax, so a temperature below 1 widens the gaps between scores and a temperature above 1 narrows them.
+```
+
+## Live simulation
+Two small simulations show the two halves of this lesson. The first builds a tokeniser from a short text so you can watch text turn into tokens. The second writes text one token at a time so you can see what temperature, top-k and top-p do. Both are tiny stand-ins: they run the same loop as a large language model, on a model small enough to read in full.
+
+```sim bpe How text becomes tokens
+question: Why are common words one token while rare words are split into pieces?
+watch: At 0 merges every letter is its own token. Each merge joins the most common neighbouring pair in the training text.
+watch: Common words such as "the" become one token after a few merges. Rare words stay in pieces for much longer.
+watch: The same sentence needs fewer tokens as merges are learned, which is how a tokeniser saves space and cost.
+try: short | Learn enough merges that the word "newest" needs only two tokens or fewer.
+try: unseen | Type a letter that is not in the training text (for example z) and see that it gets no token id.
+predict: After 12 merges, will the word "lowest" be a single token? | Yes, one token | No, several tokens
+answer: 2 | "lowest" appears only twice in this small text, so its pieces are not joined until merge 42 of 50. The very common word "the" is one token from merge 3.
+leaves-out: The tokeniser learns from about 60 words, so its merges are very different from those of a real tokeniser, which learns from huge amounts of text and works on bytes. Only letters and apostrophes are kept here, and a letter never seen in the training text gets no id (a real tokeniser falls back to raw bytes).
+reference: examples/sim-tokens/bpe_tokens.py
+```
+
+```sim gen How a language model writes text
+question: What do temperature, top-k and top-p change when a model chooses its next token?
+watch: The bars show the chance of each possible next word. The faint bar is the chance at temperature 1 with no filters; the solid bar is the chance with your settings.
+watch: A low temperature makes the most likely word stand out. A high temperature spreads the chance more evenly.
+watch: Top-k and top-p remove unlikely words before the choice. Words that are removed show "out".
+try: greedy | Choose "Greedy" and write 10 tokens. Then press "Start again" and see that you get the same text every time.
+try: hot | Set the temperature to 1.5 or more and write tokens until the model picks a word that had less than a 15% chance at temperature 1.
+predict: You lower the temperature from 1 to 0.2. What happens to the chance of the most likely next word? | It goes up | It goes down | It stays the same
+answer: 1 | Dividing the scores by a small temperature makes the biggest one stand out more. After "the cat", "sat" goes from 31% at temperature 1 to 77% at 0.2.
+leaves-out: This model is not a neural network. It is a table of how often each word followed the previous one or two words in a text of 209 tokens (words and full stops) written for this guide, so it can only repeat patterns from that text. A large language model scores its next token with a neural network that reads the whole context window, but the loop around it (scores, temperature, top-k, top-p, choose, append, repeat) is the same.
+reference: examples/sim-tokens/gen_tokens.py
 ```
 
 ## Python example

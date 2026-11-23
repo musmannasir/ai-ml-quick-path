@@ -1,4 +1,4 @@
-// From lesson 'ops-monitoring' (ops). Code status: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency); C# not compiled (no .NET SDK in the build environment)
+// From lesson 'ops-monitoring' (ops). Code status: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency)
 using System.Diagnostics.Metrics;
 
 public static class Drift

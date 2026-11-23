@@ -4,11 +4,12 @@ title: Fine-tuning: SFT, LoRA, QLoRA and preference tuning
 module: llm
 level: Advanced
 minutes: 90
+maths: advanced optional
 goal: Decide between prompting, RAG and fine-tuning, prepare instruction data, and fine-tune an open model with LoRA or QLoRA, then compare it fairly with the base model.
 prereqs: llm-scale, llm-how
 reviewed: 2026-11-02
 evidence: A decision note (prompt, RAG or fine-tune), a JSONL training set of at least 200 examples with a separate test set, and a base-versus-adapter comparison.
-code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; C# is plain .NET (System.Text.Json) and was not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 There are three ways to make a model do what you need. **Prompting**: change the instructions and examples (fast, no training). **RAG**: give it your documents at question time (best for facts that change, need sources or need permissions). **Fine-tuning**: train it further on examples so the behaviour is built in (best for a consistent format, style or narrow task, or making a smaller, cheaper model do a specific job). **Supervised fine-tuning (SFT)** uses example prompts and ideal answers. Training all weights is expensive, so **LoRA** freezes the model and trains small extra matrices added to some layers, producing a small **adapter** file. **QLoRA** also stores the frozen model in 4-bit form to save memory. **Preference tuning** (such as DPO) trains on pairs of a better and a worse answer. Fine-tuning is poor at teaching facts that change; use RAG for those.
@@ -84,6 +85,20 @@ note: The test set is separated before training and never trained on.
 - Test set | Held out before any training | output
 ```
 
+```maths Why LoRA trains so few numbers
+situation: One layer of a model is a grid of 100 by 100 weights. Full fine-tuning would change all of them. LoRA freezes them and adds two thin grids instead: one of 100 by 2 and one of 2 by 100. The 2 is called the rank.
+find: How many numbers does LoRA train, compared with full fine-tuning?
+step: Weights in the full layer | 100 × 100 = 10,000
+step: Weights in the two thin LoRA grids | 100 × 2 + 2 × 100 = 400
+step: LoRA's share of the full layer | 400 ÷ 10,000 = 0.04 = 4%
+result: LoRA trains **400** numbers instead of 10,000, which is **4%**.
+formula: LoRA parameters = rows × rank + rank × columns
+why: Fewer trained numbers means less memory, faster training and a small file to store per task. This is why LoRA makes fine-tuning possible on one ordinary GPU.
+caution: In a real model the layers are thousands wide, so the share is much smaller than 4%, often below 1%. Fewer numbers also means less capacity: LoRA suits adapting style or format better than teaching large amounts of new knowledge.
+try: You raise the rank from 2 to 8. How many numbers are trained now?
+answer: 100 × 8 + 8 × 100 = 1,600, which is 1,600 ÷ 10,000 = 16% of the layer. A higher rank can learn more but costs proportionally more memory and time.
+```
+
 ### Related concepts
 
 #### Fine-tune versus prompt
@@ -127,6 +142,35 @@ loop: Repeat until scores stop improving
 - Model writes answers | Several answers per prompt | model
 - Reward model scores them | Learned from human rankings | store
 - Tune toward higher scores | With a penalty for drifting too far | process
+```
+
+## Live simulation
+Two ideas make large models cheap to adapt and to run: training small add-on matrices, and storing weights in fewer bits.
+
+```sim lora LoRA: a big change from two thin matrices
+preset: lora
+question: Why can a huge model be adapted by training only a tiny number of new numbers?
+watch: The left grid is the change the model needs (64 numbers). The right grid is what two thin matrices of the chosen rank can make.
+watch: The error left is how much of the change the thin version misses. This change was built from two simple patterns plus a little noise.
+watch: The last readout scales the idea to a 4096 by 4096 layer, where the saving is large.
+try: rank | Find the smallest rank that leaves 15% or less of the change unexplained.
+predict: A layer has 4096 × 4096 weights. LoRA with rank 8 trains two thin matrices instead. About what share of the original weights is that? | About 40% | About 4% | Under 1%
+answer: 3 | Two matrices of 4096 × 8 hold 65,536 numbers, against 16,777,216 in the layer: about 0.39%.
+leaves-out: One small made-up matrix. In a real fine-tune the thin matrices are trained by gradient descent on your data rather than computed from a known change, and the right rank depends on the task. The base model's own weights are not touched.
+reference: examples/sim-llm/llm.py
+```
+
+```sim lora Quantisation: fewer bits per weight
+preset: quant
+question: How much accuracy do we lose when each weight is stored in fewer bits, and how much space do we save?
+watch: Each weight is rounded to the nearest of a few evenly spaced values. Fewer bits mean fewer values.
+watch: The error (RMSE) is the typical size of the rounding mistake, in the same units as the weights.
+watch: The size is shown against a 16-bit copy of the same weights.
+try: bits | Find the fewest bits that keep the rounding error at or below 0.002.
+predict: You go from 8 bits to 4 bits per weight. What happens to the rounding error? | It stays about the same | It grows many times over | It halves
+answer: 2 | Four bits leave only 15 distinct values instead of 255, so each weight is rounded much more coarsely. Here the error grows from about 0.0003 to about 0.0054, roughly 19 times.
+leaves-out: 400 made-up weights that follow a bell-shaped spread. Real quantisation schemes group weights, treat outliers separately and are tested on the model's answers, not only on rounding error. Blending two models is not shown.
+reference: examples/sim-llm/llm.py
 ```
 
 ## Python example

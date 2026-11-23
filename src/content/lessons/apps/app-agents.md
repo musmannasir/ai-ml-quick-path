@@ -4,11 +4,12 @@ title: Tools and agents with human approval
 module: apps
 level: Advanced
 minutes: 120
+maths: basic arithmetic
 goal: Let a model call tools safely, design an agent workflow with explicit state, permission checks, human approval, retries, idempotency and an audit trail, in Python and C#.
 prereqs: app-llm-api, app-prompting
 reviewed: 2026-11-02
 evidence: A refund workflow (in either language) passing scripted tests for success, decline, wrong owner, outside policy, service failure and duplicate requests.
-code: Python framework-free workflow executed 2026-11-02 (examples/agent-returns/returns_workflow.py); LangGraph and C# (Microsoft Agent Framework) not run (not installed in the build environment)
+code: Python framework-free workflow executed 2026-11-02 (examples/agent-returns/returns_workflow.py); LangGraph not run (not installed in the build environment)
 ---
 ## In plain words
 **Tool calling** lets a model ask your application to run a function: you describe each tool (name, purpose, inputs), and instead of text the model returns "call `get_order_status` with order A-1001". **Your code** checks the request, checks the user is allowed, runs it and returns the result; the model never executes anything itself. An **agent** is a system where the model chooses steps and tools within limits that your code sets, keeping **state** between steps. For business processes, the safest design is a mostly fixed **workflow** with model-powered steps (understand the request, draft a message), not an open-ended loop. Actions that change the world, especially money, need **permission checks**, **human approval**, **idempotency** (repeating a request does not repeat the refund), **retries** for temporary failures, and an **audit log**. The **Model Context Protocol (MCP)** is an open standard for exposing tools and data to AI applications (see [Frameworks](lesson:app-frameworks)).
@@ -76,6 +77,18 @@ note: Results from the executed run of the Python workflow.
 - Declined by reviewer | Pending; customer will be contacted | warn
 - Rejected | Not the owner, or outside the window | bad
 - Failed | Payment service down; queued for manual follow-up | bad
+```
+
+```maths Why long chains of steps fail more often
+situation: An agent must complete 3 steps in a row to finish a task. Each step works 90% of the time, and one failed step fails the whole task.
+find: How often does the whole task succeed?
+step: Multiply the success rate of each step | 0.9 × 0.9 × 0.9 ≈ 0.73 = 73%
+result: The task succeeds only about **73%** of the time, although every step is 90% reliable.
+formula: success of the chain = success of step 1 × success of step 2 × …
+why: Agents chain many model calls and tool calls. Reliability multiplies down with every step, which is why real agents keep chains short, check results between steps and ask a person to approve risky actions.
+caution: This assumes the steps fail independently of each other. Real failures often come together (a bad first step spoils the rest), so treat the result as a rough guide.
+try: The task needs 10 steps instead of 3, still at 90% each. Roughly how often does it succeed?
+answer: 0.9 multiplied by itself 10 times is about 0.35, so roughly 35%. Most runs now fail. Raising each step to 99% would bring 10 steps back to about 90%, which shows how reliable each step must be in a long chain.
 ```
 
 ### Related concepts
@@ -326,6 +339,21 @@ Prompt injection means text that tries to give the model new orders, for example
 - Limits stop the harm | Least privilege, approval and a sandbox | output
 ```
 
+## Live simulation
+An agent chains many steps, and chances multiply along a chain.
+
+```sim agent Why long chains of steps fail
+question: Why does an agent that is usually right at each step often fail at the whole task?
+watch: Set the chance each step works and the number of steps. The first line shows the chance of finishing when nothing is checked.
+watch: Add checks that catch a failed step and retry it, and see the second line rise.
+watch: Read the simulated result against the arithmetic.
+try: long | Reach a task of 10 or more steps that finishes at least 70% of the time with steps that work 90% or less, using checks.
+predict: Each step works 90% of the time and the task has 10 steps. About how often does the whole task work? | About 90% | About 35% | About 60%
+answer: 2 | Every step must work, so the chances multiply: 0.9 ten times is about 0.35.
+leaves-out: Steps are treated as independent and either right or wrong. Real agent steps depend on each other, some failures are harmless, and others are costly. A person approving risky steps is not modelled, though it works like a perfect check on those steps.
+reference: examples/sim-apps/apps.py
+```
+
 ## Python example
 The whole workflow in plain Python, run against every path:
 ```text Output of returns_workflow.py (executed)
@@ -348,12 +376,18 @@ In **LangGraph** (`examples/agent-returns/langgraph_returns.py`) the approval st
 ## .NET (C#) example
 Microsoft Agent Framework: read-only tools run automatically, the refund tool requires approval (packages for Agent Framework and Microsoft.Extensions.AI; API names as documented by Microsoft):
 ```cs Program.cs
-// The approval types are marked experimental in some Microsoft.Extensions.AI versions (diagnostic MEAI001),
-// and newer versions may rename them; check the names for the package version you install.
+// Compiled on 2026-11-13 with Microsoft.Extensions.AI 11.0.0 and Microsoft.Agents.AI 1.28.0.
+// Earlier versions called the request type FunctionApprovalRequestContent; it is now ToolApprovalRequestContent.
+// These types have been renamed before, so check the names for the package version you install.
 #pragma warning disable MEAI001
 using System.ComponentModel;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
+using OpenAI;
+
+// The model behind the agent. The key comes from an environment variable, never from the code.
+IChatClient chatClient = new OpenAIClient(Environment.GetEnvironmentVariable("LLM_API_KEY")!)
+    .GetChatClient("your-model").AsIChatClient();
 
 [Description("Get status of one of the current customer's orders.")]
 static string GetOrderStatus(string orderId) => Orders.StatusFor(Session.CustomerId, orderId);   // identity from the session
@@ -368,11 +402,20 @@ AIAgent agent = chatClient.AsAIAgent(
 AgentSession session = await agent.CreateSessionAsync();
 AgentResponse response = await agent.RunAsync("Please refund order A-1001", session);
 
-foreach (var request in response.Messages.SelectMany(m => m.Contents).OfType<FunctionApprovalRequestContent>())
+foreach (var request in response.Messages.SelectMany(m => m.Contents).OfType<ToolApprovalRequestContent>())
 {
-    bool approved = await ReviewQueue.AskAsync(request.FunctionCall.Name, request.FunctionCall.Arguments);   // your approval UI
-    Console.WriteLine(await agent.RunAsync(new ChatMessage(ChatRole.User, [request.CreateResponse(approved)]), session));
+    if (request.ToolCall is not FunctionCallContent call) continue;                          // only function tools here
+    bool approved = await ReviewQueue.AskAsync(call.Name, call.Arguments);                   // your approval UI
+    var decision = request.CreateResponse(approved, approved ? "Approved by a reviewer" : "Rejected by a reviewer");
+    Console.WriteLine(await agent.RunAsync(new ChatMessage(ChatRole.User, [decision]), session));
 }
+
+// Stand-ins so the sample compiles. In a real application these call your order system and read the signed-in user.
+static class Session { public static string CustomerId => "C-42"; }
+static class Orders { public static string StatusFor(string customerId, string orderId) => "delivered"; }
+static class Payments { public static string Refund(string orderId, string idempotencyKey) => $"refund queued for {orderId}"; }
+// Your approval screen. This stand-in always answers "not approved", so nothing is refunded by accident.
+static class ReviewQueue { public static Task<bool> AskAsync(string tool, object? arguments) => Task.FromResult(false); }
 ```
 
 ## Applied Maths - Statistics

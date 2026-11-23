@@ -4,11 +4,12 @@ title: Recommender systems
 module: ml
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Build a collaborative-filtering recommender with matrix factorisation, compare it with simple baselines, and list the real-world issues (cold start, ranking, diversity).
 prereqs: ml-evaluation
 reviewed: 2026-11-02
 evidence: A recommender on rating or click data with held-out error against two baselines and top-5 recommendations for three users.
-code: Python executed 2026-11-02 (gap_topics.py recsys); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (gap_topics.py recsys)
 ---
 ## In plain words
 A **recommender system** suggests items a person is likely to want: products, films, songs, articles, jobs. **Content-based** recommenders use item descriptions ("you liked thrillers, here is another thriller"). **Collaborative filtering** uses behaviour: people who liked the same things before will probably agree again. **Matrix factorisation** is the classic collaborative method. Picture a huge table of users and items, mostly empty. The model learns a short list of hidden "taste" numbers for every user and every item, so that combining them predicts the missing cells. Modern systems mix both approaches, use **implicit feedback** (clicks, watch time) more than star ratings, and handle **cold start**: new users and new items with no history yet. Embedding-based retrieval (Part 6) is also used for recommendations.
@@ -80,6 +81,35 @@ A streaming service shows each person a short row of titles. Collaborative filte
 - Learned taste numbers | For every user and item | model
 - Predicted scores for unseen items | Fill the empty cells | process
 - Ranked top items | What the person sees | output
+```
+
+```maths Matching a user's taste to a film (dot product)
+situation: A user's taste is written as two numbers: how much they like action (1) and comedy (2). Film A is described the same way as (3, 4): some action, a lot of comedy. Film B is (4, 1): mostly action.
+find: Which film is the better match for this user?
+step: Score for film A: multiply matching numbers, then add | 1 × 3 + 2 × 4 = 11
+step: Score for film B | 1 × 4 + 2 × 1 = 6
+result: Film A scores **11** and film B scores **6**, so film A is recommended first.
+formula: score = taste₁ × film₁ + taste₂ × film₂
+why: A recommender learns a short list of numbers for every user and every item. Predicting how much a user will like an item is this one sum. With millions of items, the system just ranks them by score.
+caution: These are invented numbers for teaching. Real systems learn 50 or more hidden numbers per user and item, and the numbers have no simple names such as "action" or "comedy".
+try: A second user has the taste (2, 0): they like action and do not care about comedy. Score both films for this user.
+answer: Film A: 2 × 3 + 0 × 4 = 6. Film B: 2 × 4 + 0 × 1 = 8. For this user film B wins. The same films get a different order for a different taste.
+```
+
+## Live simulation
+A recommender fills in the blanks of a table of ratings. You can see which users it listens to.
+
+```sim rec A recommender: guess a rating from similar users
+question: How can a system guess what you will like from what people like you liked?
+watch: The table holds made-up ratings. Pick a user and a film that user has not rated.
+watch: The bars show who is most similar to that user, judged only on films both have rated. The boxed bars are the users the system listens to.
+watch: The prediction is a weighted average of their ratings. Change k to listen to more or fewer users.
+try: k | For User 1 and Film C, change k so that the prediction moves by at least 0.5.
+try: cold | Switch on the cold-start option and see what the system falls back on.
+predict: User 1 and User 2 gave similar ratings to films A and B, and User 2 gave Film C a 5. What will the system guess for User 1 on Film C? | Low | High | Nothing at all
+answer: 2 | The users most similar to User 1 liked Film C, so the weighted average is high (4.5 when listening to the two most similar users).
+leaves-out: Six users and six films, all made up. Real systems have millions of users and items, most of the table is empty, and many use learned hidden factors instead of comparing users directly. They also have to avoid feeding people only more of what they already saw. A brand-new user is shown as the cold-start problem; fixes such as asking a few questions are not simulated.
+reference: examples/sim-ai/ai.py
 ```
 
 ## Python example

@@ -4,11 +4,12 @@ title: Production architecture for AI systems
 module: ops
 level: Expert
 minutes: 120
+maths: basic arithmetic
 goal: Design a complete AI system (a .NET application calling a Python model service and an LLM), with containers, secrets, fallbacks, security and a clear checklist, so you can plan any industry case.
 prereqs: ops-serving, ops-monitoring, app-rag, app-security
 reviewed: 2026-11-02
 evidence: An architecture diagram and one-page design note for a capstone, covering components, contract, failure modes, security, monitoring and cost.
-code: C# and FastAPI service not compiled or run (no .NET SDK or FastAPI in the build environment); Dockerfile not built (no Docker in the build environment)
+code: FastAPI service not run (FastAPI not installed in the build environment); Dockerfile not built (no Docker in the build environment)
 ---
 ## In plain words
 In industry an AI feature is rarely one program. It is a small system: a **front end**, an **application back end** (often ASP.NET Core in .NET companies), one or more **model services** (often Python, because most ML libraries are Python-first), an **LLM provider** (hosted API or a local model), a **vector database** for RAG, a **data store**, and **monitoring**. The parts talk through clear **contracts** (agreed request and response formats, with a version number such as `/v1/`). Each part is packaged in a **container** (a portable box holding the app and everything it needs) so it runs the same on a laptop and in the cloud. Good design plans for failure: every call to a model has a **timeout**, a **retry** for temporary errors, and a **fallback** (a simpler rule, a cached answer or a human) so the business keeps running when the model is down. Secrets such as API keys live in a **secret store** or environment variables, never in code. This lesson pulls everything in the guide together into one design you can reuse.
@@ -104,6 +105,17 @@ note: The same design as the text diagram above.
 - Monitor and improve | signals, evaluation, feedback | output
 ```
 
+```maths Availability of services in a chain
+situation: A request passes through two services, one after the other: an API and a model server. Each is available 99% of the time, and the request fails if either one is down.
+find: How often does the whole request succeed?
+step: Multiply the two availabilities | 0.99 × 0.99 = 0.9801
+result: The chain is available about **98%** of the time, which is lower than either part.
+formula: availability of a chain = availability of part 1 × availability of part 2 × …
+why: Real AI systems chain many parts: gateway, retrieval, model, database. Every part you add in a row lowers the total, which is why architectures use retries, fallbacks and spare copies.
+try: You add a third service in the chain, a vector database, also at 99%. What is the availability now?
+answer: 0.9801 × 0.99 ≈ 0.97, so about 97%. Three parts at 99% each already lose three times as much availability as one part does.
+```
+
 ### Related concepts
 
 #### Retries and fallbacks
@@ -141,6 +153,22 @@ Moving an AI app from a laptop to the cloud means packaging it in a **container*
 ## Operate
 - Health checks and scaling | restart broken copies, add copies under load | output
 - Logs and a cost limit with alerts | see problems and spending early | output
+```
+
+## Live simulation
+A production system is a chain of parts. What happens when one stops?
+
+```sim arch Following a request, and breaking a part
+question: What happens to a person's request when one part of a system stops working?
+watch: A request passes through seven parts in turn. Slide to follow it.
+watch: Break one part. Some breaks stop the request, and others only make it slower, costlier or blind.
+watch: Note which breaks the person would notice.
+try: blind | Break the logging and see that the person notices nothing.
+try: safe | Break the sign-in check and see that the system refuses requests.
+predict: Which broken part would users not notice at first? | The model server | The logging | The sign-in check
+answer: 2 | Logging only records what happened. Requests still work, but errors and costs go unseen, so a problem can grow before anyone knows.
+leaves-out: One simple line of seven parts. Real systems have many more, with fallbacks, retries and several copies of each part. The effects shown are typical, not universal, and depend on how the system was built.
+reference: examples/sim-ops/ops.py
 ```
 
 ## Python example

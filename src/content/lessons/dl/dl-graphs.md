@@ -4,11 +4,12 @@ title: Graph neural networks: learning from connections
 module: dl
 level: Advanced
 minutes: 60
+maths: basic arithmetic
 goal: Represent data as nodes and edges, explain message passing, and classify nodes from very few labels using their neighbours.
 prereqs: dl-neural-nets
 reviewed: 2026-11-02
 evidence: A small graph you build with node predictions explained by each node's neighbours.
-code: Python executed 2026-11-02 (gap_topics.py gnn); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (gap_topics.py gnn)
 ---
 ## In plain words
 Some data is about **connections**: people and friendships, bank accounts and transfers, atoms and bonds, roads and junctions. This is a **graph**: **nodes** (the things) joined by **edges** (the links). A **graph neural network (GNN)** learns from a node's own information and from its neighbours. The key idea is **message passing**: in each layer, every node collects information from its neighbours and updates itself. After two layers, a node knows about nodes two steps away. GNNs answer three kinds of questions: about a **node** (is this account fraud?), about a **link** (will these two people connect? will this customer buy this product?) and about a **whole graph** (is this molecule toxic?). Knowledge graphs, which store facts as connected entities, are also used with LLMs ("GraphRAG").
@@ -57,6 +58,33 @@ A payments company knows fraud rings share devices and pass money between their 
 ```diagram flow Reach grows with each layer
 - Layer 1 | A node knows its direct neighbours | process
 - Layer 2 | It knows nodes two steps away | model
+- Layer 3 | It knows nodes three steps away, so more of the graph | output
+```
+
+```maths Message passing: a node averages its neighbours
+situation: In a small network of people, Ana is connected to two friends. Each person has one number, for example an interest score. Ana's friends have the scores 2 and 6.
+find: What "message" does Ana receive from her neighbours?
+step: Add the neighbours' scores | 2 + 6 = 8
+step: Divide by the number of neighbours | 8 ÷ 2 = 4
+result: Ana receives **4**, the average of her neighbours.
+why: A graph neural network repeats this for every node: collect from the neighbours, combine with the node's own value, and pass the result through a small neural layer. After two rounds, each node also knows something about its neighbours' neighbours.
+try: Ana gains a third friend with a score of 10. What message does she receive now?
+answer: 2 + 6 + 10 = 18, and 18 ÷ 3 = 6. The new connection changed what Ana "knows" without changing Ana's own data. In a graph, who you are connected to is part of your description.
+```
+
+## Live simulation
+A graph network lets every node learn from its neighbours. Watch the information travel.
+
+```sim gnn Messages passing round a graph
+question: How does information travel across a graph, and what happens after many rounds?
+watch: Each circle is a node holding one number. In each round a node keeps part of its own value and takes the average of its neighbours' values.
+watch: After one round the value has reached the neighbours. After two rounds it has reached nodes two steps away.
+watch: After many rounds all nodes hold nearly the same number, so they can no longer be told apart.
+try: smooth | Use enough rounds that the largest and smallest values differ by less than 0.03.
+predict: Node A starts with the value 1. After 2 rounds, which nodes hold something? | Only node A | Nodes within two steps of A | All six nodes
+answer: 2 | Information moves one edge per round. After two rounds it has reached the nodes within two steps of A, but not the far side of the graph.
+leaves-out: Six nodes, one number each and plain averaging. Real graph networks keep a list of numbers per node, learn the weights that mix messages, and use several kinds of layers. Very deep graph networks do blur nodes together, as shown here.
+reference: examples/sim-dl/dl.py
 ```
 
 ## Python example

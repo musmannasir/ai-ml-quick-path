@@ -4,11 +4,12 @@ title: How a model learns: loss, training and overfitting
 module: ml
 level: Beginner
 minutes: 75
+maths: algebra
 goal: Explain what a model, parameters and a loss are, how training reduces the loss step by step, and how to spot overfitting and underfitting.
 prereqs: d-basics
 reviewed: 2026-11-02
 evidence: Your own run of the training loop with a printed loss that falls, and a train-versus-validation comparison that shows overfitting.
-code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py gd and cv); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py gd and cv)
 ---
 ## In plain words
 A **model** is a formula with adjustable knobs called **parameters** (or **weights**). At the start the knobs are random, so predictions are bad. The **loss** is one number that says how wrong the predictions are on the training examples. **Training** repeats a simple loop: make predictions, measure the loss, turn every knob a little in the direction that lowers the loss, and repeat. The method that finds that direction is called **gradient descent**; the size of each turn is the **learning rate**. Too big and training jumps around; too small and it crawls. A model that learns the training data too exactly, including its noise, is **overfitting**: great on training data, worse on new data. A model too simple to capture the pattern is **underfitting**. The goal is the middle: good on data it has never seen. Settings you choose before training, such as the learning rate or tree depth, are called **hyperparameters**.
@@ -94,6 +95,41 @@ note: Training data changes the knobs. Validation data only checks, so it reveal
 ## Validation data
 - Predict | Never used to change the knobs | process
 - Compare scores | A big gap to the training score means overfitting | warn
+```
+
+```maths One step of gradient descent on a toy loss
+situation: A model has one adjustable number, a weight called w. For this toy example the loss (how wrong the model is) is (w − 3)². The loss is 0 when w is 3, but the model does not know that. It starts at w = 1.
+find: After one training step with learning rate 0.1, what is the new w, and did the loss go down?
+step: Loss at the start | (1 − 3)^2 = 4
+step: Slope of the loss at w = 1 (for this loss the slope is 2 × (w − 3)) | 2 × (1 − 3) = −4
+step: Move against the slope, a small step | 1 − 0.1 × (−4) = 1.4
+step: Loss after the step | (1.4 − 3)^2 = 2.56
+result: w moved from 1 to **1.4**, and the loss fell from 4 to **2.56**.
+formula: new weight = old weight − learning rate × slope
+means: The slope says which way is uphill. Subtracting it moves downhill. The learning rate decides how big the step is.
+why: This is training. A real model repeats this small step thousands of times for millions of weights at once. The slope for all weights together is called the gradient, which gives the method its name: gradient descent.
+caution: This is one step on a made-up loss with one weight. Real losses are bumpy, and real optimisers add extra tricks, so real training does not behave this neatly.
+widget: gradient 1,0.1
+try: Use a learning rate of 1 instead of 0.1. What is the new w and the new loss?
+answer: New w = 1 − 1 × (−4) = 5. New loss = (5 − 3)² = 4. The step jumped right over the best value 3 and landed just as far away on the other side, so the loss did not improve at all. A learning rate that is too large makes training bounce or even get worse.
+deeper: The slope 2 × (w − 3) is the derivative of (w − 3)² with respect to w. With many weights, the derivative for each weight is collected into a vector called the gradient. Backpropagation is the method that computes this gradient efficiently for a neural network using the chain rule.
+```
+
+## Live simulation
+Learning is a search for numbers that make the loss small. Gradient descent does the search with one simple rule, and you can watch it work.
+
+```sim gd Gradient descent: a ball rolling down a curve
+question: How does a model learn by moving a number downhill, and what does the learning rate change?
+watch: The ball is the model's one number, x. The curve is the loss: lower is better. Each dot is one step.
+watch: Each step moves x by the learning rate times the slope. Where the curve is flat, steps become small.
+watch: Try very small and very large learning rates, and try the two-valley curve from different starting points.
+try: fast | On the bowl, get the loss below 0.01 in 15 steps or fewer.
+try: blow | Raise the learning rate until the loss grows instead of shrinking.
+try: local | On the two-valley curve, find a starting point from which the ball settles in the shallower valley.
+predict: The bowl's lowest point is x = 3. With learning rate 1.0, starting at 0, where does the ball go? | It settles at 3 | It bounces between 0 and 6 forever | It blows up
+answer: 2 | Each step is 1.0 times the slope. From 0 the slope is -6, so x jumps to 6. From 6 the slope is +6, so x jumps back to 0, and so on. A slightly smaller rate settles, a slightly larger one blows up.
+leaves-out: One number to learn, where a real model learns millions at once. The curves are made-up examples, and real loss surfaces cannot be drawn like this. Momentum and Adam are in the training lesson.
+reference: examples/sim-training/dynamics.py
 ```
 
 ## Python example

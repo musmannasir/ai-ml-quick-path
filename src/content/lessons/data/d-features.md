@@ -4,11 +4,12 @@ title: Feature engineering: turning raw data into model inputs
 module: data
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Encode categories, scale numbers, create useful features from dates and text, and avoid data leakage by using pipelines.
 prereqs: d-clean-eda
 reviewed: 2026-11-02
 evidence: A pipeline that prepares a mixed dataset (numbers, categories, dates, text) and one new feature that measurably improves a model.
-code: Python executed 2026-11-02 (ml_basics.py features); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (ml_basics.py features)
 ---
 ## In plain words
 Models only understand numbers, so you must turn raw columns into numeric **features**. **One-hot encoding** turns a category such as plan = basic/pro/team into three yes/no columns. **Scaling** puts numbers on similar ranges so a column measured in thousands does not drown out one measured in single digits. **Derived features** add meaning: "days since sign-up" from a date, "orders per month" from two counts, "hour of day" from a timestamp. **Text features** turn words into numbers, for example by counting important words (TF-IDF) or, later in this guide, with embeddings. The biggest danger is **data leakage**: letting information from the test set, or from the future, sneak into training. Wrapping all steps in a **pipeline** that is fitted on training data only prevents it. Good features usually help more than switching algorithms.
@@ -63,6 +64,39 @@ A software company predicts which trial users will buy. Raw data has a sign-up d
 ## Other data
 - Validation and test data | Apply the fitted pipeline unchanged | input
 - Production data | Apply the same fitted pipeline | output
+```
+
+```maths Putting numbers on the same scale (z-score)
+situation: Three customers placed 2, 4 and 6 orders. Another column in the same table holds yearly spend in the thousands. A model can be misled when one column has much bigger numbers than another, so we rescale.
+find: How far is the customer with 6 orders from the average, measured in "typical distances"?
+step: Add the values | 2 + 4 + 6 = 12
+step: Average | 12 ÷ 3 = 4
+step: Square each distance from the average and add them | (2 − 4)^2 + (4 − 4)^2 + (6 − 4)^2 = 8
+step: Average squared distance (the variance) | 8 ÷ 3 ≈ 2.67
+step: Square root gives the typical distance (the standard deviation) | sqrt(2.67) ≈ 1.63
+step: Distance of 6 from the average, in typical distances | (6 − 4) ÷ 1.63 ≈ 1.23
+result: The value 6 becomes about **1.23**. The value 4 becomes 0 and the value 2 becomes about −1.23.
+formula: z = (value − average) ÷ standard deviation
+means: A z of 0 is exactly average. A z of 1 is one typical distance above average. A negative z is below average.
+why: After this step every column is centred on 0 with a similar spread, so no column dominates only because its numbers are large. Many algorithms (k-nearest neighbours, neural networks, linear models with a penalty) learn better this way.
+caution: Work out the average and the standard deviation from the training rows only, then reuse those two numbers for the test rows. Using test rows here is a form of leakage.
+try: What is the z-score of a new customer with 8 orders, using the same average and standard deviation?
+answer: (8 − 4) ÷ 1.63 ≈ 2.45. The customer is about two and a half typical distances above average. Values beyond about 3 are often checked as possible outliers.
+```
+
+## Live simulation
+A model sees only numbers, so how you scale and code them changes its answers.
+
+```sim feat Scaling changes who is closest
+question: Why does a model need its columns on a similar scale, and what is wrong with coding a colour as 1, 2, 3?
+watch: Set an age and an income. The table shows the distance to eight people and boxes the closest.
+watch: Switch scaling on and see whether the closest person changes.
+watch: The small table shows how number codes and one-hot codes differ for colours.
+try: flip | Switch scaling on and see the closest person change (the starting values already do).
+predict: Income is in dollars (tens of thousands) and age is in years. Without scaling, which column decides who is closest? | Age | Income | Both equally
+answer: 2 | A difference of a few thousand dollars is a far bigger number than a difference of a few years, so the distance is almost all income and age is ignored.
+leaves-out: Eight made-up people and a plain distance. Scaling here means standardising each column. Other methods exist, and some models (such as decision trees) do not need scaling at all.
+reference: examples/sim-apps/apps.py
 ```
 
 ## Python example

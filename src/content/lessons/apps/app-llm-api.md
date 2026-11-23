@@ -4,11 +4,12 @@ title: Calling an LLM from your application
 module: apps
 level: Beginner
 minutes: 75
+maths: basic arithmetic
 goal: Call a language model from Python and C#, request structured JSON, validate it, handle failures, stream answers and control cost.
 prereqs: llm-how
 reviewed: 2026-11-02
 evidence: The same support-email summarizer working in Python and C#, rejecting invalid output, with token use and latency logged for 20 test emails.
-code: Python validator executed 2026-11-02 (examples/llm-summarizer/python, offline mode and 4 unit tests); live model calls and C# not run (no API key, no .NET SDK in the build environment)
+code: Python validator executed 2026-11-02 (examples/llm-summarizer/python, offline mode and 4 unit tests); live model calls not run (no API key)
 ---
 ## In plain words
 Your application talks to an LLM through an **API**: you send **messages** and get text back. A **system message** sets the rules ("You summarise support emails. Reply with JSON only."); **user messages** carry the content. You pay per **token** in and out, so long prompts and long answers cost more. For anything a program will use, ask for **structured output** (JSON with named fields) and **validate** it like any untrusted input: the model can still return broken JSON or values you did not allow. Plan for failure: timeouts, rate limits, invalid output. **Streaming** shows the answer word by word so users are not left waiting. Keep API keys in configuration, never in code, and only send data you are allowed to share with the provider.
@@ -66,6 +67,21 @@ note: Treat the reply like any untrusted input.
 - Broken JSON | Cannot be parsed | bad
 - Unknown priority | A value you did not allow | bad
 - Prose around the JSON | Extra text before or after | bad
+```
+
+```maths What does one model call cost?
+situation: A call sends 1,000 input tokens and gets 500 output tokens back. Use invented prices for the sum: 2 per million input tokens and 10 per million output tokens (in any currency). Real prices differ by provider and change often.
+find: What does one call cost, and what do 10,000 calls cost?
+step: Input cost | 1,000 ÷ 1,000,000 × 2 = 0.002
+step: Output cost | 500 ÷ 1,000,000 × 10 = 0.005
+step: One call | 0.002 + 0.005 = 0.007
+step: Ten thousand calls | 0.007 × 10,000 = 70
+result: One call costs **0.007**, and 10,000 calls cost **70**.
+formula: cost = input tokens ÷ 1,000,000 × input price + output tokens ÷ 1,000,000 × output price
+why: Hosted models charge per token, so cost depends on how much you send and how much you ask for. Doing this sum before launch avoids surprises on the first invoice.
+caution: The prices here are made up for arithmetic practice. Always read the provider's current price list. Output tokens usually cost several times more than input tokens.
+try: You shorten the answers so each call returns 100 output tokens instead of 500. What does one call cost now?
+answer: Output: 100 ÷ 1,000,000 × 10 = 0.001. One call: 0.002 + 0.001 = 0.003. Asking for shorter answers cut the cost by more than half, because output was the expensive part.
 ```
 
 ### Related concepts
@@ -154,6 +170,21 @@ note: Change the biggest driver first. Measure before guessing.
 - Model size | Larger models are slower and cost more | model
 - Number of calls | Chains and agents multiply calls | process
 - Retries | Each retry pays again | bad
+```
+
+## Live simulation
+A call to a language-model service is a request, a streamed answer, and a plan for when it fails.
+
+```sim api A call to a language-model service
+question: What happens in a call to a hosted language model, and what do failures and retries cost?
+watch: The request names a model, sends messages and asks for a streamed answer. Nothing is sent anywhere here.
+watch: Set how often a call fails and how many retries are allowed. The table shows how the 20 calls ended.
+watch: The costs use made-up prices of $3 and $15 per million tokens.
+try: rescue | Set the failure rate to 60% or more and raise the retries until all 20 calls succeed.
+predict: A call fails 30% of the time and you allow 3 retries. About how many of 20 calls end up succeeding? | About 14 | All or nearly all 20 | About 6
+answer: 2 | A call has to fail four times in a row to be lost, which has a chance of about 1 in 100 at 30%. Here all 20 succeed, after 31 attempts.
+leaves-out: No model or service is called. The failures, waits and costs are simulated, and the prices and speeds are placeholders, not any provider's. Real services also return other errors (invalid requests, rate limits) that should not simply be retried.
+reference: examples/sim-apps/apps.py
 ```
 
 ## Python example

@@ -4,11 +4,12 @@ title: Time-series forecasting
 module: ml
 level: Intermediate
 minutes: 75
+maths: basic arithmetic
 goal: Forecast values over time with trend and seasonality, beat simple baselines, and always test on the future.
 prereqs: ml-regression, ml-evaluation
 reviewed: 2026-11-02
 evidence: A forecast for a series you choose, compared with naive and seasonal-naive baselines on a later period, with MAE for each.
-code: Python executed 2026-11-02 (gap_topics.py timeseries); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (gap_topics.py timeseries)
 ---
 ## In plain words
 A **time series** is a measurement repeated over time: daily sales, hourly website visits, monthly energy use. **Forecasting** predicts the next values. Most series mix a **trend** (slowly going up or down), **seasonality** (patterns that repeat, like busy weekends or December), and random **noise**. Because order matters, you train on the past and test on the future, never with a random split. Every forecast must beat two simple **baselines**: "same as yesterday" (**naive**) and "same as the same day last week" (**seasonal naive**). Models then use **lag features** (the value 7 or 14 days ago), calendar features (weekday, holidays) and outside signals (weather, promotions). Common methods are exponential smoothing, ARIMA, gradient-boosted trees with lag features and, for many related series, neural forecasting models.
@@ -86,6 +87,38 @@ note: Trust the forecast only after it holds up at several cut-off dates.
 - Forecast after the date | Compare with what really happened | model
 - Record MAE | Next to the baselines | output
 loop: Move the cut-off date later and repeat
+```
+
+```maths The naive forecast and its error
+situation: A shop sold 10, 12 and 11 items on three days. The simplest forecast says "tomorrow will be the same as today".
+find: How wrong is that simple forecast on average?
+table: Day | Sold | Naive forecast (yesterday's sales) | Size of mistake
+row: 1 | 10 | none | none
+row: 2 | 12 | 10 | 2
+row: 3 | 11 | 12 | 1
+step: Mistake on day 2 | 12 − 10 = 2
+step: Mistake on day 3 (forecast minus actual, to keep it positive) | 12 − 11 = 1
+step: Average mistake (MAE) | (2 + 1) ÷ 2 = 1.5
+result: The naive forecast is off by **1.5 items** per day on average.
+why: This is the baseline every forecasting model must beat. If a complex model has an error of 1.4, it has barely earned its keep. If it has 1.6, it is worse than doing nothing clever.
+try: A model's mistakes on the same two days are 1 and 1. What is its MAE, and what share better than the baseline is it?
+answer: (1 + 1) ÷ 2 = 1. Improvement: (1.5 − 1) ÷ 1.5 ≈ 0.33 = 33%. The model's error is a third smaller than the baseline's.
+```
+
+## Live simulation
+Forecasting is tested on time-ordered data. Compare three simple methods on one made-up series.
+
+```sim ts Forecasting a monthly series
+question: How do we test a forecast fairly, and which simple methods beat which?
+watch: The line is four years of monthly values. The last year is held back: methods are fitted on the first three years and tested on the last.
+watch: Compare the three methods over the same months. The miss is the average size of the gap between the forecast and what happened.
+watch: Smoothing with a moving average makes the trend easier to see. It is not a forecast.
+try: trend | Choose "Trend plus yearly pattern" and forecast 12 months ahead with an average miss below 3.
+try: worse | Choose "Repeat the same month last year" and see it do worse than repeating the last value.
+predict: A series has a clear upward trend and a yearly pattern. Over the next 12 months, which simple method should do best? | Repeat the last value | Repeat the same month last year | Trend plus yearly pattern
+answer: 3 | It is the only method that follows both the trend and the yearly pattern. Repeating last year's month ignores the trend, so it falls behind a little more each year.
+leaves-out: A made-up series with a known steady trend, a yearly pattern and a little noise, so the right answer is clear. Real series change character over time. One split is shown; real forecasting is tested on several time-ordered splits. The trend-and-pattern method is a plain straight-line fit plus average monthly differences.
+reference: examples/sim-ai/ai.py
 ```
 
 ## Python example

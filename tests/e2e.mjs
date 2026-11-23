@@ -17,7 +17,9 @@ const QA = join(ROOT, 'qa');
 mkdirSync(join(QA, 'screenshots'), { recursive: true });
 const url = (p) => { const [f, h] = p.split('#'); return pathToFileURL(join(DIST, f)).href + (h ? '#' + h : ''); };
 const ALL = (function walk(d, pre = '') { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p, pre + f + '/') : f.endsWith('.html') ? [pre + f] : []; }); })(DIST).sort();
-const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
+const ML_LESSONS = (readFileSync(join(DIST, 'index.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
+const LESSONS = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p)).length;   // read from dist/, not typed
+const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
 const results = [];
@@ -82,7 +84,9 @@ for (const scheme of ['light', 'dark']) {
     page.errors.length = 0;
     await page.goto(url(p));
     const r = await page.evaluate(contrastAudit);
-    if (scheme === 'light') { const ext = await page.$$eval('a[href^="http"], script[src^="http"], link[href^="http"], img[src^="http"]', (es) => es.length); if (ext) extLinks.push(`${p}: ${ext}`); }
+    if (scheme === 'light') { const ext = await page.$$eval('script[src^="http"], link[href^="http"], img[src^="http"], iframe, embed, object, source[src^="http"]', (es) => es.length);
+      const badA = await page.$$eval('a[href^="http"]', (es) => es.filter((a) => !a.classList.contains('ext') || a.getAttribute('rel') !== 'noopener noreferrer external' || a.hasAttribute('target') || a.textContent.trim().length < 4).length);
+      if (ext || badA) extLinks.push(`${p}: ${ext} outside resources, ${badA} unsafe outside links`); }
     checked += r.checked; r.fails.forEach((f) => fails.push(`${p}: ${f}`));
     page.errors.forEach((e) => errs.push(`${p}: ${e}`));
   }
@@ -90,7 +94,7 @@ for (const scheme of ['light', 'dark']) {
   expect(`Text contrast WCAG AA on all pages (${scheme}): ${checked} text elements checked`, fails.length === 0, `${fails.length} failures: ${fails.slice(0, 8).join(' | ')}`);
   await page.context().close();
 }
-expect(`Self-contained: no external links, scripts, styles or images on any of the ${ALL.length} pages`, extLinks.length === 0, extLinks.slice(0, 5).join(' | '));
+expect(`Nothing loaded from other sites (no outside scripts, styles, images or frames) and every outside link is a marked reference link, on all ${ALL.length} pages`, extLinks.length === 0, extLinks.slice(0, 5).join(' | '));
 
 // 2. Contrast in dynamic states (search results, empty filter state, drawer, selected tab, quiz feedback, expanded roadmap)
 for (const scheme of ['light', 'dark']) {
@@ -286,12 +290,23 @@ for (const w of [320, 390, 768]) {
   await page.goto(url('lessons.html'));
   const shown = () => page.$$eval('#cat-list > li', (ls) => ls.filter((l) => !l.hidden).length);
   const total = await shown();
+  const mlExpected = await page.$$eval('#cat-list > li[data-part~="3-machine-learning"]', (l) => l.length);
+  const mlIntExpected = await page.$$eval('#cat-list > li[data-part~="3-machine-learning"][data-level~="intermediate"]', (l) => l.length);
   await page.selectOption('select[data-filter="part"]', '3-machine-learning'); const ml = await shown();
   await page.selectOption('select[data-filter="level"]', 'intermediate'); const mlInt = await shown();
   await page.selectOption('select[data-filter="level"]', 'expert'); const none = await shown(); const empty = await page.isVisible('.empty-state');
   await page.click('.filters [data-filter-reset]'); const reset = await shown();
-  await page.selectOption('select[data-filter="code"]', 'python-output-from-a-real-run'); const exec = await shown();
-  expect('Lesson catalogue filters (part × level × code status) combine, show empty state and reset', total === 50 && ml === 9 && mlInt === 6 && none === 0 && empty && reset === 50 && exec >= 40, `total=${total} ml=${ml} mlIntermediate=${mlInt} none=${none} empty=${empty} reset=${reset} executed=${exec}`);
+  // The code filter now lists the labels produced by the real verification run (qa/code-status.json), so the option
+  // value changed from "python-output-from-a-real-run" to "python-example-run".
+  await page.selectOption('select[data-filter="code"]', 'python-example-run'); const exec = await shown();
+  expect('Lesson catalogue filters (part × level × code status) combine, show empty state and reset', total === LESSONS && ml === mlExpected && mlInt === mlIntExpected && none === 0 && empty && reset === LESSONS && exec >= 40, `total=${total} ml=${ml} mlIntermediate=${mlInt} none=${none} empty=${empty} reset=${reset} executed=${exec}`);
+  await page.click('.filters [data-filter-reset]');
+  const mathsOpts = await page.$$eval('select[data-filter="maths"] option', (os) => os.map((o) => o.value).filter(Boolean));
+  let mathsSum = 0; for (const v of mathsOpts) { await page.selectOption('select[data-filter="maths"]', v); mathsSum += await shown(); }
+  await page.click('.filters [data-filter-reset]');
+  await page.selectOption('select[data-filter="done"]', 'yes'); const doneNone = await shown();
+  await page.selectOption('select[data-filter="done"]', 'no'); const todo = await shown();
+  expect('Catalogue maths-level filter covers every lesson exactly once; progress filter separates finished from unfinished', mathsOpts.length === 4 && mathsSum === LESSONS && doneNone === 0 && todo === LESSONS, `options=${mathsOpts.length} sum=${mathsSum} finished=${doneNone} unfinished=${todo}`);
   await page.context().close();
 }
 
@@ -331,10 +346,10 @@ for (const w of [320, 390, 768]) {
   const bad = join(QA, 'bad.json'); writeFileSync(bad, '{"hello": 1}');
   await page.setInputFiles('#import-progress', bad); await page.waitForTimeout(200);
   const badMsg = await page.textContent('#io-status'); const still = await page.textContent('#progress-dashboard');
-  expect('Lesson completion updates sidebar count (1/9)', count === '1/9', count);
-  expect('Export produces versioned JSON (schema aimlqp-progress, version 1)', exported.schema === 'aimlqp-progress' && exported.version === 1 && exported.progress['lesson:ml-classification']?.done === true, JSON.stringify(exported).slice(0, 120));
-  expect('Reset clears progress; import restores it', /1 of 9/.test(dash) && !/1 of 9/.test(afterReset) && /1 of 9/.test(afterImport), '');
-  expect('Invalid import is rejected with a clear message and changes nothing', /Import failed/.test(badMsg) && /1 of 9/.test(still), badMsg);
+  expect('Lesson completion updates the sidebar count (1 of the Part 3 lessons)', count === '1/' + ML_LESSONS, count);
+  expect('Export produces versioned JSON (schema aimlqp-progress, version 2)', exported.schema === 'aimlqp-progress' && exported.version === 2 && exported.progress['lesson:ml-classification']?.done === true, JSON.stringify(exported).slice(0, 120));
+  expect('Reset clears progress; import restores it', dash.includes('1 of ' + ML_LESSONS) && !afterReset.includes('1 of ' + ML_LESSONS) && afterImport.includes('1 of ' + ML_LESSONS), '');
+  expect('Invalid import is rejected with a clear message and changes nothing', /Import failed/.test(badMsg) && still.includes('1 of ' + ML_LESSONS), badMsg);
   await page.fill('#cal-hours', '1');
   const calErr = await page.isVisible('#cal-error'); const inv = await page.getAttribute('#cal-hours', 'aria-invalid');
   await page.fill('#cal-hours', '10'); await page.selectOption('#cal-roadmap', 'lm');
@@ -388,8 +403,552 @@ for (const w of [320, 390, 768]) {
   await rm.context().close();
 }
 
+// 12b. Learning features added 2026-11: maths moments, code language, search inside lessons, start chooser, resume, data migration
+{
+  // Maths moment calculator (learner journey 2): default result, one change, invalid input, reset, answer reveal
+  const page = await newPage({ width: 390, scheme: 'dark' });
+  await page.goto(url('lessons/ml-learning.html'));
+  const w = page.locator('.mm-widget[data-widget="gradient"]');
+  const out = () => w.locator('.mm-out').innerText();
+  const first = await out();
+  await w.locator('input >> nth=1').fill('1.2'); const up = await out();
+  await w.locator('input >> nth=1').fill(''); const errShown = await w.locator('.mm-error').isVisible(); const invalid = await w.locator('input >> nth=1').getAttribute('aria-invalid');
+  const fails = (await page.evaluate(contrastAudit)).fails;
+  await w.locator('[data-widget-reset]').click(); const back = await out(); const errGone = !(await w.locator('.mm-error').isVisible());
+  const mm = page.locator('.math-moment').first();
+  await mm.locator('.mm-try summary').focus(); await page.keyboard.press('Enter');
+  const answer = await mm.locator('.mm-try .mm-answer').isVisible();
+  const scroll = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect('Maths moment calculator: correct default result, reacts to one change, rejects empty input with a message, resets, answer opens by keyboard, readable in dark at 390 px',
+    /1\.4/.test(first) && /2\.56/.test(first) && /went UP/.test(up) && errShown && invalid === 'true' && back === first && errGone && answer && fails.length === 0 && scroll <= 0,
+    `first=${first.slice(0, 60)} up=${/went UP/.test(up)} err=${errShown} invalid=${invalid} reset=${back === first} answer=${answer} contrast=${fails.slice(0, 2).join(';')} scroll=${scroll} ${page.errors.join(';')}`);
+  await page.context().close();
+}
+{
+  // Every calculator type gives the hand-worked answer shown in its lesson (the page and the build agree)
+  const page = await newPage();
+  const cases = [['lessons/d-clean-eda.html', 'mean', /12 ÷ 3 = 4/], ['lessons/ml-regression.html', 'line', /6 \+ 1 = 7/], ['lessons/ml-classification.html', 'confusion', /0\.8 = 80%/],
+    ['lessons/app-embeddings.html', 'dot', /= 11/], ['lessons/dl-transformers.html', 'weighted', /= 8/], ['lessons/llm-local.html', 'memory', /16 GB/], ['lessons/llm-tokens.html', 'softmax', /66\.5%/]];
+  const bad = [];
+  for (const [p, type, re] of cases) {
+    await page.goto(url(p));
+    const t = await page.locator(`.mm-widget[data-widget="${type}"] .mm-out`).innerText().catch(() => 'missing');
+    if (!re.test(t)) bad.push(`${type}: ${t.slice(0, 80)}`);
+  }
+  expect('All 8 calculator types show the same result as the worked steps in their lesson', bad.length === 0 && page.errors.length === 0, bad.join(' | ') + page.errors.join(';'));
+  await page.context().close();
+}
+{
+  // Code language switch (learner journey 3): C# only hides Python, is remembered, and a deep link to the hidden language still lands
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/ml-regression.html'));
+  const vis = (id) => page.locator(`#${id}`).isVisible();
+  const both = (await vis('python-example')) && (await vis('net-c-example'));
+  await page.check('[data-lang-switch] input[value="cs"]');
+  const csOnly = !(await vis('python-example')) && (await vis('net-c-example'));
+  const tocHidden = !(await page.locator('.rail-toc li[data-lang-section="python"]').isVisible());
+  await page.reload();
+  const kept = !(await vis('python-example')) && (await page.isChecked('[data-lang-switch] input[value="cs"]'));
+  await page.goto(url('lessons/ml-regression.html#python-example'));
+  const deep = await vis('python-example');
+  const pill = await page.locator('section[data-lang-section="cs"] .code-evidence .pill').innerText();
+  expect('Code language switch: C# only hides the Python section and its contents entry, survives reload, deep link to the hidden section shows it; C# status pill comes from the compile record',
+    both && csOnly && tocHidden && kept && deep && /^C#:/.test(pill), `both=${both} csOnly=${csOnly} toc=${tocHidden} kept=${kept} deep=${deep} pill=${pill}`);
+  await page.context().close();
+}
+{
+  // Search inside lesson text (learner journey 7): a phrase that is in no page title finds a lesson section with a marked snippet
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('index.html'));
+  await page.fill('#site-search', 'jumped right over');
+  await page.waitForSelector('#search-results .res-snippet mark', { timeout: 10000 }).catch(() => {});
+  const groups = await page.$$eval('#search-results .search-group', (g) => g.map((x) => x.textContent));
+  const marks = await page.$$eval('#search-results .res-snippet mark', (m) => m.length);
+  const href = await page.locator('#search-results a').first().getAttribute('href');
+  await page.locator('#search-results a').first().click();
+  const landed = await page.evaluate(() => location.pathname.endsWith('ml-learning.html') && location.hash === '#how-it-works');
+  expect('Search finds text inside lessons, marks the words and opens the matching section', groups.includes('Inside lessons') && marks >= 1 && landed, `groups=${groups} marks=${marks} href=${href} landed=${landed}`);
+  await page.context().close();
+}
+{
+  // Start chooser and resume (learner journeys 1 and 5)
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('index.html'));
+  const noResume = !(await page.isVisible('#resume-card'));
+  await page.click('[data-persona-pick="dotnet"]');
+  const start = await page.getAttribute('#hero-start', 'href');
+  const pressed = await page.getAttribute('[data-persona-pick="dotnet"]', 'aria-pressed');
+  await page.click('#hero-start');
+  const onSetup = page.url().endsWith('lessons/s-setup.html');
+  const csFirst = await page.isChecked('[data-lang-switch] input[value="cs"]');
+  await page.goto(url('index.html'));
+  const resume = (await page.isVisible('#resume-card')) && /Set up your laptop/.test(await page.innerText('#resume-link'));
+  const chosen = await page.getAttribute('.persona-card[data-persona="dotnet"]', 'data-chosen');
+  await page.click('[data-persona-pick="dotnet"]');
+  const cleared = (await page.getAttribute('#hero-start', 'href')) === 'lessons/s-what-is-ai.html';
+  expect('Start chooser sets the first lesson and code language, is remembered and can be cleared; home page offers to resume the last lesson',
+    noResume && /s-setup/.test(start) && pressed === 'true' && onSetup && csFirst && resume && chosen === 'true' && cleared, `noResume=${noResume} start=${start} pressed=${pressed} onSetup=${onSetup} cs=${csFirst} resume=${resume} chosen=${chosen} cleared=${cleared}`);
+  await page.context().close();
+}
+{
+  // Data written by the previous site version (version 1) is kept and upgraded, never lost
+  const page = await newPage();
+  await page.goto(url('index.html'));
+  await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 1, prefs: { theme: 'dark', sidebar: 'hidden' }, progress: { 'lesson:ml-regression': { done: true, at: '2026-11-01' }, 'project:c01-churn': { done: true, at: '2026-11-02' } } })));
+  await page.goto(url('lessons/ml-regression.html'));
+  const theme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+  const ticked = await page.isChecked('[data-progress-checkbox="lesson:ml-regression"]');
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('aimlqp.v1')));
+  expect('Version 1 browser data migrates to version 2 with theme, layout and all completion marks intact',
+    theme === 'dark' && ticked && stored.version === 2 && stored.prefs.sidebar === 'hidden' && stored.progress['project:c01-churn']?.done === true && stored.progress['lesson:ml-regression']?.at === '2026-11-01' && stored.last?.id === 'ml-regression',
+    JSON.stringify(stored).slice(0, 200));
+  await page.context().close();
+}
+
+{
+  // Roadmap steps: prerequisite, progress count, checkpoint link, and a continue button that follows the learner's progress
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('roadmaps.html#ml'));
+  const meta = await page.locator('#ml .node >> nth=1').locator('.node-meta').allInnerTexts();
+  const first = await page.locator('#ml .rm-continue').getAttribute('href');
+  await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 2, prefs: {}, progress: { 'lesson:s-what-is-ai': { done: true, at: '2026-11-01' }, 'lesson:s-lifecycle': { done: true, at: '2026-11-01' }, 'lesson:s-setup': { done: true, at: '2026-11-01' } } })));
+  await page.goto(url('roadmaps.html#ml')); await page.reload();
+  const next = await page.locator('#ml .rm-continue').getAttribute('href');
+  const count = await page.locator('#ml .node >> nth=0').locator('[data-progress-ids]').first().innerText();
+  const cp = await page.locator('#ml .node >> nth=1').locator('a[href*="assessment.html#cp-data"]').count();
+  expect('Roadmap steps show what to finish first, a progress count and a checkpoint link; Continue points to the first unfinished lesson',
+    /Finish step 1/.test(meta.join(' ')) && /lessons/.test(meta.join(' ')) && cp === 1 && /s-what-is-ai/.test(first) && /d-basics/.test(next) && count === '3/3', );
+  await page.context().close();
+}
+
+{
+  // 12-week plan and progress page reflect finished lessons and offer to resume
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/s-what-is-ai.html'));
+  await page.check('[data-progress-checkbox="lesson:s-what-is-ai"]');
+  await page.goto(url('plan.html'));
+  const wk = await page.locator('#week-1 [data-progress-ids]').first().innerText();
+  const doneMark = await page.locator('#week-1 a[data-progress-id="lesson:s-what-is-ai"]').getAttribute('data-done');
+  await page.goto(url('progress.html'));
+  const resume = (await page.isVisible('#resume-progress')) && /What AI/.test(await page.innerText('#resume-link'));
+  expect('12-week plan shows finished lessons per week; progress page offers to resume the last lesson', wk === '1/4' && doneMark === 'true' && resume && page.errors.length === 0, 'wk=' + wk + ' done=' + doneMark + ' resume=' + resume + ' ' + page.errors.join(';'));
+  await page.context().close();
+}
+
+{
+  // Assessment: one column of whole questions; question text inside its box; print hides controls and opens explanations
+  const page = await newPage({ width: 1440 });
+  await page.goto(url('assessment.html'));
+  const cols = await page.evaluate(() => getComputedStyle(document.querySelector('.content')).columnCount);
+  const inside = await page.evaluate(() => { const f = document.querySelector('.mcq'), l = f.querySelector('legend'); return l.getBoundingClientRect().top >= f.getBoundingClientRect().top; });
+  await page.emulateMedia({ media: 'print' });
+  const hidden = await page.evaluate(() => getComputedStyle(document.querySelector('.mcq-actions')).display === 'none' && document.querySelectorAll('.sidebar,.topbar').length > 0 && getComputedStyle(document.querySelector('.topbar')).display === 'none');
+  expect('Assessment page is one column, question text sits inside its box, and print hides the check buttons and navigation', cols === 'auto' || cols === '1', 'columns=' + cols);
+  expect('Print layout hides top bar and check buttons', inside && hidden, 'inside=' + inside + ' hidden=' + hidden);
+  await page.context().close();
+}
+
+{
+  // Quiz retry flow: wrong answer can be changed, right answer locks, score counts first tries, retry resets
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('assessment.html'));
+  const q = page.locator('#cp-ml ~ .mcq-list .mcq').first();
+  const sec = page.locator('.checkpoint:has(#cp-ml)');
+  await q.locator('input[value="0"]').check(); await q.locator('[data-check-answer]').click();
+  const wrong = await q.locator('.mcq-feedback').innerText(); const mark = await q.locator('.opt-wrong').count(); const stillOpen = await q.locator('input[value="1"]').isEnabled();
+  await q.locator('input[value="1"]').check(); await q.locator('[data-check-answer]').click();
+  const right = await q.locator('.mcq-feedback').innerText(); const locked = await q.locator('input[value="2"]').isDisabled(); const open = await q.locator('details').evaluate((d) => d.open);
+  const score = await sec.locator('.cp-score').innerText();
+  await sec.locator('[data-retry-quiz]').click();
+  const reset = (await q.locator('input:checked').count()) === 0 && (await q.locator('input[value="2"]').isEnabled()) && (await q.locator('.mcq-feedback').innerText()) === '';
+  expect('Quiz retry: a wrong answer can be changed, a right answer locks and reports its try, the score counts first tries, Retry resets the quiz',
+    wrong.startsWith('Not quite (try 1)') && mark === 1 && stillOpen && /on try 2/.test(right) && locked && open && /1 of 5 correct so far, 0 on the first try/.test(score) && reset && page.errors.length === 0,
+    `wrong=${wrong.slice(0, 40)} mark=${mark} right=${right} locked=${locked} score=${score} reset=${reset}`);
+  await page.context().close();
+}
+
+{
+  // Exercises are tracked apart from reading: own tick, own progress block, kept in export, independent of the lesson tick
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/ml-regression.html'));
+  await page.check('[data-progress-checkbox="exercise:ml-regression"]');
+  const lessonTicked = await page.isChecked('[data-progress-checkbox="lesson:ml-regression"]');
+  const sidebarDone = await page.getAttribute('#sidebar a[data-progress-id="lesson:ml-regression"]', 'data-done');
+  await page.goto(url('progress.html'));
+  const block = await page.locator('#progress-dashboard .dash-item', { hasText: 'Exercises done' }).innerText();
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#export-progress')]);
+  const exported = JSON.parse(readFileSync(await dl.path(), 'utf8'));
+  await page.goto(url('lessons/ml-regression.html'));
+  const kept = await page.isChecked('[data-progress-checkbox="exercise:ml-regression"]');
+  expect('Exercise tick is separate from the reading tick, has its own progress block and is exported and remembered',
+    !lessonTicked && sidebarDone === 'false' && new RegExp('1 of ' + LESSONS).test(block) && exported.progress['exercise:ml-regression']?.done === true && !exported.progress['lesson:ml-regression'] && kept,
+    `lesson=${lessonTicked} sidebar=${sidebarDone} block=${block.replace(/s+/g, ' ')} exported=${Object.keys(exported.progress)} kept=${kept}`);
+  await page.context().close();
+}
+
+{
+  // Plan and roadmaps count exercises separately from reading
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/s-what-is-ai.html'));
+  await page.check('[data-progress-checkbox="exercise:s-what-is-ai"]');
+  await page.goto(url('plan.html'));
+  const wk = await page.locator('#week-1 [data-progress-ids]').allInnerTexts();
+  await page.goto(url('roadmaps.html#applied'));
+  const rm = await page.locator('#applied .node >> nth=0').locator('[data-progress-ids]').allInnerTexts();
+  expect('Study plan and roadmap steps show reading and exercise progress separately', wk.join() === '0/4,1/4' && rm.join() === '0/3,1/3', 'plan=' + wk + ' roadmap=' + rm);
+  await page.context().close();
+}
+
+// 12b. Simulations (public/assets/sim.js and sims/*.js)
+{
+  const SIMS = [['dl-neural-nets', 'nn'], ['llm-tokens', 'bpe'], ['llm-tokens', 'gen'], ['dl-transformers', 'attn'], ['ml-algorithms', 'sup'], ['dl-transformers', 'tf1'], ['dl-transformers', 'tf4'], ['dl-transformers', 'tf6'], ['llm-how', 'tf5'], ['ml-learning', 'gd'], ['dl-training', 'train'], ['dl-backprop', 'bp'], ['ml-regression', 'reg'], ['ml-classification', 'cls'], ['ml-generalisation', 'bv'], ['ml-evaluation', 'cv'], ['ml-unsupervised', 'km'], ['ml-unsupervised', 'pca'], ['ml-patterns', 'anom'], ['llm-design', 'mb'], ['llm-design', 'lw'], ['llm-embed-train', 'emb'], ['llm-finetune', 'lora'], ['app-embeddings', 'vs'], ['app-rag', 'rag'], ['dl-vision', 'cnn'], ['dl-sequences', 'seq'], ['dl-nlp-classic', 'txt'], ['dl-generative', 'ae'], ['dl-graphs', 'gnn'], ['dl-speech', 'spec'], ['dl-rl', 'rl'], ['ml-recommenders', 'rec'], ['ml-timeseries', 'ts'], ['ml-bayes', 'bay'], ['ml-causal', 'cau'], ['ai-search', 'srch'], ['ai-logic-plan', 'csp'], ['s-what-is-ai', 'rul'], ['s-lifecycle', 'loop'], ['d-basics', 'spl'], ['d-collect', 'lab'], ['d-clean-eda', 'cln'], ['d-features', 'feat'], ['app-llm-api', 'api'], ['app-agents', 'agent'], ['app-multimodal', 'mm'], ['app-security', 'inj'], ['app-evals', 'evl'], ['app-responsible', 'fair'], ['app-frameworks', 'mcp'], ['ops-data-debt', 'val'], ['ops-mlops', 'rel'], ['ops-monitoring', 'mon'], ['ops-serving', 'srv'], ['ops-architecture', 'arch'], ['llm-eval', 'ppl']];
+  const problems = [];
+  for (const [lesson, mod] of SIMS) for (const w of [320, 1280]) {
+    const page = await newPage({ width: w });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(500);
+    const info = await page.evaluate((m) => {
+      const f = document.querySelector('figure.sim[data-sim="' + m + '"]');
+      const unlabelled = [...f.querySelectorAll('input:not([type=radio]), select')].filter((e) => !(e.labels && e.labels.length) && !e.getAttribute('aria-label')).length;
+      return { live: f.classList.contains('sim-live'), over: document.documentElement.scrollWidth > window.innerWidth + 1, unlabelled, narr: f.querySelector('.sim-narr-t') ? f.querySelector('.sim-narr-t').textContent : '', live2: f.querySelector('.sim-narr') ? f.querySelector('.sim-narr').getAttribute('aria-live') : '' };
+    }, mod);
+    if (!info.live) problems.push(mod + '@' + w + ' did not start');
+    if (info.over) problems.push(mod + '@' + w + ' scrolls sideways');
+    if (info.unlabelled) problems.push(mod + '@' + w + ' has ' + info.unlabelled + ' unlabelled controls');
+    if (info.live2 !== 'polite') problems.push(mod + '@' + w + ' narrator is not a polite live region');
+    if (page.errors.length) problems.push(mod + '@' + w + ' errors: ' + page.errors.join(' | '));
+    await page.context().close();
+  }
+  expect('All fifty-seven simulations start, fit 320 and 1280 px without sideways scrolling, have labelled controls and an announced narrator, and raise no errors', !problems.length, problems.join('; '));
+
+  // Behaviour of the neural network playground: training runs, the challenge ticks, the tick is remembered, the guess check works.
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('lessons/dl-neural-nets.html#live-simulation')); await page.waitForTimeout(400);
+  await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+  await page.reload(); await page.waitForTimeout(400);
+  const fig = page.locator('figure.sim[data-sim="nn"]');
+  await page.evaluate(() => { const b = [...document.querySelectorAll('figure.sim[data-sim="nn"] .sim-btns button')].find((x) => x.textContent === 'One epoch'); for (let i = 0; i < 400; i++) b.click(); });
+  const read = await fig.locator('.sim-readouts dd').allInnerTexts();
+  const ticked = await fig.locator('[data-try="xor"].done').count();
+  await page.reload(); await page.waitForTimeout(400);
+  const remembered = await page.locator('figure.sim[data-sim="nn"] [data-try="xor"].done').count();
+  await page.locator('figure.sim[data-sim="nn"] .sim-predict input[value="1"]').check();
+  await page.locator('figure.sim[data-sim="nn"] [data-sim-check]').click();
+  const wrong = await page.locator('figure.sim[data-sim="nn"] .sim-reveal').getAttribute('class');
+  await page.locator('figure.sim[data-sim="nn"] .sim-predict input[value="2"]').check();
+  await page.locator('figure.sim[data-sim="nn"] [data-sim-check]').click();
+  const right = await page.locator('figure.sim[data-sim="nn"] .sim-reveal').getAttribute('class');
+  expect('Neural network playground: 400 epochs of real training reach 100% accuracy (as the Python program prints), the XOR challenge ticks and is remembered, and the predict check marks wrong and right guesses',
+    read[0] === '400' && read[1] === '0.042' && read[3] === '100%' && read[4] === '100%' && ticked === 1 && remembered === 1 && /no/.test(wrong) && /ok/.test(right),
+    'readouts=' + read + ' ticked=' + ticked + ' remembered=' + remembered + ' wrong=' + wrong + ' right=' + right);
+  await page.context().close();
+
+  // With reduced motion the Train button does a block of epochs at once and nothing animates.
+  const rmPage = await newPage({ width: 390, reducedMotion: 'reduce' });
+  await rmPage.goto(url('lessons/dl-neural-nets.html#live-simulation')); await rmPage.waitForTimeout(400);
+  await rmPage.evaluate(() => { [...document.querySelectorAll('figure.sim[data-sim="nn"] .sim-btns button')].find((x) => x.textContent === 'Train').click(); });
+  const rmRead = await rmPage.locator('figure.sim[data-sim="nn"] .sim-readouts dd').first().innerText();
+  expect('With reduced motion the Train button runs a block of 50 epochs at once instead of animating', rmRead === '50', 'epoch=' + rmRead);
+  await rmPage.context().close();
+
+  // The generation loop: greedy choice is repeatable, and the supervised playground opens on an algorithm that struggles.
+  const g = await newPage({ width: 1280 });
+  await g.goto(url('lessons/llm-tokens.html#live-simulation')); await g.waitForTimeout(400);
+  const text = await g.evaluate(() => {
+    const f = document.querySelector('figure.sim[data-sim="gen"]');
+    const sel = f.querySelectorAll('select')[0]; sel.value = 'greedy'; sel.dispatchEvent(new Event('change'));
+    const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent === n);
+    for (let i = 0; i < 10; i++) btn('Write next token').click();
+    return f.querySelectorAll('.sim-card-t')[1].textContent;
+  });
+  expect('Generation simulation: ten greedy tokens after "the cat" give the same text as the Python program', /Text: the cat sat on the mat. the cat sat on the$/.test(text), text);
+  await g.context().close();
+}
+
+
+// 12c. Behaviour of the Phase 1 simulations (Transformer series, gradient descent, optimiser race, backpropagation)
+{
+  const run = async (lesson, mod, fn, arg) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const out = await page.evaluate(fn, { mod, arg });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  const H = `
+    const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+    const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent === n);
+    const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+    const setSel = (label, v) => { const lab = [...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)); const sel = document.getElementById(lab.getAttribute('for')); sel.value = v; sel.dispatchEvent(new Event('change')); };
+    const toggle = (label) => { const lab = [...f.querySelectorAll('.sim-ctl.check label')].find((l) => l.textContent.includes(label)); lab.querySelector('input').click(); };
+  `;
+  const mk = (body) => new Function('a', H + body);
+  let r = await run('ml-learning', 'gd', mk(`btn('Run 20 steps').click(); return reads();`));
+  expect('Gradient descent simulation: 20 steps at rate 0.1 on the bowl reach x = 2.97 (the Python program gives the same)', r.out[1] === '2.97' && !r.errs.length, r.out.join(' ') + r.errs.join('|'));
+  r = await run('dl-backprop', 'bp', mk(`btn('Show all').click(); const d = reads(); return [d[1], d[2], f.querySelector('[data-try="chain"]').classList.contains('done')];`));
+  expect('Backpropagation simulation: showing all four steps gives a gradient of w of -1.00, the nudge check agrees, and the challenge ticks', r.out[0] === '-1.00' && r.out[1] === '-1.00' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-training', 'train', mk(`btn('Run to 60').click(); return reads();`));
+  expect('Optimiser race: after 60 steps at rate 0.05 plain and momentum are near 0.017 and Adam is still near 1', /^0\.01/.test(r.out[0]) && /^0\.01/.test(r.out[1]) && /^0\.9/.test(r.out[2]) && !r.errs.length, r.out.join(' ') + r.errs.join('|'));
+  r = await run('llm-how', 'tf5', mk(`setSel('Start with', '1'); btn('Write to the end').click(); const chips = [...f.querySelectorAll('.sim-chips li')].map((li) => li.firstChild.textContent).join(' '); return [chips, reads(), f.querySelector('[data-try="cache"]').classList.contains('done')];`));
+  expect('Transformer writing simulation: greedy text after "the cats" matches the Python program, the cache saves work, and the challenge ticks', r.out[0] === 'the cats near the boxes sleep .' && Number(r.out[1][1]) < Number(r.out[1][0]) && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-transformers', 'tf1', mk(`toggle('position'); return [reads()[0], f.querySelector('[data-try="same"]').classList.contains('done')];`));
+  expect('Words-to-numbers simulation: with position numbers off the two "the" rows are identical', r.out[0] === '0.00' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-transformers', 'tf4', mk(`toggle('Add path'); return [reads()[1], f.querySelector('[data-try="nores"]').classList.contains('done')];`));
+  expect('Transformer block simulation: switching off the add path drops the chance on agreeing verbs below 60%', parseInt(r.out[0], 10) < 60 && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-transformers', 'tf6', mk(`setSel('Mode', 'use'); for (let i = 0; i < 6; i++) btn('Next word (using mode)').click(); return [reads(), f.querySelector('[data-try="serial"]').classList.contains('done')];`));
+  expect('Training-against-using simulation: using mode needs six passes for six words and the challenge ticks', r.out[0][0] === '6' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12d. Behaviour of the Phase 2 simulations (regression, classification, bias and variance, cross-validation, clustering, PCA, anomalies)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const setRange = (label, v) => { const lab = [...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)); const i = document.getElementById(lab.getAttribute('for')); i.value = v; i.dispatchEvent(new Event('input')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('ml-regression', 'reg', `btn('Use the best fit').click(); return [reads()[1], reads()[2], done('close')];`);
+  expect('Regression simulation: "Use the best fit" gives R² 0.93 and slope 1.62, and the challenge ticks', r.out[0] === '0.93' && r.out[1] === '1.62' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-classification', 'cls', `const q = reads(); setRange('Decision threshold', 0.2); return [q[0], q[1], reads()[1], done('recall')];`);
+  expect('Classification simulation: at 0.5 precision and recall are 84%; at 0.2 recall is 94% and the challenge ticks', r.out[0] === '84%' && r.out[1] === '84%' && r.out[2] === '94%' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-generalisation', 'bv', `setRange('Degree', 9); return [reads(), done('overfit')];`);
+  expect('Bias and variance simulation: degree 9 with 15 points trains well and does far worse on new points, and the challenge ticks', Number(r.out[0][0]) < 0.05 && Number(r.out[0][1]) > 100 && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-evaluation', 'cv', `btn('Test every').click(); return [reads(), done('all')];`);
+  expect('Cross-validation simulation: five folds with k = 3 give an average of 85% (the Python program gives the same folds) and the challenge ticks', r.out[0][1] === '85%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-unsupervised', 'km', `btn('Run to the end').click(); return [reads(), done('three')];`);
+  expect('Clustering simulation: k-means with k = 3 on three groups ends at a total squared distance of 3.04 and the challenge ticks', r.out[0][1] === '3.04' && r.out[0][2] === '3' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-unsupervised', 'pca', `btn('Use the best').click(); return [reads(), done('axis')];`);
+  expect('PCA simulation: the best axis keeps 95% of the spread at 30 degrees and the challenge ticks', r.out[0][0] === '95%' && r.out[0][2] === '30°' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-patterns', 'anom', `setRange('Share of points', 5); return [reads(), done('all')];`);
+  expect('Anomaly simulation: flagging 5% catches all four real anomalies with one false alarm and the challenge ticks', r.out[0][1] === '4 of 4' && r.out[0][2] === '1' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12e. Behaviour of the Phase 3 simulations (model builder, learning to write, embeddings, LoRA, vector search, retrieval)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('llm-design', 'mb', `setSel('Start from', 'b7'); const q = reads(); setSel('Bits per weight', '4'); return [q[0], q[1], reads()[1], done('fit')];`);
+  expect('Model builder: the 7-billion-class shape has 6.57 billion parameters and 13.15 GB of weights, and at 4 bits it fits 8 GB and the challenge ticks', r.out[0] === '6.57 billion' && r.out[1] === '13.15 GB' && r.out[2] === '3.29 GB' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('llm-design', 'lw', `setRange('Words of text', 120); return [reads()[1], done('good')];`);
+  expect('Learning-to-write simulation: after 120 words the loss on unseen sentences is 2.04 (the Python program gives the same) and the challenge ticks', r.out[0] === '2.04' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('llm-embed-train', 'emb', `btn('Run 10').click(); btn('Run 10').click(); btn('Run 10').click(); return [reads(), done('all')];`);
+  expect('Embedding-training simulation: after 30 steps every word has a same-topic nearest neighbour and the challenge ticks', r.out[0][2] === '100%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('llm-finetune', 'lora', `setRange('LoRA rank', 2); return [reads()[0], reads()[1], done('rank')];`);
+  expect('LoRA simulation: rank 2 leaves 14% of the change and trains 32 of 64 numbers, and the challenge ticks', r.out[0] === '14%' && r.out[1] === '32' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('app-embeddings', 'vs', `return [reads()[1], reads()[0]];`);
+  expect('Vector-search simulation: the default query near the animals gives "horse" first and one topic', r.out[0] === 'horse' && r.out[1] === '1' && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('app-rag', 'rag', `setRange('Chunk size', 20); return [reads(), done('all')];`);
+  expect('Retrieval simulation: chunks of 20 words find the answer to the first question and all four questions at 20 words sent, and the challenge ticks', r.out[0][1] === 'yes' && r.out[0][2] === '20' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12f. Behaviour of the Phase 4 simulations (convolution, running state, word weights, autoencoder, graph, spectrogram, reinforcement learning)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('dl-vision', 'cnn', `setSel('Image', 'bar'); setSel('Filter', 'vertical edge'); return [reads(), done('edge')];`);
+  expect('Convolution simulation: the vertical bar with the vertical-edge filter gives a 6 × 6 map with strongest response 3, and the challenge ticks', r.out[0][0] === '6 × 6' && r.out[0][2] === '3' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-sequences', 'seq', `const q = reads(); setRange('Memory', 0); return [q[0], q[1], reads()[1], done('forget')];`);
+  expect('Running-state simulation: with memory 0.9 the first sentence ends at -0.67 (negative), with no memory it is unsure, and the challenge ticks', r.out[0] === '-0.67' && r.out[1] === 'negative' && r.out[2] === 'unsure' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-nlp-classic', 'txt', `setSel('Review', '3'); f.querySelector('.sim-ctl.check input').click(); return [reads()[0], done('rare')];`);
+  expect('Word-weight simulation: for review 4 with rarity weighting the top word is "ending" and the challenge ticks', r.out[0] === 'ending' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-generative', 'ae', `const q = reads()[0]; setRange('Numbers in the middle', 2); return [q, reads()[0], done('ae')];`);
+  expect('Autoencoder simulation: one number in the middle loses 54.3% and two lose 7.5% (the Python program gives the same), and the challenge ticks', r.out[0] === '54.3%' && r.out[1] === '7.5%' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-graphs', 'gnn', `setRange('Rounds', 10); return [reads()[1], done('smooth')];`);
+  expect('Graph simulation: after 10 rounds the values differ by 0.02 and the challenge ticks', r.out[0] === '0.02' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-speech', 'spec', `setSel('Window size', '128'); return [reads()[2], done('pitch')];`);
+  expect('Spectrogram simulation: a window of 128 reads the first pitch as 102 Hz and the second as 250 Hz, and the challenge ticks', r.out[0] === '102 and 250 Hz' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('dl-rl', 'rl', `btn('Train 50').click(); return [reads()[2], done('path')];`);
+  expect('Reinforcement-learning simulation: after 50 episodes the best path reaches the goal in 6 moves (the Python program gives the same path) and the challenge ticks', r.out[0] === '6 moves to the goal' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12g. Behaviour of the Phase 5 simulations (recommender, forecasting, test probability, treatment paradox, search, backtracking)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  let r = await run('ml-recommenders', 'rec', `const q = reads()[0]; setRange('How many similar', 3); return [q, reads()[0], done('k')];`);
+  expect('Recommender simulation: User 1 and Film C is predicted at 4.50 with k = 2 and 3.93 with k = 3 (the Python program gives the same), and the challenge ticks', r.out[0] === '4.50' && r.out[1] === '3.93' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-timeseries', 'ts', `setSel('Forecast method', 'trend'); setRange('Months ahead', 12); return [reads(), done('trend')];`);
+  expect('Forecasting simulation: trend plus pattern over 12 months misses by 2.32 against 5.26 for repeating the last value, and the challenge ticks', r.out[0][0] === '2.32' && r.out[0][1] === '5.26' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-bayes', 'bay', `setRange('How common', -2); return [reads()[2], done('rare')];`);
+  expect('Test-probability simulation: at 1% prevalence a positive test means 8.8% chance of illness, and the challenge ticks', r.out[0] === '8.8%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ml-causal', 'cau', `const q = reads(); f.querySelector('.sim-btns button').click(); return [q[2], reads()[2], reads()[0], done('flip')];`);
+  expect('Treatment-paradox simulation: B looks better overall (A 74%, B 81%), and with the same mix A comes out ahead at 80%, and the challenge ticks', r.out[0] === 'B' && r.out[1] === 'A' && r.out[2] === '80%' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ai-search', 'srch', `setSel('Method', 'astar'); btn('Run to the end').click(); return [reads(), done('guided')];`);
+  expect('Search simulation: A* examines 14 cells and finds the 13-step path (the Python program gives the same), and the challenge ticks', r.out[0][0] === '14' && r.out[0][1] === '13 steps' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('ai-logic-plan', 'csp', `setSel('Which region', 'smart'); btn('Run to the end').click(); return [reads(), done('smart')];`);
+  expect('Backtracking simulation: most constrained first solves the puzzle with 11 colours tried and no backtracks, and the challenge ticks', r.out[0][0] === '11' && r.out[0][1] === '0' && r.out[0][2] === 'solved' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+}
+
+// 12h. Behaviour of the Phase 6 simulations (start, data and application lessons)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const tog = (text) => [...f.querySelectorAll('.sim-ctl.check label')].find((l) => l.textContent.includes(text)).querySelector('input').click();
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  const check = (name, r, ok) => expect(name, ok && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  let r = await run('s-what-is-ai', 'rul', `tog('learned'); return [reads(), done('learn')];`);
+  check('Rules-against-learning simulation: the learned word weights get 100% of the training messages and 88% of the new ones (the Python program gives the same), and the challenge ticks', r, r.out[0][0] === '100%' && r.out[0][1] === '88%' && r.out[1] === true);
+  r = await run('s-lifecycle', 'loop', `setSel('Inject', '1'); return [reads()[2], done('worst')];`);
+  check('Project-loop simulation: a wrong success measure repeats all seven stages and the challenge ticks', r, r.out[0] === '7' && r.out[1] === true);
+  r = await run('d-basics', 'spl', `setSel('How to split', 'time'); return [reads()[0], done('time')];`);
+  check('Splits-and-leakage simulation: the time split gives an error of 4.46 against 3.31 for the random split, and the challenge ticks', r, r.out[0] === '4.46' && r.out[1] === true);
+  r = await run('d-clean-eda', 'cln', `const q = reads()[1]; setSel('Missing values', 'zero'); return [q, reads()[1], done('zero')];`);
+  check('Cleaning simulation: dropping missing values gives a mean of 39.06, filling with zero gives 35.15, and the challenge ticks', r, r.out[0] === '39.06' && r.out[1] === '35.15' && r.out[2] === true);
+  r = await run('d-features', 'feat', `const q = reads(); tog('same scale'); return [q[1], q[2], done('flip')];`);
+  check('Scaling simulation: the closest person is person 5 without scaling and person 6 with it, and the challenge ticks', r, r.out[0] === 'Person 5' && r.out[1] === 'Person 6' && r.out[2] === true);
+  r = await run('d-collect', 'lab', `setRange('Share of training', 0.3); return [reads()[0], done('drop')];`);
+  check('Label-noise simulation: with 30% wrong labels the test accuracy is 63% (the Python program gives the same), and the challenge ticks', r, r.out[0] === '63%' && r.out[1] === true);
+  r = await run('app-llm-api', 'api', `return reads();`);
+  check('LLM-call simulation: at 30% failures and 3 retries all 20 calls succeed after 31 attempts and 14 seconds of waiting', r, r.out[0] === '20 of 20' && r.out[1] === '31' && r.out[2] === '14');
+  r = await run('app-agents', 'agent', `setRange('Steps in the task', 10); setRange('Chance a check', 0.8); return [reads()[0], done('long')];`);
+  check('Agent-chain simulation: ten steps with a check chance of 80% finish 75% of the time, and the challenge ticks', r, r.out[0] === '75%' && r.out[1] === true);
+  r = await run('app-multimodal', 'mm', `setSel('Patch size', '1'); return [reads()[0], reads()[1], done('cost')];`);
+  check('Patch simulation: patches of one pixel give 64 tokens and 4096 pairs, and the challenge ticks', r, r.out[0] === '64' && r.out[1] === '4096' && r.out[2] === true);
+  r = await run('app-security', 'inj', `const q = reads()[0]; tog('Guard 1'); tog('Guard 2'); return [q, reads()[0], done('safe')];`);
+  check('Prompt-injection simulation: with no guards three attacks work, with two guards none do, and the challenge ticks', r, r.out[0] === '3 of 3' && r.out[1] === '0 of 3' && r.out[2] === true);
+  r = await run('app-evals', 'evl', `return [reads()[0], reads()[1]];`);
+  check('Test-size simulation: 20 cases give a margin of 17.5 points and ten scores from 70% to 95% (the Python program gives the same)', r, r.out[0] === '± 17.5 points' && r.out[1] === '70% to 95%');
+  r = await run('app-responsible', 'fair', `tog('one threshold'); setRange('Threshold for group B', 0.15); return [reads()[0], done('equal')];`);
+  check('Fairness simulation: with group B at threshold 0.15 the share of qualified people found is equal, and the challenge ticks', r, r.out[0] === '0 points' && r.out[1] === true);
+  r = await run('app-frameworks', 'mcp', `tog('asks the person'); setRange('Messages shown', 9); return [reads()[0], done('ask')];`);
+  check('Tool-messages simulation: all nine messages shown with the question to the person, and the challenge ticks', r, r.out[0] === '9 of 9' && r.out[1] === true);
+}
+
+// 12i. Behaviour of the Phase 7 simulations (production lessons and model scoring)
+{
+  const run = async (lesson, mod, body) => {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
+    await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
+    const H = `
+      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
+      const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
+      const setRange = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('input')); };
+      const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
+      const tog = (text) => [...f.querySelectorAll('.sim-ctl.check label')].find((l) => l.textContent.includes(text)).querySelector('input').click();
+      const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
+    `;
+    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const errs = page.errors.slice(); await page.context().close(); return { out, errs };
+  };
+  const check = (name, r, ok) => expect(name, ok && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  let r = await run('ops-data-debt', 'val', `tog('renamed'); return [reads(), done('silent')];`);
+  check('Data-check simulation: after the column is renamed, row checks alone pass 7 of 10 rows with nothing noticed (the Python program gives the same), and the challenge ticks', r, r.out[0][0] === '7 of 10' && r.out[0][1] === 'nothing noticed' && r.out[1] === true);
+  r = await run('ops-mlops', 'rel', `setSel('The new model', 'bad'); return [reads(), done('catch')];`);
+  check('Safe-release simulation: with a clearly worse model and a 5% canary, 93 requests and 14 wrong answers lead to a rollback, and the challenge ticks', r, r.out[0][0] === '93' && r.out[0][1] === '14' && r.out[0][2] === 'roll back' && r.out[1] === true);
+  r = await run('ops-monitoring', 'mon', `setRange('Days averaged', 7); setRange('Alert when', 2.5); return [reads(), done('fast')];`);
+  check('Drift simulation: a window of 7 days and a threshold of 2.5 give no false alarms and an alert 4 days after the shift, and the challenge ticks', r, r.out[0][0] === '0' && r.out[0][1] === '4 days' && r.out[1] === true);
+  r = await run('ops-serving', 'srv', `const q = reads(); setRange('Requests handled together', 4); setRange('Requests arriving', 8); return [q[3], reads()[3], reads()[2], done('batch')];`);
+  check('Serving simulation: 6 requests a second on one server leaves 530 waiting, and batches of 4 keep up at 8 a second, and the challenge ticks', r, r.out[0] === '530' && r.out[1] === '2' && r.out[2] === '2.94 s' && r.out[3] === true);
+  r = await run('ops-architecture', 'arch', `setSel('Break this part', 'Logging'); return [reads()[0], done('blind')];`);
+  check('Architecture simulation: breaking the logging leaves the request working but worse, and the challenge ticks', r, r.out[0] === 'works, but worse' && r.out[1] === true);
+  r = await run('llm-eval', 'ppl', `const q = reads()[0]; setRange('Words of text', 160); setSel('Score the answers', 'exact'); return [q, reads()[0], reads()[1], done('low'), done('strict')];`);
+  check('Model-scoring simulation: perplexity falls from 23.3 to 7.1 as the model reads more, and exact match marks only 1 of 4 answers right, and both challenges tick', r, r.out[0] === '23.3' && r.out[1] === '7.1' && r.out[2] === '1.00 of 4' && r.out[3] === true && r.out[4] === true);
+}
+
+// 12j. Simulation lab page and structural accessibility checks for every simulation
+{
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('simulations.html')); await page.waitForTimeout(300);
+  const lab = await page.evaluate(() => ({ items: document.querySelectorAll('.sim-lab li').length, groups: document.querySelectorAll('main section h2').length, h1: document.querySelectorAll('h1').length, bad: [...document.querySelectorAll('.sim-lab a')].filter((a) => !/^lessons\/[a-z0-9-]+\.html#live-simulation$/.test(a.getAttribute('href'))).length }));
+  const figs = await page.evaluate(async () => { const out = []; for (const a of document.querySelectorAll('.sim-lab a')) out.push(a.getAttribute('href').split('#')[0]); return [...new Set(out)]; });
+  expect('Simulation lab page lists every simulation with a link to its lesson, one main heading, and the lessons it links to match the lessons that have a live simulation', lab.items >= 57 && lab.h1 === 1 && lab.bad === 0 && figs.length >= 50, JSON.stringify(lab) + ' lessons=' + figs.length);
+  await page.context().close();
+  const problems = [];
+  for (const href of figs) {
+    for (const scheme of ['light', 'dark']) {
+      const pg = await newPage({ width: 1024, scheme });
+      await pg.goto(url(href + '#live-simulation')); await pg.waitForTimeout(250);
+      const r = await pg.evaluate(() => {
+        const bad = [];
+        document.querySelectorAll('figure.sim').forEach((f) => {
+          const id = f.getAttribute('data-sim');
+          if (!f.classList.contains('sim-live')) bad.push(id + ' did not start');
+          f.querySelectorAll('svg').forEach((s) => { if (s.getAttribute('role') !== 'img' || !(s.getAttribute('aria-label') || '').trim()) bad.push(id + ' svg without role img and a label'); });
+          f.querySelectorAll('button').forEach((b) => { if (!(b.textContent || '').trim() && !b.getAttribute('aria-label')) bad.push(id + ' unnamed button'); });
+          f.querySelectorAll('input:not([type=radio]), select').forEach((c) => { if (!(c.labels && c.labels.length) && !c.getAttribute('aria-label')) bad.push(id + ' unlabelled control'); });
+          f.querySelectorAll('canvas').forEach((c) => { if (!c.getAttribute('aria-label')) bad.push(id + ' canvas without a label'); });
+          const n = f.querySelector('.sim-narr'); if (!n || n.getAttribute('aria-live') !== 'polite' || !(f.querySelector('.sim-narr-t').textContent || '').trim()) bad.push(id + ' narrator missing or empty');
+          f.querySelectorAll('.sim-stage [tabindex="-1"]').forEach(() => bad.push(id + ' control removed from the keyboard order'));
+          f.querySelectorAll('.sim-try li').forEach((li) => { if (!li.querySelector('.sim-tick-word')) bad.push(id + ' goal without a text status'); });
+          const cs = getComputedStyle(f.querySelector('.sim-narr-x')); if (cs.color === getComputedStyle(f.querySelector('.sim-narr')).backgroundColor) bad.push(id + ' narrator text same colour as background');
+        });
+        return bad;
+      });
+      r.forEach((x) => problems.push(href + ' (' + scheme + '): ' + x));
+      if (pg.errors.length) problems.push(href + ' (' + scheme + ') errors: ' + pg.errors.join(' | '));
+      await pg.context().close();
+    }
+  }
+  expect('Every simulation, in light and dark themes, starts, labels its pictures, buttons and controls, has an announcing narrator and a text status for each goal, keeps its controls in the keyboard order, and raises no errors', !problems.length, problems.slice(0, 8).join('; '));
+}
+
 // 13. Screenshots
-const shots = [['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
+const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
+['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],
   ['roadmaps.html', 1440, 'dark', 'roadmap-collapsed-1440-dark'], ['roadmaps.html#lm', 390, 'light', 'roadmap-lm-390-light'], ['lessons/app-rag.html', 1440, 'light', 'lesson-1440-light'], ['lessons/app-rag.html', 390, 'dark', 'lesson-390-dark'],
   ['cases.html', 1280, 'dark', 'cases-1280-dark'], ['hardware.html', 390, 'light', 'hardware-390-light'], ['progress.html', 1280, 'light', 'progress-1280-light']];
 for (const [p, w, s, name] of shots) {

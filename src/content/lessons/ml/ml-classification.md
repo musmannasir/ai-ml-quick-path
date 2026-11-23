@@ -4,11 +4,12 @@ title: Classification: picking a category
 module: ml
 level: Beginner
 minutes: 75
+maths: basic arithmetic
 goal: Train a classifier, read its probabilities and confusion matrix, and choose a decision threshold that fits the business.
 prereqs: ml-learning, d-features
 reviewed: 2026-11-02
 evidence: A text or tabular classifier with a confusion matrix, precision and recall, and a chosen threshold explained by the cost of each mistake.
-code: Python executed 2026-11-02 (examples/spam-classifier/spam_classifier.py); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (examples/spam-classifier/spam_classifier.py)
 ---
 ## In plain words
 **Classification** picks a category: spam or not, fraud or not, which product type, which language. With two categories it is **binary**; with more it is **multi-class**; when several labels can be true at once (a photo with a dog and a cat) it is **multi-label**. Most classifiers output a **probability** for each category, and a **threshold** turns it into a decision (spam if probability ≥ 0.5). The **confusion matrix** counts four outcomes: true positives (caught), false positives (false alarms), false negatives (missed) and true negatives. **Precision** asks "of what we flagged, how much was right?"; **recall** asks "of everything real, how much did we catch?". Moving the threshold trades one for the other, so you choose it from the cost of each mistake, not by habit.
@@ -50,6 +51,31 @@ y: Really positive | Really negative
 ## Recall | model
 - Of everything real, how much did we catch?
 - Falls when real cases are missed
+```
+
+```maths Precision: when the model says "spam", how often is it right?
+situation: A filter marks 10 messages as spam. A person checks them: 8 really are spam, and 2 are normal messages that were marked by mistake.
+find: What share of the messages marked as spam is truly spam?
+step: Divide the true spam by everything that was marked | 8 ÷ (8 + 2) = 0.8 = 80%
+result: The precision is **80%**.
+formula: precision = true positives ÷ (true positives + false positives)
+means: A true positive is a message marked spam that is spam. A false positive is a false alarm: marked spam, but actually fine.
+why: A support team cares about precision because every false alarm hides a real customer message in the spam folder. High precision means few false alarms.
+try: The team makes the filter stricter. It now marks only 5 messages, and all 5 are spam. What is the precision, and what might have been lost?
+answer: 5 ÷ (5 + 0) = 1 = 100%. Precision is perfect, but the filter now marks fewer messages, so more spam probably gets through. That is what recall, in the next box, measures.
+```
+
+```maths Recall: of all the real spam, how much did the model catch?
+situation: In the same inbox there were 12 spam messages in total. The filter caught 8 of them and missed 4.
+find: What share of the real spam did the filter find?
+step: Divide the caught spam by all the real spam | 8 ÷ (8 + 4) ≈ 0.67 = 67%
+result: The recall is about **67%**: one third of the spam still reaches the inbox.
+formula: recall = true positives ÷ (true positives + false negatives)
+means: A false negative is a miss: real spam that the filter let through.
+why: Precision and recall pull against each other. A stricter filter raises precision and lowers recall; a looser one does the opposite. Choosing the balance is a business decision, not a maths one.
+widget: confusion 8,2,4,86
+try: The filter is loosened. It now catches 11 of the 12 spam messages, but it also marks 9 normal messages by mistake. What are the new recall and precision?
+answer: Recall: 11 ÷ 12 ≈ 0.92 = 92%. Precision: 11 ÷ (11 + 9) = 0.55 = 55%. Almost no spam gets through, but nearly half of what lands in the spam folder is a real message. Which is worse depends on the cost of each mistake.
 ```
 
 ## Real-world example
@@ -95,6 +121,22 @@ Common text tasks that are classification or close to it:
 - Fast, strong baseline
 ## Embeddings and transformers | output
 - Usually do better on meaning
+```
+
+## Live simulation
+A classifier outputs a chance. Choosing the threshold turns that chance into a decision, and every choice has a cost.
+
+```sim cls Threshold, confusion matrix and ROC curve
+question: A classifier gives a chance, not a yes or no. Where should the line be drawn, and what does each choice cost?
+watch: The shaded area is where the model says class 1. Move the threshold and the area grows or shrinks, but the model itself does not change.
+watch: The matrix counts true positives, false alarms, misses and true negatives. Precision is true positives over everything called 1. Recall is true positives over everything that really is 1.
+watch: The dot on the ROC curve moves as the threshold moves. A curve that bends toward the top left means a better model.
+try: recall | Find a threshold where recall is at least 90%.
+try: precision | Find a threshold where precision is at least 95% while recall stays above 50%.
+predict: You lower the threshold from 0.5 to 0.2. What happens? | Recall goes up and precision goes down | Both go up | Accuracy always goes up
+answer: 1 | A lower threshold calls more points class 1. It catches more of the real ones (recall up) and also some wrong ones (precision down). In this data, recall rises from 84% to 94% and precision falls from 84% to 67%.
+leaves-out: Two made-up groups that overlap, and a plain logistic regression. Real data has many more inputs, and the best threshold depends on what a miss and a false alarm cost, which no chart can tell you.
+reference: examples/sim-core/core.py
 ```
 
 ## Python example

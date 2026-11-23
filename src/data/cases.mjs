@@ -1,5 +1,5 @@
-// Business case studies. URLs are kept out of the site (self-contained edition);
-// they are listed in CONTENT_SOURCES.md. "confirmed" and "results" contain ONLY what the cited
+// Business case studies. Each source has a ref into src/data/sources.mjs, which holds its address, so case pages
+// can link to the evidence (owner decision 2026-11-13). CONTENT_SOURCES.md keeps the research notes. "confirmed" and "results" contain ONLY what the cited
 // sources state (sources checked 2026-10-30). "workflow" and "tech" are an
 // educational reference design written for this academy, NOT the company's stack.
 
@@ -10,7 +10,7 @@ export const CASES = [
     confirmed: 'Morgan Stanley Wealth Management deployed an internal GPT-4-based assistant ("AI @ Morgan Stanley Assistant") that answers financial advisors\' questions from the firm\'s internal knowledge, and later a meeting-summary tool ("AI @ Morgan Stanley Debrief"). OpenAI\'s case study describes evaluation of use cases before rollout.',
     problem: 'Advisors needed fast, trustworthy answers from a very large body of internal research and procedures.',
     concept: 'Retrieval-augmented generation over permissioned internal documents, with expert-written evaluation questions.',
-    results: [{ text: 'OpenAI\'s case study states that over 98% of advisor teams actively use the Assistant.', date: 'Case study page, checked 2026-10-30', caveat: 'Vendor-published adoption figure; adoption is not the same as answer accuracy.' }],
+    results: [{ text: 'InvestmentNews reports the firm\'s own statement that advisor adoption of the Assistant reached 98%.', date: 'InvestmentNews, 28 Jun 2024, read 2026-11-13', caveat: 'Vendor-published adoption figure; adoption is not the same as answer accuracy.' }],
     workflow: ['Collect approved policy and research documents with owners and permissions', 'Split documents into chunks and index them with metadata', 'Filter by the user\'s entitlements, then retrieve passages', 'Generate an answer that cites passages', 'Score answers against expert-written questions before release', 'Collect advisor feedback and review weak answers'],
     tech: [['API and auth', 'ASP.NET Core with Entra ID', 'FastAPI with OAuth2'], ['Search', 'PostgreSQL + pgvector with hybrid search', 'Azure AI Search, Elasticsearch'], ['Model access', 'Microsoft.Extensions.AI', 'Provider SDK or LangChain'], ['Evaluation', 'Versioned question set + scripted checks', 'MLflow or Ragas'], ['Monitoring', 'OpenTelemetry traces', 'Application Insights, Langfuse']],
     example: { input: 'What documents does a client need for a retirement-account transfer?', output: 'A cited answer listing the required forms, with links to the two procedure passages used, or "not found in your accessible documents".' },
@@ -18,18 +18,18 @@ export const CASES = [
     acceptance: ['Every answer cites at least one passage the user may read', 'Restricted documents never appear for unauthorised test users', '30-question evaluation set with recorded pass rate', 'Unanswerable questions return a no-answer response'],
     risks: ['Leaking restricted research to the wrong role', 'Outdated documents served as current', 'Advisors over-trusting uncited answers'],
     sources: [
-      { title: 'Shaping the future of financial services (Morgan Stanley case study)', publisher: 'OpenAI', type: 'Vendor case study' },
-      { title: 'Morgan Stanley\'s OpenAI-powered solution for advisors has expanded', publisher: 'InvestmentNews, 28 Jun 2024', type: 'Independent reporting' },
+      { ref: 'ms-openai', title: 'Shaping the future of financial services (Morgan Stanley case study)', publisher: 'OpenAI', type: 'Vendor case study' },
+      { ref: 'ms-investmentnews', title: 'Morgan Stanley\'s OpenAI-powered solution for advisors has expanded', publisher: 'InvestmentNews, 28 Jun 2024', type: 'Independent reporting' },
     ],
   },
   {
     id: 'klarna', company: 'Klarna', industry: 'Commerce', category: 'Agents / customer support',
     difficulty: 'Intermediate', tracks: ['applied', 'dotnet', 'python'], effort: '30–40 h',
-    confirmed: 'In February 2024 Klarna announced an OpenAI-powered assistant in its app handling customer-service chats, including refunds and returns, in many languages. In May 2025 the CEO told Bloomberg the company was again investing in human customer support because cost had been too dominant a factor and quality had suffered.',
+    confirmed: 'In February 2024 Klarna announced an OpenAI-powered assistant in its app handling customer-service chats, including refunds and returns, in many languages. In May 2025 the CEO told Bloomberg that Klarna was hiring human support staff again, after finding that AI support was cheaper but of lower quality.',
     problem: 'High volumes of routine payment, refund and return questions across many markets and languages.',
     concept: 'Tool-using assistant over account APIs, with escalation to people.',
     results: [
-      { text: 'Klarna reported 2.3 million conversations in the first month, two-thirds of its customer-service chats.', date: 'Klarna press release, 27 Feb 2024', caveat: 'Launch-month figure published by the company; not a current KPI.' },
+      { text: 'Klarna reported 2.3 million conversations in the first month, which its press release describes as two-thirds of its customer-service chats. (A later Entrepreneur article gives the share as 75%; the sources differ.)', date: 'Klarna press release, 27 Feb 2024', caveat: 'Launch-month figure published by the company; not a current KPI.' },
       { text: 'In May 2025 Klarna said it was hiring human support staff again to protect service quality.', date: 'Bloomberg interview reported May 2025', caveat: 'Shows that automation rate alone is not a sufficient success metric.' },
     ],
     workflow: ['Receive the customer message and detect language and intent', 'Authenticate the customer and fetch their own orders only', 'Answer from policy or prepare an action such as a refund', 'Require approval or strict rules for money-moving actions', 'Hand off to a person on low confidence or on request', 'Measure resolution, satisfaction and re-contact rate together'],
@@ -39,17 +39,17 @@ export const CASES = [
     acceptance: ['Never shows another customer\'s orders in tests', 'Refunds always pause for approval', 'Handoff triggered for 5 scripted angry or ambiguous messages', 'Report resolution rate AND satisfaction proxy, not one alone'],
     risks: ['Optimising automation rate at the cost of quality', 'Prompt injection through customer messages', 'Unauthorised refunds'],
     sources: [
-      { title: 'Klarna AI assistant handles two-thirds of customer service chats in its first month', publisher: 'Klarna, 27 Feb 2024', type: 'Company press release' },
-      { title: 'Klarna is hiring customer service agents after AI couldn\'t cut it on calls', publisher: 'Entrepreneur, 9 May 2025', type: 'Independent reporting' },
+      { ref: 'klarna-press', title: 'Klarna AI assistant handles two-thirds of customer service chats in its first month', publisher: 'Klarna, 27 Feb 2024', type: 'Company press release' },
+      { ref: 'klarna-entrepreneur', title: 'Klarna is hiring customer service agents after AI couldn\'t cut it on calls', publisher: 'Entrepreneur, 9 May 2025', type: 'Independent reporting' },
     ],
   },
   {
     id: 'indeed', company: 'Indeed', industry: 'Hiring', category: 'Fine-tuning',
     difficulty: 'Advanced', tracks: ['applied', 'lm', 'python'], effort: '40–60 h',
-    confirmed: 'Indeed used OpenAI GPT models to add a natural-language explanation of why a job is recommended to a job seeker ("Invite to Apply"), then fine-tuned a smaller model to produce similar explanations with fewer tokens so it could scale.',
+    confirmed: 'Indeed used OpenAI GPT models to add a natural-language explanation of why a job is recommended to a job seeker ("Invite to Apply"), using fine-tuning of those models. Indeed says the messages grew from 1 million to 20 million a day.',
     problem: 'Job recommendations without a clear reason were less persuasive and harder to trust.',
     concept: 'Prompted baseline, then fine-tuning a smaller model for cost and latency, validated by A/B testing.',
-    results: [{ text: 'OpenAI\'s case study reports a 20% increase in started applications and a 13% uplift in downstream success in testing.', date: 'OpenAI case study, checked 2026-10-30', caveat: 'Company-reported A/B results; method details are not public.' }],
+    results: [{ text: 'Indeed reports that A/B tests showed an increase of 20% or more in started job applications and 13% or more greater success further along in hiring.', date: 'Indeed article, read 2026-11-13', caveat: 'Company-reported A/B results; method details are not public.' }],
     workflow: ['Define what a useful, honest explanation contains', 'Collect consented job and profile examples', 'Build a prompted baseline and label good outputs', 'Fine-tune a smaller model on approved examples', 'Compare quality, cost and latency on a held-out set', 'A/B test with people before full rollout'],
     tech: [['Fine-tuning', 'Hugging Face TRL + PEFT (LoRA)', 'Provider fine-tuning API'], ['Tracking', 'MLflow', 'Weights & Biases'], ['Serving', 'vLLM', 'Managed endpoint'], ['Evaluation', 'Blind pairwise human rating', 'Rubric-based model grading, calibrated']],
     example: { input: 'Profile: 3 years React, wants remote. Job: Frontend engineer, remote, React + TypeScript.', output: '"Matches your 3 years of React experience and your preference for remote work."' },
@@ -57,8 +57,8 @@ export const CASES = [
     acceptance: ['Train/test split by profile, no overlap', 'Report quality, tokens and latency for both', 'Explanations never mention protected attributes', 'Written decision on whether fine-tuning was worth it'],
     risks: ['Personal data in training sets', 'Biased or discriminatory explanations', 'Explanations that sound confident but are wrong'],
     sources: [
-      { title: 'Indeed case study', publisher: 'OpenAI', type: 'Vendor case study' },
-      { title: 'How Indeed uses AI to provide better matching context for job seekers', publisher: 'Indeed', type: 'Company article' },
+      { ref: 'indeed-openai', title: 'Indeed case study', publisher: 'OpenAI', type: 'Vendor case study' },
+      { ref: 'indeed-lead', title: 'How Indeed uses AI to provide better matching context for job seekers', publisher: 'Indeed', type: 'Company article' },
     ],
   },
   {
@@ -75,8 +75,8 @@ export const CASES = [
     acceptance: ['Replies stay within scenario level', 'Learner ratings stored', '20 teacher-reviewed explanations with error rate reported'],
     risks: ['Wrong grammar explanations taught confidently', 'Inappropriate content with minors', 'Storing learner voice or text without consent'],
     sources: [
-      { title: 'Introducing Duolingo Max', publisher: 'Duolingo blog, Mar 2023', type: 'Company announcement' },
-      { title: 'Duolingo launches new subscription tier with access to AI tutor powered by GPT-4', publisher: 'TechCrunch, 14 Mar 2023', type: 'Independent reporting' },
+      { ref: 'duolingo-max', title: 'Introducing Duolingo Max', publisher: 'Duolingo blog, Mar 2023', type: 'Company announcement' },
+      { ref: 'duolingo-techcrunch', title: 'Duolingo launches new subscription tier with access to AI tutor powered by GPT-4', publisher: 'TechCrunch, 14 Mar 2023', type: 'Independent reporting' },
     ],
   },
   {
@@ -96,8 +96,8 @@ export const CASES = [
     acceptance: ['Separate test fields, not random images from the same field', 'Report recall of weeds at each threshold', 'Show the savings-versus-missed-weeds trade-off curve'],
     risks: ['Missed weeds reducing yield', 'Model failing in new lighting or crops', 'Safety of physical actuation (simulation only in this project)'],
     sources: [
-      { title: 'See & Spray customers see 59% average herbicide savings in 2024', publisher: 'Deere & Company, 18 Sep 2024', type: 'Company press release' },
-      { title: 'Precision agriculture research measures effectiveness of See & Spray technology', publisher: 'University of Arkansas Division of Agriculture, 10 Mar 2025', type: 'Independent research' },
+      { ref: 'deere-press', title: 'See & Spray customers see 59% average herbicide savings in 2024', publisher: 'Deere & Company, 18 Sep 2024', type: 'Company press release' },
+      { ref: 'deere-uaex', title: 'Precision agriculture research measures effectiveness of See & Spray technology', publisher: 'University of Arkansas Division of Agriculture, 10 Mar 2025', type: 'Independent research' },
     ],
   },
   {
@@ -114,8 +114,8 @@ export const CASES = [
     acceptance: ['Time-based split (train on earlier weeks, test on later)', 'Beats a persistence baseline', 'Never recommends settings outside limits in tests'],
     risks: ['Unsafe control actions', 'Distribution shift after hardware changes', 'Leakage from future data in features'],
     sources: [
-      { title: 'DeepMind AI reduces Google data centre cooling bill by 40%', publisher: 'Google DeepMind, 20 Jul 2016', type: 'Company research blog' },
-      { title: 'Google unleashes DeepMind on energy-hungry data center', publisher: 'TechCrunch, 20 Jul 2016', type: 'Independent reporting' },
+      { ref: 'deepmind-blog', title: 'DeepMind AI reduces Google data centre cooling bill by 40%', publisher: 'Google DeepMind, 20 Jul 2016', type: 'Company research blog' },
+      { ref: 'deepmind-techcrunch', title: 'Google unleashes DeepMind on energy-hungry data center', publisher: 'TechCrunch, 20 Jul 2016', type: 'Independent reporting' },
     ],
   },
   {
@@ -124,7 +124,7 @@ export const CASES = [
     confirmed: 'Intercom\'s Fin is an AI agent that answers customer questions from a company\'s help content and hands off to human agents. Intercom publishes an average "resolution rate" across customers and charges per resolution.',
     problem: 'Support teams receive many questions already answered in help articles.',
     concept: 'Grounded answering over help content, escalation, and outcome-based measurement.',
-    results: [{ text: 'Intercom\'s published average resolution rate has changed over time: an earlier Intercom blog post cited 41%; an Intercom comparison page checked on 2026-10-30 cites 76% across 8,000+ customers.', date: 'Intercom pages, checked 2026-10-30', caveat: 'Vendor-defined metric that changes with product versions and customer mix; compare definitions before comparing numbers.' }],
+    results: [{ text: 'Intercom\'s published average resolution rate has changed over time: an earlier Intercom blog post cited 41%; an Intercom comparison page read on 2026-11-13 cites 76% across 12,000+ customers (the same page said 8,000+ on 2026-10-30).', date: 'Intercom pages, read 2026-11-13', caveat: 'Vendor-defined metric that changes with product versions and customer mix; compare definitions before comparing numbers.' }],
     workflow: ['Ingest help-centre articles and keep them in sync', 'Retrieve relevant passages for each question', 'Answer with links to sources', 'Detect low confidence or requests for a person', 'Hand off with a conversation summary', 'Measure resolution with a clear definition and sample reviews'],
     tech: [['Retrieval', 'Hybrid search over help articles', 'Managed search service'], ['Answering', 'Model API with grounding prompt', 'LangChain retriever chain'], ['Handoff', 'Helpdesk API', 'Webhook to ticket queue'], ['Quality', 'Weekly human review sample', 'Automated faithfulness checks']],
     example: { input: '"How do I change the email on my account?"', output: 'Three-step answer citing the "Update your email" article; offers a person if the steps do not work.' },
@@ -132,17 +132,17 @@ export const CASES = [
     acceptance: ['Written definition of "resolved"', 'Every answer links an article', 'Escalation works for 10 scripted cases', 'Weekly review sample procedure documented'],
     risks: ['Counting abandoned conversations as resolved', 'Stale articles', 'Hallucinated steps'],
     sources: [
-      { title: 'Fin, the AI agent for customer service, keeps getting better', publisher: 'Intercom blog', type: 'Vendor blog' },
-      { title: 'Intercom vs LiveAgent comparison (states current average resolution rate)', publisher: 'Intercom', type: 'Vendor page' },
+      { ref: 'intercom-blog', title: 'Fin, the AI agent for customer service, keeps getting better', publisher: 'Intercom blog', type: 'Vendor blog' },
+      { ref: 'intercom-compare', title: 'Intercom vs LiveAgent comparison (states current average resolution rate)', publisher: 'Intercom', type: 'Vendor page' },
     ],
   },
   {
     id: 'moderna', company: 'Moderna', industry: 'Life sciences', category: 'Enterprise assistants / data analysis',
     difficulty: 'Intermediate', tracks: ['applied', 'python'], effort: '25–35 h',
-    confirmed: 'Moderna built an internal chatbot (mChat) on OpenAI\'s API, then deployed ChatGPT Enterprise. Custom GPTs include "Dose ID", which uses data-analysis features to review clinical data and support, not replace, the clinical team\'s dose-selection judgement.',
+    confirmed: 'Moderna built an internal chatbot (mChat) on OpenAI\'s API, then deployed ChatGPT Enterprise. Custom GPTs include "Dose ID", which uses data-analysis features to further evaluate the vaccine dose selected by the clinical study team, in a review led by people and supported by AI.',
     problem: 'Specialists across functions spend time on analysis, summarisation and document drafting.',
     concept: 'Enterprise assistants with tool use (data analysis) and human review in a regulated setting.',
-    results: [{ text: 'Moderna and OpenAI reported more than 750 GPTs created within about two months of adoption, and over 80% internal adoption of the earlier mChat tool.', date: 'Moderna/OpenAI announcement, 24 Apr 2024', caveat: 'Adoption and usage counts, not clinical or productivity outcomes.' }],
+    results: [{ text: 'Moderna and OpenAI reported more than 750 GPTs deployed in the few months after adopting ChatGPT Enterprise, and over 80% internal adoption of the earlier mChat tool.', date: 'Moderna/OpenAI announcement, 24 Apr 2024', caveat: 'Adoption and usage counts, not clinical or productivity outcomes.' }],
     workflow: ['Define the analysis question and approved data', 'Load de-identified data into an isolated analysis tool', 'Assistant applies documented criteria and produces charts', 'Assistant cites the data and criteria used', 'Experts review and make the decision', 'Record the analysis for audit'],
     tech: [['Analysis', 'Python sandbox with pandas and matplotlib', 'Managed code-interpreter tool'], ['Documents', 'RAG over SOPs', 'Enterprise search'], ['Governance', 'Audit log + access control', 'Validated system processes']],
     example: { input: 'De-identified dose-response table for three doses.', output: 'Summary table, two charts, and the criteria applied, flagged as decision support for expert review.' },
@@ -150,14 +150,14 @@ export const CASES = [
     acceptance: ['Every claim linked to a source sentence', 'Missing evidence flagged rather than guessed', 'Reviewer sign-off step recorded'],
     risks: ['Patient data exposure', 'Unvalidated analysis influencing medical decisions', 'Over-reliance on generated charts'],
     sources: [
-      { title: 'Accelerating the development of life-saving treatments (Moderna)', publisher: 'OpenAI', type: 'Vendor case study' },
-      { title: 'Moderna and OpenAI collaborate to advance mRNA medicine', publisher: 'BioSpace (Moderna press release), 24 Apr 2024', type: 'Company press release' },
+      { ref: 'moderna-openai', title: 'Accelerating the development of life-saving treatments (Moderna)', publisher: 'OpenAI', type: 'Vendor case study' },
+      { ref: 'moderna-biospace', title: 'Moderna and OpenAI collaborate to advance mRNA medicine', publisher: 'BioSpace (Moderna press release), 24 Apr 2024', type: 'Company press release' },
     ],
   },
   {
     id: 'lowes', company: 'Lowe\'s', industry: 'Retail', category: 'RAG / knowledge assistant',
     difficulty: 'Intermediate', tracks: ['applied', 'dotnet'], effort: '25–35 h',
-    confirmed: 'Lowe\'s launched Mylow, a customer-facing home-improvement advisor (March 2025), and Mylow Companion for store associates across its 1,700+ stores (May 2025). Both were built with OpenAI and grounded in Lowe\'s product and project content.',
+    confirmed: 'Lowe\'s launched Mylow, a customer-facing home-improvement advisor (earlier in 2025), and Mylow Companion for store associates across its 1,700+ stores (May 2025). Both were built with OpenAI and grounded in Lowe\'s product and project content.',
     problem: 'Associates must answer questions about thousands of products and projects, including outside their own department.',
     concept: 'Catalog- and guide-grounded assistant with voice input for staff.',
     results: [{ text: 'No outcome metric is cited here; primary sources describe the rollout.', date: '5 May 2025 announcement', caveat: 'Avoid quoting second-hand earnings-call metrics without the primary transcript.' }],
@@ -168,8 +168,8 @@ export const CASES = [
     acceptance: ['Never recommends out-of-catalog products', 'Stock answers match the database', 'States when a question needs a specialist'],
     risks: ['Wrong safety advice for DIY projects', 'Stale stock data', 'Hallucinated product attributes'],
     sources: [
-      { title: 'Lowe\'s puts project expertise into every hand', publisher: 'OpenAI', type: 'Vendor case study' },
-      { title: 'Lowe\'s deploys first at-scale AI assistant for retail associates', publisher: 'Lowe\'s via PR Newswire, 5 May 2025', type: 'Company press release' },
+      { ref: 'lowes-openai', title: 'Lowe\'s puts project expertise into every hand', publisher: 'OpenAI', type: 'Vendor case study' },
+      { ref: 'lowes-prnewswire', title: 'Lowe\'s deploys first at-scale AI assistant for retail associates', publisher: 'Lowe\'s via PR Newswire, 5 May 2025', type: 'Company press release' },
     ],
   },
   {
@@ -186,8 +186,8 @@ export const CASES = [
     acceptance: ['Answers cite file paths and lines', 'Generated tests compile and run in an isolated container', 'Measure on 10 tasks with and without the tool'],
     risks: ['Leaking private code to third parties', 'Insecure suggested code', 'Licence issues in suggestions'],
     sources: [
-      { title: 'Research: quantifying GitHub Copilot\'s impact on developer productivity and happiness', publisher: 'GitHub blog, 7 Sep 2022', type: 'Company research' },
-      { title: 'The Impact of AI on Developer Productivity: Evidence from GitHub Copilot (Peng et al.)', publisher: 'arXiv, 2023', type: 'Research paper' },
+      { ref: 'copilot-research', title: 'Research: quantifying GitHub Copilot\'s impact on developer productivity and happiness', publisher: 'GitHub blog, 7 Sep 2022', type: 'Company research' },
+      { ref: 'copilot-arxiv', title: 'The Impact of AI on Developer Productivity: Evidence from GitHub Copilot (Peng et al.)', publisher: 'arXiv, 2023', type: 'Research paper' },
     ],
   },
   {
@@ -196,7 +196,7 @@ export const CASES = [
     confirmed: 'Toyota built an internal "AI Platform" on a hybrid of on-premises systems and Google Cloud so factory staff can create and deploy machine-learning models (for example image-based inspection) without specialist ML skills.',
     problem: 'Factory floors have many local inspection and monitoring tasks but few ML specialists.',
     concept: 'Self-service ML platform: labelling, training, deployment and governance for non-specialists.',
-    results: [{ text: 'Google Cloud\'s write-up states the platform could save up to about 10,000 hours of routine work per year, and that a team of six built it in about 1.5 years.', date: 'Google Cloud blog, 10 Dec 2024', caveat: 'Vendor-hosted customer story; estimate, not audited.' }],
+    results: [{ text: 'Google Cloud\'s write-up states the platform saves about 10,000 hours or more of work per year, and that a team of six built it in about 1.5 years.', date: 'Google Cloud blog, 10 Dec 2024', caveat: 'Vendor-hosted customer story; estimate, not audited.' }],
     workflow: ['Worker captures and labels images of good and defective parts', 'Platform trains a model with sensible defaults', 'Validation on held-out images is shown in plain language', 'Model deployed to line equipment', 'Monitoring flags drift and low confidence', 'Engineers review and retrain'],
     tech: [['Training', 'PyTorch on Kubernetes', 'Managed AutoML'], ['Edge', 'ONNX Runtime', 'Vendor edge runtime'], ['Governance', 'Model registry (MLflow)', 'Cloud model registry']],
     example: { input: '1,200 labelled photos of a bracket (good / scratched / dented).', output: 'Model card: recall for "dented" 0.93 on held-out images; deployed with a review threshold.' },
@@ -204,8 +204,25 @@ export const CASES = [
     acceptance: ['Non-specialist can run it from a README', 'Held-out evaluation shown per class', 'Model card generated automatically'],
     risks: ['Silent failure on new part variants', 'Labelling mistakes', 'Unclear ownership of deployed models'],
     sources: [
-      { title: 'How Toyota built an AI platform for manufacturing efficiency (Japanese edition shown; English edition published the same day)', publisher: 'Google Cloud blog, 10 Dec 2024', type: 'Vendor customer story' },
-      { title: 'People + AI: augmenting the supply chain workforce', publisher: 'Logistics Viewpoints, 5 Jun 2025', type: 'Independent reporting' },
+      { ref: 'toyota-gcloud', title: 'How Toyota built an AI platform for manufacturing efficiency (Japanese edition shown; English edition published the same day)', publisher: 'Google Cloud blog, 10 Dec 2024', type: 'Vendor customer story' },
+      { ref: 'toyota-logistics', title: 'People + AI: augmenting the supply chain workforce', publisher: 'Logistics Viewpoints, 5 Jun 2025', type: 'Independent reporting' },
     ],
   },
 ];
+
+// Source re-check of 2026-11-13: each claim above was compared with the source pages that could be opened on that date.
+// "Not re-opened" means the publisher's site refused an automated request, so that part rests on the earlier reading
+// (2026-10-30) and still needs a person to open the page.
+export const CASE_CHECKS = {
+  'morgan-stanley': 'The InvestmentNews article was read and supports the Assistant, the Debrief tool and the 98% adoption figure (as stated by the firm). The OpenAI case study was not re-opened, so two points rest on the earlier reading: that the Assistant is built on GPT-4, and the description of evaluation before rollout.',
+  klarna: 'The Entrepreneur article was read and supports the 2.3 million conversations, the 35-plus languages and the return to hiring people. It gives the share of chats as 75%, not two-thirds. Klarna\'s own press release, which carries the two-thirds figure in its title, was not re-opened.',
+  indeed: 'Indeed\'s own article was read and supports the feature, the use of fine-tuning and both test results. An earlier version of this page said a smaller model was fine-tuned to use fewer tokens; that detail came from the OpenAI case study, which was not re-opened, so it has been removed.',
+  duolingo: 'Both sources were read. The TechCrunch report names Explain My Answer and Roleplay as the launch features. The Duolingo blog page has since been updated and its text now names Video Call and Roleplay.',
+  'john-deere': 'The University of Arkansas article was read and supports the three-year trial, the 43 to 59% reduction and the seed-bank finding. The Deere press release was not re-opened (the address returned a general page to an automated request), so the 59% average, the 1 million acres and the nozzle-level description rest on the earlier reading.',
+  'deepmind-cooling': 'Both sources were read and support every statement on this page.',
+  'intercom-fin': 'Both Intercom pages were read. The 41% and 76% figures are supported. The number of customers quoted beside the 76% figure had changed from 8,000+ to 12,000+, and this page was corrected. These are the vendor\'s own figures and they change over time.',
+  moderna: 'The joint press release was read and supports mChat, ChatGPT Enterprise, Dose ID, the 750 GPTs and the 80% adoption. Two phrases on this page were corrected to match it. The OpenAI case study was not re-opened.',
+  lowes: 'The press release was read and supports Mylow Companion, the 1,700-plus stores and the work with OpenAI. It says Mylow launched "earlier this year" without naming a month, so the month was removed. The OpenAI case study was not re-opened.',
+  'github-copilot': 'Both sources were read and support every statement on this page. The research paper gives the speed-up as 55.8%.',
+  toyota: 'Both sources were read (the Google Cloud post in its Japanese edition) and support every statement on this page.',
+};

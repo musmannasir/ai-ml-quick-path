@@ -4,11 +4,12 @@ title: Responsible AI: fairness, privacy, transparency and oversight
 module: apps
 level: Intermediate
 minutes: 60
+maths: basic arithmetic
 goal: Measure fairness between groups, protect privacy, explain decisions, keep people in control, and document models with model cards and risk registers.
 prereqs: ml-evaluation, app-security
 reviewed: 2026-11-02
 evidence: A risk register and a fairness check (approval rates and error rates by group) for one of your models, with an owner for each risk.
-code: Python executed 2026-11-02 (quickpath.py fairness); C# not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py fairness)
 ---
 ## In plain words
 Responsible AI means building systems that are fair, safe, private and accountable, and it is part of engineering, not an extra step. **Fairness**: errors and benefits should not fall unfairly on some groups. Two simple checks are **demographic parity** (do groups get approved at similar rates?) and **equal opportunity** (among people who truly qualify, are groups approved at similar rates?). **Privacy**: collect and send only the data you need, with a lawful basis and consent where required. **Transparency**: tell people when they deal with AI, and explain important decisions. **Human oversight**: people can review, override and appeal. **Accountability**: every system has an owner, monitoring and an incident plan. Document with a **model card** (intended use, data, results, limits) and a **risk register**. Laws are growing; examples include data-protection laws such as the GDPR in Europe and the EU AI Act, which sets rules by risk level, so involve legal and privacy colleagues for real deployments.
@@ -71,6 +72,19 @@ A lender's credit model approved one group less often even among applicants who 
 loop: Review when data or use changes
 ```
 
+```maths Comparing outcomes between two groups
+situation: A model helps to decide loan applications. Out of 100 applicants in group A, 40 are approved. Out of 100 applicants in group B, 30 are approved.
+find: What is the approval rate of each group, and how big is the gap?
+step: Group A | 40 ÷ 100 = 0.4 = 40%
+step: Group B | 30 ÷ 100 = 0.3 = 30%
+step: Gap in percentage points | 40 − 30 = 10
+result: Group A is approved **10 percentage points** more often than group B.
+why: Comparing rates between groups is the first fairness check. It does not say why the gap exists, but it tells you where to look before a system is used on real people.
+caution: A gap is a signal to investigate, not proof of unfair treatment, and a small gap does not prove fairness. The groups may differ in ways the model is allowed to use, or the training data may carry old bias.
+try: Group B has only 10 applicants and 3 are approved. What is the rate, and how much should you trust it?
+answer: 3 ÷ 10 = 0.3 = 30%, the same rate as before. With 10 people, one more approval would make it 40%, so the number is much less certain. Small groups need extra care before you draw conclusions.
+```
+
 ### Related concepts
 - **Federated learning**: train a shared model across many devices or organisations without moving their raw data; only model updates are sent and combined. Used for phone keyboards and in healthcare.
 
@@ -88,6 +102,21 @@ note: Raw data stays where it is. Only model updates are sent and combined.
 - AI-generated media | text, image or audio | model
 - Mark it | watermark or signed metadata on how it was made | process
 - Identify later | anyone can check where it came from | output
+```
+
+## Live simulation
+Fairness measures can pull in different directions. See what moves when you change a threshold.
+
+```sim fair One threshold or one per group
+question: What happens to different groups when a decision uses one score threshold, and what can be changed?
+watch: Each bar shows a rate for each group: who is selected, how many qualified people are found, and how often the decision is right.
+watch: In this data the score is less informative for group B, so one threshold finds fewer qualified people there.
+watch: Switch to separate thresholds and move group B's.
+try: equal | Use separate thresholds so that the share of qualified people found in group B is within 3 points of group A's.
+predict: Group B's scores separate qualified people less well. With one threshold for both groups, what happens? | Both groups are treated equally | Fewer qualified people are found in group B | More are found in group B
+answer: 2 | The same cut-off lands in a different place relative to group B's qualified people, so a smaller share is found: 49% against 73% here.
+leaves-out: Made-up scores for two groups of 200, built so that the score is weaker for one group. Real fairness work has many definitions that cannot all hold together, and choosing between them is a decision about people and law, not a calculation. Using a group as an input may itself be restricted.
+reference: examples/sim-apps/apps.py
 ```
 
 ## Python example

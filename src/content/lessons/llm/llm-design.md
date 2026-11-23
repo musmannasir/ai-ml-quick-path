@@ -4,11 +4,12 @@ title: Designing a language model
 module: llm
 level: Advanced
 minutes: 75
+maths: advanced optional
 goal: Choose tokeniser, vocabulary, width, depth, heads and context length for a model, estimate its size and memory, and plan experiments.
 prereqs: llm-tokens, dl-transformers
 reviewed: 2026-11-02
 evidence: A design sheet for a small model with parameter count, memory estimate, training data plan and three experiments that each change one setting.
-code: Python executed 2026-11-02 (quickpath.py llm_size); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment)
+code: Python executed 2026-11-02 (quickpath.py llm_size)
 ---
 ## In plain words
 Designing an LLM means choosing a handful of numbers and writing down why. **Vocabulary size**: how many tokens the tokeniser knows (bigger means shorter sequences but a bigger embedding table). **Width** (model dimension): how many numbers represent each token. **Depth**: how many transformer blocks. **Heads**: how many attention heads per block (width divided by heads is the size of each head). **Context length**: how many tokens it can read at once (longer costs more memory). Plus choices about position encoding, normalisation and whether to share the input and output embedding tables. These settings decide the **parameter count**, which decides memory, speed and how much training data you need. Research on scaling found that for a fixed compute budget, model size and training data should grow together; a widely used rule of thumb is roughly 20 training tokens per parameter. A design is a hypothesis: test it with experiments that change one setting at a time.
@@ -70,6 +71,16 @@ note: Each step feeds the next. Experiments may send you back to change a settin
 - Any change is traced to one choice
 ```
 
+```maths Counting parameters in one small piece of a model
+situation: A tiny language model has a vocabulary of 1,000 tokens. Each token's embedding is a list of 16 numbers.
+find: How many parameters (learned numbers) are in the embedding table?
+step: Tokens times numbers per token | 1,000 × 16 = 16,000
+result: The embedding table has **16,000** parameters.
+why: A model's size is simply the count of all such numbers in all its parts. "A 7 billion parameter model" means this sum, done for every table and layer, comes to 7 billion. Design choices such as vocabulary size, embedding length and number of layers each multiply into the total.
+try: You double the embedding length to 32. How many parameters now?
+answer: 1,000 × 32 = 32,000. Doubling the embedding length doubles this table. Inside the transformer layers the effect is stronger: several of their matrices grow with the square of this length, so they become four times larger.
+```
+
 ### Related concepts
 - **Mixture of experts (MoE)**: instead of one large feed-forward block per layer, the model has many smaller "expert" blocks and a router that sends each token to only a few of them. The model has many parameters in total but uses only a fraction per token, so it is cheaper to run than a dense model of the same total size. All experts must still fit in memory.
 - **Dense model**: the usual design, where every parameter is used for every token.
@@ -91,6 +102,34 @@ note: Retrieval (RAG) is often still better than very long inputs.
 - Longer input | Hundreds of thousands of tokens | input
 - KV cache grows | More memory with length | warn
 - Facts in the middle | May still be missed | bad
+```
+
+## Live simulation
+The size of a model follows from a few choices. The first simulation turns those choices into memory and cost. The second shows what "learning to write" looks like.
+
+```sim mb Build a model and see what it costs
+question: How do the number of layers, the width and the vocabulary decide how big a language model is, and what does that cost in memory?
+watch: Parameters grow with layers times width squared, plus the vocabulary times the width. Doubling the width roughly quadruples the layer parameters.
+watch: The weights need memory in proportion to the bits stored for each one. Fewer bits mean a smaller model, with some loss of accuracy (see the quantisation simulation in the fine-tuning lesson).
+watch: The cache holds one key and one value per layer for every token of text kept, so long text costs memory on top of the weights.
+try: fit | Build a shape with at least 6 billion parameters whose weights fit in 8 GB (hint: fewer bits per weight).
+try: wide | Reach at least 1 billion parameters with 12 layers or fewer (hint: make it wide).
+predict: You double the width and keep everything else the same. About how do the parameters in the layers change? | They double | They quadruple | They stay the same
+answer: 2 | Attention and feed-forward weights are matrices with width × width entries, so doubling the width makes each one about four times larger.
+leaves-out: The formulas are simplified: they ignore small parts (biases, normalisation), and real models differ in details such as gated feed-forward layers or sharing keys between heads, which changes the numbers. The shapes are generic examples, not named products. Training memory (16 bytes per parameter) and training work (6 × parameters × tokens, with 20 tokens per parameter) are common rules of thumb, not measurements.
+reference: examples/sim-llm/llm.py
+```
+
+```sim lw Watch a tiny model learn to write
+question: What does it mean for a language model to learn, and how can we see it happen?
+watch: The model reads the first words of a small made-up text and counts which word follows which. Slide the amount it has read.
+watch: The loss is measured on every fourth sentence, which it never reads. A lower loss means it gives the real next word a higher chance.
+watch: The sample text starts with “the cat”. Early on it is close to random words. Later it begins to copy the patterns of the text.
+try: good | Let the model read enough text to bring the loss on unseen text below 2.05.
+predict: As the model reads more text, which number should fall? | The loss on text it has never read | Only the loss on text it has already read | Nothing: reading does not change it
+answer: 1 | Loss on unseen text is the honest measure of learning: it falls when the model has picked up patterns that carry over to new text. Loss on text it has read can fall just by memorising.
+leaves-out: This is a table of counts, not a neural network, and it reads about 160 words. A large model learns by gradient descent over billions of words, and its loss falls in a similar way: fast at first, then slowly. The unseen sentences come from the same made-up text, so they are easier than real unseen writing, and the loss still bumps because each new stretch adds new word pairs.
+reference: examples/sim-llm/llm.py
 ```
 
 ## Python example

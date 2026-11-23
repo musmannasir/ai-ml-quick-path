@@ -4,11 +4,12 @@ title: Transformers and attention
 module: dl
 level: Intermediate
 minutes: 90
+maths: algebra
 goal: Explain attention with queries, keys and values, the parts of a transformer block, and the three transformer families (encoder, decoder, encoder-decoder).
 prereqs: dl-sequences
 reviewed: 2026-11-02
 evidence: The attention toy reproduced by hand for one word, and a table matching three of your tasks to a transformer family.
-code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py); C# (TorchSharp) not run (not installed in the build environment)
+code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 ---
 ## In plain words
 **Attention** lets each word decide which other words matter for understanding it. In "The cat sat because it was tired", the word "it" should pay attention to "cat". Each word produces three things: a **query** (what am I looking for?), a **key** (what do I offer?) and a **value** (what information do I pass on?). Each word compares its query with every key, turns the scores into weights that add up to 1, and takes a weighted mix of the values. **Multi-head attention** runs several of these in parallel, so different heads can follow different relationships (grammar, meaning, position). A **transformer block** combines attention with a small neural network, plus shortcuts (**residual connections**) and **normalisation** that keep deep stacks trainable. **Positional information** tells the model the word order. There are three families: **encoder-only** (BERT-style: understand text, great for classification and embeddings), **decoder-only** (GPT-style: generate text one token at a time; most chat LLMs), and **encoder-decoder** (T5-style: read one text, write another, as in translation).
@@ -75,6 +76,74 @@ note: Taken from the toy run in this lesson.
 ## Words after "it"
 - was | Weight 0 because it is hidden | bad
 - tired | Weight 0 because it is hidden | bad
+```
+
+```maths Attention as a weighted mix
+situation: In the sentence "The cat sat because it was tired", the model is working on the word "it". Attention lets "it" take information from other words. Suppose, with invented weights, it gives 0.75 of its attention to "cat" and 0.25 to "sat". To keep the sum small, each word's information is one number here: 10 for "cat" and 2 for "sat".
+find: What does "it" receive after mixing the two words?
+step: Share taken from "cat" | 0.75 × 10 = 7.5
+step: Share taken from "sat" | 0.25 × 2 = 0.5
+step: Add the shares | 7.5 + 0.5 = 8
+step: Check that the attention weights add up to 1 | 0.75 + 0.25 = 1
+result: "it" receives **8**, a value much closer to "cat" (10) than to "sat" (2).
+formula: new value = weight₁ × value₁ + weight₂ × value₂   (the weights add up to 1)
+why: This weighted mix is what an attention layer does for every word, using all the other words. It is how the model works out that "it" refers to the cat.
+caution: The weights 0.75 and 0.25 are made up for this example. They are not what any real trained model learned. In a real transformer each word is a long list of numbers, and the weights come from comparing "query" and "key" vectors and passing the scores through softmax, as the next part of the lesson explains.
+widget: weighted 0.75,10,0.25,2
+try: The weights change to 0.5 and 0.5. What does "it" receive now?
+answer: 0.5 × 10 + 0.5 × 2 = 5 + 1 = 6. With equal attention the result sits halfway between the two words. Attention is useful because the weights are not equal: the model learns where to look.
+deeper: In real self-attention each token is turned into three vectors: a query, a key and a value. The score between two tokens is the dot product of one token's query with the other's key, divided by the square root of the vector length. Softmax turns each token's scores into weights that add up to 1, and the output is the weighted sum of the value vectors.
+```
+
+## Live simulation
+Attention is easiest to understand with real numbers. The tiny model below was trained for this guide on made-up sentences. It has one Transformer block with two attention heads. The page runs its real forward pass, so every number shown is calculated, not drawn. Four simulations follow the path of a sentence through the model: numbers, attention, the block, and training against using.
+
+```sim tf1 From words to numbers
+question: How does a Transformer turn a sentence into numbers, and why does it add a second set of numbers for position?
+watch: Each word is looked up in a table and becomes a row of 8 numbers. The table was learned in training.
+watch: Each place in the sentence also has its own row of 8 numbers. The two rows are added to give what the first layer receives.
+watch: The readout compares the two "the" rows in the sentence. Switch the position numbers off and the distance falls to zero.
+try: same | Switch off the position numbers and see the two "the" rows become identical.
+predict: In "the cats near the box sleep .", the word "the" appears twice. Without position numbers, what would the model see for the two "the" words? | Two different rows | The same row twice | Two rows that cancel out
+answer: 2 | The word table gives one row per word, wherever the word sits. Only the position numbers make the two "the" rows differ, which lets later layers tell the places apart.
+leaves-out: A real model has thousands of numbers per word and tens of thousands of tokens (see the tokens lesson), and many use a different way of marking position. The numbers here were learned, so on their own they do not mean anything you can read.
+```
+
+```sim attn One attention layer, step by step
+question: When a word is about to be followed by a verb, which earlier word does the model look at, and how do the numbers decide it?
+watch: Each row of the grid is one word looking back. The weights in a row add up to 1, and a darker cell means more attention.
+watch: Open the arithmetic table: each weight comes from a score (query times key, divided by 2) turned into a weight by softmax.
+watch: Compare the two heads. Head 1 spreads its attention over nearby words. Head 2, at the word before the verb, looks back at the plural subject when there is one.
+try: subject | Choose Head 2 and a plural sentence, select the word before the verb, and find the row where the subject gets at least 90% of the attention.
+try: future | Switch off the causal mask and see weights appear on words that come later in the sentence.
+predict: In "the cats near the box ...", the next word is a verb. To choose "sleep" rather than "sleeps", which earlier word must the model use? | the | cats | near | box
+answer: 2 | The verb must agree with its subject, "cats", and not with the nearest noun, "box". The model has to carry the subject's number forward to the word before the verb.
+leaves-out: This model has 21 words, 8 numbers per word, one block with two heads, and it learned only one thing: verbs agree in number with their subject. A large model has thousands of numbers per word, dozens of layers and many heads, plus feed-forward layers and normalisation that are left out here. Turning off the mask or the scaling shows what the scores would do, but the trained model always uses both.
+reference: examples/sim-attention/attention_forward.py
+```
+
+```sim tf4 One Transformer block, stage by stage
+question: What happens to one word's numbers inside a Transformer block, and what breaks when a part is removed?
+watch: Each row is the same word's 8 numbers after one stage. Colour shows the sign and strength of each number.
+watch: After a normalise stage the 8 numbers have average 0 and spread 1. The add stages keep the word's own information while new information is mixed in.
+watch: Switch a part off and watch the chance on the right kind of verb. The model was trained with every part on, so this shows what each part contributes.
+try: nores | Switch off the add path, choose the word before the verb, and see the chance on verbs that agree fall below 60%.
+predict: What is the job of the "add" path around attention? | It makes the model bigger | It lets the word keep its own information while attention mixes in new information | It removes the oldest words
+answer: 2 | The block output is the input plus what attention (and then the feed-forward network) adds. Without the add, each layer would have to rebuild the word from scratch.
+leaves-out: One block, where a large model stacks dozens. The normalise step here has no learned scale and shift, which real layers usually have. The model learned one rule (verbs agree in number with their subject), so only that behaviour shows.
+reference: examples/sim-attention/attention_forward.py
+```
+
+```sim tf6 Training against using
+question: Why can a Transformer learn from every word of a sentence at once, but must write one word at a time?
+watch: In training mode every row (one position, one prediction) is filled in one pass, because the causal mask hides later words from each position.
+watch: The loss of a row is the negative natural log of the chance on the real next word. The average loss is what training tries to lower.
+watch: In using mode the rows appear one at a time, because each new word has to exist before the next one can be predicted.
+try: serial | Switch to using mode and press "Next word" until every word is written.
+predict: A sentence of 7 words is used for training. How many passes through the model give a loss for all 6 predictions? | 6, one per word | 1, all positions at once | 7
+answer: 2 | With the causal mask, the model can predict every position's next word in the same pass. Writing is different: the next word is not known until it has been chosen.
+leaves-out: Training also changes the weights after each pass, which this page does not do; it only shows the loss of a model that is already trained. In using mode the page reveals the same rows one at a time. A real writing loop feeds the model's own choices back in, as the writing simulation in the lesson on how large language models work does.
+reference: examples/sim-attention/attention_forward.py
 ```
 
 ## Python example

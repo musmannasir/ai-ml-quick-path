@@ -4,11 +4,12 @@ title: Reinforcement learning
 module: dl
 level: Advanced
 minutes: 75
+maths: advanced optional
 goal: Explain agents, actions, rewards and policies, implement Q-learning and a policy-gradient agent, and connect reinforcement learning to how chat models are tuned.
 prereqs: ml-learning
 reviewed: 2026-11-02
 evidence: A Q-learning or policy-gradient agent for a small problem you design, with its learned policy explained and averaged over several seeds.
-code: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); C# is plain .NET with no packages and was not compiled (no .NET SDK in the build environment); added technique snippets (2026-11-05) not run
+code: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); added technique snippets (2026-11-05) not run
 ---
 ## In plain words
 In **reinforcement learning (RL)** an **agent** learns by trial and error. It sees a **state**, takes an **action**, gets a **reward** (good or bad), and lands in a new state. Its goal is the most total reward over time, where sooner rewards usually count more (a **discount**). **Q-learning** keeps a score for every action in every state and updates it after each try. **Policy-gradient** methods learn the probabilities of actions directly and make rewarded actions more likely; **PPO** is a stable, widely used version. The agent must balance **exploration** (trying new things) and **exploitation** (using what works). RL powers game-playing systems and robotics, and **RLHF** (reinforcement learning from human feedback) and related methods tune chat models towards answers people prefer.
@@ -55,6 +56,18 @@ A news site must choose which of three page layouts to show. A simple RL agent (
 - Add safety | Hard limits and human oversight | warn
 ```
 
+```maths Average reward: is this action worth repeating?
+situation: An agent tries the same action four times. It gets the rewards 1, 0, 1 and 1 (1 means success, 0 means failure).
+find: How good is this action on average?
+step: Add the rewards | 1 + 0 + 1 + 1 = 3
+step: Divide by the number of tries | 3 ÷ 4 = 0.75
+result: The action's average reward is **0.75**.
+why: Reinforcement learning keeps a running estimate like this for each action and prefers the action with the highest one. Learning is updating these estimates as new rewards arrive.
+caution: Four tries is very little. An action tried once with reward 1 has an average of 1, which looks better than 0.75 but may be luck. This is why agents keep exploring.
+try: The fifth try gives a reward of 0. What is the new average?
+answer: 3 + 0 = 3 total reward over 5 tries, so 3 ÷ 5 = 0.6. One failure moved the estimate from 0.75 to 0.6, because there are still few tries.
+```
+
 ### Related concepts
 - **Epsilon-greedy choice**: a simple rule for balancing exploring and using what works. Everyday example: you usually go to your favourite lunch place, but one day in ten you try a new one, in case it is better. Here epsilon (the share of random tries) is 0.1: with chance 0.9 pick the best-known action, with chance 0.1 pick any action at random. The maths panel below shows the chances. The **Q-table** is the table of scores that Q-learning updates, one row per state and one column per action; the full corridor code in both languages is in the examples below.
 
@@ -69,6 +82,36 @@ A news site must choose which of three page layouts to show. A simple RL agent (
 - Bandit | Choose among page layouts and learn from clicks | process
 - Games and robotics | Learn by trial and error | model
 - RLHF | Tunes chat models towards answers people prefer | output
+```
+
+## Live simulation
+Reinforcement learning learns from rewards, not from labelled examples. Two small problems show the main ideas.
+
+```sim rl Q-learning in a grid world
+preset: grid
+question: How can a learner discover a good path when the only reward comes at the end?
+watch: The learner starts at S. Reaching the star gives +1, the cross gives -1, and every move costs a little.
+watch: Each square shows an arrow for the best move found so far and the value of that square. Values spread backwards from the goal, one square per pass.
+watch: The boxed squares are the best path now. Epsilon sets how often it tries a random move instead of its best.
+try: path | Train until the best path reaches the goal in exactly 6 moves.
+predict: The learner gets +1 only at the goal. Why does learning take many episodes? | The reward must travel backwards one square at a time | The grid is too big to see | It forgets what it learned
+answer: 1 | At first only the square next to the goal learns that it leads to a reward. In the next episodes the square before that learns, and so on back to the start.
+leaves-out: A 4 × 4 grid where moves always work as planned. Real problems have far more states, so the table of values is replaced by a neural network, and moves can be unreliable. Policy gradient methods, which learn the choice of moves directly, are not shown.
+reference: examples/sim-dl/dl.py
+```
+
+```sim rl Slot machines and exploring
+preset: bandit
+question: Should a learner keep using what looks best, or try other options too?
+watch: Three slot machines pay with different hidden chances. The bars show what the learner thinks of each.
+watch: With epsilon 0 it always pulls the arm that looks best so far. With epsilon above 0 it sometimes pulls a random arm.
+watch: Regret counts how many chances to win were lost compared with always pulling the best arm.
+try: stuck | Set epsilon to 0, pull 100 times, and see that the best arm is never tried.
+try: explore | Set epsilon above 0 and reach 500 pulls with a regret below 20.
+predict: With epsilon 0 (never explore), what does the learner do? | It finds the best arm | It sticks with the first arm that paid | It tries all arms equally
+answer: 2 | At the start every arm looks equally bad, so it pulls the first one. When that pays, the estimate rises and it never has a reason to leave. Here it never pulls the best arm at all.
+leaves-out: Three arms with fixed chances (30%, 50% and 70%) and an average that is updated after each pull. Real problems have changing options and context, and the best way to explore is a research topic of its own.
+reference: examples/sim-dl/dl.py
 ```
 
 ## Python example
