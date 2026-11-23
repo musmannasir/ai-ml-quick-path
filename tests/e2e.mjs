@@ -700,18 +700,18 @@ for (const w of [320, 390, 768]) {
 
 // 12d. Behaviour of the Phase 2 simulations (regression, classification, bias and variance, cross-validation, clustering, PCA, anomalies)
 {
-  const run = async (lesson, mod, body) => {
+  const run = async (lesson, mod, body, idx = 0) => {
     const page = await newPage({ width: 1280 });
     await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
     await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
     const H = `
-      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const f = document.querySelectorAll('figure.sim[data-sim="' + a.mod + '"]')[a.idx];
       const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
       const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
       const setRange = (label, v) => { const lab = [...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)); const i = document.getElementById(lab.getAttribute('for')); i.value = v; i.dispatchEvent(new Event('input')); };
       const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
     `;
-    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const out = await page.evaluate(new Function('a', H + body), { mod, idx });
     const errs = page.errors.slice(); await page.context().close(); return { out, errs };
   };
   let r = await run('ml-regression', 'reg', `btn('Use the best fit').click(); return [reads()[1], reads()[2], done('close')];`);
@@ -732,12 +732,12 @@ for (const w of [320, 390, 768]) {
 
 // 12e. Behaviour of the Phase 3 simulations (model builder, learning to write, embeddings, LoRA, vector search, retrieval)
 {
-  const run = async (lesson, mod, body) => {
+  const run = async (lesson, mod, body, idx = 0) => {
     const page = await newPage({ width: 1280 });
     await page.goto(url('lessons/' + lesson + '.html#live-simulation')); await page.waitForTimeout(400);
     await page.evaluate(() => { localStorage.removeItem('aimlqp.sim.v1'); });
     const H = `
-      const f = document.querySelector('figure.sim[data-sim="' + a.mod + '"]');
+      const f = document.querySelectorAll('figure.sim[data-sim="' + a.mod + '"]')[a.idx];
       const btn = (n) => [...f.querySelectorAll('.sim-btns button')].find((x) => x.textContent.startsWith(n));
       const reads = () => [...f.querySelectorAll('.sim-readouts dd')].map((x) => x.textContent);
       const ctl = (label) => document.getElementById([...f.querySelectorAll('.sim-ctl label')].find((l) => l.textContent.startsWith(label)).getAttribute('for'));
@@ -745,7 +745,7 @@ for (const w of [320, 390, 768]) {
       const setSel = (label, v) => { const i = ctl(label); i.value = v; i.dispatchEvent(new Event('change')); };
       const done = (id) => f.querySelector('[data-try="' + id + '"]').classList.contains('done');
     `;
-    const out = await page.evaluate(new Function('a', H + body), { mod });
+    const out = await page.evaluate(new Function('a', H + body), { mod, idx });
     const errs = page.errors.slice(); await page.context().close(); return { out, errs };
   };
   let r = await run('llm-design', 'mb', `setSel('Start from', 'b7'); const q = reads(); setSel('Bits per weight', '4'); return [q[0], q[1], reads()[1], done('fit')];`);
@@ -756,6 +756,8 @@ for (const w of [320, 390, 768]) {
   expect('Embedding-training simulation: after 30 steps every word has a same-topic nearest neighbour and the challenge ticks', r.out[0][2] === '100%' && r.out[1] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('llm-finetune', 'lora', `setRange('LoRA rank', 2); return [reads()[0], reads()[1], done('rank')];`);
   expect('LoRA simulation: rank 2 leaves 14% of the change and trains 32 of 64 numbers, and the challenge ticks', r.out[0] === '14%' && r.out[1] === '32' && r.out[2] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
+  r = await run('llm-finetune', 'lora', `const q = reads(); setRange('Rank for the variants', 21); return [q[0], q[1], q[2], done('share')];`, 2);
+  expect('LoRA-variants simulation: at width 4096 and rank 8, LoRA trains 65,536, LoRA-FA 32,768 and VeRA 4,104 (the Python program gives the same), and rank 21 ticks the challenge', r.out[0].startsWith('65,536') && r.out[1] === '32,768' && r.out[2] === '4,104' && r.out[3] === true && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('app-embeddings', 'vs', `return [reads()[1], reads()[0]];`);
   expect('Vector-search simulation: the default query near the animals gives "horse" first and one topic', r.out[0] === 'horse' && r.out[1] === '1' && !r.errs.length, JSON.stringify(r.out) + r.errs.join('|'));
   r = await run('app-rag', 'rag', `setRange('Chunk size', 20); return [reads(), done('all')];`);

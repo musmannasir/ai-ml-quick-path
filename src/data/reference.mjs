@@ -136,6 +136,9 @@ export const GLOSSARY = [
   ['LLM as judge', 'Using one language model to grade the answers of another against a written scoring guide. Useful at scale, but it must be checked against human grades.', 'app-evals'],
   ['Logistic regression', 'A simple, fast classification model that outputs a probability.', 'ml-classification'],
   ['LoRA (low-rank adaptation)', 'Fine-tuning by training small extra weight matrices while the original model stays frozen.', 'llm-finetune'],
+  ['LoRA-FA', 'A LoRA variant that also freezes the first thin matrix and trains only the second, so it trains fewer numbers and stores less during training.', 'llm-finetune'],
+  ['LoRA+', 'A LoRA variant with the same matrices, where the second thin matrix learns with a higher learning rate than the first.', 'llm-finetune'],
+  ['Delta-LoRA', 'A LoRA variant that also updates the big frozen matrix, using the change in the product of the two thin matrices.', 'llm-finetune'],
   ['Loss', 'A number that measures how wrong the model is; training tries to make it smaller.', 'ml-learning'],
   ['Machine learning (ML)', 'Building programs that learn patterns from examples instead of following hand-written rules.', 's-what-is-ai'],
   ['MAE (mean absolute error)', 'The average size of prediction errors, in the target’s units.', 'ml-regression'],
@@ -300,6 +303,7 @@ export const GLOSSARY = [
   ['Underfitting', 'When a model is too simple to capture the pattern and does badly even on training data.', 'ml-learning'],
   ['Unsupervised learning', 'Finding structure in data that has no labels.', 'ml-unsupervised'],
   ['Validation set', 'Data used during development to compare models and choose settings.', 'ml-learning'],
+  ['VeRA', 'A LoRA variant that shares one frozen random pair of thin matrices across all layers and trains only two small scaling vectors per layer.', 'llm-finetune'],
   ['Vector database', 'A database that stores embeddings and finds the most similar ones quickly.', 'app-embeddings'],
   ['Weight', 'A number inside a model that is adjusted during training.', 'dl-neural-nets'],
 ];

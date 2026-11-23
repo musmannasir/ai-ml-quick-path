@@ -8,7 +8,7 @@ maths: advanced optional
 goal: Decide between prompting, RAG and fine-tuning, prepare instruction data, and fine-tune an open model with LoRA or QLoRA, then compare it fairly with the base model.
 prereqs: llm-scale, llm-how
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-23
 evidence: A decision note (prompt, RAG or fine-tune), a JSONL training set of at least 200 examples with a separate test set, and a base-versus-adapter comparison.
 code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; added technique snippets (2026-11-05) not run
 ---
@@ -114,6 +114,43 @@ note: Move to the next step only when the test set shows a gap.
 - Compare on the same test set | Keep the simplest option that passes | output
 ```
 
+#### Other LoRA variants (LoRA-FA, VeRA, Delta-LoRA, LoRA+)
+Plain LoRA trains two thin matrices, **A** and **B**, whose product is the change to a big weight matrix **W**. Several later methods keep that idea and change what is trained, what is frozen or how fast each part learns. Each has an original paper (linked in the sources list of this lesson); the descriptions below are simplified.
+
+- **LoRA-FA** ([paper](source:lorafa-paper)) freezes **A** as well and trains only **B**. That halves the trained numbers and, because the layer input no longer has to be kept for training A, it can use less memory during training. The risk is less freedom to adapt.
+- **VeRA** ([paper](source:vera-paper)) uses one pair of random, frozen thin matrices shared by every layer, and trains only two small **scaling vectors** per layer. It trains far fewer numbers than LoRA, which keeps the stored file tiny when you keep many adapters.
+- **Delta-LoRA** ([paper](source:deltalora-paper)) also moves the big matrix **W** itself. It adds the change in the product of A and B between two training steps to W, so W is updated without storing a full gradient for it.
+- **LoRA+** ([paper](source:loraplus-paper)) keeps the same matrices as LoRA but gives **B** a higher learning rate than **A**. The authors argue one shared rate is not ideal for wide models. The trained numbers stay the same.
+
+```diagram compare LoRA and its variants: what is trained
+note: Per layer. Frozen means not changed during training.
+## LoRA | process
+- Trains A and B
+- W frozen
+## LoRA-FA | process
+- Trains B only
+- A and W frozen
+## VeRA | model
+- Trains two small scaling vectors
+- Shared random A and B frozen
+## LoRA+ and Delta-LoRA | warn
+- Both train A and B
+- LoRA+: B learns faster. Delta-LoRA: W also moves
+```
+
+```maths Trained numbers for one layer, five methods
+situation: One layer of a model is a grid of 4096 by 4096 weights, which is 16,777,216 numbers. Every method below uses rank 8. These are counts for one layer, worked from the descriptions above, not measured speeds.
+find: How many numbers does each method train in this layer?
+step: LoRA trains A (4096 by 8) and B (8 by 4096) | 4096 × 8 + 8 × 4096 = 65,536
+step: LoRA-FA trains B only | 8 × 4096 = 32,768
+step: VeRA trains a scaling vector of length 8 and one of length 4096 | 8 + 4096 = 4,104
+step: How many times fewer is VeRA than LoRA | 65,536 ÷ 4,104 ≈ 16
+result: LoRA and LoRA+ train **65,536** numbers, LoRA-FA **32,768**, VeRA **4,104**. Delta-LoRA trains **65,536** and also updates W.
+formula: LoRA = d × r + r × d; LoRA-FA = r × d; VeRA = r + d
+why: Fewer trained numbers means a smaller file for each task. The counts do not say which method gives the best answers: that depends on the task and has to be tested on your own test set.
+caution: Counts are not quality. A method that trains fewer numbers can fit your data less well.
+```
+
 #### QLoRA (LoRA on a compressed base model)
 **QLoRA** is LoRA with one extra trick: the frozen base model is stored in **4-bit** numbers instead of 16-bit. **Quantising** means rounding numbers to fewer bits, like writing prices to the nearest dollar instead of the nearest cent. The file gets about four times smaller and still works well enough. The small LoRA matrices stay in higher precision and are the only part that is trained. Everyday example: you keep a big reference book on a small e-reader in compressed form, and you write your own notes on a separate page. The book is not changed; only your notes are. This lets a big model be fine-tuned on one modest graphics card.
 
@@ -171,6 +208,19 @@ try: bits | Find the fewest bits that keep the rounding error at or below 0.002.
 predict: You go from 8 bits to 4 bits per weight. What happens to the rounding error? | It stays about the same | It grows many times over | It halves
 answer: 2 | Four bits leave only 15 distinct values instead of 255, so each weight is rounded much more coarsely. Here the error grows from about 0.0003 to about 0.0054, roughly 19 times.
 leaves-out: 400 made-up weights that follow a bell-shaped spread. Real quantisation schemes group weights, treat outliers separately and are tested on the model's answers, not only on rounding error. Blending two models is not shown.
+reference: examples/sim-llm/llm.py
+```
+
+```sim lora LoRA variants: what each one trains
+preset: variants
+question: How many numbers does each LoRA variant train for one layer, and how does that change with the layer width and the rank?
+watch: The bars show each method's trained numbers as a share of plain LoRA's.
+watch: LoRA-FA is always half of LoRA. VeRA depends on the width plus the rank, not on their product.
+watch: LoRA+ and Delta-LoRA train the same count as LoRA; they differ in how the training runs.
+try: share | At width 4096, find the smallest rank at which LoRA trains more than 1% of the layer.
+predict: At width 4096 and rank 8, VeRA trains about how many times fewer numbers than LoRA? | About 2 times | About 16 times | About 160 times
+answer: 2 | LoRA trains 65,536 and VeRA 4,104, so about 16 times fewer.
+leaves-out: Only the counts of trained numbers for one square layer, worked from the formulas. It does not train anything, so it says nothing about accuracy, speed or memory use, and it ignores the shared matrices of VeRA, which are stored once.
 reference: examples/sim-llm/llm.py
 ```
 

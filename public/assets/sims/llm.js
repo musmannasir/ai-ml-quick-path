@@ -73,6 +73,10 @@
     }
     return { err: frob(R) / base, rest: R };
   };
+  // Trainable numbers for one square layer of width d at rank r: LoRA trains A (d by r) and B (r by d); LoRA-FA freezes A and trains B only;
+  // VeRA freezes a shared random A and B and trains one scaling vector of length r and one of length d; LoRA+ trains the same numbers as LoRA
+  // (B just learns faster); Delta-LoRA trains the same numbers as LoRA and also moves W with the change in A times B.
+  L.loraVariants = function (d, r) { return { lora: 2 * d * r, fa: d * r, vera: d + r, plus: 2 * d * r, delta: 2 * d * r }; };
   L.quantWeights = function () { var r = lcg(9), W = []; for (var i = 0; i < 400; i++) W.push(0.05 * gauss(r)); return W; };
   L.quantise = function (W, bits) { var levels = Math.pow(2, bits - 1) - 1, mx = 0; W.forEach(function (w) { mx = Math.max(mx, Math.abs(w)); }); var scale = mx / levels; return W.map(function (w) { return Math.floor(w / scale + 0.5) * scale; }); };
   L.quantRmse = function (W, bits) { var q = L.quantise(W, bits), s = 0; W.forEach(function (w, i) { s += (w - q[i]) * (w - q[i]); }); return Math.sqrt(s / W.length); };

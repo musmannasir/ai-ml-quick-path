@@ -5,13 +5,15 @@
   if (typeof document === 'undefined') return;
   Q.register('lora', function (S) {
     var L = Q.logic.llm, M = L.loraTarget(), W = L.quantWeights();
-    var cV = S.select('view', 'Idea', [['lora', 'LoRA: change a big matrix with two thin ones'], ['quant', 'Quantisation: store weights in fewer bits']], S.preset === 'quant' ? 'quant' : 'lora', function () { show(); draw(); });
+    var cV = S.select('view', 'Idea', [['lora', 'LoRA: change a big matrix with two thin ones'], ['variants', 'LoRA variants: what each one trains'], ['quant', 'Quantisation: store weights in fewer bits']], S.preset === 'quant' ? 'quant' : S.preset === 'variants' ? 'variants' : 'lora', function () { show(); draw(); });
     var cR = S.range('rank', 'LoRA rank', { min: 1, max: 4, step: 1, value: 1, onChange: function () { draw(); } });
+    var cW = S.select('width', 'Layer width', [['768', '768 by 768'], ['2048', '2048 by 2048'], ['4096', '4096 by 4096'], ['8192', '8192 by 8192']], '4096', function () { draw(); });
+    var cK = S.range('vrank', 'Rank for the variants', { min: 1, max: 64, step: 1, value: 8, onChange: function () { draw(); } });
     var cB = S.range('bits', 'Bits per weight', { min: 2, max: 8, step: 1, value: 8, onChange: function () { draw(); } });
     var row = S.row(), c1 = S.card('Change', row), s1 = S.svgEl(150, 150, 'Grid of the numbers of the change the model needs.', c1), c2 = S.card('Change', row), s2 = S.svgEl(150, 150, 'Grid of the numbers of the cheap approximation.', c2);
     var rA = S.readout('a', ''), rB = S.readout('b', ''), rC = S.readout('c', ''), titles = [c1.firstChild, c2.firstChild];
     var rows = [rA, rB, rC];
-    function show() { var q = cV.get() === 'quant'; cR.input.closest('.sim-ctl').hidden = q; cB.input.closest('.sim-ctl').hidden = !q; }
+    function show() { var v = cV.get(); cR.input.closest('.sim-ctl').hidden = v !== 'lora'; cB.input.closest('.sim-ctl').hidden = v !== 'quant'; cW.input.closest('.sim-ctl').hidden = v !== 'variants'; cK.input.closest('.sim-ctl').hidden = v !== 'variants'; c2.hidden = v === 'variants'; }
     function grid(svg, mat, scale) { while (svg.firstChild) svg.removeChild(svg.firstChild); mat.forEach(function (r, i) { r.forEach(function (v, j) { svg.appendChild(S.svg('rect', { x: 4 + j * 18, y: 4 + i * 18, width: 17, height: 17, rx: 2, class: v >= 0 ? 'sv-f0' : 'sv-f1', 'fill-opacity': (0.08 + 0.9 * Math.min(1, Math.abs(v) / scale)).toFixed(2) })); }); }); }
     function line(svg, a, b) {
       while (svg.firstChild) svg.removeChild(svg.firstChild); svg.setAttribute('viewBox', '0 0 150 150');
@@ -20,7 +22,21 @@
     }
     function draw() {
       var q = cV.get() === 'quant';
-      if (!q) {
+      if (cV.get() === 'variants') {
+        var d = Number(cW.get()), k = cK.get(), V = L.loraVariants(d, k), full = d * d, names = [['LoRA', 'lora'], ['LoRA-FA', 'fa'], ['VeRA', 'vera'], ['LoRA+', 'plus'], ['Delta-LoRA', 'delta']];
+        titles[0].textContent = 'Numbers trained, as a share of LoRA (' + d + ' by ' + d + ' layer, rank ' + k + ')';
+        while (s1.firstChild) s1.removeChild(s1.firstChild); s1.setAttribute('viewBox', '0 0 150 150');
+        names.forEach(function (n, i) {
+          var y = 8 + i * 28, w = 140 * V[n[1]] / V.lora;
+          s1.appendChild(S.svg('text', { x: 4, y: y + 8, class: 'sv-t', 'font-size': 8 })).textContent = n[0] + (n[1] === 'delta' ? ' (W also moves)' : '');
+          s1.appendChild(S.svg('rect', { x: 4, y: y + 12, width: Math.max(1.5, w), height: 8, rx: 2, class: 'sv-f0' }));
+        });
+        setLabels(['LoRA, LoRA+ and Delta-LoRA train', 'LoRA-FA trains', 'VeRA trains']);
+        rA.set(V.lora.toLocaleString('en') + ' (' + (100 * V.lora / full).toFixed(2) + '% of ' + full.toLocaleString('en') + ')'); rB.set(V.fa.toLocaleString('en')); rC.set(V.vera.toLocaleString('en'));
+        S.narrate('Rank ' + k + ' at width ' + d + ': LoRA trains ' + V.lora.toLocaleString('en') + ', LoRA-FA ' + V.fa.toLocaleString('en') + ', VeRA ' + V.vera.toLocaleString('en'),
+          'LoRA-FA freezes the first thin matrix and trains only the second, so it trains half as many numbers. VeRA shares one frozen random pair across layers and trains only two small scaling vectors, so its count grows with the width, not with the rank times the width. LoRA+ and Delta-LoRA train the same number of values as LoRA: LoRA+ changes the learning rate of the second matrix, and Delta-LoRA also moves the big matrix itself.');
+        if (d === 4096 && 100 * V.lora / full > 1) S.challenge('share');
+      } else if (!q) {
         var r = cR.get(), res = L.lowRank(M, r), approx = M.map(function (row, i) { return row.map(function (v, j) { return v - res.rest[i][j]; }); });
         titles[0].textContent = 'The change the model needs (8 × 8 = 64 numbers)'; titles[1].textContent = 'Two thin matrices of rank ' + r + ' (' + (16 * r) + ' numbers) multiplied';
         grid(s1, M, 1.2); grid(s2, approx, 1.2);
