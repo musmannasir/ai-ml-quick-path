@@ -26,15 +26,15 @@ Do not set `ADSENSE_CLIENT` until the steps in `MONETIZATION_READINESS.md` are d
 `npm test` locally before pushing. Not yet tried on Cloudflare; after the first deploy click through nested pages, because
 Cloudflare serves `page.html` at `/page`.
 
-### Deploy from GitHub Actions (production, from 2026-11-23)
-`.github/workflows/deploy-cloudflare.yml` deploys to the Cloudflare Pages project `aimlquickpath` on every push to `main` (and
-by hand from the Actions tab). It builds the site, runs `check:maths`, `check:sims` and `test:static`, then runs
-`wrangler pages deploy dist`. The browser tests run in a separate job that reports but does not block the deploy.
-One-time setup in GitHub, Settings, Secrets and variables, Actions: secrets `CLOUDFLARE_API_TOKEN` (permission Account, Cloudflare
-Pages, Edit) and `CLOUDFLARE_ACCOUNT_ID`, and the variable `SITE_URL` (set it only once that address works). Never commit these values.
-A Pages project is either connected to Git in the Cloudflare dashboard or uses direct upload, not both. This workflow needs a
-direct-upload project. If `aimlquickpath` is connected to GitHub in the dashboard, Cloudflare already builds on every push to `main`,
-and you should use one method only.
+### Cloudflare Workers Builds (production, from 2026-11-23)
+The live site is the Cloudflare Worker `ai-ml-quick-path` (static assets only), connected to this GitHub repository. Every push to
+`main` (for example a merged pull request) makes Cloudflare run the build command `npm run build` and the deploy command
+`npx wrangler deploy`. `wrangler.jsonc` in the repository root tells wrangler to publish `dist/` and to serve `dist/404.html` for
+unknown addresses. No GitHub Action and no secret is needed. Cloudflare runs only the build, so run `npm test` locally before merging.
+In the Cloudflare dashboard (Workers & Pages, ai-ml-quick-path, Settings, Builds) add the build variable `SITE_URL` (for example
+`https://www.aimlquickpath.com`, once that address works) so the sitemap and canonical tags are written. If the dashboard shows
+"disconnected from your Git account", open Manage next to the repository and give the "Cloudflare Workers and Pages" GitHub app
+access to the repository. A Worker with only static assets cannot have runtime variables; build variables are the only ones used.
 
 ## Netlify
 Build command `npm run build`, publish directory `dist`. `_headers` is applied automatically.
