@@ -8,6 +8,7 @@ maths: advanced optional
 goal: Estimate memory for training and inference, and choose the right scaling tools (GPUs, mixed precision, gradient accumulation and checkpointing, data and model parallelism, FSDP) as models grow.
 prereqs: llm-train-laptop
 reviewed: 2026-11-02
+updated: 2026-11-24
 evidence: A written plan to train or fine-tune a named model size on a named GPU setup, with memory arithmetic and the chosen techniques justified.
 code: Python memory arithmetic executed 2026-11-02 (examples/memory-estimate/memory_estimate.py); multi-GPU code conceptual
 ---
@@ -21,6 +22,12 @@ note: Full training with AdamW is about 16 bytes per parameter before activation
 - Gradients | One per weight, from the backward pass | process
 - Optimiser state | AdamW keeps extra numbers per weight | store
 - Activations | Saved for the backward pass | store
+```
+
+```visual Memory per parameter, and an 8-billion-parameter example
+file: training-memory
+alt: A bar for about 16 bytes per parameter in full training with the AdamW optimiser: weights 2 bytes, gradients 2 bytes and optimiser state 12 bytes, before activations. Below it, an 8-billion-parameter model needs about 128 gigabytes of training state, and a bar marks that one 80 gigabyte GPU holds only part of it, so it does not fit.
+caption: Full training needs about 16 bytes per parameter before activations: 8 billion parameters is about 128 GB, more than one 80 GB GPU. LoRA and QLoRA cut this a lot.
 ```
 
 ```diagram layers Scaling tools, easiest at the top

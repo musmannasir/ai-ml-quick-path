@@ -13,6 +13,7 @@
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "serve": "node scripts/serve.mjs",
     "list:visuals": "node scripts/list-visuals.mjs",
+    "sheet:visuals": "node scripts/visual-sheet.mjs",
     "test:static": "node tests/static-checks.mjs",
     "test:e2e": "node tests/e2e.mjs",
     "test:e2e:edge": "node tests/e2e.mjs --channel=msedge",

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 720 338" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Pretraining, instruction tuning and preference tuning. -->
+  <rect class="vz-ml" x="14" y="130" width="222" height="156" rx="12"/>
+  <text class="vz-title" x="28" y="160" text-anchor="start">1. Pretraining</text>
+  <text class="vz-s" x="28" y="188" text-anchor="start">Reads huge amounts of text and</text>
+  <text class="vz-s" x="28" y="206" text-anchor="start">predicts the next token.</text>
+  <text class="vz-s" x="28" y="234" text-anchor="start">Learns grammar, facts and</text>
+  <text class="vz-s" x="28" y="252" text-anchor="start">patterns of reasoning and code.</text>
+  <line class="vz-arrow" x1="240.0" y1="200.0" x2="246.1" y2="184.3"/>
+  <polygon class="vz-headk" points="250.0,174.0 240.5,182.1 251.7,186.4"/>
+  <rect class="vz-ap" x="252" y="104" width="222" height="182" rx="12"/>
+  <text class="vz-title" x="266" y="134" text-anchor="start">2. Instruction tuning</text>
+  <text class="vz-s" x="266" y="162" text-anchor="start">Learns from example questions</text>
+  <text class="vz-s" x="266" y="180" text-anchor="start">and good answers.</text>
+  <text class="vz-s" x="266" y="208" text-anchor="start">Learns to follow requests</text>
+  <text class="vz-s" x="266" y="226" text-anchor="start">instead of just continuing text.</text>
+  <line class="vz-arrow" x1="478.0" y1="174.0" x2="484.1" y2="158.3"/>
+  <polygon class="vz-headk" points="488.0,148.0 478.5,156.1 489.7,160.4"/>
+  <rect class="vz-lm" x="490" y="78" width="222" height="208" rx="12"/>
+  <text class="vz-title" x="504" y="108" text-anchor="start">3. Preference tuning</text>
+  <text class="vz-s" x="504" y="136" text-anchor="start">Learns which answers people</text>
+  <text class="vz-s" x="504" y="154" text-anchor="start">prefer.</text>
+  <text class="vz-s" x="504" y="182" text-anchor="start">Learns to be helpful and safe.</text>
+  <text class="vz-title" x="14" y="30" text-anchor="start">Each stage adds behaviour on top of the one before it.</text>
+  <text class="vz-s" x="14" y="56" text-anchor="start">Model builders do these stages. You mostly use the result and add your own documents and checks.</text>
+  <text class="vz-n vz-note" x="14" y="322" text-anchor="start">Fine-tuning (a later lesson) is the same idea applied again by you, on your own examples.</text>
+</svg>

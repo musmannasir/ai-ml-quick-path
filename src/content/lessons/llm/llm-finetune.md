@@ -8,7 +8,7 @@ maths: advanced optional
 goal: Decide between prompting, RAG and fine-tuning, prepare instruction data, and fine-tune an open model with LoRA or QLoRA, then compare it fairly with the base model.
 prereqs: llm-scale, llm-how
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: A decision note (prompt, RAG or fine-tune), a JSONL training set of at least 200 examples with a separate test set, and a base-versus-adapter comparison.
 code: Python LoRA arithmetic executed 2026-11-02 (quickpath.py lora); TRL training conceptual; added technique snippets (2026-11-05) not run
 ---
@@ -50,6 +50,12 @@ note: Only the small adapter is trained.
 ## QLoRA | model
 - LoRA plus the frozen model stored in 4-bit
 - Saves more memory
+```
+
+```visual LoRA: a frozen grid and two thin pieces
+file: lora-thin-pieces
+alt: A large square labelled frozen, 10,000 numbers, 100 by 100. Beside it, plus a tall thin rectangle of 100 by 2 times a wide thin rectangle of 2 by 100, which are the only parts trained. A box says LoRA trains 100 times 2 plus 2 times 100, which is 400 numbers, or 4 percent of 10,000.
+caption: LoRA leaves the big layer frozen and trains two thin pieces next to it: 400 numbers instead of 10,000 in the lesson's example. QLoRA also stores the frozen layer in 4-bit.
 ```
 
 ## Real-world example

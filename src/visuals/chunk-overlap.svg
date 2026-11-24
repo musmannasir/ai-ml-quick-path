@@ -1,0 +1,65 @@
+<svg viewBox="0 0 720 328" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Chunk size and overlap decide whether an answer stays whole. -->
+  <text class="vz-s" x="24" y="28" text-anchor="start">A page of text as 24 word blocks. The answer to a question sits in the highlighted words.</text>
+  <text class="vz-title" x="24" y="62" text-anchor="start">Chunks of 8 words, no overlap</text>
+  <rect class="vz-wd" x="24" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="52" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="80" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="108" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="136" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="164" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="192" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="220" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="248" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="276" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="304" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="332" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="360" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="388" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="416" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="444" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="472" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="500" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="528" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="556" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="584" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="612" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="640" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="668" y="72" width="26" height="26" rx="4"/>
+  <rect class="vz-chunk" x="24" y="106" width="220" height="12" rx="3"/>
+  <rect class="vz-chunk" x="248" y="106" width="220" height="12" rx="3"/>
+  <rect class="vz-chunk" x="472" y="106" width="220" height="12" rx="3"/>
+  <text class="vz-s" x="24" y="142" text-anchor="start">The answer is cut across two chunks. Neither chunk holds all of it, so a search may miss it.</text>
+  <text class="vz-title" x="24" y="184" text-anchor="start">Chunks of 8 words, overlapping by 4</text>
+  <rect class="vz-wd" x="24" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="52" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="80" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="108" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="136" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="164" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="192" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="220" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="248" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="276" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-ans" x="304" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="332" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="360" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="388" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="416" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="444" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="472" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="500" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="528" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="556" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="584" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="612" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="640" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-wd" x="668" y="194" width="26" height="26" rx="4"/>
+  <rect class="vz-chunk" x="24" y="228" width="220" height="12" rx="3"/>
+  <rect class="vz-chunk2" x="136" y="244" width="220" height="12" rx="3"/>
+  <rect class="vz-chunk" x="248" y="228" width="220" height="12" rx="3"/>
+  <rect class="vz-chunk" x="360" y="244" width="220" height="12" rx="3"/>
+  <rect class="vz-chunk" x="472" y="228" width="220" height="12" rx="3"/>
+  <text class="vz-s" x="24" y="282" text-anchor="start">The second chunk (the highlighted bar) holds the whole answer. The price: more chunks to store and search.</text>
+  <text class="vz-n vz-note" x="24" y="312" text-anchor="start">Illustrative. The right size and overlap depend on your documents; test them with real questions.</text>
+</svg>

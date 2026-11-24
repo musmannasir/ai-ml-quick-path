@@ -8,7 +8,7 @@ maths: algebra
 goal: Watch a live model or LLM app for data drift, falling quality, latency and cost, and decide when to alert, retrain or roll back.
 prereqs: ops-mlops, app-evals
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: A monitoring sheet for one model listing each signal, its threshold, the action it triggers, and a drift check run on your own data.
 code: Python executed 2026-11-02 (ml_basics.py drift; applied_basics.py latency)
 ---
@@ -38,6 +38,12 @@ y: Right answer is the same | Right answer has changed
 - Data drift | new kinds of input the model never saw | warn
 - Concept drift | for example fraudsters change tactics | bad
 - Both changed | the inputs and the right answer have both moved | warn
+```
+
+```visual Data drift and concept drift
+file: drift-two-kinds
+alt: Two panels. Data drift: two bell curves, the training data and the live data, with the live one shifted to the right, meaning the inputs have changed. Concept drift: a scatter-free plot with two lines for the same input, the relationship before and the relationship now, which differ, meaning the right answer for the same input has changed.
+caption: Data drift means the inputs changed; concept drift means the right answer for the same input changed. The curves are made up.
 ```
 
 ```diagram fan Extra signals for LLM apps

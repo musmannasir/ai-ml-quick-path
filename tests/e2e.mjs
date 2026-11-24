@@ -976,6 +976,27 @@ for (const w of [320, 390, 768]) {
   await page.context().close();
 }
 
+// 12l. Every visual: all text inside its picture, no two pieces of text on top of each other, and the page never scrolls sideways
+{
+  const withVisuals = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p) && readFileSync(join(DIST, p), 'utf8').includes('data-vz'));
+  let n = 0; const bad = [];
+  for (const rel of withVisuals) {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url(rel)); await page.evaluate(() => { try { const d = JSON.parse(localStorage.getItem('aimlqp.v1') || '{}'); d.prefs = d.prefs || {}; d.prefs.visualTab = 'visual'; localStorage.setItem('aimlqp.v1', JSON.stringify(d)); } catch (e) {} });
+    await page.reload(); await page.waitForTimeout(150);
+    const res = await page.evaluate(() => [...document.querySelectorAll('.vz-fig svg')].map((svg) => {
+      const vb = svg.viewBox.baseVal, probs = [], texts = [...svg.querySelectorAll('text')].filter((t) => t.textContent.trim()).map((t) => ({ t: t.textContent.trim().slice(0, 28), b: t.getBBox() }));
+      for (const x of texts) if (x.b.x < -0.5 || x.b.y < -0.5 || x.b.x + x.b.width > vb.width + 0.5 || x.b.y + x.b.height > vb.height + 0.5) probs.push('outside: ' + x.t);
+      for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) { const a = texts[i].b, c = texts[j].b, w = Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x), h = Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y); if (w > 3 && h > 5) probs.push('overlap: ' + texts[i].t + ' / ' + texts[j].t); }
+      return probs;
+    }));
+    n += res.length; res.forEach((r, i) => r.forEach((m) => bad.push(rel + ' #' + (i + 1) + ' ' + m)));
+    for (const w of [320, 768]) { await page.setViewportSize({ width: w, height: 800 }); const sw = await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth); if (!sw) bad.push(rel + ' scrolls sideways at ' + w); }
+    await page.context().close();
+  }
+  expect(`Visuals: all ${n} drawings keep their text inside the picture, with no overlapping text, and do not make the page scroll sideways at 320, 768 and 1280 px`, n > 0 && !bad.length, bad.slice(0, 12).join(' | '));
+}
+
 // 13. Screenshots
 const shots = [['lessons/ml-learning.html', 1440, 'light', 'lesson-maths-1440-light'], ['lessons/ml-learning.html', 1440, 'dark', 'lesson-maths-1440-dark'], ['lessons/ml-classification.html', 390, 'light', 'lesson-maths-390-light'], ['lessons/ml-regression.html', 768, 'dark', 'lesson-768-dark'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 390, 'dark', 'home-390-dark'], ['cases/klarna.html', 1280, 'light', 'case-sources-1280-light'],
 ['lessons.html', 1440, 'light', 'catalogue-1440-light'], ['solve.html', 1440, 'dark', 'solve-1440-dark'], ['maths.html', 1280, 'light', 'maths-map-1280-light'], ['lessons/llm-train-laptop.html', 1920, 'light', 'lesson-1920-light'], ['plan.html', 390, 'light', 'plan-390-light'], ['projects/c04-rag-assistant.html', 1440, 'light', 'capstone-1440-light'], ['index.html', 1440, 'light', 'home-1440-light'], ['index.html', 1440, 'dark', 'home-1440-dark'], ['index.html', 390, 'light', 'home-390-light'], ['index.html', 390, 'dark', 'home-390-dark'],

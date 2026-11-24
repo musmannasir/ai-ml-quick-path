@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Improve RAG quality with better chunking, hybrid keyword-plus-vector search, reciprocal rank fusion, re-ranking, query rewriting and metadata filters, and measure each change.
 prereqs: app-rag
 reviewed: 2026-11-02
+updated: 2026-11-24
 evidence: A before-and-after table of retrieval hit rate (correct passage in top 5) on at least 30 questions for vector-only versus hybrid retrieval with re-ranking.
 code: Python executed 2026-11-02 (quickpath.py chunking and hybrid)
 ---
@@ -34,6 +35,12 @@ note: Output from the executed chunking demo on an 80-word policy.
 - Each rule stays whole
 ## Overlap | process
 - 6 chunks | 25-word chunks with 10-word overlap
+```
+
+```visual Chunk size and overlap
+file: chunk-overlap
+alt: A row of 24 word blocks with five highlighted blocks that hold the answer. With chunks of 8 words and no overlap, the answer is cut across two chunks. With chunks of 8 words overlapping by 4, the second chunk holds the whole answer, at the price of more chunks.
+caption: Overlap keeps an answer whole when a chunk boundary would otherwise cut it, at the cost of storing more chunks. The sizes are illustrative.
 ```
 
 ```diagram merge Hybrid search

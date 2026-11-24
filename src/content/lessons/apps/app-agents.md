@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Let a model call tools safely, design an agent workflow with explicit state, permission checks, human approval, retries, idempotency and an audit trail, in Python and C#.
 prereqs: app-llm-api, app-prompting
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A refund workflow (in either language) passing scripted tests for success, decline, wrong owner, outside policy, service failure and duplicate requests.
 code: Python framework-free workflow executed 2026-11-02 (examples/agent-returns/returns_workflow.py); LangGraph not run (not installed in the build environment)
 ---
@@ -134,6 +134,12 @@ note: Your code owns the loop and the stop conditions.
 - Call a tool | Your code checks the request and runs it | process
 - Read the result | The result is added to the history | store
 loop: Repeat until done or a limit is hit
+```
+
+```visual The agent loop and its limits
+file: agent-loop
+alt: Three boxes in a loop: the model decides whether to answer or use a tool; your code checks the request and runs the tool; the result comes back and the model reads it. A return arrow shows the loop repeats. A panel below lists limits set by your code: a step limit and budget, only allowed tools, and a person approving actions that change things.
+caption: The model decides, your code acts and checks, the result comes back, and the loop repeats until a final answer or a limit. The limits are set by your code, not by the model.
 ```
 
 ```diagram flow How the loop stops

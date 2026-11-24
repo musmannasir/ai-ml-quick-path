@@ -1079,4 +1079,17 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .vz-px { fill: var(--ink); }
 .vz-frame { fill: none; stroke: var(--line-strong); stroke-width: 2; }
 .vz-big { stroke-width: 3.5; }
+.vz-barv { fill: var(--sim-c0); }
+.vz-barhi { fill: var(--sim-c2); }
+.vz-slot { fill: none; stroke: var(--sim-c1); stroke-width: 3; stroke-dasharray: 6 4; }
+.vz-limit { stroke: var(--bad-ink); stroke-width: 3; stroke-dasharray: 6 4; }
+.vz-cut { fill: var(--bad-bg); stroke: var(--bad-ink); stroke-width: 2; stroke-dasharray: 5 4; }
+.vz-frozen { fill: var(--surface-3); stroke: var(--ink-2); stroke-width: 3; }
+.vz-train { fill: var(--sim-c1); }
+.vz-ans { fill: var(--sim-c1); fill-opacity: .55; stroke: var(--sim-c1); stroke-width: 1.5; }
+.vz-wd { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1; }
+.vz-chunk { fill: none; stroke: var(--ml); stroke-width: 2.5; }
+.vz-chunk2 { fill: none; stroke: var(--sim-c1); stroke-width: 4; }
+.vz-curve2 { fill: none; stroke: var(--sim-c1); stroke-width: 3.5; }
+.vz-axis { stroke: var(--ink-3); stroke-width: 2; }
 @media print { .vz-bar { display: none; } .vz-panel[hidden] { display: block; } .vz-on .vz-label { display: block; } .vz-fig { break-inside: avoid; } }

@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain embeddings, find similar text by cosine similarity, and store and search vectors in a vector database from Python and C#.
 prereqs: app-llm-api, dl-sequences
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Twenty passages embedded with a real embedding model, five differently worded questions, and the rank of the correct passage for each.
 code: Python cosine demo executed 2026-11-02 (applied_basics.py cosine); embedding-model calls not run (no model in the build environment)
 ---
@@ -29,6 +29,12 @@ note: Toy 3-number vectors from the executed demo below. 1 means the same direct
 - "vacation days" and "vacation days" | 1.000
 ## Far | bad
 - "vacation days" and "printer is jammed" | 0.170
+```
+
+```visual A question and its nearest pieces on a map
+file: vector-search-map
+alt: A map of document pieces as dots with a diamond for the question How do I return headphones. A dashed circle around the question contains the three closest pieces: Return policy, Refund steps and Damaged item claim. Shipping times, Store opening hours and Gift cards are far away. The closest pieces are sent to the model as evidence.
+caption: Vector search turns the question into a point and finds the closest document pieces, even when no words match. The pieces and positions are made up.
 ```
 
 ```diagram layers What a vector database holds

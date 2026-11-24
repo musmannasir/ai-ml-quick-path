@@ -1,0 +1,50 @@
+<svg viewBox="0 0 720 292" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A sentence cut into tokens and token ids. -->
+  <text class="vz-title" x="20" y="34" text-anchor="start">Text:  "Please refund my broken headphones."</text>
+  <rect class="vz-ap" x="20" y="70" width="79.0" height="44" rx="8"/>
+  <text class="vz-title" x="59.5" y="99" text-anchor="middle">Please</text>
+  <line class="vz-arrow" x1="59.5" y1="118.0" x2="59.5" y2="137.0"/>
+  <polygon class="vz-headk" points="59.5,148.0 65.5,137.0 53.5,137.0"/>
+  <rect class="vz-card" x="20" y="152" width="79.0" height="34" rx="6"/>
+  <text class="vz-s" x="59.5" y="175" text-anchor="middle">4821</text>
+  <rect class="vz-ap" x="107.0" y="70" width="89.5" height="44" rx="8"/>
+  <text class="vz-title" x="151.75" y="99" text-anchor="middle">·refund</text>
+  <line class="vz-arrow" x1="151.8" y1="118.0" x2="151.8" y2="137.0"/>
+  <polygon class="vz-headk" points="151.8,148.0 157.8,137.0 145.8,137.0"/>
+  <rect class="vz-card" x="107.0" y="152" width="89.5" height="34" rx="6"/>
+  <text class="vz-s" x="151.75" y="175" text-anchor="middle">9033</text>
+  <rect class="vz-ap" x="204.5" y="70" width="47.5" height="44" rx="8"/>
+  <text class="vz-title" x="228.25" y="99" text-anchor="middle">·my</text>
+  <line class="vz-arrow" x1="228.2" y1="118.0" x2="228.2" y2="137.0"/>
+  <polygon class="vz-headk" points="228.2,148.0 234.2,137.0 222.2,137.0"/>
+  <rect class="vz-card" x="204.5" y="152" width="47.5" height="34" rx="6"/>
+  <text class="vz-s" x="228.25" y="175" text-anchor="middle">612</text>
+  <rect class="vz-ap" x="260.0" y="70" width="89.5" height="44" rx="8"/>
+  <text class="vz-title" x="304.75" y="99" text-anchor="middle">·broken</text>
+  <line class="vz-arrow" x1="304.8" y1="118.0" x2="304.8" y2="137.0"/>
+  <polygon class="vz-headk" points="304.8,148.0 310.8,137.0 298.8,137.0"/>
+  <rect class="vz-card" x="260.0" y="152" width="89.5" height="34" rx="6"/>
+  <text class="vz-s" x="304.75" y="175" text-anchor="middle">7455</text>
+  <rect class="vz-ml" x="357.5" y="70" width="68.5" height="44" rx="8"/>
+  <text class="vz-title" x="391.75" y="99" text-anchor="middle">·head</text>
+  <line class="vz-arrow" x1="391.8" y1="118.0" x2="391.8" y2="137.0"/>
+  <polygon class="vz-headk" points="391.8,148.0 397.8,137.0 385.8,137.0"/>
+  <rect class="vz-card" x="357.5" y="152" width="68.5" height="34" rx="6"/>
+  <text class="vz-s" x="391.75" y="175" text-anchor="middle">1307</text>
+  <rect class="vz-ml" x="434.0" y="70" width="79.0" height="44" rx="8"/>
+  <text class="vz-title" x="473.5" y="99" text-anchor="middle">phones</text>
+  <line class="vz-arrow" x1="473.5" y1="118.0" x2="473.5" y2="137.0"/>
+  <polygon class="vz-headk" points="473.5,148.0 479.5,137.0 467.5,137.0"/>
+  <rect class="vz-card" x="434.0" y="152" width="79.0" height="34" rx="6"/>
+  <text class="vz-s" x="473.5" y="175" text-anchor="middle">5589</text>
+  <rect class="vz-ap" x="521.0" y="70" width="46" height="44" rx="8"/>
+  <text class="vz-title" x="544.0" y="99" text-anchor="middle">.</text>
+  <line class="vz-arrow" x1="544.0" y1="118.0" x2="544.0" y2="137.0"/>
+  <polygon class="vz-headk" points="544.0,148.0 550.0,137.0 538.0,137.0"/>
+  <rect class="vz-card" x="521.0" y="152" width="46" height="34" rx="6"/>
+  <text class="vz-s" x="544.0" y="175" text-anchor="middle">13</text>
+  <text class="vz-s" x="20" y="62" text-anchor="start">Tokens: pieces of text from the tokeniser's vocabulary (a dot marks a leading space)</text>
+  <text class="vz-s" x="20" y="214" text-anchor="start">Token ids: the numbers the model really reads</text>
+  <text class="vz-s" x="20" y="252" text-anchor="start">Common words stay whole. A rarer word is split into pieces: here "headphones" became "head" + "phones".</text>
+  <text class="vz-n vz-note" x="20" y="276" text-anchor="start">Illustrative split and made-up ids. Every tokeniser has its own vocabulary, so real splits and ids differ.</text>
+</svg>

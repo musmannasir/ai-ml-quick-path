@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain pretraining, next-token prediction, context windows, instruction tuning, open-weight versus hosted models, and why LLMs sometimes make things up.
 prereqs: dl-transformers
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: A one-page explanation, for a non-technical colleague, of how a chat assistant produces an answer and why it can be confidently wrong.
 code: Python executed 2026-11-02 (quickpath.py bigram)
 ---
@@ -24,12 +24,24 @@ note: The answer is built token by token, each new token joins the text.
 loop: Repeat until the model produces a stop token
 ```
 
+```visual Pick the next token, add it, repeat
+file: next-token-loop
+alt: The text The capital of France is with an empty slot at the end. A model box reads the text and produces a list of made-up chances for the next token: Paris 0.90, the 0.04, a 0.03, known 0.02. One is picked and placed in the slot, then the loop repeats.
+caption: The model scores every possible next token, one is chosen and added to the text, and the loop repeats. The chances shown are made up.
+```
+
 ```diagram bar What shares the context window
 note: Illustrative proportions only. The real split changes with every request.
 - Your prompt | 20 | input
 - Documents | 40 | store
 - Conversation | 25 | process
 - Model's answer | 15 | output
+```
+
+```visual The context window shared by four things
+file: context-desk
+alt: Two horizontal bars. The first shows one request that fits within a limit line: your prompt 20 percent, documents 40, conversation 25 and the model's answer 15, all illustrative. The second shows a request that is too long: the end is cut off beyond the limit and labelled cut text, meaning the oldest or least useful text is removed and the model never sees it.
+caption: Everything the model reads and writes in one request must fit in the context window. When it is too long, some text is cut and never seen. The percentages are illustrative.
 ```
 
 ```diagram compare Hosted model versus open-weight model
@@ -78,6 +90,12 @@ note: Each stage adds behaviour on top of the one below.
 - Preference tuning | Prefers helpful, safe answers | process
 - Instruction tuning | Follows requests from example conversations | process
 - Pretraining | Learns grammar, facts, reasoning patterns and code by predicting the next token | model
+```
+
+```visual Three stages of building a model
+file: three-stages
+alt: Three rising steps joined by arrows. Step 1, pretraining: reads huge amounts of text and predicts the next token, learning grammar, facts and patterns of reasoning and code. Step 2, instruction tuning: learns from example questions and good answers, so it follows requests. Step 3, preference tuning: learns which answers people prefer, so it is helpful and safe.
+caption: Each stage adds behaviour on top of the one before. Model builders do these stages; you mostly use the result.
 ```
 
 ```maths Next-token probability from counting

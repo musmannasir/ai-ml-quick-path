@@ -1,0 +1,36 @@
+<svg viewBox="0 0 720 334" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- RAG: find the evidence, then write the answer from it. -->
+  <rect class="vz-ap" x="12" y="14" width="336" height="238" rx="14"/>
+  <text class="vz-title" x="30" y="44" text-anchor="start">Half 1: find the evidence</text>
+  <text class="vz-s" x="30" y="64" text-anchor="start">(retrieval)</text>
+  <rect class="vz-card" x="30" y="80" width="130" height="44" rx="8"/>
+  <text class="vz-s" x="95" y="107" text-anchor="middle">Question</text>
+  <line class="vz-arrow" x1="164.0" y1="102.0" x2="185.0" y2="102.0"/>
+  <polygon class="vz-headk" points="196.0,102.0 185.0,96.0 185.0,108.0"/>
+  <rect class="vz-card" x="200" y="80" width="132" height="44" rx="8"/>
+  <text class="vz-s" x="266" y="100" text-anchor="middle">Search your</text>
+  <text class="vz-s" x="266" y="116" text-anchor="middle">documents</text>
+  <line class="vz-arrow" x1="266.0" y1="128.0" x2="266.0" y2="149.0"/>
+  <polygon class="vz-headk" points="266.0,160.0 272.0,149.0 260.0,149.0"/>
+  <rect class="vz-ok" x="190" y="164" width="148" height="70" rx="8"/>
+  <text class="vz-s" x="264" y="188" text-anchor="middle">The few best</text>
+  <text class="vz-s" x="264" y="205" text-anchor="middle">pieces, with the</text>
+  <text class="vz-s" x="264" y="222" text-anchor="middle">source of each</text>
+  <rect class="vz-lm" x="372" y="14" width="336" height="238" rx="14"/>
+  <text class="vz-title" x="390" y="44" text-anchor="start">Half 2: write the answer</text>
+  <text class="vz-s" x="390" y="64" text-anchor="start">(generation)</text>
+  <rect class="vz-card" x="390" y="80" width="300" height="44" rx="8"/>
+  <text class="vz-s" x="540" y="107" text-anchor="middle">Question + the pieces, in the prompt</text>
+  <line class="vz-arrow" x1="540.0" y1="128.0" x2="540.0" y2="143.0"/>
+  <polygon class="vz-headk" points="540.0,154.0 546.0,143.0 534.0,143.0"/>
+  <rect class="vz-card" x="440" y="158" width="200" height="40" rx="8"/>
+  <text class="vz-s" x="540" y="183" text-anchor="middle">Language model</text>
+  <line class="vz-arrow" x1="540.0" y1="202.0" x2="540.0" y2="213.0"/>
+  <polygon class="vz-headk" points="540.0,224.0 546.0,213.0 534.0,213.0"/>
+  <text class="vz-s" x="540" y="242" text-anchor="middle">Answer with citations, or "I don't know"</text>
+  <line class="vz-arrow" x1="340.0" y1="186.0" x2="382.0" y2="121.2"/>
+  <polygon class="vz-headk" points="388.0,112.0 377.0,118.0 387.0,124.5"/>
+  <text class="vz-s" x="20" y="276" text-anchor="start">The model answers from the evidence you supply, so you can check the sources</text>
+  <text class="vz-s" x="20" y="294" text-anchor="start">and keep documents up to date without retraining.</text>
+  <text class="vz-n vz-note" x="20" y="318" text-anchor="start">Permissions are checked before search results reach the model.</text>
+</svg>

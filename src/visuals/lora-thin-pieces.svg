@@ -1,0 +1,23 @@
+<svg viewBox="0 0 720 306" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- LoRA trains two thin matrices next to a frozen big one. -->
+  <text class="vz-title" x="20" y="30" text-anchor="start">One layer of a model: a grid of 100 × 100 weights</text>
+  <rect class="vz-frozen" x="30" y="56" width="130" height="130" rx="6"/>
+  <text class="vz-title" x="95" y="114" text-anchor="middle">frozen</text>
+  <text class="vz-s" x="95" y="136" text-anchor="middle">10,000 numbers</text>
+  <text class="vz-s" x="95" y="206" text-anchor="middle">100 × 100</text>
+  <text class="vz-v" x="196" y="130" text-anchor="middle">+</text>
+  <rect class="vz-train" x="224" y="56" width="16" height="130" rx="3"/>
+  <text class="vz-s" x="232" y="206" text-anchor="middle">100 × 2</text>
+  <text class="vz-v" x="262" y="130" text-anchor="middle">×</text>
+  <rect class="vz-train" x="284" y="114" width="130" height="16" rx="3"/>
+  <text class="vz-s" x="349" y="150" text-anchor="middle">2 × 100</text>
+  <text class="vz-v" x="446" y="130" text-anchor="middle">→</text>
+  <rect class="vz-ok" x="470" y="70" width="226" height="116" rx="12"/>
+  <text class="vz-title" x="486" y="100" text-anchor="start">LoRA trains only the</text>
+  <text class="vz-title" x="486" y="122" text-anchor="start">two thin pieces:</text>
+  <text class="vz-s" x="486" y="150" text-anchor="start">100 × 2 + 2 × 100 = 400</text>
+  <text class="vz-s" x="486" y="170" text-anchor="start">numbers, which is 4% of 10,000</text>
+  <text class="vz-s" x="20" y="238" text-anchor="start">The big grid stays frozen. The two thin pieces are the "adapter": a small file that holds what was learned.</text>
+  <text class="vz-s" x="20" y="260" text-anchor="start">QLoRA does the same and also stores the frozen layer in 4-bit numbers to save memory.</text>
+  <text class="vz-n vz-note" x="20" y="290" text-anchor="start">The numbers are the lesson's example. In a real model the layers are thousands wide, so the share is far below 4%.</text>
+</svg>

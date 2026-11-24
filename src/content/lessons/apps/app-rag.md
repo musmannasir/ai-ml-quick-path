@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Build a retrieval-augmented generation (RAG) system that checks permissions, retrieves evidence, answers with citations, says "I don't know" when evidence is missing, and is measured with an evaluation set.
 prereqs: app-embeddings, app-prompting
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A working RAG assistant in Python or C# that passes an evaluation set of answerable, unanswerable and forbidden questions, with failures explained.
 code: Python executed 2026-11-02 (examples/rag-leave-policy/rag_leave_policy.py, offline with TF-IDF standing in for embeddings)
 ---
@@ -28,6 +28,12 @@ note: The model's weights never change. The knowledge lives in documents you can
 - Retrieve | Top few by similarity | process
 - Prompt | Chunks plus the question | process
 - Answer with citations | Chunk ids, or "I don't know" | output
+```
+
+```visual RAG as find, then write
+file: rag-two-halves
+alt: Two panels. Half 1, find the evidence (retrieval): the question searches your documents and returns the few best pieces with the source of each. Half 2, write the answer (generation): the question and the pieces go into the prompt of a language model, which produces an answer with citations, or says it does not know.
+caption: First retrieve the best evidence from your documents, then have the model write the answer from that evidence, with citations.
 ```
 
 ```diagram fan Three kinds of evaluation question
