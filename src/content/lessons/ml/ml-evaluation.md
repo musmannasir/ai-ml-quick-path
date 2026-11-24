@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Choose the right metric for the problem, use cross-validation, read ROC and precision-recall results, and handle rare classes with thresholds and class weights.
 prereqs: ml-classification, ml-regression
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: An evaluation report with the metric choice justified, cross-validated scores with spread, and a threshold table for one classifier.
 code: Python executed 2026-11-02 (ml_basics.py metrics, gap_topics.py roc)
 ---
@@ -44,6 +44,12 @@ y: Really fraud | Really not fraud
 - False negative | 5 frauds missed | bad
 - False positive | 30 false alarms | warn
 - True negative | Normal payments left alone | output
+```
+
+```visual Who the model caught, missed and wrongly flagged
+file: confusion-fraud
+alt: Two rows of small shapes for the fraud example. The first row shows the 20 real frauds: 15 solid squares for frauds caught and 5 dashed squares for frauds missed. The second row shows the 45 payments the model flagged: the same 15 solid squares for real frauds and 30 diamonds for false alarms. Three cards give the results: recall 15 divided by 20 is 0.75, precision 15 divided by 45 is about 0.33, and accuracy 965 divided by 1,000 is 0.965.
+caption: Out of 1,000 payments, 20 are fraud. The model flags 45 of them: 15 real frauds and 30 false alarms, and it misses 5 frauds. Recall asks "how much fraud did we catch?", precision asks "how many flags were real?", and accuracy hides both.
 ```
 
 ```diagram loop Cross-validation

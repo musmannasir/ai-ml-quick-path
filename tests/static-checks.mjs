@@ -132,6 +132,22 @@ if (SITE_URL) {
   const lessonLinks = (llms.match(/\(https:\/\/[^)]*\/lessons\/[^)]+\)/g) || []).length;
   if (lessonLinks < 70) problems.push(`llms.txt lists only ${lessonLinks} lessons`);
 }
+// ---- Diagram tabs (Boxes / Visual) ----
+{
+  const vz = [];
+  for (const f of files) {
+    const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1).split(String.fromCharCode(92)).join('/');
+    const boxes = html.split('<div class="vz" data-vz>').slice(1);
+    for (const b of boxes) {
+      vz.push(rel);
+      if (!/role="tablist"/.test(b) || (b.match(/role="tab"/g) || []).length !== 2 || (b.match(/role="tabpanel"/g) || []).length !== 2) problems.push(`${rel}: a diagram tab group needs a tab list, two tabs and two panels`);
+      if (!/<figure class="diagram /.test(b)) problems.push(`${rel}: the Boxes tab has no diagram`);
+      if (!/<svg[^>]*role="img"[^>]*aria-labelledby="[^"]+"[^>]*>\s*<title id="[^"]+">[^<]{20,}<\/title>/.test(b)) problems.push(`${rel}: a visual needs an accessible title of at least 20 characters`);
+      if (/\sstyle=/.test(b)) problems.push(`${rel}: a visual has an inline style attribute`);
+    }
+  }
+  if (!vz.length) problems.push('no diagram tab group found (the pilot visual in dl-transformers is missing)');
+}
 for (const u of external) problems.push(`outside address not registered in src/data/sources.mjs: ${u}`);
 console.log(`Checked ${files.length} pages, ${links} internal links, ${outside} outside reference links to ${usedSources.size} registered sources, ${external.size} unregistered outside addresses or outside resources (must be 0).`);
 if (problems.length) { console.error(problems.join('\n')); process.exit(1); }

@@ -1,0 +1,37 @@
+<svg viewBox="0 0 720 276" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The sentence, one box per word. "it" is the word being worked on; "cat" and "sat" are the words it takes from. -->
+  <rect class="vz-box" x="16" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t" x="60" y="199" text-anchor="middle">The</text>
+  <rect class="vz-box vz-b0" x="116" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t" x="160" y="199" text-anchor="middle">cat</text>
+  <rect class="vz-box" x="216" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t" x="260" y="199" text-anchor="middle">sat</text>
+  <rect class="vz-box" x="316" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t" x="360" y="199" text-anchor="middle">because</text>
+  <rect class="vz-box vz-b1" x="416" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t" x="460" y="199" text-anchor="middle">it</text>
+  <rect class="vz-box vz-hid" x="516" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t vz-dim" x="560" y="199" text-anchor="middle">was</text>
+  <rect class="vz-box vz-hid" x="616" y="170" width="88" height="44" rx="8"/>
+  <text class="vz-t vz-dim" x="660" y="199" text-anchor="middle">tired</text>
+
+  <!-- Attention arcs: thickness is the (made-up) weight. They end at "it" because "it" takes information from these words. -->
+  <path class="vz-arc" d="M160 166 Q310 14 450 164" stroke-width="10"/>
+  <polygon class="vz-head" points="441,148 459,148 450,166"/>
+  <path class="vz-arc" d="M260 166 Q360 98 470 164" stroke-width="3.5"/>
+  <polygon class="vz-head" points="461,148 479,148 470,166"/>
+  <rect class="vz-lab-bg" x="268" y="68" width="78" height="30" rx="6"/>
+  <text class="vz-w" x="307" y="90" text-anchor="middle">0.75</text>
+  <rect class="vz-lab-bg" x="318" y="120" width="78" height="28" rx="6"/>
+  <text class="vz-w" x="357" y="140" text-anchor="middle">0.25</text>
+
+  <!-- Notes under the words -->
+  <text class="vz-n" x="60" y="238" text-anchor="middle">about 0</text>
+  <text class="vz-n" x="360" y="238" text-anchor="middle">about 0</text>
+  <text class="vz-n" x="610" y="238" text-anchor="middle">hidden by the</text>
+  <text class="vz-n" x="610" y="254" text-anchor="middle">causal mask (0)</text>
+  <text class="vz-n" x="160" y="238" text-anchor="middle">gives most</text>
+  <text class="vz-n" x="260" y="238" text-anchor="middle">gives some</text>
+  <text class="vz-n" x="460" y="238" text-anchor="middle">is being worked on</text>
+  <text class="vz-n vz-note" x="16" y="268">Thicker arc = bigger attention weight. The weights are made up, as in the maths box below.</text>
+</svg>

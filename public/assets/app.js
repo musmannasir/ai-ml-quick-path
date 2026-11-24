@@ -327,8 +327,31 @@
     apply();
   });
 
+  // ---------- Diagram tabs: "Boxes" (the diagram) and "Visual" (a drawn picture) ----------
+  // Without this script both panels are shown one under the other. The chosen tab is a preference shared by every diagram on the page.
+  var vzs = $$('[data-vz]');
+  if (vzs.length) {
+    var showVz = function (which, focusTab) {
+      vzs.forEach(function (box) {
+        box.classList.add('vz-on'); $('.vz-bar', box).hidden = false;
+        $$('[data-vz-tab]', box).forEach(function (t) { var on = t.getAttribute('data-vz-tab') === which; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; if (on && focusTab === box) t.focus(); });
+        $$('[data-vz-panel]', box).forEach(function (p) { p.hidden = p.getAttribute('data-vz-panel') !== which; });
+      });
+    };
+    showVz(store.pref('visualTab') === 'visual' ? 'visual' : 'boxes');
+    vzs.forEach(function (box) {
+      $$('[data-vz-tab]', box).forEach(function (t) {
+        t.addEventListener('click', function () { var w = t.getAttribute('data-vz-tab'); store.pref('visualTab', w); showVz(w, box); });
+        t.addEventListener('keydown', function (e) {
+          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
+          e.preventDefault(); var w = (e.key === 'ArrowLeft' || e.key === 'Home') ? 'boxes' : 'visual'; store.pref('visualTab', w); showVz(w, box);
+        });
+      });
+    });
+  }
+
   // ---------- Roadmaps: tabs, steps, deep links ----------
-  var tabs = $$('[role="tab"]');
+  var tabs = $$('.tabs [role="tab"]');
   if (tabs.length) {
     var panels = tabs.map(function (t) { return doc.getElementById(t.getAttribute('aria-controls')); });
     function selectTab(id, focusTab) {

@@ -1,0 +1,90 @@
+<svg viewBox="0 0 720 345" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- 1,000 payments, 20 of them fraud. The model flags 45: 15 real frauds and 30 false alarms. -->
+  <text class="vz-title" x="22" y="38">Real frauds: 20 of the 1,000 payments</text>
+  <rect class="vz-caught" x="22" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="37" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="52" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="67" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="82" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="97" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="112" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="127" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="142" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="157" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="172" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="187" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="202" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="217" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="232" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-missed" x="247" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-missed" x="262" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-missed" x="277" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-missed" x="292" y="52" width="12" height="12" rx="2"/>
+  <rect class="vz-missed" x="307" y="52" width="12" height="12" rx="2"/>
+  <text class="vz-n" x="134" y="84" text-anchor="middle">15 caught</text>
+  <text class="vz-n" x="284" y="84" text-anchor="middle">5 missed</text>
+  <text class="vz-title" x="22" y="124">Flagged by the model: 45 payments</text>
+  <rect class="vz-caught" x="22" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="37" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="52" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="67" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="82" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="97" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="112" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="127" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="142" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="157" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="172" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="187" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="202" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="217" y="138" width="12" height="12" rx="2"/>
+  <rect class="vz-caught" x="232" y="138" width="12" height="12" rx="2"/>
+  <polygon class="vz-false" points="253.0,137.0 260.0,144.0 253.0,151.0 246.0,144.0"/>
+  <polygon class="vz-false" points="268.0,137.0 275.0,144.0 268.0,151.0 261.0,144.0"/>
+  <polygon class="vz-false" points="283.0,137.0 290.0,144.0 283.0,151.0 276.0,144.0"/>
+  <polygon class="vz-false" points="298.0,137.0 305.0,144.0 298.0,151.0 291.0,144.0"/>
+  <polygon class="vz-false" points="313.0,137.0 320.0,144.0 313.0,151.0 306.0,144.0"/>
+  <polygon class="vz-false" points="328.0,137.0 335.0,144.0 328.0,151.0 321.0,144.0"/>
+  <polygon class="vz-false" points="343.0,137.0 350.0,144.0 343.0,151.0 336.0,144.0"/>
+  <polygon class="vz-false" points="358.0,137.0 365.0,144.0 358.0,151.0 351.0,144.0"/>
+  <polygon class="vz-false" points="373.0,137.0 380.0,144.0 373.0,151.0 366.0,144.0"/>
+  <polygon class="vz-false" points="388.0,137.0 395.0,144.0 388.0,151.0 381.0,144.0"/>
+  <polygon class="vz-false" points="403.0,137.0 410.0,144.0 403.0,151.0 396.0,144.0"/>
+  <polygon class="vz-false" points="418.0,137.0 425.0,144.0 418.0,151.0 411.0,144.0"/>
+  <polygon class="vz-false" points="433.0,137.0 440.0,144.0 433.0,151.0 426.0,144.0"/>
+  <polygon class="vz-false" points="448.0,137.0 455.0,144.0 448.0,151.0 441.0,144.0"/>
+  <polygon class="vz-false" points="463.0,137.0 470.0,144.0 463.0,151.0 456.0,144.0"/>
+  <polygon class="vz-false" points="478.0,137.0 485.0,144.0 478.0,151.0 471.0,144.0"/>
+  <polygon class="vz-false" points="493.0,137.0 500.0,144.0 493.0,151.0 486.0,144.0"/>
+  <polygon class="vz-false" points="508.0,137.0 515.0,144.0 508.0,151.0 501.0,144.0"/>
+  <polygon class="vz-false" points="523.0,137.0 530.0,144.0 523.0,151.0 516.0,144.0"/>
+  <polygon class="vz-false" points="538.0,137.0 545.0,144.0 538.0,151.0 531.0,144.0"/>
+  <polygon class="vz-false" points="553.0,137.0 560.0,144.0 553.0,151.0 546.0,144.0"/>
+  <polygon class="vz-false" points="568.0,137.0 575.0,144.0 568.0,151.0 561.0,144.0"/>
+  <polygon class="vz-false" points="583.0,137.0 590.0,144.0 583.0,151.0 576.0,144.0"/>
+  <polygon class="vz-false" points="598.0,137.0 605.0,144.0 598.0,151.0 591.0,144.0"/>
+  <polygon class="vz-false" points="613.0,137.0 620.0,144.0 613.0,151.0 606.0,144.0"/>
+  <polygon class="vz-false" points="628.0,137.0 635.0,144.0 628.0,151.0 621.0,144.0"/>
+  <polygon class="vz-false" points="643.0,137.0 650.0,144.0 643.0,151.0 636.0,144.0"/>
+  <polygon class="vz-false" points="658.0,137.0 665.0,144.0 658.0,151.0 651.0,144.0"/>
+  <polygon class="vz-false" points="673.0,137.0 680.0,144.0 673.0,151.0 666.0,144.0"/>
+  <polygon class="vz-false" points="688.0,137.0 695.0,144.0 688.0,151.0 681.0,144.0"/>
+  <text class="vz-n" x="134" y="170" text-anchor="middle">15 real frauds</text>
+  <text class="vz-n" x="472" y="170" text-anchor="middle">30 false alarms</text>
+  <rect class="vz-card" x="12" y="196" width="216" height="104" rx="10"/>
+  <text class="vz-title" x="26" y="222">Recall</text>
+  <text class="vz-v" x="26" y="250">15 ÷ 20 = 0.75</text>
+  <text class="vz-s" x="26" y="274">Of the real frauds,</text>
+  <text class="vz-s" x="26" y="290">how many were caught.</text>
+  <rect class="vz-card" x="252" y="196" width="216" height="104" rx="10"/>
+  <text class="vz-title" x="266" y="222">Precision</text>
+  <text class="vz-v" x="266" y="250">15 ÷ 45 ≈ 0.33</text>
+  <text class="vz-s" x="266" y="274">Of the flagged payments,</text>
+  <text class="vz-s" x="266" y="290">how many were real.</text>
+  <rect class="vz-card" x="492" y="196" width="216" height="104" rx="10"/>
+  <text class="vz-title" x="506" y="222">Accuracy</text>
+  <text class="vz-v" x="506" y="250">965 ÷ 1,000 = 0.965</text>
+  <text class="vz-s" x="506" y="274">Looks high, yet 5 frauds</text>
+  <text class="vz-s" x="506" y="290">were missed.</text>
+  <text class="vz-n vz-note" x="22" y="326">Solid square = fraud caught. Dashed square = fraud missed. Diamond = false alarm. Numbers from the run in this lesson.</text>
+</svg>
