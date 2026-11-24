@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 314" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Boosting: mistakes get more weight in the next round. -->
+  <text class="vz-title" x="20" y="30" text-anchor="start">Boosting: each new rule looks harder at what the last ones got wrong</text>
+  <rect class="vz-card" x="14" y="50" width="222" height="190" rx="10"/>
+  <text class="vz-title" x="28" y="76" text-anchor="start">Round 1</text>
+  <circle class="vz-bw" cx="48.0" cy="120.0" r="8"/>
+  <circle class="vz-c0" cx="114.0" cy="120.0" r="8"/>
+  <circle class="vz-c0" cx="180.0" cy="120.0" r="8"/>
+  <circle class="vz-c0" cx="48.0" cy="182.0" r="8"/>
+  <circle class="vz-bw" cx="114.0" cy="182.0" r="1"/>
+  <circle class="vz-c0" cx="180.0" cy="182.0" r="8"/>
+  <text class="vz-s" x="28" y="228" text-anchor="start">two points wrong</text>
+  <rect class="vz-card" x="252" y="50" width="222" height="190" rx="10"/>
+  <text class="vz-title" x="266" y="76" text-anchor="start">Round 2</text>
+  <circle class="vz-c0" cx="286.0" cy="120.0" r="8"/>
+  <circle class="vz-c0" cx="352.0" cy="120.0" r="8"/>
+  <circle class="vz-bw" cx="418.0" cy="120.0" r="15"/>
+  <circle class="vz-c0" cx="286.0" cy="182.0" r="8"/>
+  <circle class="vz-bw" cx="352.0" cy="182.0" r="15"/>
+  <circle class="vz-c0" cx="418.0" cy="182.0" r="8"/>
+  <text class="vz-s" x="266" y="228" text-anchor="start">the wrong ones now weigh more</text>
+  <rect class="vz-card" x="490" y="50" width="222" height="190" rx="10"/>
+  <text class="vz-title" x="504" y="76" text-anchor="start">Round 3</text>
+  <circle class="vz-c0" cx="524.0" cy="120.0" r="8"/>
+  <circle class="vz-c0" cx="590.0" cy="120.0" r="8"/>
+  <circle class="vz-c0" cx="656.0" cy="120.0" r="15"/>
+  <circle class="vz-c0" cx="524.0" cy="182.0" r="8"/>
+  <circle class="vz-c0" cx="590.0" cy="182.0" r="15"/>
+  <circle class="vz-c0" cx="656.0" cy="182.0" r="8"/>
+  <text class="vz-s" x="504" y="228" text-anchor="start">the team votes on the answer</text>
+  <text class="vz-s" x="20" y="268" text-anchor="start">Big circles are points that carry more weight because earlier rules got them wrong.</text>
+  <text class="vz-n vz-note" x="12" y="298" text-anchor="start">Illustrative weights. The final answer is a weighted vote of all the simple rules, accurate rules counting more.</text>
+</svg>

@@ -8,6 +8,7 @@ maths: algebra
 goal: Estimate how good each state is from experience with Monte Carlo and temporal-difference learning, learn the value of each action with Q-learning and SARSA, and explain how a deep Q-network replaces the table with a neural network.
 prereqs: dl-rl
 reviewed: 2026-11-18
+updated: 2026-11-24
 evidence: A table of state values on a small corridor from two methods that agree, and a comparison of the Q-learning and SARSA values after the same number of episodes, with a sentence saying why they differ.
 code: Python executed 2026-11-18 (examples/rl-value/rl_value.py, standard library only); PyTorch was not installed, so no deep Q-network was run; the C# version prints the same output
 ---
@@ -31,6 +32,12 @@ note: The table of action values slowly fills in with what the agent learns.
 - Compare what happened with what was expected | The TD error | model
 - Nudge the action value towards the estimate | Small step, set by a learning rate | output
 loop: Repeat for every step of every episode
+```
+
+```visual A Q-table and one learning step
+file: q-table
+alt: A table of three states by four actions, with made-up values. One cell is highlighted. A box shows one learning step: old value 0.40, estimate 0.80, learning rate 0.1, so the new value is 0.40 plus 0.1 times 0.40, which is 0.44.
+caption: The agent nudges one table entry a small step towards what it just saw, so the table slowly fills in. The values are made up.
 ```
 
 ```diagram compare Q-learning and SARSA

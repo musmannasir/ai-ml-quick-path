@@ -1,0 +1,44 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- PCA as the shadow of the data on its main direction. -->
+  <rect class="vz-card" x="12" y="12" width="460" height="270" rx="10"/>
+  <line class="vz-fit" x1="72" y1="239" x2="408" y2="61"/>
+  <line class="vz-resid2" x1="95.1" y1="203.7" x2="104.8" y2="221.9"/>
+  <line class="vz-resid2" x1="117.5" y1="194.8" x2="125.9" y2="210.7"/>
+  <line class="vz-resid2" x1="139.4" y1="197.7" x2="141.8" y2="202.2"/>
+  <line class="vz-resid2" x1="177.6" y1="200.9" x2="170.3" y2="187.1"/>
+  <line class="vz-resid2" x1="181.3" y1="164.8" x2="188.1" y2="177.6"/>
+  <line class="vz-resid2" x1="199.6" y1="158.3" x2="205.1" y2="168.6"/>
+  <line class="vz-resid2" x1="211.0" y1="142.2" x2="220.6" y2="160.3"/>
+  <line class="vz-resid2" x1="250.9" y1="169.4" x2="240.5" y2="149.7"/>
+  <line class="vz-resid2" x1="273.9" y1="150.0" x2="266.4" y2="135.9"/>
+  <line class="vz-resid2" x1="278.1" y1="111.7" x2="285.6" y2="125.8"/>
+  <line class="vz-resid2" x1="302.9" y1="124.0" x2="299.8" y2="118.2"/>
+  <line class="vz-resid2" x1="332.3" y1="121.8" x2="323.7" y2="105.5"/>
+  <line class="vz-resid2" x1="334.6" y1="75.4" x2="344.7" y2="94.3"/>
+  <line class="vz-resid2" x1="365.4" y1="93.4" x2="361.2" y2="85.6"/>
+  <circle class="vz-pt" cx="95.1" cy="203.7" r="5.5"/>
+  <circle class="vz-pt" cx="117.5" cy="194.8" r="5.5"/>
+  <circle class="vz-pt" cx="139.4" cy="197.7" r="5.5"/>
+  <circle class="vz-pt" cx="177.6" cy="200.9" r="5.5"/>
+  <circle class="vz-pt" cx="181.3" cy="164.8" r="5.5"/>
+  <circle class="vz-pt" cx="199.6" cy="158.3" r="5.5"/>
+  <circle class="vz-pt" cx="211.0" cy="142.2" r="5.5"/>
+  <circle class="vz-pt" cx="250.9" cy="169.4" r="5.5"/>
+  <circle class="vz-pt" cx="273.9" cy="150.0" r="5.5"/>
+  <circle class="vz-pt" cx="278.1" cy="111.7" r="5.5"/>
+  <circle class="vz-pt" cx="302.9" cy="124.0" r="5.5"/>
+  <circle class="vz-pt" cx="332.3" cy="121.8" r="5.5"/>
+  <circle class="vz-pt" cx="334.6" cy="75.4" r="5.5"/>
+  <circle class="vz-pt" cx="365.4" cy="93.4" r="5.5"/>
+  <text class="vz-title" x="500" y="50" text-anchor="start">PCA</text>
+  <text class="vz-s" x="500" y="80" text-anchor="start">Many columns in, a few out.</text>
+  <text class="vz-s" x="500" y="112" text-anchor="start">Find the direction in which</text>
+  <text class="vz-s" x="500" y="130" text-anchor="start">the data varies most (the</text>
+  <text class="vz-s" x="500" y="148" text-anchor="start">green line), then describe</text>
+  <text class="vz-s" x="500" y="166" text-anchor="start">each point by where its</text>
+  <text class="vz-s" x="500" y="184" text-anchor="start">"shadow" falls on it.</text>
+  <text class="vz-s" x="500" y="216" text-anchor="start">Two columns become one,</text>
+  <text class="vz-s" x="500" y="234" text-anchor="start">and most of the pattern</text>
+  <text class="vz-s" x="500" y="252" text-anchor="start">is kept.</text>
+  <text class="vz-n vz-note" x="12" y="306" text-anchor="start">Made-up points in two dimensions. Real data has many columns and often needs several components.</text>
+</svg>

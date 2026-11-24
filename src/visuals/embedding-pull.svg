@@ -1,0 +1,28 @@
+<svg viewBox="0 0 720 334" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Embedding training pulls matching pairs closer. -->
+  <rect class="vz-card" x="14" y="40" width="340" height="220" rx="10"/>
+  <text class="vz-title" x="30" y="66" text-anchor="start">Before training</text>
+  <circle class="vz-c0" cx="64.0" cy="110.0" r="8"/>
+  <text class="vz-s" x="76" y="115" text-anchor="start">Q1</text>
+  <circle class="vz-c1" cx="264.0" cy="190.0" r="8"/>
+  <text class="vz-s" x="276" y="195" text-anchor="start">A1</text>
+  <circle class="vz-c0" cx="74.0" cy="210.0" r="8"/>
+  <text class="vz-s" x="86" y="215" text-anchor="start">Q2</text>
+  <circle class="vz-c1" cx="244.0" cy="100.0" r="8"/>
+  <text class="vz-s" x="256" y="105" text-anchor="start">A2</text>
+  <rect class="vz-card" x="366" y="40" width="340" height="220" rx="10"/>
+  <text class="vz-title" x="382" y="66" text-anchor="start">After training</text>
+  <circle class="vz-c0" cx="426.0" cy="120.0" r="8"/>
+  <text class="vz-s" x="438" y="125" text-anchor="start">Q1</text>
+  <circle class="vz-c1" cx="476.0" cy="128.0" r="8"/>
+  <text class="vz-s" x="488" y="133" text-anchor="start">A1</text>
+  <circle class="vz-c0" cx="606.0" cy="200.0" r="8"/>
+  <text class="vz-s" x="618" y="205" text-anchor="start">Q2</text>
+  <circle class="vz-c1" cx="556.0" cy="208.0" r="8"/>
+  <text class="vz-s" x="568" y="213" text-anchor="start">A2</text>
+  <line class="vz-arrow" x1="356.0" y1="150.0" x2="359.0" y2="150.0"/>
+  <polygon class="vz-headk" points="370.0,150.0 359.0,144.0 359.0,156.0"/>
+  <text class="vz-title" x="14" y="28" text-anchor="start">Training pulls matching pairs together and pushes the rest apart</text>
+  <text class="vz-s" x="14" y="290" text-anchor="start">Q = a question, A = its answer. The model only ever sees which pairs belong together; everything else follows from that.</text>
+  <text class="vz-n vz-note" x="12" y="318" text-anchor="start">Two-dimensional and made-up. Real embeddings have hundreds of numbers.</text>
+</svg>

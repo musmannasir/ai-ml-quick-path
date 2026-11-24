@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Forecast values over time with trend and seasonality, beat simple baselines, and always test on the future.
 prereqs: ml-regression, ml-evaluation
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A forecast for a series you choose, compared with naive and seasonal-naive baselines on a later period, with MAE for each.
 code: Python executed 2026-11-02 (gap_topics.py timeseries)
 ---
@@ -21,6 +21,12 @@ note: Most series mix these three parts.
 - Trend | Slowly going up or down | process
 - Seasonality | Patterns that repeat, like busy weekends or December | model
 - Noise | Random ups and downs | warn
+```
+
+```visual Trend, season and noise add up to the series
+file: ts-parts
+alt: Four stacked curves. The first is a slow upward trend, the second a repeating seasonal wave, the third random noise, and the fourth is their sum, the series you see.
+caption: Most series mix a trend, a repeating seasonal pattern and noise. The curves are made up.
 ```
 
 ```diagram compare Random split and time split

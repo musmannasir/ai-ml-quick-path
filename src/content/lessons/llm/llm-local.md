@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Run an open-weight model locally, understand quantization and memory needs, and call the local model from Python and .NET through the same interfaces used for hosted models.
 prereqs: llm-how
 reviewed: 2026-11-02
+updated: 2026-11-24
 evidence: A local model answering through both a Python and a C# client, with memory use and tokens per second noted for two quantization levels.
 code: Python memory arithmetic executed 2026-11-02 (memory_estimate.py); local model calls not run (no model runner in the build environment)
 ---
@@ -54,6 +55,12 @@ note: Weights for an 8-billion-parameter model, from the executed memory run.
 ## 4-bit weights | model
 - 4.0 GB
 - Small quality loss to measure
+```
+
+```visual Fewer levels, less memory
+file: quantise-steps
+alt: On the left, a smooth rising line next to a staircase that follows it with only a few levels. On the right, three bars for the memory of an 8-billion-parameter model: 16 GB at 16 bits, 8 GB at 8 bits and 4 GB at 4 bits.
+caption: Rounding weights to fewer levels shrinks the model, with a small quality loss to measure. The memory numbers are from the lesson's run.
 ```
 
 ```diagram merge Memory a local model needs

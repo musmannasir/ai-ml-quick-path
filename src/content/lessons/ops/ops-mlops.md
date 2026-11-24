@@ -8,7 +8,7 @@ maths: algebra
 goal: Make model training repeatable and releases safe by versioning data, code and models, recording metrics in a registry, and promoting a new model only when it passes a gate.
 prereqs: ops-serving, ml-evaluation
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A training pipeline that records data hash, parameters and metrics for every run, plus a promotion rule that rejected at least one candidate.
 code: Python executed 2026-11-02 (quickpath.py registry); MLflow not run (MLflow not installed in the build environment)
 ---
@@ -52,6 +52,12 @@ note: Same test set for both models, rules written down in advance.
 - Two groups, one model each
 ```
 
+```visual A canary release widening in stages
+file: canary-release
+alt: Three rows of twenty circles. In stage 1 two circles are filled, 10 percent on the new model; in stage 2 ten are filled, 50 percent; in stage 3 all twenty, fully released. A note says to watch the metrics before widening and to roll back if they get worse.
+caption: A small share of users gets the new model first, and the share widens only while the metrics hold. The shares are illustrative.
+```
+
 ## Real-world example
 A lender retrains its credit-risk model every month. The pipeline pulls a dated data snapshot, trains, evaluates and writes everything to the registry. One month, a more complex model scores slightly lower than the champion on the frozen test set. The gate rejects it automatically, and the champion stays in production. Months later an auditor asks why a loan was refused in March; the registry shows exactly which model, data snapshot and threshold were used.
 
@@ -80,6 +86,12 @@ loop: Retrain on a schedule or when drift is detected
 - Compare with champion | apply the gate | process
 - Shadow or canary | watch the metrics | warn
 - Promote | keep the old model for rollback | output
+```
+
+```visual The MLOps pipeline as a loop
+file: mlops-pipeline
+alt: Six numbered boxes in a loop: freeze the test set, train, log the run, compare with the champion, shadow or canary, and promote while keeping the old model. An arrow returns from the end to the start.
+caption: Retrain on a schedule or when drift is detected. Every run is recorded so any model can be reproduced or rolled back.
 ```
 
 ```maths A canary release in numbers

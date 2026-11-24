@@ -24,6 +24,12 @@ note: Things it rebuilds badly are unusual, which is how it detects anomalies.
 - Rebuilt data | Compared with the original | output
 ```
 
+```visual An autoencoder squeezes and rebuilds
+file: autoencoder-hourglass
+alt: A hourglass of five columns of circles: six, four, two, four, six. The left half is the encoder squeezing the original data, the narrow middle is a small code, and the right half is the decoder rebuilding the data.
+caption: An autoencoder squeezes data into a small code and rebuilds it. What it rebuilds badly is unusual, which helps detect anomalies.
+```
+
 ```diagram compare Autoencoder and variational autoencoder
 ## Autoencoder | process
 - Compress and rebuild | Useful for compression and anomaly detection

@@ -22,6 +22,12 @@ code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 - Value | What information do I pass on? | store
 ```
 
+```visual Three heads, three questions
+file: multi-head
+alt: Three rows, each showing the sentence The cat sat because it. In each row an arc runs from the word it to a different word: head 1 to cat, head 2 to sat, head 3 to because.
+caption: Several attention heads read the same sentence, each with its own question. What each head learns is found by training.
+```
+
 ```diagram merge Attention builds a new meaning for "it"
 note: The weights add up to 1. In the lesson's toy run, "cat" got the largest weight for "it".
 - New vector for "it" | A weighted mix of the values | output
@@ -126,6 +132,12 @@ note: Weights are made up for illustration: chat 0.8, le 0.1, dort 0.1.
 - Decoder has written "the" | Its current state becomes the query | process
 - Cross-attention | The query is scored against every French word's key | model
 - Next word: "cat" | Mostly taken from the vector for "chat" | output
+```
+
+```visual Cross-attention in a translator
+file: cross-attention
+alt: The French words le, chat and dort on the left. On the right the English so far, the, and an empty slot for the next word. Three lines run from the French words to the slot, with weights 0.1, 0.8 and 0.1, the thick one from chat. The next word is cat.
+caption: The decoder's query is compared with every encoder word, and most of the weight falls on chat, so the next English word is cat. The weights are made up.
 ```
 
 #### RMSNorm (a simpler normalisation)

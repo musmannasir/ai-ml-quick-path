@@ -50,6 +50,12 @@ note: Keyword search finds exact codes, names and rare words. Vector search find
 - Vector search | Ranking by meaning | model
 ```
 
+```visual Two searches merged, then re-ranked
+file: hybrid-rerank
+alt: Two ranked lists, keyword search and vector search, flow into a merge step where documents found by both rise to the top, then into a re-ranker that reads the question and each candidate and re-orders them. The top few go to the model as evidence.
+caption: Keyword search finds exact words and vector search finds similar meaning; merging and re-ranking them misses less. The lists are made up.
+```
+
 ```diagram flow Reciprocal rank fusion in words
 note: Merge by rank, not by raw score, because the two scores are on different scales.
 - Two ranked lists | One from keyword search, one from vector search | input

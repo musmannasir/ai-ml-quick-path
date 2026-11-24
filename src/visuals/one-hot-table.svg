@@ -1,0 +1,38 @@
+<svg viewBox="0 0 720 284" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- One-hot encoding of the plan column. -->
+  <text class="vz-title" x="20" y="34" text-anchor="start">Before: one text column</text>
+  <rect class="vz-card" x="20" y="46" width="130" height="144" rx="6"/>
+  <text class="vz-title" x="36" y="72" text-anchor="start">plan</text>
+  <text class="vz-s" x="36" y="108" text-anchor="start">basic</text>
+  <text class="vz-s" x="36" y="144" text-anchor="start">pro</text>
+  <text class="vz-s" x="36" y="180" text-anchor="start">team</text>
+  <line class="vz-arrow" x1="160.0" y1="120.0" x2="233.0" y2="120.0"/>
+  <polygon class="vz-headk" points="244.0,120.0 233.0,114.0 233.0,126.0"/>
+  <text class="vz-s" x="204" y="108" text-anchor="middle">one-hot</text>
+  <text class="vz-title" x="260" y="34" text-anchor="start">After: one yes/no column per plan</text>
+  <rect class="vz-card" x="260" y="46" width="340" height="144" rx="6"/>
+  <text class="vz-s" x="272" y="72" text-anchor="start">plan_basic</text>
+  <text class="vz-s" x="382" y="72" text-anchor="start">plan_pro</text>
+  <text class="vz-s" x="492" y="72" text-anchor="start">plan_team</text>
+  <rect class="vz-ok" x="272" y="90" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="304" y="110" text-anchor="middle">1</text>
+  <rect class="vz-card" x="382" y="90" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="414" y="110" text-anchor="middle">0</text>
+  <rect class="vz-card" x="492" y="90" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="524" y="110" text-anchor="middle">0</text>
+  <rect class="vz-card" x="272" y="126" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="304" y="146" text-anchor="middle">0</text>
+  <rect class="vz-ok" x="382" y="126" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="414" y="146" text-anchor="middle">1</text>
+  <rect class="vz-card" x="492" y="126" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="524" y="146" text-anchor="middle">0</text>
+  <rect class="vz-card" x="272" y="162" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="304" y="182" text-anchor="middle">0</text>
+  <rect class="vz-card" x="382" y="162" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="414" y="182" text-anchor="middle">0</text>
+  <rect class="vz-ok" x="492" y="162" width="64" height="28" rx="6"/>
+  <text class="vz-title" x="524" y="182" text-anchor="middle">1</text>
+  <text class="vz-s" x="20" y="214" text-anchor="start">A model works with numbers, not words. One-hot encoding gives each category its own 0/1 column,</text>
+  <text class="vz-s" x="20" y="234" text-anchor="start">so "pro" is not treated as "bigger" than "basic". One column became three, as in the lesson's run.</text>
+  <text class="vz-n vz-note" x="12" y="268" text-anchor="start">Fit the encoder on the training data only, then apply it everywhere (see the leaky and safe preparation diagram).</text>
+</svg>

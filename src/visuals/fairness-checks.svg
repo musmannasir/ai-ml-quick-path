@@ -1,0 +1,27 @@
+<svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Two simple fairness checks compared. -->
+  <rect class="vz-card" x="14" y="20" width="340" height="230" rx="10"/>
+  <text class="vz-title" x="30" y="48" text-anchor="start">Demographic parity</text>
+  <text class="vz-s" x="30" y="70" text-anchor="start">Looks at everyone in each group</text>
+  <text class="vz-s" x="30" y="118" text-anchor="start">Group A</text>
+  <rect class="vz-barv" x="110" y="96" width="160.0" height="30" rx="4"/>
+  <text class="vz-s" x="274.0" y="117" text-anchor="start">40% approved</text>
+  <text class="vz-s" x="30" y="168" text-anchor="start">Group B</text>
+  <rect class="vz-barv" x="110" y="146" width="120.0" height="30" rx="4"/>
+  <text class="vz-s" x="234.0" y="167" text-anchor="start">30% approved</text>
+  <text class="vz-s" x="30" y="214" text-anchor="start">Do groups get approved at</text>
+  <text class="vz-s" x="30" y="232" text-anchor="start">similar rates?</text>
+  <rect class="vz-card" x="366" y="20" width="340" height="230" rx="10"/>
+  <text class="vz-title" x="382" y="48" text-anchor="start">Equal opportunity</text>
+  <text class="vz-s" x="382" y="70" text-anchor="start">Looks only at people who truly qualify</text>
+  <text class="vz-s" x="382" y="118" text-anchor="start">Group A</text>
+  <rect class="vz-barhi" x="462" y="96" width="170.0" height="30" rx="4"/>
+  <text class="vz-s" x="636.0" y="117" text-anchor="start">85% approved</text>
+  <text class="vz-s" x="382" y="168" text-anchor="start">Group B</text>
+  <rect class="vz-barhi" x="462" y="146" width="140.0" height="30" rx="4"/>
+  <text class="vz-s" x="606.0" y="167" text-anchor="start">70% approved</text>
+  <text class="vz-s" x="382" y="214" text-anchor="start">Among those who qualify, are</text>
+  <text class="vz-s" x="382" y="232" text-anchor="start">groups approved at similar rates?</text>
+  <text class="vz-n vz-note" x="12" y="280" text-anchor="start">Made-up rates. Both checks compare groups; they ask about different people.</text>
+  <text class="vz-n vz-note" x="12" y="298" text-anchor="start">Which one fits depends on the harm you most want to avoid.</text>
+</svg>

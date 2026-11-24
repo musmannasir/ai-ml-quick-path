@@ -1,0 +1,98 @@
+<svg viewBox="0 0 720 336" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- An autoencoder squeezes data into a small code and rebuilds it. -->
+  <line class="vz-edge" x1="90" y1="65" x2="210" y2="99"/>
+  <line class="vz-edge" x1="90" y1="65" x2="210" y2="133"/>
+  <line class="vz-edge" x1="90" y1="65" x2="210" y2="167"/>
+  <line class="vz-edge" x1="90" y1="65" x2="210" y2="201"/>
+  <line class="vz-edge" x1="90" y1="99" x2="210" y2="99"/>
+  <line class="vz-edge" x1="90" y1="99" x2="210" y2="133"/>
+  <line class="vz-edge" x1="90" y1="99" x2="210" y2="167"/>
+  <line class="vz-edge" x1="90" y1="99" x2="210" y2="201"/>
+  <line class="vz-edge" x1="90" y1="133" x2="210" y2="99"/>
+  <line class="vz-edge" x1="90" y1="133" x2="210" y2="133"/>
+  <line class="vz-edge" x1="90" y1="133" x2="210" y2="167"/>
+  <line class="vz-edge" x1="90" y1="133" x2="210" y2="201"/>
+  <line class="vz-edge" x1="90" y1="167" x2="210" y2="99"/>
+  <line class="vz-edge" x1="90" y1="167" x2="210" y2="133"/>
+  <line class="vz-edge" x1="90" y1="167" x2="210" y2="167"/>
+  <line class="vz-edge" x1="90" y1="167" x2="210" y2="201"/>
+  <line class="vz-edge" x1="90" y1="201" x2="210" y2="99"/>
+  <line class="vz-edge" x1="90" y1="201" x2="210" y2="133"/>
+  <line class="vz-edge" x1="90" y1="201" x2="210" y2="167"/>
+  <line class="vz-edge" x1="90" y1="201" x2="210" y2="201"/>
+  <line class="vz-edge" x1="90" y1="235" x2="210" y2="99"/>
+  <line class="vz-edge" x1="90" y1="235" x2="210" y2="133"/>
+  <line class="vz-edge" x1="90" y1="235" x2="210" y2="167"/>
+  <line class="vz-edge" x1="90" y1="235" x2="210" y2="201"/>
+  <line class="vz-edge" x1="210" y1="99" x2="330" y2="133"/>
+  <line class="vz-edge" x1="210" y1="99" x2="330" y2="167"/>
+  <line class="vz-edge" x1="210" y1="133" x2="330" y2="133"/>
+  <line class="vz-edge" x1="210" y1="133" x2="330" y2="167"/>
+  <line class="vz-edge" x1="210" y1="167" x2="330" y2="133"/>
+  <line class="vz-edge" x1="210" y1="167" x2="330" y2="167"/>
+  <line class="vz-edge" x1="210" y1="201" x2="330" y2="133"/>
+  <line class="vz-edge" x1="210" y1="201" x2="330" y2="167"/>
+  <line class="vz-edge" x1="330" y1="133" x2="450" y2="99"/>
+  <line class="vz-edge" x1="330" y1="133" x2="450" y2="133"/>
+  <line class="vz-edge" x1="330" y1="133" x2="450" y2="167"/>
+  <line class="vz-edge" x1="330" y1="133" x2="450" y2="201"/>
+  <line class="vz-edge" x1="330" y1="167" x2="450" y2="99"/>
+  <line class="vz-edge" x1="330" y1="167" x2="450" y2="133"/>
+  <line class="vz-edge" x1="330" y1="167" x2="450" y2="167"/>
+  <line class="vz-edge" x1="330" y1="167" x2="450" y2="201"/>
+  <line class="vz-edge" x1="450" y1="99" x2="570" y2="65"/>
+  <line class="vz-edge" x1="450" y1="99" x2="570" y2="99"/>
+  <line class="vz-edge" x1="450" y1="99" x2="570" y2="133"/>
+  <line class="vz-edge" x1="450" y1="99" x2="570" y2="167"/>
+  <line class="vz-edge" x1="450" y1="99" x2="570" y2="201"/>
+  <line class="vz-edge" x1="450" y1="99" x2="570" y2="235"/>
+  <line class="vz-edge" x1="450" y1="133" x2="570" y2="65"/>
+  <line class="vz-edge" x1="450" y1="133" x2="570" y2="99"/>
+  <line class="vz-edge" x1="450" y1="133" x2="570" y2="133"/>
+  <line class="vz-edge" x1="450" y1="133" x2="570" y2="167"/>
+  <line class="vz-edge" x1="450" y1="133" x2="570" y2="201"/>
+  <line class="vz-edge" x1="450" y1="133" x2="570" y2="235"/>
+  <line class="vz-edge" x1="450" y1="167" x2="570" y2="65"/>
+  <line class="vz-edge" x1="450" y1="167" x2="570" y2="99"/>
+  <line class="vz-edge" x1="450" y1="167" x2="570" y2="133"/>
+  <line class="vz-edge" x1="450" y1="167" x2="570" y2="167"/>
+  <line class="vz-edge" x1="450" y1="167" x2="570" y2="201"/>
+  <line class="vz-edge" x1="450" y1="167" x2="570" y2="235"/>
+  <line class="vz-edge" x1="450" y1="201" x2="570" y2="65"/>
+  <line class="vz-edge" x1="450" y1="201" x2="570" y2="99"/>
+  <line class="vz-edge" x1="450" y1="201" x2="570" y2="133"/>
+  <line class="vz-edge" x1="450" y1="201" x2="570" y2="167"/>
+  <line class="vz-edge" x1="450" y1="201" x2="570" y2="201"/>
+  <line class="vz-edge" x1="450" y1="201" x2="570" y2="235"/>
+  <circle class="vz-nodeA" cx="90.0" cy="65.0" r="11"/>
+  <circle class="vz-nodeA" cx="90.0" cy="99.0" r="11"/>
+  <circle class="vz-nodeA" cx="90.0" cy="133.0" r="11"/>
+  <circle class="vz-nodeA" cx="90.0" cy="167.0" r="11"/>
+  <circle class="vz-nodeA" cx="90.0" cy="201.0" r="11"/>
+  <circle class="vz-nodeA" cx="90.0" cy="235.0" r="11"/>
+  <circle class="vz-nodeA" cx="210.0" cy="99.0" r="11"/>
+  <circle class="vz-nodeA" cx="210.0" cy="133.0" r="11"/>
+  <circle class="vz-nodeA" cx="210.0" cy="167.0" r="11"/>
+  <circle class="vz-nodeA" cx="210.0" cy="201.0" r="11"/>
+  <circle class="vz-nodeC" cx="330.0" cy="133.0" r="11"/>
+  <circle class="vz-nodeC" cx="330.0" cy="167.0" r="11"/>
+  <circle class="vz-nodeB" cx="450.0" cy="99.0" r="11"/>
+  <circle class="vz-nodeB" cx="450.0" cy="133.0" r="11"/>
+  <circle class="vz-nodeB" cx="450.0" cy="167.0" r="11"/>
+  <circle class="vz-nodeB" cx="450.0" cy="201.0" r="11"/>
+  <circle class="vz-nodeB" cx="570.0" cy="65.0" r="11"/>
+  <circle class="vz-nodeB" cx="570.0" cy="99.0" r="11"/>
+  <circle class="vz-nodeB" cx="570.0" cy="133.0" r="11"/>
+  <circle class="vz-nodeB" cx="570.0" cy="167.0" r="11"/>
+  <circle class="vz-nodeB" cx="570.0" cy="201.0" r="11"/>
+  <circle class="vz-nodeB" cx="570.0" cy="235.0" r="11"/>
+  <text class="vz-title" x="150" y="34" text-anchor="middle">Encoder: squeeze</text>
+  <text class="vz-s" x="330" y="58" text-anchor="start"></text>
+  <text class="vz-title" x="330" y="218" text-anchor="middle">small code</text>
+  <text class="vz-s" x="330" y="238" text-anchor="middle">a compact summary</text>
+  <text class="vz-title" x="510" y="34" text-anchor="middle">Decoder: rebuild</text>
+  <text class="vz-s" x="90" y="268" text-anchor="middle">original data</text>
+  <text class="vz-s" x="570" y="268" text-anchor="middle">rebuilt data</text>
+  <text class="vz-s" x="14" y="300" text-anchor="start">Training makes the rebuilt data match the original. What the model rebuilds badly is unusual, which is how</text>
+  <text class="vz-s" x="14" y="320" text-anchor="start">an autoencoder can detect anomalies.</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Message passing from neighbours to a node. -->
+  <rect class="vz-card" x="12" y="12" width="460" height="270" rx="10"/>
+  <line class="vz-link" x1="240" y1="150" x2="110" y2="80"/>
+  <line class="vz-link" x1="240" y1="150" x2="380" y2="90"/>
+  <line class="vz-link" x1="240" y1="150" x2="110" y2="220"/>
+  <line class="vz-link" x1="240" y1="150" x2="390" y2="220"/>
+  <line class="vz-link" x1="110" y1="80" x2="240" y2="40"/>
+  <line class="vz-link" x1="380" y1="90" x2="240" y2="40"/>
+  <circle class="vz-b1 vz-fillnode" cx="240.0" cy="150.0" r="22"/>
+  <circle class="vz-fillb0" cx="110.0" cy="80.0" r="17"/>
+  <circle class="vz-fillb0" cx="380.0" cy="90.0" r="17"/>
+  <circle class="vz-fillb0" cx="110.0" cy="220.0" r="17"/>
+  <circle class="vz-fillb0" cx="390.0" cy="220.0" r="17"/>
+  <circle class="vz-fillplain" cx="240.0" cy="40.0" r="17"/>
+  <text class="vz-s" x="240" y="192" text-anchor="middle">this node</text>
+  <text class="vz-title" x="500" y="50" text-anchor="start">Message passing</text>
+  <text class="vz-s" x="500" y="82" text-anchor="start">Each node starts with its</text>
+  <text class="vz-s" x="500" y="100" text-anchor="start">own information.</text>
+  <text class="vz-s" x="500" y="132" text-anchor="start">It receives messages from</text>
+  <text class="vz-s" x="500" y="150" text-anchor="start">its neighbours (the blue</text>
+  <text class="vz-s" x="500" y="168" text-anchor="start">nodes) and combines them</text>
+  <text class="vz-s" x="500" y="186" text-anchor="start">with its own.</text>
+  <text class="vz-s" x="500" y="218" text-anchor="start">After more layers, news</text>
+  <text class="vz-s" x="500" y="236" text-anchor="start">travels further along the</text>
+  <text class="vz-s" x="500" y="254" text-anchor="start">links.</text>
+  <text class="vz-n vz-note" x="12" y="306" text-anchor="start">A made-up graph. Nodes could be people, accounts or molecules; links are the connections between them.</text>
+</svg>

@@ -1,0 +1,34 @@
+<svg viewBox="0 0 720 336" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A router sends each token to two of eight experts. -->
+  <rect class="vz-card" x="20" y="118" width="110" height="48" rx="8"/>
+  <text class="vz-title" x="75" y="148" text-anchor="middle">token</text>
+  <line class="vz-arrow" x1="134.0" y1="142.0" x2="165.0" y2="142.0"/>
+  <polygon class="vz-headk" points="176.0,142.0 165.0,136.0 165.0,148.0"/>
+  <rect class="vz-warn" x="180" y="112" width="110" height="60" rx="10"/>
+  <text class="vz-title" x="235" y="140" text-anchor="middle">Router</text>
+  <text class="vz-s" x="235" y="160" text-anchor="middle">picks 2</text>
+  <rect class="vz-card" x="360" y="60" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="396" y="100" text-anchor="middle">Expert 1</text>
+  <rect class="vz-ok" x="442" y="60" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="478" y="100" text-anchor="middle">Expert 2</text>
+  <line class="vz-arrow" x1="292.0" y1="142.0" x2="429.5" y2="98.3"/>
+  <polygon class="vz-headk" points="440.0,95.0 427.7,92.6 431.3,104.0"/>
+  <rect class="vz-card" x="524" y="60" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="560" y="100" text-anchor="middle">Expert 3</text>
+  <rect class="vz-card" x="606" y="60" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="642" y="100" text-anchor="middle">Expert 4</text>
+  <rect class="vz-card" x="360" y="170" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="396" y="210" text-anchor="middle">Expert 5</text>
+  <rect class="vz-ok" x="442" y="170" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="478" y="210" text-anchor="middle">Expert 6</text>
+  <line class="vz-arrow" x1="292.0" y1="142.0" x2="429.9" y2="200.7"/>
+  <polygon class="vz-headk" points="440.0,205.0 432.2,195.2 427.5,206.2"/>
+  <rect class="vz-card" x="524" y="170" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="560" y="210" text-anchor="middle">Expert 7</text>
+  <rect class="vz-card" x="606" y="170" width="72" height="70" rx="8"/>
+  <text class="vz-s" x="642" y="210" text-anchor="middle">Expert 8</text>
+  <text class="vz-s" x="20" y="252" text-anchor="start">A mixture-of-experts layer has many expert blocks, but each token goes to only a few of them.</text>
+  <text class="vz-s" x="20" y="272" text-anchor="start">The model holds many parameters in memory, yet uses a fraction per token:</text>
+  <text class="vz-s" x="20" y="292" text-anchor="start">cheaper to run than a dense model of the same size.</text>
+  <text class="vz-n vz-note" x="12" y="320" text-anchor="start">Illustrative: 8 experts, 2 used. Real models differ in how many experts there are and how many are used.</text>
+</svg>

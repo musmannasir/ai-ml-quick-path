@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain how audio becomes features, how speech recognition and text-to-speech work, and measure transcription quality with word error rate.
 prereqs: dl-transformers
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Transcripts of five of your own short recordings with word error rate against your reference text, and a note on which errors matter for the task.
 code: Python signal demo and WER executed 2026-11-02 (gap_topics.py speech); Whisper not run (not installed in the build environment)
 ---
@@ -20,6 +20,12 @@ Sound is a wave, recorded as thousands of numbers per second (16,000 per second 
 - Frames | Short overlapping pieces, for example 25 ms every 10 ms | process
 - Fourier transform | How strong is each pitch in each frame | process
 - Spectrogram | Stacked frames: a picture of sound over time | output
+```
+
+```visual From a sound wave to a spectrogram
+file: spectrogram-steps
+alt: A wavy line with overlapping frame brackets, then a grid of cells below it that is brighter where a pitch is strong. The steps are: sound wave, cut into short overlapping frames, measure how strong each pitch is in each frame, stack the frames into a picture of sound over time.
+caption: A spectrogram stacks the pitch strength of short frames into a picture of sound over time. The picture here is made up.
 ```
 
 ```diagram compare Speech recognition and text-to-speech

@@ -73,6 +73,12 @@ note: Needs scaled features. It suits small and medium data and is slow on large
 - The boundary with the widest gap | Between the classes
 ```
 
+```visual The widest margin and its support vectors
+file: svm-margin
+alt: Circles on one side and squares on the other, with a solid boundary line between them and two dashed lines marking the margin. The points closest to the line are circled and called support vectors. Text says a soft margin, set by C, lets some points sit on the wrong side.
+caption: A support vector machine picks the boundary with the widest gap between the classes; the closest points are the support vectors.
+```
+
 ```diagram matrix Which algorithm family for which data
 x: Tables of data | Images, audio, free text
 y: Usually best | Strong simple baseline
@@ -156,6 +162,12 @@ note: Each model sees a different random re-sample of the same data.
 - Random re-samples | Pick rows with replacement, many times | process
 - One model per sample | Each model learns slightly different quirks | model
 - Vote or average | Classes vote; numbers are averaged | output
+```
+
+```visual Three trees voting
+file: forest-vote
+alt: Three small decision trees, each trained on a different random re-sample. Trees 1 and 3 vote yes and tree 2 votes no. The forest answer is yes, two votes to one.
+caption: A random forest trains many different trees and lets them vote. The three trees here are a made-up example.
 ```
 
 #### Entropy and information gain (a second way to measure a mixed group)

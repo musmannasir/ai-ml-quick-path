@@ -181,6 +181,12 @@ MCP is one standard way to plug tools and data into many AI applications. A tool
 - AI app B | Uses the same tools through MCP | model
 ```
 
+```visual MCP as one standard plug
+file: mcp-plug
+alt: Top: three apps each connected to three tools by nine separate lines, labelled nine connectors. Bottom: three apps connect to a single MCP box, which connects to the three tools, six pieces in all.
+caption: With a standard, each tool is written once as a server and any app that speaks MCP can use it. Treat every server as code you must trust and limit.
+```
+
 #### Planning
 Planning means breaking a goal into steps. There are two styles. In **plan then act**, the agent writes the whole plan first and then follows it. This is easy to review, but the plan can go out of date. In **act step by step**, the agent decides each step after seeing the last result. This adapts well but can drift. In both styles, when a step fails the agent should **re-plan**: change the remaining steps instead of repeating the failed one blindly.
 

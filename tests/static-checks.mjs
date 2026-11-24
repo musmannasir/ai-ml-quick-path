@@ -148,6 +148,18 @@ if (SITE_URL) {
   }
   if (!vz.length) problems.push('no diagram tab group found (the pilot visual in dl-transformers is missing)');
 }
+// ---- Cheat sheets ----
+{
+  const sheets = files.filter((f) => /cheat-[^/\\]+\.html$/.test(f));
+  if (sheets.length < 12) problems.push('expected at least 12 cheat sheet pages, found ' + sheets.length);
+  for (const f of sheets) {
+    const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1);
+    const panels = (html.match(/class="cheat-panel/g) || []).length;
+    if (panels < 5) problems.push(rel + ': a cheat sheet needs at least 5 panels, found ' + panels);
+    if (!/<a href="lessons\/[^"]+\.html">/.test(html)) problems.push(rel + ': a cheat sheet panel must link to its lessons');
+    for (const m of html.matchAll(/<svg[^>]*class="vz-svg"[^>]*>/g)) if (!/role="img"/.test(m[0]) || !/aria-labelledby=/.test(m[0])) problems.push(rel + ': a drawing in a cheat sheet has no text alternative');
+  }
+}
 for (const u of external) problems.push(`outside address not registered in src/data/sources.mjs: ${u}`);
 console.log(`Checked ${files.length} pages, ${links} internal links, ${outside} outside reference links to ${usedSources.size} registered sources, ${external.size} unregistered outside addresses or outside resources (must be 0).`);
 if (problems.length) { console.error(problems.join('\n')); process.exit(1); }

@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Find and fix duplicates, missing values, impossible values and messy categories, and explore data with summaries and charts before modelling.
 prereqs: d-basics
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A cleaning report for a dataset you choose, listing each problem, how many rows it affected and what you decided, plus two charts with one finding each.
 code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py quality, gap_topics.py viz)
 ---
@@ -22,6 +22,12 @@ Real data is messy. The same customer appears twice (**duplicates**). Some value
 ## Wrong or inconsistent | bad
 - Invalid values and outliers | Like minus three minutes, or a 2,000-minute wait: may be errors or real but rare
 - Messy categories | Email, email and e-mail
+```
+
+```visual A small table with four kinds of mess
+file: messy-table
+alt: A small made-up table of customers with highlighted problems: an empty city cell, a duplicated row for Ana, the city London written as london, and waiting times of minus 3 and 2000 minutes. Labels on the right name them: missing value, duplicate row, messy category, invalid value or outlier.
+caption: Missing values, duplicates, inconsistent categories and invalid values are the four kinds of mess to find and fix before training.
 ```
 
 ```diagram compare Which chart to use

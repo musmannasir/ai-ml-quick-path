@@ -8,7 +8,7 @@ maths: algebra
 goal: Use batches, epochs, learning rates, optimisers, dropout, normalisation, early stopping, checkpoints and GPUs to train networks reliably.
 prereqs: dl-neural-nets
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Two training runs of one model (with and without regularisation) with training and validation loss curves and the best checkpoint saved.
 code: Python dropout demo executed 2026-11-02 (ai_extras.py dropout); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---
@@ -35,6 +35,12 @@ note: A batch is a small group of examples used for one update. An epoch is one 
 - Some neurons off | Randomly switched off so the network cannot rely on one path
 ## Validation and use | model
 - All neurons on | Use eval mode so dropout is off
+```
+
+```visual Dropout during training and in use
+file: dropout-networks
+alt: Two small networks side by side. In the first, labelled during training, some neurons are crossed out and their connections are faint. In the second, labelled in use, all neurons are on.
+caption: Dropout switches random neurons off during training so no neuron is relied on too much. In use, all neurons are on.
 ```
 
 ## Real-world example

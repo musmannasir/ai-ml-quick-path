@@ -8,6 +8,7 @@ maths: algebra
 goal: Explain how AdaBoost builds a strong model from many weak ones by re-weighting its mistakes, follow three rounds by hand, and place AdaBoost next to bagging, gradient boosting and discriminant analysis.
 prereqs: ml-algorithms
 reviewed: 2026-11-18
+updated: 2026-11-24
 evidence: The three rounds of AdaBoost on a small dataset, with each round's weighted error, vote size and the weights after the round, written out and matching a program's output.
 code: Python executed 2026-11-18 (examples/boosting/adaboost.py); the C# version prints the same numbers
 ---
@@ -21,6 +22,12 @@ note: Each pass fixes what the last pass left wrong.
 - Raise the weights of its mistakes | The next rule must look at them | warn
 - Add the rule to the team | Final answer is the weighted vote | output
 loop: Repeat for a fixed number of rounds
+```
+
+```visual Boosting: mistakes get more weight
+file: boosting-rounds
+alt: Three panels, round 1, 2 and 3, each with six circles. In round 1 two circles are marked wrong. In round 2 the wrong ones are drawn larger because they carry more weight. In round 3 all are right and the team votes on the final answer.
+caption: Each new simple rule looks harder at the points the earlier rules got wrong. The weights are illustrative.
 ```
 
 ```diagram compare Bagging and boosting

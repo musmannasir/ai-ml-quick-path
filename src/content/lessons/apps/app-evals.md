@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Build an evaluation set, write automatic checks, use an LLM as a judge carefully, detect hallucinations, and compare versions with A/B tests.
 prereqs: app-rag
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: An evaluation script with thresholds that runs on every change, plus one regression it caught.
 code: Python executed 2026-11-02 (applied_basics.py evals, examples/math/math_for_ai.py abtest)
 ---
@@ -21,6 +21,12 @@ note: An eval is a repeatable test on fixed inputs.
 - Run the application | same inputs every time | process
 - Score the outputs | automatic checks, then judge or person | process
 - Compare with thresholds | block the release if below | output
+```
+
+```visual An eval as a pipeline with a gate
+file: eval-pipeline
+alt: Four boxes in a row: evaluation set, run the app, score the outputs, compare with thresholds. From the last box one arrow goes to release when above the threshold and another to block the release when below it.
+caption: An eval is a repeatable test on fixed inputs. Run it on every change so a regression shows up before users see it.
 ```
 
 ```diagram layers What an evaluation set can expect

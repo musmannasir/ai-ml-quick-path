@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Train a classifier, read its probabilities and confusion matrix, and choose a decision threshold that fits the business.
 prereqs: ml-learning, d-features
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A text or tabular classifier with a confusion matrix, precision and recall, and a chosen threshold explained by the cost of each mistake.
 code: Python executed 2026-11-02 (examples/spam-classifier/spam_classifier.py)
 ---
@@ -33,6 +33,12 @@ note: The threshold is a choice you make from the cost of each mistake.
 - Probability | Example: how likely is spam | process
 - Threshold | Spam if the probability reaches the threshold | warn
 - Decision | Spam or not spam | output
+```
+
+```visual The S-curve and the threshold
+file: sigmoid-threshold
+alt: A graph with an S-shaped curve rising from 0 to 1 and a dashed horizontal line at 0.5 labelled threshold. Scores above the line lead to class yes and scores below to class no. Text says moving the threshold trades precision against recall.
+caption: The model turns a score into a probability along an S-shaped curve, and a threshold turns that probability into a decision.
 ```
 
 ```diagram matrix Confusion matrix: four possible outcomes

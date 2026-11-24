@@ -1,0 +1,35 @@
+<svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Several kinds of input into one application. -->
+  <rect class="vz-ml" x="14" y="24" width="220" height="54" rx="8"/>
+  <text class="vz-title" x="28" y="48" text-anchor="start">Text</text>
+  <text class="vz-s" x="28" y="67" text-anchor="start">instructions and questions</text>
+  <line class="vz-arrow" x1="238.0" y1="51.0" x2="301.2" y2="131.4"/>
+  <polygon class="vz-headk" points="308.0,140.0 305.9,127.6 296.5,135.1"/>
+  <rect class="vz-ap" x="14" y="90" width="220" height="54" rx="8"/>
+  <text class="vz-title" x="28" y="114" text-anchor="start">Images</text>
+  <text class="vz-s" x="28" y="133" text-anchor="start">photos, read with the text</text>
+  <line class="vz-arrow" x1="238.0" y1="117.0" x2="297.5" y2="136.6"/>
+  <polygon class="vz-headk" points="308.0,140.0 299.4,130.9 295.7,142.3"/>
+  <rect class="vz-warn" x="14" y="156" width="220" height="54" rx="8"/>
+  <text class="vz-title" x="28" y="180" text-anchor="start">Documents</text>
+  <text class="vz-s" x="28" y="199" text-anchor="start">scans, forms, invoices</text>
+  <line class="vz-arrow" x1="238.0" y1="183.0" x2="298.6" y2="145.8"/>
+  <polygon class="vz-headk" points="308.0,140.0 295.5,140.6 301.8,150.9"/>
+  <rect class="vz-lm" x="14" y="222" width="220" height="54" rx="8"/>
+  <text class="vz-title" x="28" y="246" text-anchor="start">Audio and video</text>
+  <text class="vz-s" x="28" y="265" text-anchor="start">speech or recordings</text>
+  <line class="vz-arrow" x1="238.0" y1="249.0" x2="302.1" y2="149.3"/>
+  <polygon class="vz-headk" points="308.0,140.0 297.0,146.0 307.1,152.5"/>
+  <rect class="vz-ok" x="312" y="90" width="160" height="100" rx="12"/>
+  <text class="vz-title" x="392" y="126" text-anchor="middle">One model</text>
+  <text class="vz-s" x="392" y="148" text-anchor="middle">one set of</text>
+  <text class="vz-s" x="392" y="166" text-anchor="middle">instructions</text>
+  <line class="vz-arrow" x1="476.0" y1="140.0" x2="529.0" y2="140.0"/>
+  <polygon class="vz-headk" points="540.0,140.0 529.0,134.0 529.0,146.0"/>
+  <rect class="vz-card" x="544" y="100" width="162" height="80" rx="10"/>
+  <text class="vz-s" x="625" y="130" text-anchor="middle">Text or</text>
+  <text class="vz-s" x="625" y="150" text-anchor="middle">structured</text>
+  <text class="vz-s" x="625" y="170" text-anchor="middle">output</text>
+  <text class="vz-n vz-note" x="12" y="296" text-anchor="start">Treat what is read from images and documents as data, not instructions,</text>
+  <text class="vz-n vz-note" x="12" y="314" text-anchor="start">and keep a person in the loop for important decisions.</text>
+</svg>

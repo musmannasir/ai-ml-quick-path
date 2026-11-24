@@ -1,0 +1,24 @@
+<svg viewBox="0 0 720 308" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A cache hit and a cache miss. -->
+  <rect class="vz-card" x="14" y="100" width="140" height="54" rx="8"/>
+  <text class="vz-title" x="84" y="133" text-anchor="middle">Question</text>
+  <line class="vz-arrow" x1="158.0" y1="127.0" x2="199.0" y2="127.0"/>
+  <polygon class="vz-headk" points="210.0,127.0 199.0,121.0 199.0,133.0"/>
+  <rect class="vz-warn" x="214" y="90" width="140" height="74" rx="10"/>
+  <text class="vz-title" x="284" y="122" text-anchor="middle">Cache</text>
+  <text class="vz-s" x="284" y="144" text-anchor="middle">seen it before?</text>
+  <line class="vz-arrow" x1="358.0" y1="110.0" x2="430.5" y2="67.6"/>
+  <polygon class="vz-headk" points="440.0,62.0 427.5,62.4 433.5,72.7"/>
+  <text class="vz-s" x="398" y="74" text-anchor="middle">yes: hit</text>
+  <rect class="vz-ok" x="444" y="30" width="262" height="62" rx="8"/>
+  <text class="vz-title" x="575" y="58" text-anchor="middle">Saved answer returned</text>
+  <text class="vz-s" x="575" y="78" text-anchor="middle">no model call, no cost</text>
+  <line class="vz-arrow" x1="358.0" y1="146.0" x2="430.5" y2="188.4"/>
+  <polygon class="vz-headk" points="440.0,194.0 433.5,183.3 427.5,193.6"/>
+  <text class="vz-s" x="398" y="188" text-anchor="middle">no: miss</text>
+  <rect class="vz-lm" x="444" y="168" width="262" height="62" rx="8"/>
+  <text class="vz-title" x="575" y="196" text-anchor="middle">Call the model</text>
+  <text class="vz-s" x="575" y="216" text-anchor="middle">then save the answer for next time</text>
+  <text class="vz-s" x="14" y="264" text-anchor="start">Repeated questions are answered for free. Cache only answers that are safe to reuse (not personal or time-sensitive).</text>
+  <text class="vz-n vz-note" x="12" y="292" text-anchor="start">Provider prompt caching is related: it reuses the processed start of a long prompt that repeats.</text>
+</svg>

@@ -2,6 +2,8 @@
 // Lessons work without leaving the site. Outside links are allowed only to sources registered in src/data/sources.mjs
 // (S.sourceItem / S.sourceLink); the build and static checks enforce this.
 
+import { inlineVisual } from '../lib/visual.mjs';
+
 const TRACK_LABEL = { applied: 'AI application', ml: 'Machine learning', lm: 'Language models' };
 
 export function allPages(S) {
@@ -11,6 +13,7 @@ export function allPages(S) {
     projectsIndex(S), ...S.PROJECTS.map((p) => projectPage(S, p)),
     casesIndex(S), ...S.CASES.map((c) => casePage(S, c)),
     hardware(S), glossary(S), assessment(S), progress(S), about(S), privacy(S), notFound(S),
+    cheatIndex(S), ...S.CHEATSHEETS.map((c) => cheatSheet(S, c)),
   ];
 }
 
@@ -693,4 +696,41 @@ function privacy(S) {
 
 function notFound() {
   return { path: '404.html', title: 'Page not found', body: '<h1>Page not found</h1><p>The address may have changed. Use search above, or go to the <a href="index.html">welcome page</a> or <a href="lessons.html">all lessons</a>.</p>', crumbs: [] };
+}
+
+// ---------- Cheat sheets (src/data/cheatsheets.mjs) ----------
+function cheatIndex(S) {
+  const parts = S.CHEATSHEETS.filter((c) => /^(big-picture|data|ml|deep-learning|llm|apps|production)$/.test(c.id));
+  const topics = S.CHEATSHEETS.filter((c) => !parts.includes(c));
+  const card = (c) => `<li><a class="sim-lab-t" href="cheat-${S.esc(c.id)}.html">${S.esc(c.title)}</a><p>${S.esc(c.intro)}</p><p class="small muted">${c.panels.length} panels</p></li>`;
+  const body = `
+<h1>Cheat sheets</h1>
+<p class="lede">${S.CHEATSHEETS.length} one-page summaries for revision: one for each part of the guide, and five that cut across parts. Every line repeats something a lesson teaches, and each panel links to the lessons that explain it. They print on one or two pages.</p>
+<h2 id="by-part">By part</h2>
+<ul class="sim-lab">${parts.map(card).join('')}</ul>
+<h2 id="by-topic">By topic</h2>
+<ul class="sim-lab">${topics.map(card).join('')}</ul>`;
+  return { path: 'cheatsheets.html', title: 'Cheat sheets', body, crumbs: [['Cheat sheets', 'cheatsheets.html']], section: 'Reference', keywords: 'cheat sheet summary revision formulas one page print' };
+}
+
+function cheatSheet(S, c) {
+  const path = `cheat-${c.id}.html`, ctx = S.ctxFor(path), where = `cheatsheets.mjs (${c.id})`;
+  const panels = c.panels.map((p, i) => {
+    const id = `cp-${c.id}-${i + 1}`;
+    for (const l of p.lessons || []) if (!S.lessons[l]) throw new Error(`${where}: unknown lesson id "${l}"`);
+    const v = p.visual ? inlineVisual(p.visual, id, where) : null;
+    return `<section class="cheat-panel${v ? ' has-vis' : ''}" aria-labelledby="${id}">
+<div class="cheat-text"><h2 id="${id}"><span class="cp-n" aria-hidden="true">${i + 1}</span>${S.esc(p.title)}</h2>
+<ul>${p.points.map((t) => `<li>${S.esc(t)}</li>`).join('')}</ul>
+${p.formula ? `<pre class="cheat-formula" tabindex="0"><code>${p.formula.map(S.esc).join('\n')}</code></pre>` : ''}
+<p class="cheat-links small">Learn more: ${(p.lessons || []).map((l) => S.lessonLink(l, ctx)).join(' · ')}</p></div>
+${v ? `<figure class="cheat-vis vz-fig">${v.svg}<figcaption>${S.esc(v.caption)}</figcaption></figure>` : ''}
+</section>`;
+  }).join('\n');
+  const body = `
+<p class="small"><a href="cheatsheets.html">All cheat sheets</a></p>
+<h1>${S.esc(c.title)}</h1>
+<p class="lede">${S.esc(c.intro)} <button type="button" class="btn btn-small" data-print>Print this sheet</button></p>
+<div class="cheat-grid">${panels}</div>`;
+  return { path, title: c.title, body, crumbs: [['Cheat sheets', 'cheatsheets.html'], [c.short, path]], wide: true, section: 'Reference', keywords: `cheat sheet summary revision ${c.short}` };
 }

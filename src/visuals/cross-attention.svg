@@ -1,0 +1,24 @@
+<svg viewBox="0 0 720 332" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Cross-attention in a translator. -->
+  <text class="vz-title" x="20" y="30" text-anchor="start">Encoder: the French sentence</text>
+  <rect class="vz-ap" x="20" y="56" width="130" height="44" rx="8"/>
+  <text class="vz-title" x="85" y="84" text-anchor="middle">le</text>
+  <rect class="vz-ap" x="20" y="120" width="130" height="44" rx="8"/>
+  <text class="vz-title" x="85" y="148" text-anchor="middle">chat</text>
+  <rect class="vz-ap" x="20" y="184" width="130" height="44" rx="8"/>
+  <text class="vz-title" x="85" y="212" text-anchor="middle">dort</text>
+  <text class="vz-title" x="560" y="30" text-anchor="middle">Decoder: the English so far</text>
+  <rect class="vz-card" x="480" y="56" width="80" height="44" rx="8"/>
+  <text class="vz-title" x="520" y="84" text-anchor="middle">the</text>
+  <rect class="vz-slot" x="480" y="120" width="80" height="44" rx="8"/>
+  <text class="vz-title" x="520" y="148" text-anchor="middle">cat?</text>
+  <line class="vz-arc" x1="154" y1="78" x2="476" y2="142" stroke-width="2.9"/>
+  <text class="vz-s" x="300" y="72" text-anchor="middle">0.1</text>
+  <line class="vz-arc" x1="154" y1="142" x2="476" y2="142" stroke-width="12.7"/>
+  <text class="vz-s" x="300" y="130" text-anchor="middle">0.8</text>
+  <line class="vz-arc" x1="154" y1="206" x2="476" y2="142" stroke-width="2.9"/>
+  <text class="vz-s" x="300" y="224" text-anchor="middle">0.1</text>
+  <text class="vz-s" x="20" y="268" text-anchor="start">The decoder's question (its query) is compared with every encoder word. Most of the weight, 0.8, falls on "chat",</text>
+  <text class="vz-s" x="20" y="288" text-anchor="start">so the next English word is "cat". This is cross-attention: queries from one text, keys and values from another.</text>
+  <text class="vz-n vz-note" x="12" y="316" text-anchor="start">Made-up weights, as in the lesson's translator example.</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg viewBox="0 0 720 316" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The MLOps pipeline as a loop of six steps. -->
+  <rect class="vz-ml" x="14" y="40" width="206" height="76" rx="12"/>
+  <text class="vz-title" x="28" y="70" text-anchor="start">1.</text>
+  <text class="vz-title" x="54" y="70" text-anchor="start">Freeze the test set</text>
+  <rect class="vz-ap" x="250" y="40" width="206" height="76" rx="12"/>
+  <text class="vz-title" x="264" y="70" text-anchor="start">2.</text>
+  <text class="vz-title" x="290" y="70" text-anchor="start">Train</text>
+  <text class="vz-s" x="290" y="92" text-anchor="start">(snapshot, hash, features)</text>
+  <rect class="vz-r0" x="486" y="40" width="206" height="76" rx="12"/>
+  <text class="vz-title" x="500" y="70" text-anchor="start">3.</text>
+  <text class="vz-title" x="526" y="70" text-anchor="start">Log the run</text>
+  <rect class="vz-lm" x="486" y="160" width="206" height="76" rx="12"/>
+  <text class="vz-title" x="500" y="190" text-anchor="start">4.</text>
+  <text class="vz-title" x="526" y="190" text-anchor="start">Compare to champion</text>
+  <rect class="vz-warn" x="250" y="160" width="206" height="76" rx="12"/>
+  <text class="vz-title" x="264" y="190" text-anchor="start">5.</text>
+  <text class="vz-title" x="290" y="190" text-anchor="start">Shadow or canary</text>
+  <rect class="vz-ok" x="14" y="160" width="206" height="76" rx="12"/>
+  <text class="vz-title" x="28" y="190" text-anchor="start">6.</text>
+  <text class="vz-title" x="54" y="190" text-anchor="start">Promote</text>
+  <text class="vz-s" x="54" y="212" text-anchor="start">(keep the old one)</text>
+  <line class="vz-arrow" x1="222.0" y1="78.0" x2="235.0" y2="78.0"/>
+  <polygon class="vz-headk" points="246.0,78.0 235.0,72.0 235.0,84.0"/>
+  <line class="vz-arrow" x1="458.0" y1="78.0" x2="471.0" y2="78.0"/>
+  <polygon class="vz-headk" points="482.0,78.0 471.0,72.0 471.0,84.0"/>
+  <line class="vz-arrow" x1="588.0" y1="120.0" x2="588.0" y2="145.0"/>
+  <polygon class="vz-headk" points="588.0,156.0 594.0,145.0 582.0,145.0"/>
+  <line class="vz-arrow" x1="480.0" y1="198.0" x2="469.0" y2="198.0"/>
+  <polygon class="vz-headk" points="458.0,198.0 469.0,204.0 469.0,192.0"/>
+  <line class="vz-arrow" x1="244.0" y1="198.0" x2="233.0" y2="198.0"/>
+  <polygon class="vz-headk" points="222.0,198.0 233.0,204.0 233.0,192.0"/>
+  <path class="vz-fb" d="M14 198 C -4 198 -4 78 14 78"/>
+  <text class="vz-title" x="14" y="28" text-anchor="start">The MLOps pipeline: retrain on a schedule or when drift is detected</text>
+  <text class="vz-s" x="14" y="272" text-anchor="start">Every run is recorded (parameters, metrics, data hash, code version), so any model can be reproduced or rolled back.</text>
+  <text class="vz-n vz-note" x="12" y="300" text-anchor="start">Simplified: real pipelines add data validation, approval and monitoring steps.</text>
+</svg>

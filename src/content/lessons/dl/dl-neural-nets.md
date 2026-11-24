@@ -214,6 +214,12 @@ e is about 2.718. A large positive z gives a value near 1; a large negative z gi
 - Layers bend and combine | The network can learn patterns a straight line cannot
 ```
 
+```visual Three activation functions
+file: activation-shapes
+alt: Three small graphs. The step function jumps from 0 to 1. ReLU is 0 for negative inputs and rises as a straight line for positive ones. The sigmoid is a smooth S-shaped curve between 0 and 1.
+caption: An activation function bends the sum so layers can learn curves. Without it, many layers collapse into one straight-line model.
+```
+
 ## Quick check
 Q: What does an activation function add?
 A: Non-linearity: the ability to bend and combine patterns, without which many layers act like one straight-line model.

@@ -61,6 +61,12 @@ note: One lucky split cannot fool you, because the score is an average over seve
 loop: Repeat for each split, then average the scores and report the spread
 ```
 
+```visual Five folds taking turns as the test part
+file: cv-folds
+alt: Five rows of five blocks. In each row a different block is marked test and the other four train: round 1 tests on the first block, round 2 on the second, and so on. A note says to average the five scores and report the spread.
+caption: In cross-validation every part of the data takes a turn as the test part, and the scores are averaged, so one lucky split cannot fool you.
+```
+
 ```maths Why accuracy fails when one class is rare
 situation: A bank checks 100 card payments. Only 2 of them are fraud. A lazy model answers "not fraud" for every payment.
 find: How accurate is the lazy model, and how much fraud does it catch?

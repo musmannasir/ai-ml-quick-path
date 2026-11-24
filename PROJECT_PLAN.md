@@ -46,3 +46,7 @@ and no external links.
 Stage-by-stage status, the requirements-to-test matrix, the acceptance checklist and the ordered list of open work are kept in
 `IMPLEMENTATION_PROGRESS.md`. Baseline: `docs/audits/BASELINE_2026_UPGRADE.md`. Summary on 2026-11-13: Stages 0 and 1 done;
 Stages 2, 3, 4 and 6 partly done; Stage 5 not started apart from case source links; nothing deployed.
+
+## 2026-11-24: visuals
+
+The guide now has Visual tabs (a drawn picture beside the boxes of a diagram) and 12 cheat sheets. Plan and status: `docs/VISUALS_PLAN.md`; design rules: `CLAUDE.md` section 4.10.

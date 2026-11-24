@@ -19,7 +19,7 @@ const url = (p) => { const [f, h] = p.split('#'); return pathToFileURL(join(DIST
 const ALL = (function walk(d, pre = '') { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p, pre + f + '/') : f.endsWith('.html') ? [pre + f] : []; }); })(DIST).sort();
 const ML_LESSONS = (readFileSync(join(DIST, 'index.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
 const LESSONS = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p)).length;   // read from dist/, not typed
-const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
+const KEY = ['index.html', 'cheatsheets.html', 'cheat-ml.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
 const results = [];
@@ -978,7 +978,7 @@ for (const w of [320, 390, 768]) {
 
 // 12l. Every visual: all text inside its picture, no two pieces of text on top of each other, and the page never scrolls sideways
 {
-  const withVisuals = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p) && readFileSync(join(DIST, p), 'utf8').includes('data-vz'));
+  const withVisuals = ALL.filter((p) => /^(lessons\/[^/]+|cheat-[^/]+)\.html$/.test(p) && readFileSync(join(DIST, p), 'utf8').includes('vz-fig'));
   let n = 0; const bad = [];
   for (const rel of withVisuals) {
     const page = await newPage({ width: 1280 });

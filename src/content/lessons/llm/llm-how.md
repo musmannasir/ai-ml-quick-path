@@ -138,6 +138,12 @@ note: Prefill runs once per request. Decode repeats once per new token.
 - Reply complete | Stops at an end-of-text token or the length limit | output
 ```
 
+```visual Prefill, decode, TTFT and ITL on a timeline
+file: prefill-decode
+alt: A timeline. A wide box for prefill reads the whole prompt at once, then eight small boxes for decode, one token at a time. A bracket under prefill is time to first token, and a bracket between two decode boxes is inter-token latency.
+caption: Prefill reads the prompt at once and sets the wait for the first token; decode writes one token at a time and sets the pace. The example times are made up.
+```
+
 #### The chat template
 The model only reads one long list of tokens. A **chat template** is the fixed recipe that turns your separate messages (system, user, assistant) into that one list, using special marker tokens to show where each message starts and ends. Every model family has its own template, so use the one that comes with the model: a wrong template makes a good model answer badly. The markers below are made up to show the idea.
 
@@ -286,6 +292,12 @@ All values are counted in tokens.
 - Real documents supplied (RAG)
 - Outputs are checked
 - People review important decisions
+```
+
+```visual A model guessing and a model grounded in documents
+file: grounding
+alt: Two panels. On the left, the model alone answers a question about a refund policy with a confident date and no source, and may be wrong. On the right, the model is given a document, answers from it and cites it, and says it does not know when evidence is missing.
+caption: A model alone writes likely-sounding text. Supplied documents, citations and checks make an answer something you can verify. The question and dates are made up.
 ```
 
 ## Quick check

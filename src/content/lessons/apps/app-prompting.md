@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Write clear prompts with roles, rules, delimiters, examples and output formats, keep prompts versioned, and test them with a small evaluation set.
 prereqs: app-llm-api
 reviewed: 2026-11-02
+updated: 2026-11-24
 evidence: Two versions of a prompt for one task, each scored on the same 20 test inputs, with the winning version and its weak cases documented.
 code: Python scoring harness executed 2026-11-02 (examples/applied-ai-basics/applied_basics.py evals)
 ---
@@ -21,6 +22,12 @@ note: Top to bottom is a sensible order. Not every prompt needs every part.
 - Examples | One or two inputs with the ideal output (few-shot) | input
 - Data in delimiters | The user content, marked as data and not as instructions | warn
 - Output format | For example JSON with named fields | output
+```
+
+```visual The parts of a prompt, in order
+file: prompt-parts
+alt: Five stacked bars from top to bottom: role and task, rules, examples, data in delimiters, and output format. Text says to keep the data apart from the instructions so text inside it is not obeyed.
+caption: A sensible order for a prompt. Not every prompt needs every part, and data is kept apart from instructions.
 ```
 
 ```diagram nest Instructions kept apart from data

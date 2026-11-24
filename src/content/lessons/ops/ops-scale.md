@@ -8,6 +8,7 @@ maths: basic arithmetic
 goal: Make models and LLM apps faster and cheaper with batching, caching, smaller models, quantisation and ONNX export, and know when to add more machines or GPUs.
 prereqs: ops-serving, llm-local
 reviewed: 2026-11-02
+updated: 2026-11-24
 evidence: A before-and-after table for one service showing latency, throughput and cost per 1,000 requests after at least two optimisations.
 code: Python executed 2026-11-02 (quickpath.py batching, cache); ONNX export not run (skl2onnx not installed in the build environment)
 ---
@@ -35,6 +36,12 @@ note: Cheap levers first; scaling out comes last.
 - The answer is saved for next time
 ```
 
+```visual A cache hit and a cache miss
+file: cache-shortcut
+alt: A question goes to a cache. If it has been seen before, a hit returns the saved answer with no model call and no cost. If not, a miss calls the model and saves the answer for next time.
+caption: Repeated questions are answered for free from a cache. Cache only answers that are safe to reuse.
+```
+
 ```diagram compare One call per row versus one batch
 note: From the batching run in this lesson; the ratio depends on your machine.
 ## One at a time | bad
@@ -45,6 +52,12 @@ note: From the batching run in this lesson; the ratio depends on your machine.
 - 2000 predictions, 1 call
 - Overhead spread across all rows
 - 0.1 ms in the demo
+```
+
+```visual Many calls or one batch
+file: batching-bus
+alt: Two panels. On the left, many small boxes for one call per row, 2000 predictions in 2000 calls, 193 milliseconds in the lesson's demo. On the right, one large group for a single batch, 2000 predictions in one call, 0.1 milliseconds in the demo.
+caption: One batch shares the fixed overhead across all rows. The numbers are from the lesson's run and depend on the machine.
 ```
 
 ```diagram compare Quantisation: fewer bits per weight

@@ -36,6 +36,12 @@ caption: An embedding gives each word a list of numbers, which acts like a posit
 loop: Repeat for every token, then use the final state to predict
 ```
 
+```visual An RNN unrolled over three words
+file: rnn-unrolled
+alt: Three copies of the same RNN cell in a row, reading the words the, cat and sat, passing a memory arrow from one to the next. The final memory is used to make a prediction.
+caption: A recurrent network is one cell used again and again, carrying its memory forward. Early words fade, which is one reason transformers replaced it.
+```
+
 ```diagram compare RNN and transformer
 ## RNN | warn
 - One step at a time | Each step waits for the previous one

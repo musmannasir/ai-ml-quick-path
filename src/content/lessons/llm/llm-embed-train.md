@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain how an embedding model learns to place related texts close together, work out cosine similarity and the contrastive loss for a small batch by hand, and say why the choice of negatives and the temperature matter.
 prereqs: app-embeddings, llm-how
 reviewed: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: The cosine similarity table for a batch of three question and answer pairs before and after training, with the contrastive loss and top-1 accuracy for each, and a sentence on what changed.
 code: Python executed 2026-11-19 (examples/embed-train/embed_train.py, NumPy only); no embedding model was trained and no neural framework was run; the C# version prints the same output
 ---
@@ -21,6 +21,12 @@ note: The model only ever sees which pairs belong together. Everything else foll
 - Embed both sides with the same network | Pool the token vectors to one vector | model
 - Compare every question with every answer | A table of cosine similarities | process
 - Update the network to raise the diagonal | Own answers closer, others farther | output
+```
+
+```visual Matching pairs pulled together
+file: embedding-pull
+alt: Two panels of dots labelled Q1, A1, Q2 and A2. Before training, each question is far from its answer. After training, each question sits next to its own answer and apart from the others.
+caption: Training pulls matching question and answer pairs together and pushes the rest apart. The map is two-dimensional and made up.
 ```
 
 ```diagram compare Easy and hard negatives

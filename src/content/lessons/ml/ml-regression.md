@@ -8,7 +8,7 @@ maths: algebra
 goal: Train regression models that predict numbers, judge them with MAE, RMSE and R², and choose the right model complexity.
 prereqs: ml-learning, d-features
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A regression model on a dataset you choose with MAE, RMSE and R² on a test set, compared with a baseline that predicts the average.
 code: Python executed 2026-11-02 (examples/gap-topics/gap_topics.py regression)
 ---
@@ -47,6 +47,12 @@ note: Smaller error is better for MAE and RMSE. R² is better the closer it is t
 - Share of the variation explained
 - 1 is perfect
 - 0 is no better than the average
+```
+
+```visual The gaps between the points and the line
+file: residuals
+alt: A scatter of ten dots with a fitted line. Vertical orange segments from each dot to the line show the errors, called residuals. Text explains that MAE is the average gap, RMSE punishes big gaps more, and R squared says how much of the ups and downs the model explains.
+caption: The error measures are all based on the gaps between the real values and the model's line. The points are made up.
 ```
 
 ```maths A straight-line prediction, step by step

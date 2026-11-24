@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Represent data as nodes and edges, explain message passing, and classify nodes from very few labels using their neighbours.
 prereqs: dl-neural-nets
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A small graph you build with node predictions explained by each node's neighbours.
 code: Python executed 2026-11-02 (gap_topics.py gnn)
 ---
@@ -26,6 +26,12 @@ Some data is about **connections**: people and friendships, bank accounts and tr
 - Node's own information | Where it starts | input
 - Neighbour A | Sends information | process
 - Neighbour B | Sends information | process
+```
+
+```visual A node listening to its neighbours
+file: message-passing
+alt: A small graph with a central node linked to four neighbours, with two more nodes behind them. Text says each node starts with its own information, receives messages from its neighbours and combines them, and that after more layers news travels further along the links.
+caption: In message passing each node combines what its neighbours know with its own information. The graph is made up.
 ```
 
 ```diagram compare Three kinds of GNN question

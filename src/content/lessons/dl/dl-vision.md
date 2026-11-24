@@ -37,6 +37,12 @@ caption: A small filter slides over the image one pixel at a time. Each output n
 - Which pixel is what? | Every pixel labelled: road, car, person
 ```
 
+```visual One picture, three questions
+file: vision-tasks
+alt: Three copies of a scene with a circle and a square. In classification the picture gets one label, ball and box. In object detection each object gets a dashed box and a name with a made-up score. In segmentation every pixel of each object is coloured by its class.
+caption: Classification says what is in the picture, detection says what and where, and segmentation says which pixels belong to what.
+```
+
 ```diagram flow Transfer learning
 - Model trained on millions of photos | Already knows general visual features | store
 - Replace the last layer | Use your own classes | process

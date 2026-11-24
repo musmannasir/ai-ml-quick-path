@@ -177,6 +177,12 @@ note: No separate reward model is needed.
 - Tuned model | Prefers the answers people choose | output
 ```
 
+```visual A chosen and a rejected answer
+file: dpo-pair
+alt: A prompt, then two answers. The chosen answer, clear and polite with the 14-day window, has an arrow up: make this more likely. The rejected answer, vague and curt, has an arrow down: make this less likely. A note says a frozen reference model anchors the training.
+caption: DPO raises the chosen answer and lowers the rejected one, anchored to a frozen copy of the starting model. The pair is made up.
+```
+
 #### RLHF (reward model, then tuning)
 **RLHF** (reinforcement learning from human feedback) is the older, longer route to the same goal. Step 1: people rank answers, and a **reward model** learns to score answers like they do. Step 2: the language model is tuned to earn higher scores, with a penalty if it drifts too far from the original model. Everyday example: a cooking student is scored by a judge. The student improves, but a rule says "do not change your style so much that it no longer looks like cooking". This is a simplified view; real systems have more parts.
 
