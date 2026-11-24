@@ -1,0 +1,31 @@
+<svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The three nearest neighbours of a new point vote. -->
+  <rect class="vz-card" x="12" y="12" width="460" height="262" rx="10"/>
+  <circle class="vz-knn" cx="233.3" cy="159.2" r="68.0"/>
+  <circle class="vz-c0" cx="106.7" cy="192.7" r="7"/>
+  <circle class="vz-c0" cx="146.7" cy="221.3" r="7"/>
+  <circle class="vz-c0" cx="86.7" cy="154.4" r="7"/>
+  <circle class="vz-c0" cx="186.7" cy="173.6" r="7"/>
+  <circle class="vz-c0" cx="126.7" cy="121.0" r="7"/>
+  <circle class="vz-c0" cx="220.0" cy="207.0" r="7"/>
+  <circle class="vz-c0" cx="66.7" cy="207.0" r="7"/>
+  <rect class="vz-c1" x="339.7" y="128.3" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="379.7" y="176.1" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="313.0" y="85.3" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="399.7" y="104.4" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="259.7" y="114.0" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="366.3" y="61.4" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="326.3" y="200.0" width="14" height="14" rx="2"/>
+  <polygon class="vz-new" points="233.3,148.2 243.3,159.2 233.3,170.2 223.3,159.2"/>
+  <text class="vz-s" x="247.33333333333334" y="147.22222222222223" text-anchor="start">new point</text>
+  <text class="vz-title" x="500" y="50" text-anchor="start">k-nearest neighbours, k = 3</text>
+  <text class="vz-s" x="500" y="80" text-anchor="start">1. Find the 3 closest known points</text>
+  <text class="vz-s" x="500" y="98" text-anchor="start">    (inside the dashed circle).</text>
+  <text class="vz-s" x="500" y="126" text-anchor="start">2. Let them vote:</text>
+  <text class="vz-s" x="500" y="146" text-anchor="start">    2 circles, 1 square.</text>
+  <text class="vz-s" x="500" y="174" text-anchor="start">3. The new point gets the</text>
+  <text class="vz-s" x="500" y="192" text-anchor="start">    majority class: circle.</text>
+  <text class="vz-n" x="500" y="228" text-anchor="start">No training step: it keeps all the</text>
+  <text class="vz-n" x="500" y="246" text-anchor="start">points and is slow on big data.</text>
+  <text class="vz-n vz-note" x="12" y="298" text-anchor="start">Made-up points in two dimensions. Circle = one class, square = the other.</text>
+</svg>

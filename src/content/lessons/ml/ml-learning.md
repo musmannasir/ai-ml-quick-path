@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain what a model, parameters and a loss are, how training reduces the loss step by step, and how to spot overfitting and underfitting.
 prereqs: d-basics
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Your own run of the training loop with a printed loss that falls, and a train-versus-validation comparison that shows overfitting.
 code: Python executed 2026-11-02 (examples/ml-basics/ml_basics.py gd and cv)
 ---
@@ -43,6 +43,12 @@ loop: Repeat until the loss stops improving
 - Training crawls
 ```
 
+```visual A ball rolling down a bowl with three step sizes
+file: learning-rate-bowl
+alt: Three bowl-shaped curves, each showing a ball that starts high on the left and takes steps towards the bottom. With a learning rate that is too big, each step overshoots and lands higher on the other side, so the loss grows. With a good rate the steps get smaller and reach the bottom. With a rate that is too small the steps are tiny and the ball crawls.
+caption: Training is a ball rolling down a bowl of loss. The learning rate sets the size of each step: too big overshoots, too small crawls.
+```
+
 ```diagram compare Underfitting, a good fit and overfitting
 note: The goal is the middle column: good on data the model has never seen.
 ## Underfitting | warn
@@ -54,6 +60,12 @@ note: The goal is the middle column: good on data the model has never seen.
 ## Overfitting | bad
 - Memorises the training data and its noise
 - Great on training data, worse on new data
+```
+
+```visual The same points fitted three ways
+file: fit-three-ways
+alt: Three panels with the same ten dots. In the first a straight line misses the curved pattern: underfitting. In the second a smooth curve follows the pattern: a good fit. In the third a wiggly line passes through every dot and chases the noise: overfitting.
+caption: Same data, three models. The straight line is too simple, the wiggly line copies the noise, and the smooth curve is the one that works on new data.
 ```
 
 ```diagram compare Parameters and hyperparameters

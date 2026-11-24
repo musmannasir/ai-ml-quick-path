@@ -8,7 +8,7 @@ maths: algebra
 goal: Update a belief with Bayes' rule, read a small Bayesian network, explain how a Markov chain Monte Carlo sampler explores a distribution, and follow a one-number Kalman filter.
 prereqs: ml-evaluation
 reviewed: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Bayes' rule worked for a test with its false alarms, a probability of rain given wet grass from a small network, and the estimate and uncertainty after each measurement of a Kalman filter.
 code: Python executed 2026-11-19 (examples/bayes/bayes.py, standard library only); the C# version prints the same output
 ---
@@ -23,6 +23,12 @@ note: The prior is what you believed. The posterior is what you believe after th
 ## Posterior | output
 - What you believe after the evidence
 - Updated by how well each option explains it
+```
+
+```visual A positive test in counts of 10,000 people
+file: bayes-people
+alt: Two horizontal bars. The first splits 10,000 people into 100 who are ill and 9,900 who are healthy. The second zooms in on the 585 people with a positive test: 90 are really ill and 495 are healthy people with a false alarm. Text below says 90 divided by 585 is about 15 percent, not 90 percent.
+caption: Counting people shows why a positive test on a rare illness is usually a false alarm: most positives come from the large healthy group.
 ```
 
 ```diagram flow Metropolis sampling

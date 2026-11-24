@@ -1,0 +1,31 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Hand-written rules against rules learned from examples. -->
+  <rect class="vz-card" x="12" y="12" width="340" height="270" rx="12"/>
+  <text class="vz-title" x="30" y="44" text-anchor="start">Hand-written rules</text>
+  <text class="vz-s" x="30" y="66" text-anchor="start">A person writes every rule.</text>
+  <rect class="vz-warn" x="30" y="86" width="304" height="74" rx="8"/>
+  <text class="vz-code" x="44" y="112" text-anchor="start">IF the email contains</text>
+  <text class="vz-code" x="44" y="134" text-anchor="start">   "free prize"  THEN  spam</text>
+  <text class="vz-s" x="30" y="190" text-anchor="start">Spammers change the words,</text>
+  <text class="vz-s" x="30" y="208" text-anchor="start">so the rule stops working and</text>
+  <text class="vz-s" x="30" y="226" text-anchor="start">a person has to write a new one.</text>
+  <rect class="vz-card" x="368" y="12" width="340" height="270" rx="12"/>
+  <text class="vz-title" x="386" y="44" text-anchor="start">Machine learning</text>
+  <text class="vz-s" x="386" y="66" text-anchor="start">The computer finds the rules.</text>
+  <rect class="vz-bad" x="386" y="86" width="136" height="32" rx="6"/>
+  <text class="vz-s" x="454" y="107" text-anchor="middle">email: spam</text>
+  <rect class="vz-ok" x="536" y="86" width="136" height="32" rx="6"/>
+  <text class="vz-s" x="604" y="107" text-anchor="middle">email: not spam</text>
+  <rect class="vz-bad" x="386" y="128" width="136" height="32" rx="6"/>
+  <text class="vz-s" x="454" y="149" text-anchor="middle">email: spam</text>
+  <rect class="vz-ok" x="536" y="128" width="136" height="32" rx="6"/>
+  <text class="vz-s" x="604" y="149" text-anchor="middle">email: not spam</text>
+  <text class="vz-s" x="386" y="190" text-anchor="start">Thousands of emails already</text>
+  <text class="vz-s" x="386" y="208" text-anchor="start">marked spam or not spam</text>
+  <polygon class="vz-head" points="620,194 640,204 620,214"/>
+  <rect class="vz-ok" x="646" y="186" width="52" height="36" rx="8"/>
+  <text class="vz-s" x="672" y="209" text-anchor="middle">rules</text>
+  <text class="vz-s" x="386" y="244" text-anchor="start">learned from the examples</text>
+  <text class="vz-s" x="386" y="262" text-anchor="start">and updated when new ones arrive.</text>
+  <text class="vz-n vz-note" x="12" y="308" text-anchor="start">The spam example from the lesson. The email texts are made up.</text>
+</svg>

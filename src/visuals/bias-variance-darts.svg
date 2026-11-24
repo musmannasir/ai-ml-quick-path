@@ -1,0 +1,60 @@
+<svg viewBox="0 0 720 350" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Bias and variance as darts on a board. -->
+  <rect class="vz-card" x="12" y="12" width="340" height="146" rx="10"/>
+  <circle class="vz-ring0" cx="96" cy="82" r="58.0"/>
+  <circle class="vz-ring1" cx="96" cy="82" r="38.3"/>
+  <circle class="vz-ring2" cx="96" cy="82" r="19.1"/>
+  <circle class="vz-dart" cx="98.3" cy="83.2" r="4"/>
+  <circle class="vz-dart" cx="93.1" cy="83.7" r="4"/>
+  <circle class="vz-dart" cx="97.2" cy="79.1" r="4"/>
+  <circle class="vz-dart" cx="94.3" cy="80.3" r="4"/>
+  <circle class="vz-dart" cx="98.9" cy="80.8" r="4"/>
+  <circle class="vz-dart" cx="95.4" cy="84.9" r="4"/>
+  <text class="vz-title" x="188" y="60" text-anchor="start">Low bias</text>
+  <text class="vz-title" x="188" y="82" text-anchor="start">low variance</text>
+  <text class="vz-s" x="188" y="112" text-anchor="start">On target</text>
+  <text class="vz-s" x="188" y="130" text-anchor="start">and consistent.</text>
+  <rect class="vz-card" x="368" y="12" width="340" height="146" rx="10"/>
+  <circle class="vz-ring0" cx="452" cy="82" r="58.0"/>
+  <circle class="vz-ring1" cx="452" cy="82" r="38.3"/>
+  <circle class="vz-ring2" cx="452" cy="82" r="19.1"/>
+  <circle class="vz-dart" cx="476.4" cy="87.8" r="4"/>
+  <circle class="vz-dart" cx="430.0" cy="99.4" r="4"/>
+  <circle class="vz-dart" cx="459.0" cy="55.9" r="4"/>
+  <circle class="vz-dart" cx="437.5" cy="62.9" r="4"/>
+  <circle class="vz-dart" cx="472.3" cy="70.4" r="4"/>
+  <circle class="vz-dart" cx="446.2" cy="108.7" r="4"/>
+  <text class="vz-title" x="544" y="60" text-anchor="start">Low bias</text>
+  <text class="vz-title" x="544" y="82" text-anchor="start">high variance</text>
+  <text class="vz-s" x="544" y="112" text-anchor="start">On target on average</text>
+  <text class="vz-s" x="544" y="130" text-anchor="start">but scattered.</text>
+  <rect class="vz-card" x="12" y="168" width="340" height="146" rx="10"/>
+  <circle class="vz-ring0" cx="96" cy="238" r="58.0"/>
+  <circle class="vz-ring1" cx="96" cy="238" r="38.3"/>
+  <circle class="vz-ring2" cx="96" cy="238" r="19.1"/>
+  <circle class="vz-dart" cx="124.4" cy="256.6" r="4"/>
+  <circle class="vz-dart" cx="119.2" cy="257.1" r="4"/>
+  <circle class="vz-dart" cx="123.3" cy="252.5" r="4"/>
+  <circle class="vz-dart" cx="120.4" cy="253.7" r="4"/>
+  <circle class="vz-dart" cx="125.0" cy="254.2" r="4"/>
+  <circle class="vz-dart" cx="121.5" cy="258.3" r="4"/>
+  <text class="vz-title" x="188" y="216" text-anchor="start">High bias</text>
+  <text class="vz-title" x="188" y="238" text-anchor="start">low variance</text>
+  <text class="vz-s" x="188" y="268" text-anchor="start">Consistent</text>
+  <text class="vz-s" x="188" y="286" text-anchor="start">but off target.</text>
+  <rect class="vz-card" x="368" y="168" width="340" height="146" rx="10"/>
+  <circle class="vz-ring0" cx="452" cy="238" r="58.0"/>
+  <circle class="vz-ring1" cx="452" cy="238" r="38.3"/>
+  <circle class="vz-ring2" cx="452" cy="238" r="19.1"/>
+  <circle class="vz-dart" cx="502.5" cy="261.2" r="4"/>
+  <circle class="vz-dart" cx="456.1" cy="272.8" r="4"/>
+  <circle class="vz-dart" cx="485.1" cy="229.3" r="4"/>
+  <circle class="vz-dart" cx="463.6" cy="236.3" r="4"/>
+  <circle class="vz-dart" cx="498.4" cy="243.8" r="4"/>
+  <circle class="vz-dart" cx="472.3" cy="282.1" r="4"/>
+  <text class="vz-title" x="544" y="216" text-anchor="start">High bias</text>
+  <text class="vz-title" x="544" y="238" text-anchor="start">high variance</text>
+  <text class="vz-s" x="544" y="268" text-anchor="start">Off target and scattered</text>
+  <text class="vz-n" x="500" y="130" text-anchor="start"></text>
+  <text class="vz-n vz-note" x="12" y="336" text-anchor="start">The bullseye is the true pattern; each dart is a model trained on a different sample of the data.</text>
+</svg>

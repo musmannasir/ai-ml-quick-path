@@ -1,0 +1,22 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A decision tree as a game of twenty questions. -->
+  <rect class="vz-ml" x="250" y="14" width="220" height="46" rx="8"/>
+  <text class="vz-s" x="360.0" y="42" text-anchor="middle">Missed a payment before?</text>
+  <rect class="vz-bad" x="40" y="120" width="190" height="46" rx="8"/>
+  <text class="vz-s" x="135.0" y="148" text-anchor="middle">Decline the loan</text>
+  <rect class="vz-ml" x="300" y="120" width="240" height="46" rx="8"/>
+  <text class="vz-s" x="420.0" y="148" text-anchor="middle">Income above 30,000?</text>
+  <rect class="vz-ok" x="210" y="230" width="190" height="46" rx="8"/>
+  <text class="vz-s" x="305.0" y="258" text-anchor="middle">Approve the loan</text>
+  <rect class="vz-bad" x="440" y="230" width="190" height="46" rx="8"/>
+  <text class="vz-s" x="535.0" y="258" text-anchor="middle">Decline the loan</text>
+  <line class="vz-link" x1="330" y1="60" x2="135" y2="120"/>
+  <text class="vz-s" x="215" y="86" text-anchor="start">yes</text>
+  <line class="vz-link" x1="390" y1="60" x2="420" y2="120"/>
+  <text class="vz-s" x="420" y="92" text-anchor="start">no</text>
+  <line class="vz-link" x1="380" y1="166" x2="305" y2="230"/>
+  <text class="vz-s" x="328" y="200" text-anchor="start">yes</text>
+  <line class="vz-link" x1="460" y1="166" x2="535" y2="230"/>
+  <text class="vz-s" x="520" y="200" text-anchor="start">no</text>
+  <text class="vz-n vz-note" x="12" y="308" text-anchor="start">Made-up loan example. Each question splits the people into purer groups; the leaves are the answers.</text>
+</svg>

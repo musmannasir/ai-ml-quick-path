@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain in plain words how linear models, k-nearest neighbours, decision trees, random forests, gradient boosting, support vector machines and naive Bayes work, and choose between them.
 prereqs: ml-regression, ml-classification
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: A cross-validated comparison of at least four algorithms on one dataset, with your choice explained by accuracy, speed and explainability.
 code: Python executed 2026-11-02 (examples/ai-extras/ai_extras.py algos, gap_topics.py svm); added technique snippets (2026-11-05) not run
 ---
@@ -40,6 +40,12 @@ For images, audio and free text, **neural networks** (Part 4) usually win; for t
 - Very fast text baseline
 ```
 
+```visual Three nearest neighbours vote on a new point
+file: knn-vote
+alt: A scatter of circles and squares with a new diamond-shaped point in the middle. A dashed circle around the new point contains its three nearest neighbours: two circles and one square. The two circles outvote the square, so the new point is labelled a circle.
+caption: k-nearest neighbours with k = 3: find the three closest known points and let them vote. There is no training step.
+```
+
 ```diagram compare Three ways to use decision trees
 ## Decision tree | process
 - A flowchart of yes/no questions
@@ -51,6 +57,12 @@ For images, audio and free text, **neural networks** (Part 4) usually win; for t
 - Builds trees one by one
 - Each fixes the last one's mistakes
 - Usually the most accurate on tables
+```
+
+```visual A decision tree as a game of questions
+file: decision-tree-questions
+alt: A small tree. The top question is: has the person missed a payment before? If yes, decline the loan. If no, ask: is income above 30,000? If yes, approve the loan; if no, decline it. The example is made up.
+caption: A decision tree is a flowchart of yes/no questions that ends in an answer. A random forest averages many such trees.
 ```
 
 ```diagram compare Support vector machine: the widest gap

@@ -1,0 +1,49 @@
+<svg viewBox="0 0 720 284" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The same points fitted by a line, a smooth curve and a wiggly curve. -->
+  <rect class="vz-card" x="10" y="10" width="220" height="236" rx="10"/>
+  <line class="vz-fit" x1="22.0" y1="72.2" x2="218.0" y2="159.9"/>
+  <circle class="vz-pt" cx="31.8" cy="88.2" r="4.5"/>
+  <circle class="vz-pt" cx="51.4" cy="92.8" r="4.5"/>
+  <circle class="vz-pt" cx="71.0" cy="59.6" r="4.5"/>
+  <circle class="vz-pt" cx="90.6" cy="94.8" r="4.5"/>
+  <circle class="vz-pt" cx="110.2" cy="92.8" r="4.5"/>
+  <circle class="vz-pt" cx="129.8" cy="148.2" r="4.5"/>
+  <circle class="vz-pt" cx="149.4" cy="144.0" r="4.5"/>
+  <circle class="vz-pt" cx="169.0" cy="176.7" r="4.5"/>
+  <circle class="vz-pt" cx="188.6" cy="133.7" r="4.5"/>
+  <circle class="vz-pt" cx="208.2" cy="129.7" r="4.5"/>
+  <text class="vz-title" x="120.0" y="198" text-anchor="middle">Underfitting</text>
+  <text class="vz-s" x="120.0" y="218" text-anchor="middle">Too simple for the pattern:</text>
+  <text class="vz-s" x="120.0" y="234" text-anchor="middle">weak on old and new data.</text>
+  <rect class="vz-card" x="245" y="10" width="220" height="236" rx="10"/>
+  <path class="vz-fit" d="M257.0 116.2 L260.3 111.1 L263.5 106.0 L266.8 101.1 L270.1 96.4 L273.3 91.9 L276.6 87.7 L279.9 83.9 L283.1 80.4 L286.4 77.4 L289.7 74.8 L292.9 72.8 L296.2 71.2 L299.5 70.2 L302.7 69.8 L306.0 69.9 L309.3 70.6 L312.5 71.8 L315.8 73.6 L319.1 75.9 L322.3 78.7 L325.6 81.9 L328.9 85.5 L332.1 89.5 L335.4 93.9 L338.7 98.5 L341.9 103.3 L345.2 108.2 L348.5 113.3 L351.7 118.4 L355.0 123.5 L358.3 128.5 L361.5 133.3 L364.8 137.9 L368.1 142.3 L371.3 146.3 L374.6 150.0 L377.9 153.3 L381.1 156.1 L384.4 158.5 L387.7 160.3 L390.9 161.6 L394.2 162.3 L397.5 162.5 L400.7 162.2 L404.0 161.2 L407.3 159.8 L410.5 157.8 L413.8 155.3 L417.1 152.3 L420.3 148.9 L423.6 145.1 L426.9 140.9 L430.1 136.5 L433.4 131.8 L436.7 126.9 L439.9 121.9 L443.2 116.8 L446.5 111.7 L449.7 106.6 L453.0 101.7"/>
+  <circle class="vz-pt" cx="266.8" cy="88.2" r="4.5"/>
+  <circle class="vz-pt" cx="286.4" cy="92.8" r="4.5"/>
+  <circle class="vz-pt" cx="306.0" cy="59.6" r="4.5"/>
+  <circle class="vz-pt" cx="325.6" cy="94.8" r="4.5"/>
+  <circle class="vz-pt" cx="345.2" cy="92.8" r="4.5"/>
+  <circle class="vz-pt" cx="364.8" cy="148.2" r="4.5"/>
+  <circle class="vz-pt" cx="384.4" cy="144.0" r="4.5"/>
+  <circle class="vz-pt" cx="404.0" cy="176.7" r="4.5"/>
+  <circle class="vz-pt" cx="423.6" cy="133.7" r="4.5"/>
+  <circle class="vz-pt" cx="443.2" cy="129.7" r="4.5"/>
+  <text class="vz-title" x="355.0" y="198" text-anchor="middle">Good fit</text>
+  <text class="vz-s" x="355.0" y="218" text-anchor="middle">Captures the real pattern:</text>
+  <text class="vz-s" x="355.0" y="234" text-anchor="middle">good on new data too.</text>
+  <rect class="vz-card" x="480" y="10" width="220" height="236" rx="10"/>
+  <path class="vz-fit vz-wild" d="M501.8 88.2 L521.4 92.8 L541.0 59.6 L560.6 94.8 L580.2 92.8 L599.8 148.2 L619.4 144.0 L639.0 176.7 L658.6 133.7 L678.2 129.7"/>
+  <circle class="vz-pt" cx="501.8" cy="88.2" r="4.5"/>
+  <circle class="vz-pt" cx="521.4" cy="92.8" r="4.5"/>
+  <circle class="vz-pt" cx="541.0" cy="59.6" r="4.5"/>
+  <circle class="vz-pt" cx="560.6" cy="94.8" r="4.5"/>
+  <circle class="vz-pt" cx="580.2" cy="92.8" r="4.5"/>
+  <circle class="vz-pt" cx="599.8" cy="148.2" r="4.5"/>
+  <circle class="vz-pt" cx="619.4" cy="144.0" r="4.5"/>
+  <circle class="vz-pt" cx="639.0" cy="176.7" r="4.5"/>
+  <circle class="vz-pt" cx="658.6" cy="133.7" r="4.5"/>
+  <circle class="vz-pt" cx="678.2" cy="129.7" r="4.5"/>
+  <text class="vz-title" x="590.0" y="198" text-anchor="middle">Overfitting</text>
+  <text class="vz-s" x="590.0" y="218" text-anchor="middle">Chases the noise in the points:</text>
+  <text class="vz-s" x="590.0" y="234" text-anchor="middle">great on old data, worse on new.</text>
+  <text class="vz-n vz-note" x="12" y="270" text-anchor="start">The same 10 made-up points in every panel. The line or curve is the model.</text>
+</svg>

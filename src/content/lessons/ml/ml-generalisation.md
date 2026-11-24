@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain the two ways a model goes wrong (too simple, too flexible), read training and test error to tell which one you have, and know why more features and more data change the answer.
 prereqs: ml-learning, ml-evaluation
 reviewed: 2026-11-18
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A table of training and test error for at least five settings of one model dial, with a written sentence saying which setting you would ship and why.
 code: Python executed 2026-11-18 (examples/generalisation/generalisation.py); the C# version prints the same numbers
 ---
@@ -25,6 +25,12 @@ note: Both models are wrong, in opposite ways. Neither is the one you want.
 - Copies the wobble in the training data
 - Tiny training error, large test error
 - Gives a different model on every training sample
+```
+
+```visual Bias and variance as four dartboards
+file: bias-variance-darts
+alt: Four dartboards. Top left: low bias and low variance, darts tightly grouped on the bullseye. Top right: low bias and high variance, darts scattered around the bullseye. Bottom left: high bias and low variance, darts tightly grouped away from the bullseye. Bottom right: high bias and high variance, darts scattered and away from the bullseye.
+caption: Bias is how far the average dart is from the bullseye; variance is how scattered the darts are. Each dart is a model trained on a different sample.
 ```
 
 ```diagram flow How to read the two errors
