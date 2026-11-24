@@ -93,7 +93,7 @@ tests/static-checks.mjs  HTML checks on dist/ (including zero external links)
 tests/e2e.mjs            Playwright checks (the count is printed at the end of the run; includes a layout check of every drawing); writes qa/e2e-results.json and qa/screenshots/
 ```
 
-**Pages (128):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
+**Pages (129):** index (the landing page: title, a "Get started: free learning" button to start.html, an overview with live counts, no sidebar), start (the welcome page with the starting-point chooser and resume card), plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
 maths (maths names map, generated from every lesson's maths section), simulations (the Simulation lab catalogue), 7 part pages (`part-1-start.html` …
 `part-7-production.html`), 73 lessons, projects + 8 capstones, cases + 11, hardware, glossary, cheat sheets (an index and 13 sheets), assessment,
 progress, about, 404. Output uses **relative links** and works from `file://`.

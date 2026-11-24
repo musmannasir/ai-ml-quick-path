@@ -8,7 +8,7 @@ const TRACK_LABEL = { applied: 'AI application', ml: 'Machine learning', lm: 'La
 
 export function allPages(S) {
   return [
-    home(S), plan(S), roles(S), roadmaps(S), catalogue(S), solve(S), maths(S), simulations(S),
+    landing(S), home(S), plan(S), roles(S), roadmaps(S), catalogue(S), solve(S), maths(S), simulations(S),
     ...S.MODULES.map((m) => modulePage(S, m)),
     projectsIndex(S), ...S.PROJECTS.map((p) => projectPage(S, p)),
     casesIndex(S), ...S.CASES.map((c) => casePage(S, c)),
@@ -45,7 +45,7 @@ function codeSummary(S) {
 
 // ---------- Home ----------
 function home(S) {
-  const ctx = S.ctxFor('index.html');
+  const ctx = S.ctxFor('start.html');
   const total = S.LESSON_ORDER.length;
   const hours = hoursOf(S, S.LESSON_ORDER);
   const parts = ['Big picture', 'Data', 'Machine learning', 'Deep learning', 'Language models', 'AI applications', 'Production'];
@@ -131,7 +131,7 @@ function home(S) {
     <div class="callout callout-note"><p><strong>Honest about the code.</strong> Every lesson shows what was really checked. ${codeSummary(S)} Compiled is not the same as run: samples that call a model or need your own data were not executed. Durations are study estimates for reading; practice and projects take longer. Quick checks are self-checks, not certificates, and finishing the lessons does not by itself make anyone an expert. Progress is saved only in this browser (see <a href="progress.html">progress</a>).</p></div>
   </div>
 </section>`;
-  return { path: 'index.html', title: 'Welcome', description: 'A free, plain-words guide to AI and machine learning from beginner to industry level, with small worked maths and Python and .NET examples.', body, crumbs: [], wide: true, section: 'Start', keywords: 'start beginner fresh ai ml guide python dotnet plain words' };
+  return { path: 'start.html', title: 'Start here', description: 'A free, plain-words guide to AI and machine learning from beginner to industry level, with small worked maths and Python and .NET examples.', body, crumbs: [], wide: true, section: 'Start', keywords: 'start beginner fresh ai ml guide python dotnet plain words' };
 }
 
 // ---------- 12-week plan ----------
@@ -640,7 +640,7 @@ function progress(S) {
   };
   const body = `
 <h1>My progress and study calendar</h1>
-<p id="resume-progress" class="resume-card" hidden><span class="resume-k">Continue where you left off</span><br><a id="resume-link" href="index.html"></a><br><span class="small muted" id="resume-next"></span></p>
+<p id="resume-progress" class="resume-card" hidden><span class="resume-k">Continue where you left off</span><br><a id="resume-link" href="start.html"></a><br><span class="small muted" id="resume-next"></span></p>
 <div class="callout callout-note"><p><strong>How progress works.</strong> A lesson has two ticks: reading it, and producing its exercise evidence. A project has one. It is your own record, not a test result. Completion marks are stored in this browser on this device. They are not uploaded or shared. Clearing browser data removes them, so export a file to keep a backup or move to another device.</p></div>
 <p id="storage-warning" class="callout callout-warn" hidden>This browser is blocking local storage, so progress cannot be saved here. Lessons still work; use export before closing the page.</p>
 <section aria-labelledby="dash-h"><h2 id="dash-h">Progress by part</h2><div id="progress-dashboard" class="dash"></div></section>
@@ -733,4 +733,82 @@ ${v ? `<figure class="cheat-vis vz-fig">${v.svg}<figcaption>${S.esc(v.caption)}<
 <p class="lede">${S.esc(c.intro)} <button type="button" class="btn btn-small" data-print>Print this sheet</button></p>
 <div class="cheat-grid">${panels}</div>`;
   return { path, title: c.title, body, crumbs: [['Cheat sheets', 'cheatsheets.html'], [c.short, path]], wide: true, section: 'Reference', keywords: `cheat sheet summary revision ${c.short}` };
+}
+
+// ---------- Landing page (index.html): the first page a visitor sees; the old welcome page is start.html ----------
+function landing(S) {
+  const ext = S.esc;
+  const hours = hoursOf(S, S.LESSON_ORDER);
+  let sims = 0, visuals = 0;
+  for (const id of S.LESSON_ORDER) for (const sec of S.lessons[id].sections) { sims += (sec.body.match(/^```sim\s/gm) || []).length; visuals += (sec.body.match(/^```visual\s/gm) || []).length; }
+  const demo = inlineVisual('attention-it', 'lp-demo', 'landing page');
+  const partLines = { start: 'What AI is and how a project runs', data: 'Collecting, cleaning, features', ml: 'Models, metrics and algorithms', dl: 'Neural networks, vision, transformers', llm: 'Tokens, fine-tuning, running locally', apps: 'RAG, agents, security, evaluation', ops: 'Releases, monitoring, cost' };
+  const body = `
+<header class="lp-top">
+  <a class="lp-brand" href="index.html"><span class="lp-logo" aria-hidden="true">AI</span>AI &amp; ML Quick Path</a>
+  <nav class="lp-nav" aria-label="Main"><a href="lessons.html">Lessons</a><a href="roadmaps.html">Roadmaps</a><a href="simulations.html">Simulations</a><a href="cheatsheets.html">Cheat sheets</a><a href="about.html">About</a></nav>
+</header>
+<main id="main" tabindex="-1">
+<div class="lp-wrap">
+  <section class="lp-hero" aria-labelledby="lp-h">
+    <div>
+      <span class="lp-kicker">Free · No sign-up</span>
+      <h1 id="lp-h">Learn AI and machine learning, <em>from zero</em> to real projects</h1>
+      <p class="lp-lede">Every idea explained in plain words, shown as a picture, and tried in a live simulation. Working examples in Python and .NET (C#), and the skills to plan and build real AI systems.</p>
+      <div class="lp-cta">
+        <a class="lp-btn" href="start.html" data-landing-cta>Get started: free learning <span aria-hidden="true">→</span></a>
+        <a class="lp-btn lp-btn-2" href="roadmaps.html">See the roadmaps</a>
+      </div>
+      <p class="lp-note" data-landing-note>No account, no tracking. Your progress stays in your own browser.</p>
+    </div>
+    <div class="lp-demo" role="group" aria-label="A preview of one lesson picture">
+      <div class="lp-demo-tabs" aria-hidden="true"><span>Boxes</span><span class="on">Visual</span></div>
+      ${demo.svg}
+      <p>A real picture from the <a href="lessons/dl-transformers.html">Transformers lesson</a>: the word "it" decides which earlier words to listen to.</p>
+    </div>
+  </section>
+
+  <section class="lp-stats" aria-label="What is inside">
+    <div class="lp-stat"><b>${S.LESSON_ORDER.length}</b><span>lessons</span></div>
+    <div class="lp-stat"><b>${sims}</b><span>live simulations</span></div>
+    <div class="lp-stat"><b>${visuals}</b><span>picture tabs</span></div>
+    <div class="lp-stat"><b>${S.CHEATSHEETS.length}</b><span>cheat sheets</span></div>
+    <div class="lp-stat"><b>${S.PROJECTS.length}</b><span>capstone projects</span></div>
+  </section>
+
+  <section class="lp-sec" aria-labelledby="lp-why">
+    <h2 id="lp-why">Why learn it this way</h2>
+    <p class="lp-sub">AI looks hard from the outside. Here it is taken one small, clear step at a time.</p>
+    <div class="lp-cards">
+      <article class="lp-card"><div class="lp-ico lp-i1" aria-hidden="true">💬</div><h3>Plain words first</h3><p>Short sentences, every new term defined, concrete inputs and outputs. Maths comes in small steps, only where it helps.</p></article>
+      <article class="lp-card"><div class="lp-ico lp-i2" aria-hidden="true">🖼️</div><h3>See it, not only read it</h3><p>Each idea has a diagram, and many have a drawn picture on a second tab, so you can pick the way that clicks for you.</p></article>
+      <article class="lp-card"><div class="lp-ico lp-i3" aria-hidden="true">🎛️</div><h3>Try it live</h3><p>Move a slider, watch the numbers change, and answer a quick prediction. The calculations are real.</p></article>
+      <article class="lp-card"><div class="lp-ico lp-i4" aria-hidden="true">🛠️</div><h3>Build real things</h3><p>Python and .NET (C#) examples, ${S.PROJECTS.length} capstone projects, and how companies use AI in production.</p></article>
+    </div>
+  </section>
+
+  <section class="lp-sec" aria-labelledby="lp-how">
+    <h2 id="lp-how">How it works</h2>
+    <div class="lp-steps">
+      <div class="lp-step"><h3>Pick a starting point</h3><p>New to AI, a developer, or aiming at a job role: each has a suggested first lesson.</p></div>
+      <div class="lp-step"><h3>Read, look, try</h3><p>A lesson has the idea, a real example, a picture, a simulation and code. Study times are estimates: about ${hours} hours in all.</p></div>
+      <div class="lp-step"><h3>Check yourself</h3><p>Quick questions after each lesson, a quiz for each part, and cheat sheets to revise.</p></div>
+    </div>
+  </section>
+
+  <section class="lp-sec" aria-labelledby="lp-path">
+    <h2 id="lp-path">${S.MODULES.length} parts, one path</h2>
+    <p class="lp-sub">Each part builds on the one before. You can start at the top or jump to what you need.</p>
+    <ol class="lp-parts">${S.MODULES.map((m, i) => `<li><b>${i + 1}</b><span><a href="${ext(m.page)}"><strong>${ext(m.title.replace(/^Part \d+: /, ''))}</strong></a><br>${ext(partLines[m.id] || '')}</span></li>`).join('')}</ol>
+  </section>
+
+  <section class="lp-band" aria-labelledby="lp-go">
+    <h2 id="lp-go">Ready to start?</h2>
+    <p>The whole guide is free. Begin with the first lesson, or choose your own starting point.</p>
+    <a class="lp-btn" href="start.html" data-landing-cta>Get started: free learning <span aria-hidden="true">→</span></a>
+  </section>
+</div>
+</main>
+<footer class="lp-wrap lp-foot"><span>AI &amp; ML Quick Path</span><a href="about.html">About this guide</a><a href="privacy.html">Privacy</a><span>Built to be honest: made-up numbers are labelled, and code that was not run says so.</span></footer>`;
+  return { path: 'index.html', title: 'AI & ML Quick Path', description: 'A free, plain-language guide to AI and machine learning, with live simulations, pictures, and Python and .NET (C#) examples. No sign-up.', body, landing: true, section: 'Home', keywords: 'ai machine learning free guide start learn' };
 }

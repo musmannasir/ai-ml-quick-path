@@ -44,7 +44,7 @@ const ICON = {
 export function navGroups(lessonsById) {
   const groups = [
     { id: 'begin', title: 'Start here', items: [
-      { href: 'index.html', label: 'Welcome and how to use this guide' }, { href: 'roadmaps.html', label: 'Visual roadmaps' },
+      { href: 'start.html', label: 'Welcome and how to use this guide' }, { href: 'roadmaps.html', label: 'Visual roadmaps' },
       { href: 'plan.html', label: '12-week study plan' }, { href: 'lessons.html', label: 'All lessons with filters' },
       { href: 'roles.html', label: 'AI engineer or ML engineer?' } ] },
   ];
@@ -111,7 +111,7 @@ function structuredData({ path, title, desc, crumbs, lessonMeta, canonical }) {
   return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>`;
 }
 
-export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [], lessonMeta = null }) {
+export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [], lessonMeta = null, landing = false }) {
   const depth = path.split('/').length - 1;
   const root = depth ? '../'.repeat(depth) : '';
   // The brand is added only when the whole title fits in about 60 characters; search results cut longer titles.
@@ -141,8 +141,12 @@ ${ADS.client ? `<meta name="google-adsense-account" content="${esc(ADS.client)}"
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(ADS.client)}" crossorigin="anonymous"></script>` : ''}
 <script>${INLINE_SCRIPT}</script>
 </head>
-<body class="${bodyClass}">
-<a class="skip-link" href="#main">Skip to main content</a>
+<body class="${landing ? 'lp' : bodyClass}">
+<a class="skip-link" href="#main">Skip to main content</a>${landing ? `
+${body}
+<script src="${root}assets/app.js" defer></script>
+</body>
+</html>` : ''}${landing ? '' : `
 <header class="topbar">
   <button type="button" id="sidebar-toggle" class="btn btn-quiet" aria-controls="sidebar" aria-expanded="true">${ICON.menu}<span class="btn-label">Contents</span></button>
   <a class="brand" href="${root}index.html">${ICON.logo}<span class="brand-text">${SITE.short}</span></a>
@@ -185,5 +189,5 @@ ${FOOTER_AD_PAGES.test(path) ? adSlot('footer') : ''}
 <script src="${root}assets/app.js" defer></script>${(scripts || []).map((s) => `
 <script src="${root}${s}" defer></script>`).join('')}
 </body>
-</html>`;
+</html>`}`;
 }

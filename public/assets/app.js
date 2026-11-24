@@ -562,6 +562,14 @@
     resume.hidden = false;
   }
 
+  // ---------- Landing page: a returning learner gets a "Continue" button to the last lesson ----------
+  var lpCtas = $$('[data-landing-cta]');
+  if (lpCtas.length && store.data.last && /^[a-z0-9-]+$/.test(store.data.last.id)) {
+    lpCtas.forEach(function (a) { a.href = ROOT + 'lessons/' + store.data.last.id + '.html'; a.firstChild.textContent = 'Continue learning '; });
+    var lpNote = $('[data-landing-note]');
+    if (lpNote) lpNote.textContent = 'Welcome back. Your last lesson: ' + (store.data.last.title || 'your last lesson') + '.';
+  }
+
   // ---------- Starting point chooser (home page): a local preference, not an account ----------
   var chooser = $('[data-persona-chooser]');
   if (chooser) {
