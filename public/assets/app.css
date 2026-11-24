@@ -1053,4 +1053,30 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .vz-c1 { fill: var(--sim-c1); stroke: var(--surface); stroke-width: 1.5; }
 .vz-new { fill: var(--ink); }
 .vz-link { stroke: var(--ink-2); stroke-width: 2.5; }
+.vz-arrow { stroke: var(--ink-2); stroke-width: 2.5; fill: none; }
+.vz-arrowr { stroke: var(--sim-c2); stroke-width: 3; }
+.vz-headk { fill: var(--ink-2); }
+.vz-node { fill: var(--surface); stroke: var(--ink-2); stroke-width: 2.5; }
+.vz-nodeA { fill: var(--ml-soft); stroke: var(--ml); stroke-width: 2.5; }
+.vz-nodeB { fill: var(--lm-soft); stroke: var(--lm); stroke-width: 2.5; }
+.vz-nodeC { fill: var(--applied-soft); stroke: var(--applied); stroke-width: 2.5; }
+.vz-edge { stroke: var(--line-strong); stroke-width: 1; opacity: .7; }
+.vz-cell { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
+.vz-win { fill: var(--sim-c1); fill-opacity: .2; stroke: var(--sim-c1); stroke-width: 3.5; }
+.vz-win2 { fill: none; stroke: var(--sim-c0); stroke-width: 3; stroke-dasharray: 7 5; }
+.vz-filt { fill: var(--sim-c1); fill-opacity: .25; }
+.vz-first { fill: var(--sim-c1); fill-opacity: .45; }
+.vz-second { fill: var(--sim-c0); fill-opacity: .3; }
+.vz-clu { fill-opacity: .55; stroke-dasharray: 6 5; }
+.vz-heat { fill: var(--sim-c0); }
+.vz-hv { fill: var(--ink); font-size: 13px; font-weight: 650; }
+.vz-maskcell { fill: var(--surface-3); stroke: var(--line); stroke-width: 1; }
+.vz-resid { fill: none; stroke: var(--sim-c2); stroke-width: 3; stroke-dasharray: 7 5; }
+.vz-tilefake { fill: var(--bad-bg); stroke: var(--bad-ink); stroke-width: 2.5; stroke-dasharray: 5 4; }
+.vz-tilereal { fill: var(--ok-bg); stroke: var(--ok-ink); stroke-width: 2.5; }
+.vz-glyph { fill: var(--ink-2); }
+.vz-fb { fill: none; stroke: var(--ink-2); stroke-width: 2.5; stroke-dasharray: 7 5; }
+.vz-px { fill: var(--ink); }
+.vz-frame { fill: none; stroke: var(--line-strong); stroke-width: 2; }
+.vz-big { stroke-width: 3.5; }
 @media print { .vz-bar { display: none; } .vz-panel[hidden] { display: block; } .vz-on .vz-label { display: block; } .vz-fig { break-inside: avoid; } }

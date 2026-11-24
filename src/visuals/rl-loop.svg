@@ -1,0 +1,27 @@
+<svg viewBox="0 0 720 326" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The agent and environment loop. -->
+  <rect class="vz-ml" x="30" y="40" width="230" height="120" rx="14"/>
+  <text class="vz-title" x="145" y="76" text-anchor="middle">Agent</text>
+  <text class="vz-s" x="145" y="100" text-anchor="middle">sees a state, then</text>
+  <text class="vz-s" x="145" y="118" text-anchor="middle">picks an action</text>
+  <text class="vz-s" x="145" y="140" text-anchor="middle">(learned, or sometimes random)</text>
+  <rect class="vz-ap" x="460" y="40" width="230" height="120" rx="14"/>
+  <text class="vz-title" x="575" y="76" text-anchor="middle">Environment</text>
+  <text class="vz-s" x="575" y="100" text-anchor="middle">reacts to the action:</text>
+  <text class="vz-s" x="575" y="118" text-anchor="middle">gives a reward and</text>
+  <text class="vz-s" x="575" y="136" text-anchor="middle">moves to a new state</text>
+  <line class="vz-arrow" x1="264.0" y1="70.0" x2="445.0" y2="70.0"/>
+  <polygon class="vz-headk" points="456.0,70.0 445.0,64.0 445.0,76.0"/>
+  <text class="vz-title" x="360" y="60" text-anchor="middle">action</text>
+  <line class="vz-arrow" x1="456.0" y1="112.0" x2="275.0" y2="112.0"/>
+  <polygon class="vz-headk" points="264.0,112.0 275.0,118.0 275.0,106.0"/>
+  <text class="vz-title" x="360" y="104" text-anchor="middle">new state</text>
+  <line class="vz-arrow" x1="456.0" y1="146.0" x2="275.0" y2="146.0"/>
+  <polygon class="vz-headk" points="264.0,146.0 275.0,152.0 275.0,140.0"/>
+  <text class="vz-title" x="360" y="138" text-anchor="middle">reward (good or bad)</text>
+  <rect class="vz-card" x="30" y="190" width="660" height="96" rx="10"/>
+  <text class="vz-title" x="48" y="218" text-anchor="start">Example (made up): a game character in a maze</text>
+  <text class="vz-s" x="48" y="242" text-anchor="start">State: where it stands.   Action: step left, right, up or down.</text>
+  <text class="vz-s" x="48" y="262" text-anchor="start">Reward: +1 for a coin, −1 for a trap.   Goal: the most total reward over time.</text>
+  <text class="vz-n vz-note" x="12" y="312" text-anchor="start">Repeat the loop many times; the agent learns which actions pay off.</text>
+</svg>

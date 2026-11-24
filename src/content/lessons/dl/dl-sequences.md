@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain how text becomes numbers (tokens and embeddings), how word vectors capture meaning, and how recurrent networks process sequences and why transformers replaced them.
 prereqs: dl-neural-nets, d-features
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Word vectors trained on a small corpus you choose, with nearest neighbours for five words and a note on one surprising result.
 code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn)
 ---
@@ -21,6 +21,12 @@ Text, speech and sensor readings are **sequences**: order matters. To use text, 
 - Token ids | Each token gets an id | store
 - Embeddings | A list of numbers per id that represents meaning | model
 - Use | Classify, search, translate or generate | output
+```
+
+```visual Words as points on a map
+file: embedding-map
+alt: A map with words as dots. Three groups are circled. Software developer, programmer and engineer sit close together; nurse, doctor and paramedic sit together in another place; baker, chef and bakery sit together in a third. Words with similar meanings are close, words with different meanings are far apart.
+caption: An embedding gives each word a list of numbers, which acts like a position on a map. Similar meanings land close together, which is how search can find programmer when you ask for software developer.
 ```
 
 ```diagram loop A recurrent network reading a sequence

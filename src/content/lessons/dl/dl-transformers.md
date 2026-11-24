@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain attention with queries, keys and values, the parts of a transformer block, and the three transformer families (encoder, decoder, encoder-decoder).
 prereqs: dl-sequences
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: The attention toy reproduced by hand for one word, and a table matching three of your tasks to a transformer family.
 code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 ---
@@ -35,6 +35,12 @@ note: The weights add up to 1. In the lesson's toy run, "cat" got the largest we
 - Residual connection and normalisation | Shortcuts that keep deep stacks trainable | process
 - Small neural network | Processes each position | model
 - Residual connection and normalisation | Again, around the small network | process
+```
+
+```visual One transformer block, step by step
+file: transformer-block
+alt: A vertical stack of steps. Words come in as number lists, go through attention, then an add-and-normalise step, then a small neural network, then another add-and-normalise step, and come out to the next block. Two dashed shortcut arrows run on the right: the input is added back after attention and again after the small network. A note says a model stacks many such blocks.
+caption: Attention, then a small network, each followed by adding the input back and normalising. The shortcuts keep very deep stacks trainable.
 ```
 
 ```diagram compare Three transformer families
@@ -67,6 +73,12 @@ A legal-tech company uses an encoder-only model to classify contract clauses qui
 - Causal mask | In decoders, hide future tokens | warn
 - Mix the values | Weighted by the weights; many heads and blocks | model
 - Final layer | Scores for the next token or class | output
+```
+
+```visual A grid of attention weights
+file: attention-heatmap
+alt: A seven by seven grid for the sentence The cat sat because it was tired. Each row is a word, each column is a word it can look at. Cells hold made-up attention weights, darker for larger, and each row adds up to 1. Cells above the diagonal are greyed out because the causal mask hides later words. In the row for it, 0.75 goes to cat and 0.25 to sat.
+caption: Each row shows how one word spreads its attention over the words before it. Later words are hidden by the causal mask.
 ```
 
 ```diagram lanes Visible words for "it" with the causal mask

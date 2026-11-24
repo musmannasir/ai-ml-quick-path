@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain convolutional networks, transfer learning, object detection, segmentation and vision transformers, and run a trained vision model from Python and C#.
 prereqs: dl-training
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A fine-tuned image classifier (or detector) evaluated on images from a different session than training, exported to ONNX and called from C# or Python.
 code: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---
@@ -20,6 +20,12 @@ Images are grids of numbers (pixel brightness per colour). A **convolutional neu
 - Early filters | Slide across the image and detect edges | process
 - Later filters | Combine edges into shapes and whole objects | model
 - Answer | Label, boxes or a mask | output
+```
+
+```visual A filter sliding over an image
+file: conv-slide
+alt: A grid of 5 by 5 pixels with a 3 by 3 window outlined at the top left and a second window, dashed, one pixel to the right. A 3 by 3 filter is shown in the middle. An arrow leads to a 3 by 3 output grid whose first two cells are highlighted to match the two window positions. Text says there are 5 minus 3 plus 1 equals 3 positions across and 3 down, so 9 output numbers.
+caption: A small filter slides over the image one pixel at a time. Each output number says how well that patch matches the filter.
 ```
 
 ```diagram compare Three vision tasks

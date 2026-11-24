@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 332" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A GAN as a forger and a detective. -->
+  <rect class="vz-bad" x="14" y="24" width="210" height="130" rx="12"/>
+  <text class="vz-title" x="119" y="54" text-anchor="middle">Generator</text>
+  <text class="vz-s" x="119" y="74" text-anchor="middle">the forger</text>
+  <text class="vz-s" x="119" y="104" text-anchor="middle">starts from random numbers</text>
+  <text class="vz-s" x="119" y="122" text-anchor="middle">and makes a fake picture</text>
+  <rect class="vz-ok" x="496" y="24" width="210" height="130" rx="12"/>
+  <text class="vz-title" x="601" y="54" text-anchor="middle">Discriminator</text>
+  <text class="vz-s" x="601" y="74" text-anchor="middle">the detective</text>
+  <text class="vz-s" x="601" y="104" text-anchor="middle">looks at each picture and</text>
+  <text class="vz-s" x="601" y="122" text-anchor="middle">says "real" or "fake"</text>
+  <rect class="vz-tilefake" x="318" y="36" width="64" height="48" rx="6"/>
+  <circle class="vz-glyph" cx="350" cy="60" r="11"/>
+  <text class="vz-s" x="350" y="100" text-anchor="middle">fake</text>
+  <rect class="vz-tilereal" x="318" y="100" width="64" height="48" rx="6"/>
+  <circle class="vz-glyph" cx="350" cy="124" r="11"/>
+  <text class="vz-s" x="350" y="164" text-anchor="middle">real (from the training data)</text>
+  <line class="vz-arrow" x1="226.0" y1="66.0" x2="303.0" y2="60.7"/>
+  <polygon class="vz-headk" points="314.0,60.0 302.6,54.8 303.4,66.7"/>
+  <line class="vz-arrow" x1="386.0" y1="60.0" x2="481.1" y2="74.4"/>
+  <polygon class="vz-headk" points="492.0,76.0 482.0,68.4 480.2,80.3"/>
+  <text class="vz-s" x="358" y="24" text-anchor="middle">pictures</text>
+  <line class="vz-arrow" x1="386.0" y1="124.0" x2="481.1" y2="113.2"/>
+  <polygon class="vz-headk" points="492.0,112.0 480.4,107.3 481.7,119.2"/>
+  <path class="vz-fb" d="M601 156 C 601 214 119 214 119 158"/>
+  <line class="vz-arrow" x1="130.0" y1="190.0" x2="122.6" y2="168.4"/>
+  <polygon class="vz-headk" points="119.0,158.0 116.9,170.4 128.2,166.5"/>
+  <text class="vz-s" x="360" y="236" text-anchor="middle">feedback: where the fake gave itself away</text>
+  <text class="vz-title" x="360" y="262" text-anchor="middle">Both improve: the forger makes better fakes, the detective gets sharper.</text>
+  <text class="vz-s" x="360" y="284" text-anchor="middle">They repeat until the fakes look real.</text>
+  <text class="vz-n vz-note" x="12" y="318" text-anchor="start">The forger and the detective are two neural networks trained against each other.</text>
+</svg>

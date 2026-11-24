@@ -8,7 +8,7 @@ maths: advanced optional
 goal: Explain how autoencoders, variational autoencoders, GANs and diffusion models create new data, and when industry uses each.
 prereqs: dl-vision
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A one-page comparison of four generative model families with one business use for each, plus the noise-schedule demo run and explained.
 code: Python executed 2026-11-02 (ai_extras.py diffusion)
 ---
@@ -39,6 +39,12 @@ note: Things it rebuilds badly are unusual, which is how it detects anomalies.
 loop: Repeat until the fakes look real
 ```
 
+```visual A forger and a detective
+file: gan-forger
+alt: A generator, called the forger, makes a fake picture from random numbers. A discriminator, called the detective, receives the fake and a real picture from the training data and says real or fake. A dashed arrow carries feedback back to the forger. Both improve: better fakes, sharper detective, repeated until the fakes look real.
+caption: Two networks trained against each other: the forger learns to make fakes the detective cannot spot, and the detective learns to catch them.
+```
+
 ```diagram lanes Diffusion: training and generating
 ## Training
 - Add noise to images step by step | input
@@ -47,6 +53,12 @@ loop: Repeat until the fakes look real
 - Start from pure noise | input
 - Clean it up step by step | process
 - Often guided by a text prompt | output
+```
+
+```visual Noise added, then removed
+file: diffusion-steps
+alt: Two rows of five small pictures of a disc. The top row, training, goes from a clean image through a little noise, more noise and mostly noise to pure noise. The bottom row, generating, goes the other way: from pure noise, step by step, back to a clean image.
+caption: In training, noise is added a little at a time and the model learns to undo each small step. To generate, it starts from pure noise and cleans it up.
 ```
 
 ## Real-world example

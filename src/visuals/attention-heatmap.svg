@@ -1,0 +1,106 @@
+<svg viewBox="0 0 720 450" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A grid of attention weights with the causal mask. -->
+  <text class="vz-title" x="280.0" y="30" text-anchor="middle">word being looked at</text>
+  <text class="vz-s" x="136.0" y="62" text-anchor="middle">The</text>
+  <text class="vz-s" x="184.0" y="62" text-anchor="middle">cat</text>
+  <text class="vz-s" x="232.0" y="62" text-anchor="middle">sat</text>
+  <text class="vz-s" x="280.0" y="62" text-anchor="middle">bec.</text>
+  <text class="vz-s" x="328.0" y="62" text-anchor="middle">it</text>
+  <text class="vz-s" x="376.0" y="62" text-anchor="middle">was</text>
+  <text class="vz-s" x="424.0" y="62" text-anchor="middle">tired</text>
+  <text class="vz-s" x="102" y="103.0" text-anchor="end">The</text>
+  <rect class="vz-heat" x="112" y="74" width="48" height="48" fill-opacity="1.00"/>
+  <text class="vz-hv" x="136.0" y="103.0" text-anchor="middle">1</text>
+  <rect class="vz-maskcell" x="160" y="74" width="48" height="48"/>
+  <rect class="vz-maskcell" x="208" y="74" width="48" height="48"/>
+  <rect class="vz-maskcell" x="256" y="74" width="48" height="48"/>
+  <rect class="vz-maskcell" x="304" y="74" width="48" height="48"/>
+  <rect class="vz-maskcell" x="352" y="74" width="48" height="48"/>
+  <rect class="vz-maskcell" x="400" y="74" width="48" height="48"/>
+  <text class="vz-s" x="102" y="151.0" text-anchor="end">cat</text>
+  <rect class="vz-heat" x="112" y="122" width="48" height="48" fill-opacity="0.34"/>
+  <text class="vz-hv" x="136.0" y="151.0" text-anchor="middle">0.3</text>
+  <rect class="vz-heat" x="160" y="122" width="48" height="48" fill-opacity="0.72"/>
+  <text class="vz-hv" x="184.0" y="151.0" text-anchor="middle">0.7</text>
+  <rect class="vz-maskcell" x="208" y="122" width="48" height="48"/>
+  <rect class="vz-maskcell" x="256" y="122" width="48" height="48"/>
+  <rect class="vz-maskcell" x="304" y="122" width="48" height="48"/>
+  <rect class="vz-maskcell" x="352" y="122" width="48" height="48"/>
+  <rect class="vz-maskcell" x="400" y="122" width="48" height="48"/>
+  <text class="vz-s" x="102" y="199.0" text-anchor="end">sat</text>
+  <rect class="vz-heat" x="112" y="170" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="136.0" y="199.0" text-anchor="middle">0.1</text>
+  <rect class="vz-heat" x="160" y="170" width="48" height="48" fill-opacity="0.62"/>
+  <text class="vz-hv" x="184.0" y="199.0" text-anchor="middle">0.6</text>
+  <rect class="vz-heat" x="208" y="170" width="48" height="48" fill-opacity="0.34"/>
+  <text class="vz-hv" x="232.0" y="199.0" text-anchor="middle">0.3</text>
+  <rect class="vz-maskcell" x="256" y="170" width="48" height="48"/>
+  <rect class="vz-maskcell" x="304" y="170" width="48" height="48"/>
+  <rect class="vz-maskcell" x="352" y="170" width="48" height="48"/>
+  <rect class="vz-maskcell" x="400" y="170" width="48" height="48"/>
+  <text class="vz-s" x="102" y="247.0" text-anchor="end">because</text>
+  <rect class="vz-heat" x="112" y="218" width="48" height="48" fill-opacity="0.11"/>
+  <text class="vz-hv" x="136.0" y="247.0" text-anchor="middle">0.05</text>
+  <rect class="vz-heat" x="160" y="218" width="48" height="48" fill-opacity="0.25"/>
+  <text class="vz-hv" x="184.0" y="247.0" text-anchor="middle">0.2</text>
+  <rect class="vz-heat" x="208" y="218" width="48" height="48" fill-opacity="0.67"/>
+  <text class="vz-hv" x="232.0" y="247.0" text-anchor="middle">0.65</text>
+  <rect class="vz-heat" x="256" y="218" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="280.0" y="247.0" text-anchor="middle">0.1</text>
+  <rect class="vz-maskcell" x="304" y="218" width="48" height="48"/>
+  <rect class="vz-maskcell" x="352" y="218" width="48" height="48"/>
+  <rect class="vz-maskcell" x="400" y="218" width="48" height="48"/>
+  <text class="vz-s" x="102" y="295.0" text-anchor="end">it</text>
+  <rect class="vz-heat" x="112" y="266" width="48" height="48" fill-opacity="0.06"/>
+  <text class="vz-hv" x="136.0" y="295.0" text-anchor="middle">0</text>
+  <rect class="vz-heat" x="160" y="266" width="48" height="48" fill-opacity="0.76"/>
+  <text class="vz-hv" x="184.0" y="295.0" text-anchor="middle">0.75</text>
+  <rect class="vz-heat" x="208" y="266" width="48" height="48" fill-opacity="0.29"/>
+  <text class="vz-hv" x="232.0" y="295.0" text-anchor="middle">0.25</text>
+  <rect class="vz-heat" x="256" y="266" width="48" height="48" fill-opacity="0.06"/>
+  <text class="vz-hv" x="280.0" y="295.0" text-anchor="middle">0</text>
+  <rect class="vz-heat" x="304" y="266" width="48" height="48" fill-opacity="0.06"/>
+  <text class="vz-hv" x="328.0" y="295.0" text-anchor="middle">0</text>
+  <rect class="vz-maskcell" x="352" y="266" width="48" height="48"/>
+  <rect class="vz-maskcell" x="400" y="266" width="48" height="48"/>
+  <text class="vz-s" x="102" y="343.0" text-anchor="end">was</text>
+  <rect class="vz-heat" x="112" y="314" width="48" height="48" fill-opacity="0.11"/>
+  <text class="vz-hv" x="136.0" y="343.0" text-anchor="middle">0.05</text>
+  <rect class="vz-heat" x="160" y="314" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="184.0" y="343.0" text-anchor="middle">0.1</text>
+  <rect class="vz-heat" x="208" y="314" width="48" height="48" fill-opacity="0.11"/>
+  <text class="vz-hv" x="232.0" y="343.0" text-anchor="middle">0.05</text>
+  <rect class="vz-heat" x="256" y="314" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="280.0" y="343.0" text-anchor="middle">0.1</text>
+  <rect class="vz-heat" x="304" y="314" width="48" height="48" fill-opacity="0.62"/>
+  <text class="vz-hv" x="328.0" y="343.0" text-anchor="middle">0.6</text>
+  <rect class="vz-heat" x="352" y="314" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="376.0" y="343.0" text-anchor="middle">0.1</text>
+  <rect class="vz-maskcell" x="400" y="314" width="48" height="48"/>
+  <text class="vz-s" x="102" y="391.0" text-anchor="end">tired</text>
+  <rect class="vz-heat" x="112" y="362" width="48" height="48" fill-opacity="0.06"/>
+  <text class="vz-hv" x="136.0" y="391.0" text-anchor="middle">0</text>
+  <rect class="vz-heat" x="160" y="362" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="184.0" y="391.0" text-anchor="middle">0.1</text>
+  <rect class="vz-heat" x="208" y="362" width="48" height="48" fill-opacity="0.11"/>
+  <text class="vz-hv" x="232.0" y="391.0" text-anchor="middle">0.05</text>
+  <rect class="vz-heat" x="256" y="362" width="48" height="48" fill-opacity="0.11"/>
+  <text class="vz-hv" x="280.0" y="391.0" text-anchor="middle">0.05</text>
+  <rect class="vz-heat" x="304" y="362" width="48" height="48" fill-opacity="0.34"/>
+  <text class="vz-hv" x="328.0" y="391.0" text-anchor="middle">0.3</text>
+  <rect class="vz-heat" x="352" y="362" width="48" height="48" fill-opacity="0.15"/>
+  <text class="vz-hv" x="376.0" y="391.0" text-anchor="middle">0.1</text>
+  <rect class="vz-heat" x="400" y="362" width="48" height="48" fill-opacity="0.44"/>
+  <text class="vz-hv" x="424.0" y="391.0" text-anchor="middle">0.4</text>
+  <text class="vz-n" x="12" y="72" text-anchor="start"></text>
+  <text class="vz-s" x="450" y="100" text-anchor="start">Each row is one word working out</text>
+  <text class="vz-s" x="450" y="118" text-anchor="start">its new meaning. The numbers in the row</text>
+  <text class="vz-s" x="450" y="136" text-anchor="start">are its attention weights and add up to 1.</text>
+  <text class="vz-s" x="450" y="172" text-anchor="start">Darker = more attention.</text>
+  <rect class="vz-maskcell" x="450" y="196" width="24" height="24"/>
+  <text class="vz-s" x="482" y="214" text-anchor="start">Hidden by the causal mask:</text>
+  <text class="vz-s" x="482" y="232" text-anchor="start">a word cannot look at later words.</text>
+  <text class="vz-s" x="450" y="270" text-anchor="start">Look at the row for "it": most of its</text>
+  <text class="vz-s" x="450" y="288" text-anchor="start">attention goes to "cat" (0.75).</text>
+  <text class="vz-n vz-note" x="12" y="436" text-anchor="start">Made-up weights (the row for "it" is the one used in the lesson's maths box).</text>
+</svg>
