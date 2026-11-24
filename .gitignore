@@ -5,3 +5,4 @@ qa/screenshots/
 *.log
 __pycache__/
 *.pyc
+qa/visuals.html

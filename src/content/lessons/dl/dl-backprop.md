@@ -8,7 +8,7 @@ maths: algebra
 goal: Follow the chain rule through a small calculation by hand, see how automatic differentiation does the same thing for any model, and recognise why gradients can vanish in deep stacks of layers.
 prereqs: dl-neural-nets
 reviewed: 2026-11-18
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A hand-worked gradient for a one-neuron model that matches a program's gradient and a tiny numerical check, plus a sentence on why sigmoid stacks lose gradient.
 code: Python executed 2026-11-18 (examples/backprop/autograd.py, standard library only); PyTorch was not run for this lesson; the C# version prints the same numbers
 ---
@@ -21,6 +21,12 @@ note: The forward pass records. The backward pass uses the record to hand out bl
 - Backward: start with gradient one at the loss | One unit of blame | process
 - Multiply by each step's slope going back | The chain rule | model
 - Read the gradient at every weight | Used to update the weights | output
+```
+
+```visual The forward pass, then the backward pass
+file: forward-backward
+alt: A row of four boxes, input, step 1, step 2 and loss, with arrows running forward. Below it, arrows run backward from the loss, and text explains that blame is handed back using the chain rule so each weight gets a gradient.
+caption: The forward pass computes and remembers; the backward pass uses the record to hand out blame as a gradient for every weight.
 ```
 
 ```diagram compare Three ways to get a gradient

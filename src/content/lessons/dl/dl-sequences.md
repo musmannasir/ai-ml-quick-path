@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain how text becomes numbers (tokens and embeddings), how word vectors capture meaning, and how recurrent networks process sequences and why transformers replaced them.
 prereqs: dl-neural-nets, d-features
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Word vectors trained on a small corpus you choose, with nearest neighbours for five words and a note on one surprising result.
 code: Python executed 2026-11-02 (gap_topics.py wordvec, ai_extras.py rnn)
 ---
@@ -23,11 +23,23 @@ Text, speech and sensor readings are **sequences**: order matters. To use text, 
 - Use | Classify, search, translate or generate | output
 ```
 
+```visual Words as points on a map
+file: embedding-map
+alt: A map with words as dots. Three groups are circled. Software developer, programmer and engineer sit close together; nurse, doctor and paramedic sit together in another place; baker, chef and bakery sit together in a third. Words with similar meanings are close, words with different meanings are far apart.
+caption: An embedding gives each word a list of numbers, which acts like a position on a map. Similar meanings land close together, which is how search can find programmer when you ask for software developer.
+```
+
 ```diagram loop A recurrent network reading a sequence
 - Read the next token | One step at a time | input
 - Update the hidden state | The running memory | model
 - Pass the state on | It becomes the input to the next step | store
 loop: Repeat for every token, then use the final state to predict
+```
+
+```visual An RNN unrolled over three words
+file: rnn-unrolled
+alt: Three copies of the same RNN cell in a row, reading the words the, cat and sat, passing a memory arrow from one to the next. The final memory is used to make a prediction.
+caption: A recurrent network is one cell used again and again, carrying its memory forward. Early words fade, which is one reason transformers replaced it.
 ```
 
 ```diagram compare RNN and transformer

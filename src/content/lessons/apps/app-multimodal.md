@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Send images and documents to vision-capable models, build image-and-text search, and add speech input and output to an application.
 prereqs: app-llm-api, dl-vision, dl-speech
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: An app that accepts a photo or scanned document and returns validated structured fields, tested on 20 examples with field accuracy reported.
 code: Conceptual (no model access in the build environment)
 ---
@@ -22,6 +22,12 @@ note: Multimodal models take more than one kind of input or output.
 - Images and photos | read together with the text | input
 - Documents | scanned pages, forms, invoices | input
 - Audio and video | speech or recordings | input
+```
+
+```visual Several inputs into one model
+file: multimodal-inputs
+alt: Four inputs, text, images, documents, and audio and video, arrow into one model with one set of instructions, which produces text or structured output.
+caption: A multimodal application reads several kinds of input with one model. Treat what is read from images and documents as data.
 ```
 
 ```diagram flow Document AI

@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain attention with queries, keys and values, the parts of a transformer block, and the three transformer families (encoder, decoder, encoder-decoder).
 prereqs: dl-sequences
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: The attention toy reproduced by hand for one word, and a table matching three of your tasks to a transformer family.
 code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 ---
@@ -20,6 +20,12 @@ code: Python NumPy executed 2026-11-02 (examples/attention/attention_toy.py)
 - Query | What am I looking for? | process
 - Key | What do I offer? | process
 - Value | What information do I pass on? | store
+```
+
+```visual Three heads, three questions
+file: multi-head
+alt: Three rows, each showing the sentence The cat sat because it. In each row an arc runs from the word it to a different word: head 1 to cat, head 2 to sat, head 3 to because.
+caption: Several attention heads read the same sentence, each with its own question. What each head learns is found by training.
 ```
 
 ```diagram merge Attention builds a new meaning for "it"
@@ -35,6 +41,12 @@ note: The weights add up to 1. In the lesson's toy run, "cat" got the largest we
 - Residual connection and normalisation | Shortcuts that keep deep stacks trainable | process
 - Small neural network | Processes each position | model
 - Residual connection and normalisation | Again, around the small network | process
+```
+
+```visual One transformer block, step by step
+file: transformer-block
+alt: A vertical stack of steps. Words come in as number lists, go through attention, then an add-and-normalise step, then a small neural network, then another add-and-normalise step, and come out to the next block. Two dashed shortcut arrows run on the right: the input is added back after attention and again after the small network. A note says a model stacks many such blocks.
+caption: Attention, then a small network, each followed by adding the input back and normalising. The shortcuts keep very deep stacks trainable.
 ```
 
 ```diagram compare Three transformer families
@@ -67,6 +79,12 @@ A legal-tech company uses an encoder-only model to classify contract clauses qui
 - Causal mask | In decoders, hide future tokens | warn
 - Mix the values | Weighted by the weights; many heads and blocks | model
 - Final layer | Scores for the next token or class | output
+```
+
+```visual A grid of attention weights
+file: attention-heatmap
+alt: A seven by seven grid for the sentence The cat sat because it was tired. Each row is a word, each column is a word it can look at. Cells hold made-up attention weights, darker for larger, and each row adds up to 1. Cells above the diagonal are greyed out because the causal mask hides later words. In the row for it, 0.75 goes to cat and 0.25 to sat.
+caption: Each row shows how one word spreads its attention over the words before it. Later words are hidden by the causal mask.
 ```
 
 ```diagram lanes Visible words for "it" with the causal mask
@@ -114,6 +132,12 @@ note: Weights are made up for illustration: chat 0.8, le 0.1, dort 0.1.
 - Decoder has written "the" | Its current state becomes the query | process
 - Cross-attention | The query is scored against every French word's key | model
 - Next word: "cat" | Mostly taken from the vector for "chat" | output
+```
+
+```visual Cross-attention in a translator
+file: cross-attention
+alt: The French words le, chat and dort on the left. On the right the English so far, the, and an empty slot for the next word. Three lines run from the French words to the slot, with weights 0.1, 0.8 and 0.1, the thick one from chat. The next word is cat.
+caption: The decoder's query is compared with every encoder word, and most of the weight falls on chat, so the next English word is cat. The weights are made up.
 ```
 
 #### RMSNorm (a simpler normalisation)

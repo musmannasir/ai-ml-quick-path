@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain neurons, layers, activations and backpropagation in plain words, and train a small network in Python and C#.
 prereqs: ml-learning
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: Your own network that learns XOR in Python or C#, and a note on what changed when you used a different random seed.
 code: Python NumPy executed 2026-11-02 (examples/ai-extras/ai_extras.py nn); PyTorch not run (not installed in the build environment)
 ---
@@ -22,12 +22,24 @@ note: Data moves from the top layer to the bottom layer. "Deep" means many hidde
 - Output layer | Gives the answer | output
 ```
 
+```visual Layers of neurons
+file: network-layers
+alt: A network drawn as four columns of circles joined by lines: an input layer of three circles, two hidden layers of four circles each, and an output layer of two circles. Every circle connects to every circle in the next column. Labels say the input layer takes raw numbers, the hidden layers build more and more abstract patterns, and the output layer gives the answer.
+caption: Data flows from the input layer through the hidden layers to the output layer. Deep means many hidden layers.
+```
+
 ```diagram flow Inside one neuron
 - Numbers in | Each number comes from the previous layer | input
 - Multiply by weights | Each input has its own weight | process
 - Add them up | One total per neuron | process
 - Activation function | ReLU or tanh bends the result so patterns can combine | model
 - Number out | Passed to the next layer | output
+```
+
+```visual One neuron with the lesson's numbers
+file: neuron-sum
+alt: A neuron drawn as a circle. Two input circles hold 2 and 3. Arrows carry them in, multiplied by the weights 0.5 and minus 1, giving 1 and minus 3. A bias of plus 1 comes in from above. The neuron adds them to get minus 1. That goes through a ReLU box, which turns negative numbers into 0, and the output circle shows 0, so the neuron stays silent.
+caption: Inputs times weights, plus a bias, then ReLU. With these invented numbers the sum is -1, so the neuron outputs 0.
 ```
 
 ```diagram compare Straight-line model and a network on XOR
@@ -200,6 +212,12 @@ e is about 2.718. A large positive z gives a value near 1; a large negative z gi
 - Layers collapse | Stacked layers act like one straight-line model
 ## With activation functions | output
 - Layers bend and combine | The network can learn patterns a straight line cannot
+```
+
+```visual Three activation functions
+file: activation-shapes
+alt: Three small graphs. The step function jumps from 0 to 1. ReLU is 0 for negative inputs and rises as a straight line for positive ones. The sigmoid is a smooth S-shaped curve between 0 and 1.
+caption: An activation function bends the sum so layers can learn curves. Without it, many layers collapse into one straight-line model.
 ```
 
 ## Quick check

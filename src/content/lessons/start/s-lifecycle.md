@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Walk through the full project lifecycle (problem, data, baseline, model, evaluation, deployment, monitoring) and run every step on a small example.
 prereqs: s-what-is-ai
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: The lifecycle script run on your machine, plus a written problem statement for a project idea with its success measure and baseline.
 code: Python executed 2026-11-02 (quickpath.py lifecycle)
 ---
@@ -24,6 +24,12 @@ note: Six steps, then you go round again.
 - Deploy | So people or systems can use it | output
 - Monitor | The world changes and models get worse | warn
 loop: Repeat when monitoring shows quality dropping
+```
+
+```visual The project as a loop of stops
+file: lifecycle-road
+alt: Six boxes in a row joined by arrows: goal, data, baseline, model, check and release. A return arrow runs from the end back to the start through a box that says monitor, learn, and go round again.
+caption: An AI project is a loop, not a straight line: bad results usually send you back to the data or the goal.
 ```
 
 ```diagram compare Baseline and model on the same goal

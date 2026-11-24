@@ -1,0 +1,20 @@
+<svg viewBox="0 0 720 368" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A hidden factor that makes two things look connected. -->
+  <rect class="vz-warn" x="250" y="20" width="220" height="64" rx="12"/>
+  <text class="vz-title" x="360" y="46" text-anchor="middle">Hidden factor</text>
+  <text class="vz-s" x="360" y="68" text-anchor="middle">(for example hot weather)</text>
+  <rect class="vz-ml" x="30" y="200" width="220" height="64" rx="12"/>
+  <text class="vz-title" x="140" y="228" text-anchor="middle">Ice cream sales</text>
+  <text class="vz-s" x="140" y="250" text-anchor="middle">go up</text>
+  <rect class="vz-lm" x="470" y="200" width="220" height="64" rx="12"/>
+  <text class="vz-title" x="580" y="228" text-anchor="middle">Sunburn cases</text>
+  <text class="vz-s" x="580" y="250" text-anchor="middle">go up</text>
+  <line class="vz-arrow" x1="310.0" y1="88.0" x2="178.7" y2="189.3"/>
+  <polygon class="vz-headk" points="170.0,196.0 182.4,194.0 175.0,184.5"/>
+  <line class="vz-arrow" x1="410.0" y1="88.0" x2="541.3" y2="189.3"/>
+  <polygon class="vz-headk" points="550.0,196.0 545.0,184.5 537.6,194.0"/>
+  <line class="vz-fb" x1="256" y1="232" x2="466" y2="232"/>
+  <text class="vz-title" x="360" y="294" text-anchor="middle">The two move together, but neither causes the other: a false link.</text>
+  <text class="vz-s" x="20" y="326" text-anchor="start">A made-up example of a confounder. A hidden factor drives both, so the two look connected.</text>
+  <text class="vz-n vz-note" x="12" y="352" text-anchor="start">Causal methods try to separate the real effect of an action from effects like this one.</text>
+</svg>

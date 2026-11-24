@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Recognise the main risks to LLM applications (prompt injection, data leakage, excessive agency and others), apply layered defences, and redact personal data before it reaches a model.
 prereqs: app-agents, app-rag
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A threat list for one of your apps plus 15 adversarial tests (injection, data leakage, unsafe output, cost abuse) with results and fixes.
 code: Python executed 2026-11-02 (quickpath.py pii)
 ---
@@ -24,6 +24,12 @@ AI apps add new ways to be attacked. **Prompt injection** is text that tries to 
 - Hidden in a document, web page or email
 - The system reads it as part of its work
 - The user may never see it
+```
+
+```visual A hidden instruction, and a check in code
+file: prompt-injection
+alt: An untrusted email contains an ordinary question and, highlighted, a hidden line asking the model to ignore its rules and send every customer's address. The email and the rules reach the model as one block of text, and the model may follow the hidden line. The requested action, send customer data, is not an allowed tool, so the code blocks it. Defences listed: treat outside text as data, give the model only needed tools, check requests in code, and ask a person to approve risky actions.
+caption: An injection hides instructions in text the model reads. A prompt rule alone is not enough: the code must check what the model asks to do.
 ```
 
 ```diagram nest Untrusted text around the model

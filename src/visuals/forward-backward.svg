@@ -1,0 +1,29 @@
+<svg viewBox="0 0 720 328" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The forward pass and the backward pass. -->
+  <rect class="vz-r0" x="24" y="80" width="130" height="56" rx="10"/>
+  <text class="vz-title" x="89" y="114" text-anchor="middle">Input</text>
+  <line class="vz-arrow" x1="158.0" y1="100.0" x2="185.0" y2="100.0"/>
+  <polygon class="vz-headk" points="196.0,100.0 185.0,94.0 185.0,106.0"/>
+  <rect class="vz-ml" x="200" y="80" width="130" height="56" rx="10"/>
+  <text class="vz-title" x="265" y="114" text-anchor="middle">Step 1</text>
+  <line class="vz-arrow" x1="334.0" y1="100.0" x2="361.0" y2="100.0"/>
+  <polygon class="vz-headk" points="372.0,100.0 361.0,94.0 361.0,106.0"/>
+  <rect class="vz-ml" x="376" y="80" width="130" height="56" rx="10"/>
+  <text class="vz-title" x="441" y="114" text-anchor="middle">Step 2</text>
+  <line class="vz-arrow" x1="510.0" y1="100.0" x2="537.0" y2="100.0"/>
+  <polygon class="vz-headk" points="548.0,100.0 537.0,94.0 537.0,106.0"/>
+  <rect class="vz-warn" x="552" y="80" width="130" height="56" rx="10"/>
+  <text class="vz-title" x="617" y="114" text-anchor="middle">Loss</text>
+  <text class="vz-title" x="20" y="54" text-anchor="start">Forward pass: compute each step and remember it</text>
+  <line class="vz-arrowr" x1="196.0" y1="172.0" x2="167.0" y2="172.0"/>
+  <polygon class="vz-headk" points="156.0,172.0 167.0,178.0 167.0,166.0"/>
+  <line class="vz-arrowr" x1="372.0" y1="172.0" x2="343.0" y2="172.0"/>
+  <polygon class="vz-headk" points="332.0,172.0 343.0,178.0 343.0,166.0"/>
+  <line class="vz-arrowr" x1="548.0" y1="172.0" x2="519.0" y2="172.0"/>
+  <polygon class="vz-headk" points="508.0,172.0 519.0,178.0 519.0,166.0"/>
+  <text class="vz-title" x="20" y="214" text-anchor="start">Backward pass: hand out blame from the loss, step by step</text>
+  <text class="vz-s" x="20" y="238" text-anchor="start">Start with one unit of blame at the loss and multiply by each step's slope going back (the chain rule).</text>
+  <text class="vz-s" x="20" y="258" text-anchor="start">Each weight ends up with a gradient: how much it contributed to the error.</text>
+  <text class="vz-s" x="20" y="284" text-anchor="start">The gradients tell the optimiser which way to nudge each weight, and by how much.</text>
+  <text class="vz-n vz-note" x="12" y="312" text-anchor="start">The forward pass records; the backward pass uses the record to hand out blame.</text>
+</svg>

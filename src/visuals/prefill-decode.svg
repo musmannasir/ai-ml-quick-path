@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 326" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Prefill, decode, time to first token and inter-token latency. -->
+  <text class="vz-title" x="14" y="28" text-anchor="start">One request, over time</text>
+  <rect class="vz-ml" x="20" y="60" width="230" height="60" rx="8"/>
+  <text class="vz-title" x="135" y="88" text-anchor="middle">Prefill</text>
+  <text class="vz-s" x="135" y="108" text-anchor="middle">reads the whole prompt at once</text>
+  <rect class="vz-lm" x="270" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="292" y="96" text-anchor="middle">t1</text>
+  <rect class="vz-lm" x="322" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="344" y="96" text-anchor="middle">t2</text>
+  <rect class="vz-lm" x="374" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="396" y="96" text-anchor="middle">t3</text>
+  <rect class="vz-lm" x="426" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="448" y="96" text-anchor="middle">t4</text>
+  <rect class="vz-lm" x="478" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="500" y="96" text-anchor="middle">t5</text>
+  <rect class="vz-lm" x="530" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="552" y="96" text-anchor="middle">t6</text>
+  <rect class="vz-lm" x="582" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="604" y="96" text-anchor="middle">t7</text>
+  <rect class="vz-lm" x="634" y="60" width="44" height="60" rx="6"/>
+  <text class="vz-s" x="656" y="96" text-anchor="middle">t8</text>
+  <line class="vz-limit" x1="258" y1="48" x2="258" y2="140"/>
+  <text class="vz-s" x="135" y="150" text-anchor="middle">limited by arithmetic speed</text>
+  <text class="vz-s" x="480" y="150" text-anchor="middle">Decode: one token at a time, limited by memory speed</text>
+  <line class="vz-axis" x1="20" y1="190" x2="258" y2="190"/>
+  <text class="vz-title" x="139" y="214" text-anchor="middle">TTFT: the wait for the first token</text>
+  <line class="vz-axis" x1="270" y1="190" x2="322" y2="190"/><line class="vz-axis" x1="322" y1="190" x2="374" y2="190"/>
+  <text class="vz-title" x="480" y="214" text-anchor="middle">ITL: the gap between tokens</text>
+  <text class="vz-s" x="14" y="258" text-anchor="start">Made-up example from the API lesson: first token after 0.5 s (TTFT), then a token every 0.05 s (ITL).</text>
+  <text class="vz-s" x="14" y="280" text-anchor="start">A long prompt makes TTFT worse; a busy or large model makes ITL worse.</text>
+  <text class="vz-n vz-note" x="12" y="310" text-anchor="start">Boxes are not to scale. Every real system differs; measure yours.</text>
+</svg>

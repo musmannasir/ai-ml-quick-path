@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A support vector machine's widest margin. -->
+  <rect class="vz-card" x="12" y="12" width="460" height="270" rx="10"/>
+  <line class="vz-fit" x1="170" y1="260" x2="400" y2="30" />
+  <line class="vz-knn" x1="130" y1="260" x2="360" y2="30" />
+  <line class="vz-knn" x1="210" y1="260" x2="440" y2="30" />
+  <circle class="vz-c0" cx="90.0" cy="90.0" r="7"/>
+  <circle class="vz-c0" cx="140.0" cy="60.0" r="7"/>
+  <circle class="vz-c0" cx="170.0" cy="130.0" r="7"/>
+  <circle class="vz-c0" cx="110.0" cy="170.0" r="7"/>
+  <circle class="vz-c0" cx="200.0" cy="190.0" r="7"/>
+  <circle class="vz-c0" cx="260.0" cy="130.0" r="7"/>
+  <rect class="vz-c1" x="293" y="163" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="343" y="143" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="383" y="213" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="323" y="233" width="14" height="14" rx="2"/>
+  <rect class="vz-c1" x="413" y="163" width="14" height="14" rx="2"/>
+  <circle class="vz-sv" cx="200.0" cy="190.0" r="13"/>
+  <circle class="vz-sv" cx="260.0" cy="130.0" r="13"/>
+  <rect class="vz-sv" x="287" y="157" width="26" height="26" rx="4"/>
+  <text class="vz-title" x="500" y="50" text-anchor="start">Support vector machine</text>
+  <text class="vz-s" x="500" y="80" text-anchor="start">Many lines separate the</text>
+  <text class="vz-s" x="500" y="98" text-anchor="start">two groups. The SVM picks</text>
+  <text class="vz-s" x="500" y="116" text-anchor="start">the one with the widest</text>
+  <text class="vz-s" x="500" y="134" text-anchor="start">gap (the margin).</text>
+  <text class="vz-s" x="500" y="166" text-anchor="start">Circled points are the</text>
+  <text class="vz-s" x="500" y="184" text-anchor="start">"support vectors": the</text>
+  <text class="vz-s" x="500" y="202" text-anchor="start">ones closest to the line.</text>
+  <text class="vz-s" x="500" y="234" text-anchor="start">Soft margin: setting C</text>
+  <text class="vz-s" x="500" y="252" text-anchor="start">decides how many points</text>
+  <text class="vz-s" x="500" y="270" text-anchor="start">may sit on the wrong side.</text>
+  <text class="vz-n vz-note" x="12" y="306" text-anchor="start">Made-up points. Solid line = the boundary; dashed lines = the edges of the margin.</text>
+</svg>

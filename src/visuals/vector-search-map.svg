@@ -1,0 +1,29 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A question and its nearest document pieces on a map. -->
+  <rect class="vz-card" x="12" y="12" width="460" height="270" rx="10"/>
+  <circle class="vz-knn" cx="270" cy="120" r="78"/>
+  <circle class="vz-c0" cx="225" cy="70" r="7"/>
+  <text class="vz-s" x="236" y="75" text-anchor="start">Return policy</text>
+  <circle class="vz-c0" cx="330" cy="130" r="7"/>
+  <text class="vz-s" x="341" y="135" text-anchor="start">Refund steps</text>
+  <circle class="vz-c0" cx="190" cy="150" r="7"/>
+  <text class="vz-s" x="201" y="155" text-anchor="start">Damaged item claim</text>
+  <circle class="vz-pt" cx="340" cy="240" r="7"/>
+  <text class="vz-s" x="351" y="245" text-anchor="start">Shipping times</text>
+  <circle class="vz-pt" cx="90" cy="60" r="7"/>
+  <text class="vz-s" x="101" y="65" text-anchor="start">Store opening hours</text>
+  <circle class="vz-pt" cx="90" cy="235" r="7"/>
+  <text class="vz-s" x="101" y="240" text-anchor="start">Gift cards</text>
+  <polygon class="vz-new" points="270,109 280,120 270,131 260,120"/>
+  <text class="vz-s" x="284" y="106" text-anchor="start">question</text>
+  <text class="vz-title" x="496" y="50" text-anchor="start">Vector search</text>
+  <text class="vz-s" x="496" y="82" text-anchor="start">1. Turn the question into a</text>
+  <text class="vz-s" x="496" y="100" text-anchor="start">    vector (a point on the map).</text>
+  <text class="vz-s" x="496" y="128" text-anchor="start">2. Find the closest document</text>
+  <text class="vz-s" x="496" y="146" text-anchor="start">    pieces (inside the circle).</text>
+  <text class="vz-s" x="496" y="174" text-anchor="start">3. Send those to the model</text>
+  <text class="vz-s" x="496" y="192" text-anchor="start">    as evidence.</text>
+  <text class="vz-n" x="496" y="228" text-anchor="start">Close = similar meaning, even</text>
+  <text class="vz-n" x="496" y="246" text-anchor="start">when no words match.</text>
+  <text class="vz-n vz-note" x="12" y="306" text-anchor="start">A two-dimensional picture with made-up pieces and positions. Real vectors have hundreds of numbers.</text>
+</svg>

@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Measure fairness between groups, protect privacy, explain decisions, keep people in control, and document models with model cards and risk registers.
 prereqs: ml-evaluation, app-security
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A risk register and a fairness check (approval rates and error rates by group) for one of your models, with an owner for each risk.
 code: Python executed 2026-11-02 (quickpath.py fairness)
 ---
@@ -37,6 +37,12 @@ note: Both compare groups. They ask about different people.
 ## Equal opportunity | process
 - Looks only at people who truly qualify
 - Are groups approved at similar rates?
+```
+
+```visual Two fairness checks, two groups
+file: fairness-checks
+alt: Two panels. Demographic parity compares approval rates of everyone in each group: group A 40 percent and group B 30 percent. Equal opportunity compares only the people who truly qualify: group A 85 percent and group B 70 percent.
+caption: Both checks compare groups but ask about different people. The rates are made up.
 ```
 
 ```diagram layers Documents that keep a system accountable

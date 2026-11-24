@@ -1,0 +1,38 @@
+<svg viewBox="0 0 720 292" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The project lifecycle as stops on a loop. -->
+  <rect class="vz-ml" x="14" y="70" width="104" height="78" rx="12"/>
+  <text class="vz-title" x="66" y="102" text-anchor="middle">Goal</text>
+  <text class="vz-s" x="66" y="124" text-anchor="middle">what to improve</text>
+  <line class="vz-arrow" x1="120.0" y1="109.0" x2="117.0" y2="109.0"/>
+  <polygon class="vz-headk" points="128.0,109.0 117.0,103.0 117.0,115.0"/>
+  <rect class="vz-ap" x="130" y="70" width="104" height="78" rx="12"/>
+  <text class="vz-title" x="182" y="102" text-anchor="middle">Data</text>
+  <text class="vz-s" x="182" y="124" text-anchor="middle">collect, clean</text>
+  <line class="vz-arrow" x1="236.0" y1="109.0" x2="233.0" y2="109.0"/>
+  <polygon class="vz-headk" points="244.0,109.0 233.0,103.0 233.0,115.0"/>
+  <rect class="vz-ml" x="246" y="70" width="104" height="78" rx="12"/>
+  <text class="vz-title" x="298" y="102" text-anchor="middle">Baseline</text>
+  <text class="vz-s" x="298" y="124" text-anchor="middle">a simple first try</text>
+  <line class="vz-arrow" x1="352.0" y1="109.0" x2="349.0" y2="109.0"/>
+  <polygon class="vz-headk" points="360.0,109.0 349.0,103.0 349.0,115.0"/>
+  <rect class="vz-ap" x="362" y="70" width="104" height="78" rx="12"/>
+  <text class="vz-title" x="414" y="102" text-anchor="middle">Model</text>
+  <text class="vz-s" x="414" y="124" text-anchor="middle">train and tune</text>
+  <line class="vz-arrow" x1="468.0" y1="109.0" x2="465.0" y2="109.0"/>
+  <polygon class="vz-headk" points="476.0,109.0 465.0,103.0 465.0,115.0"/>
+  <rect class="vz-ml" x="478" y="70" width="104" height="78" rx="12"/>
+  <text class="vz-title" x="530" y="102" text-anchor="middle">Check</text>
+  <text class="vz-s" x="530" y="124" text-anchor="middle">test honestly</text>
+  <line class="vz-arrow" x1="584.0" y1="109.0" x2="581.0" y2="109.0"/>
+  <polygon class="vz-headk" points="592.0,109.0 581.0,103.0 581.0,115.0"/>
+  <rect class="vz-ap" x="594" y="70" width="104" height="78" rx="12"/>
+  <text class="vz-title" x="646" y="102" text-anchor="middle">Release</text>
+  <text class="vz-s" x="646" y="124" text-anchor="middle">ship it safely</text>
+  <path class="vz-fb" d="M66 152 C 66 230 662 230 662 152"/>
+  <line class="vz-arrow" x1="640.0" y1="214.0" x2="658.3" y2="162.4"/>
+  <polygon class="vz-headk" points="662.0,152.0 652.7,160.4 664.0,164.4"/>
+  <rect class="vz-warn" x="200" y="198" width="320" height="44" rx="10"/>
+  <text class="vz-title" x="360" y="226" text-anchor="middle">Monitor, learn, and go round again</text>
+  <text class="vz-title" x="14" y="34" text-anchor="start">An AI project is a loop, not a straight line</text>
+  <text class="vz-n vz-note" x="12" y="276" text-anchor="start">Each stop can send you back: bad results usually mean going back to the data or the goal.</text>
+</svg>

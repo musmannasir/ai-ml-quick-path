@@ -8,7 +8,7 @@ maths: algebra
 goal: Encode categories, scale numbers, create useful features from dates and text, and avoid data leakage by using pipelines.
 prereqs: d-clean-eda
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A pipeline that prepares a mixed dataset (numbers, categories, dates, text) and one new feature that measurably improves a model.
 code: Python executed 2026-11-02 (ml_basics.py features)
 ---
@@ -32,6 +32,12 @@ note: Matches the executed output in the Python example: one column became three
 - plan_basic | yes or no
 - plan_pro | yes or no
 - plan_team | yes or no
+```
+
+```visual One-hot encoding of the plan column
+file: one-hot-table
+alt: On the left a table with one column called plan holding basic, pro and team. An arrow labelled one-hot leads to a table with three columns, plan basic, plan pro and plan team, where each row has a single 1 and two 0s.
+caption: One text column becomes one yes/no column per plan, so the model does not treat pro as bigger than basic.
 ```
 
 ```diagram compare Leaky and safe preparation

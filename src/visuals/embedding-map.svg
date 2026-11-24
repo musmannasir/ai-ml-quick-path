@@ -1,0 +1,29 @@
+<svg viewBox="0 0 720 316" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Words as points on a map: similar meanings sit close together. -->
+  <rect class="vz-card" x="12" y="12" width="696" height="290" rx="10"/>
+  <ellipse class="vz-clu vz-ml" cx="190" cy="86" rx="156" ry="70"/>
+  <ellipse class="vz-clu vz-ok" cx="540" cy="80" rx="146" ry="74"/>
+  <ellipse class="vz-clu vz-warn" cx="330" cy="222" rx="131" ry="56"/>
+  <circle class="vz-pt" cx="130" cy="76" r="6"/>
+  <text class="vz-s" x="140" y="81" text-anchor="start">software developer</text>
+  <circle class="vz-pt" cx="220" cy="101" r="6"/>
+  <text class="vz-s" x="230" y="106" text-anchor="start">programmer</text>
+  <circle class="vz-pt" cx="170" cy="126" r="6"/>
+  <text class="vz-s" x="180" y="131" text-anchor="start">engineer</text>
+  <text class="vz-title" x="190" y="170" text-anchor="middle">jobs in tech</text>
+  <circle class="vz-pt" cx="500" cy="70" r="6"/>
+  <text class="vz-s" x="510" y="75" text-anchor="start">nurse</text>
+  <circle class="vz-pt" cx="580" cy="98" r="6"/>
+  <text class="vz-s" x="590" y="103" text-anchor="start">doctor</text>
+  <circle class="vz-pt" cx="525" cy="120" r="6"/>
+  <text class="vz-s" x="535" y="125" text-anchor="start">paramedic</text>
+  <text class="vz-title" x="540" y="168" text-anchor="middle">health jobs</text>
+  <circle class="vz-pt" cx="300" cy="215" r="6"/>
+  <text class="vz-s" x="310" y="220" text-anchor="start">baker</text>
+  <circle class="vz-pt" cx="360" cy="232" r="6"/>
+  <text class="vz-s" x="370" y="237" text-anchor="start">chef</text>
+  <circle class="vz-pt" cx="335" cy="195" r="6"/>
+  <text class="vz-s" x="345" y="200" text-anchor="start">bakery</text>
+  <text class="vz-title" x="469" y="228" text-anchor="start">food</text>
+  <text class="vz-n vz-note" x="24" y="294" text-anchor="start">Close together = similar meaning. Distance is how a model finds "programmer" when you search "software developer".</text>
+</svg>

@@ -8,7 +8,7 @@ maths: advanced optional
 goal: Explain agents, actions, rewards and policies, implement Q-learning and a policy-gradient agent, and connect reinforcement learning to how chat models are tuned.
 prereqs: ml-learning
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A Q-learning or policy-gradient agent for a small problem you design, with its learned policy explained and averaged over several seeds.
 code: Python executed 2026-11-02 (ai_extras.py qlearn, gap_topics.py pg); added technique snippets (2026-11-05) not run
 ---
@@ -21,6 +21,12 @@ In **reinforcement learning (RL)** an **agent** learns by trial and error. It se
 - Environment gives a reward | Good or bad | output
 - New state | The agent updates what it knows | model
 loop: Repeat to get the most total reward over time
+```
+
+```visual The agent and environment loop
+file: rl-loop
+alt: Two boxes. The agent on the left sees a state and picks an action. The environment on the right reacts to the action. Three arrows join them: the action goes from agent to environment, and the new state and a reward come back. An example below: a game character in a maze gets plus 1 for a coin and minus 1 for a trap.
+caption: The agent acts, the environment answers with a new state and a reward, and the loop repeats to collect the most reward over time.
 ```
 
 ```diagram compare Q-learning and policy gradient

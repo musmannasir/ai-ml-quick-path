@@ -9,7 +9,7 @@
 //
 // Without JavaScript both parts are shown one under the other; the script adds the tab bar. Rules enforced here: the diagram must come
 // first, alt text and caption are required, and the SVG file must hold no script, no style attribute, no event handler and no outside address.
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,4 +35,34 @@ export function renderVisualTab(title, bodyLines, diagramHtml, inl, ctx, where) 
 <div class="vz-panel" role="tabpanel" id="${id}-pb" aria-labelledby="${id}-tb" data-vz-panel="boxes"><p class="vz-label">Boxes</p>${diagramHtml}</div>
 <div class="vz-panel" role="tabpanel" id="${id}-pv" aria-labelledby="${id}-tv" data-vz-panel="visual"><p class="vz-label">Visual</p><figure class="vz-fig">${svg}<figcaption><span class="dg-kicker">Visual</span> ${inl(kv.caption)}</figcaption></figure></div>
 </div>`;
+}
+
+// ---- Used by the cheat sheets: the same drawings, with the text alternative written for the lesson that holds them ----
+let META = null;
+export function visualMeta() {
+  if (META) return META;
+  META = {};
+  const root = join(DIR, '..', 'content', 'lessons');
+  for (const part of readdirSync(root)) {
+    for (const fn of readdirSync(join(root, part)).filter((f) => f.endsWith('.md'))) {
+      const lines = readFileSync(join(root, part, fn), 'utf8').replace(/\r\n/g, '\n').split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        if (!lines[i].startsWith('```visual')) continue;
+        const kv = {};
+        for (i++; i < lines.length && !lines[i].startsWith('```'); i++) { const m = lines[i].match(/^(file|alt|caption):\s*(.+)$/); if (m) kv[m[1]] = m[2].trim(); }
+        if (kv.file && !META[kv.file]) META[kv.file] = kv;
+      }
+    }
+  }
+  return META;
+}
+
+export function inlineVisual(file, idPrefix, where) {
+  const meta = visualMeta()[file];
+  if (!meta) throw new Error(`${where}: the visual "${file}" is not used in any lesson, so it has no text alternative`);
+  const path = join(DIR, file + '.svg');
+  if (!existsSync(path)) throw new Error(`${where}: src/visuals/${file}.svg does not exist`);
+  let svg = readFileSync(path, 'utf8').replace(/\r\n/g, '\n').replace(/<!--[\s\S]*?-->/g, '').trim();
+  svg = svg.replace('<svg ', `<svg role="img" aria-labelledby="${idPrefix}-t" `).replace(/(<svg[^>]*>)/, `$1<title id="${idPrefix}-t">${esc(meta.alt)}</title>`);
+  return { svg, caption: meta.caption };
 }

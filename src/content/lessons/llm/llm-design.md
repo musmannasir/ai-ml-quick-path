@@ -8,7 +8,7 @@ maths: advanced optional
 goal: Choose tokeniser, vocabulary, width, depth, heads and context length for a model, estimate its size and memory, and plan experiments.
 prereqs: llm-tokens, dl-transformers
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: A design sheet for a small model with parameter count, memory estimate, training data plan and three experiments that each change one setting.
 code: Python executed 2026-11-02 (quickpath.py llm_size)
 ---
@@ -101,6 +101,12 @@ note: Eight query heads, with made-up group sizes.
 - Cache 8 times smaller
 ```
 
+```visual How many key-value heads are kept
+file: gqa-heads
+alt: Three rows, each with eight query heads. Multi-head has eight key-value heads. Grouped-query has two, each shared by four query heads, so the cache is four times smaller. Multi-query has one, so the cache is eight times smaller.
+caption: Sharing key and value heads among query heads shrinks the cache that long texts need.
+```
+
 ```diagram compare Dense model versus mixture of experts
 ## Dense model | model
 - Every parameter is used for every token
@@ -110,6 +116,12 @@ note: Eight query heads, with made-up group sizes.
 - Many parameters, a fraction used per token
 - Cheaper to run than a same-size dense model
 - All experts must still fit in memory
+```
+
+```visual A router picking two of eight experts
+file: moe-router
+alt: A token goes into a router, which sends it to two of eight expert blocks. The other six are not used for this token.
+caption: A mixture-of-experts layer has many experts but sends each token to only a few, so it uses a fraction of its parameters per token.
 ```
 
 ```diagram flow Long context costs memory

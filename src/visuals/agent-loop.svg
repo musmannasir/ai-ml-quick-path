@@ -1,0 +1,27 @@
+<svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The agent loop with limits set by code. -->
+  <rect class="vz-lm" x="14" y="40" width="200" height="90" rx="12"/>
+  <text class="vz-title" x="114" y="70" text-anchor="middle">1. Model decides</text>
+  <text class="vz-s" x="114" y="92" text-anchor="middle">answer now, or use</text>
+  <text class="vz-s" x="114" y="108" text-anchor="middle">a tool?</text>
+  <rect class="vz-ap" x="260" y="40" width="200" height="90" rx="12"/>
+  <text class="vz-title" x="360" y="70" text-anchor="middle">2. Your code acts</text>
+  <text class="vz-s" x="360" y="92" text-anchor="middle">checks the request,</text>
+  <text class="vz-s" x="360" y="108" text-anchor="middle">then runs the tool</text>
+  <rect class="vz-ml" x="506" y="40" width="200" height="90" rx="12"/>
+  <text class="vz-title" x="606" y="70" text-anchor="middle">3. Result comes back</text>
+  <text class="vz-s" x="606" y="92" text-anchor="middle">the model reads what</text>
+  <text class="vz-s" x="606" y="108" text-anchor="middle">the tool returned</text>
+  <line class="vz-arrow" x1="218.0" y1="85.0" x2="245.0" y2="85.0"/>
+  <polygon class="vz-headk" points="256.0,85.0 245.0,79.0 245.0,91.0"/>
+  <line class="vz-arrow" x1="464.0" y1="85.0" x2="491.0" y2="85.0"/>
+  <polygon class="vz-headk" points="502.0,85.0 491.0,79.0 491.0,91.0"/>
+  <path class="vz-fb" d="M606 134 C 606 190 114 190 114 136"/>
+  <line class="vz-arrow" x1="126.0" y1="164.0" x2="118.1" y2="144.2"/>
+  <polygon class="vz-headk" points="114.0,134.0 112.5,146.4 123.7,142.0"/>
+  <text class="vz-title" x="360" y="184" text-anchor="middle">repeat</text>
+  <rect class="vz-card" x="14" y="214" width="692" height="74" rx="10"/>
+  <text class="vz-title" x="30" y="240" text-anchor="start">Limits set by your code, not by the model:</text>
+  <text class="vz-s" x="30" y="262" text-anchor="start">a step limit and a budget  ·  only the tools you allow  ·  a person approves actions that change things</text>
+  <text class="vz-n vz-note" x="14" y="316" text-anchor="start">The loop ends when the model gives a final answer or a limit is reached.</text>
+</svg>

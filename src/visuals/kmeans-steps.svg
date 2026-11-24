@@ -1,0 +1,50 @@
+<svg viewBox="0 0 720 306" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- k-means: assign, move the centres, repeat. -->
+  <rect class="vz-card" x="14" y="40" width="222" height="220" rx="10"/>
+  <text class="vz-title" x="26" y="64" text-anchor="start">1. Pick centres, assign</text>
+  <circle class="vz-c0" cx="66.0" cy="131.0" r="6"/>
+  <circle class="vz-c0" cx="86.0" cy="156.5" r="6"/>
+  <circle class="vz-c0" cx="106.0" cy="122.5" r="6"/>
+  <circle class="vz-c0" cx="76.0" cy="182.0" r="6"/>
+  <circle class="vz-c1" cx="176.0" cy="131.0" r="6"/>
+  <circle class="vz-c1" cx="196.0" cy="165.0" r="6"/>
+  <circle class="vz-c1" cx="216.0" cy="139.5" r="6"/>
+  <circle class="vz-c1" cx="186.0" cy="190.5" r="6"/>
+  <circle class="vz-c0" cx="121.0" cy="207.5" r="6"/>
+  <circle class="vz-c1" cx="146.0" cy="224.5" r="6"/>
+  <polygon class="vz-new" points="66,180.5 75,190.5 66,200.5 57,190.5"/>
+  <polygon class="vz-new" points="216,180.5 225,190.5 216,200.5 207,190.5"/>
+  <text class="vz-s" x="26" y="248" text-anchor="start">each point joins its nearest centre</text>
+  <rect class="vz-card" x="252" y="40" width="222" height="220" rx="10"/>
+  <text class="vz-title" x="264" y="64" text-anchor="start">2. Move the centres</text>
+  <circle class="vz-c0" cx="304.0" cy="131.0" r="6"/>
+  <circle class="vz-c0" cx="324.0" cy="156.5" r="6"/>
+  <circle class="vz-c0" cx="344.0" cy="122.5" r="6"/>
+  <circle class="vz-c0" cx="314.0" cy="182.0" r="6"/>
+  <circle class="vz-c1" cx="414.0" cy="131.0" r="6"/>
+  <circle class="vz-c1" cx="434.0" cy="165.0" r="6"/>
+  <circle class="vz-c1" cx="454.0" cy="139.5" r="6"/>
+  <circle class="vz-c1" cx="424.0" cy="190.5" r="6"/>
+  <circle class="vz-c0" cx="359.0" cy="207.5" r="6"/>
+  <circle class="vz-c1" cx="384.0" cy="224.5" r="6"/>
+  <polygon class="vz-new" points="329.0,149.89999999999998 338.0,159.89999999999998 329.0,169.89999999999998 320.0,159.89999999999998"/>
+  <polygon class="vz-new" points="422.0,160.1 431.0,170.1 422.0,180.1 413.0,170.1"/>
+  <text class="vz-s" x="264" y="248" text-anchor="start">to the middle of their points</text>
+  <rect class="vz-card" x="490" y="40" width="222" height="220" rx="10"/>
+  <text class="vz-title" x="502" y="64" text-anchor="start">3. Repeat until still</text>
+  <circle class="vz-c0" cx="542.0" cy="131.0" r="6"/>
+  <circle class="vz-c0" cx="562.0" cy="156.5" r="6"/>
+  <circle class="vz-c0" cx="582.0" cy="122.5" r="6"/>
+  <circle class="vz-c0" cx="552.0" cy="182.0" r="6"/>
+  <circle class="vz-c1" cx="652.0" cy="131.0" r="6"/>
+  <circle class="vz-c1" cx="672.0" cy="165.0" r="6"/>
+  <circle class="vz-c1" cx="692.0" cy="139.5" r="6"/>
+  <circle class="vz-c1" cx="662.0" cy="190.5" r="6"/>
+  <circle class="vz-c0" cx="597.0" cy="207.5" r="6"/>
+  <circle class="vz-c1" cx="622.0" cy="224.5" r="6"/>
+  <polygon class="vz-new" points="567.0,149.89999999999998 576.0,159.89999999999998 567.0,169.89999999999998 558.0,159.89999999999998"/>
+  <polygon class="vz-new" points="660.0,160.1 669.0,170.1 660.0,180.1 651.0,170.1"/>
+  <text class="vz-s" x="502" y="248" text-anchor="start">the groups stop changing</text>
+  <text class="vz-title" x="14" y="28" text-anchor="start">k-means with k = 2 (diamonds are the centres)</text>
+  <text class="vz-n vz-note" x="12" y="290" text-anchor="start">Made-up points. The method needs no labels: it finds the groups from distances alone.</text>
+</svg>

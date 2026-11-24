@@ -1,0 +1,50 @@
+<svg viewBox="0 0 720 316" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Missing, duplicate, inconsistent and invalid values in a table. -->
+  <rect class="vz-card" x="14" y="50" width="520" height="228" rx="6"/>
+  <text class="vz-title" x="20" y="76" text-anchor="start">customer</text>
+  <text class="vz-title" x="170" y="76" text-anchor="start">city</text>
+  <text class="vz-title" x="330" y="76" text-anchor="start">age</text>
+  <text class="vz-title" x="450" y="76" text-anchor="start">wait (min)</text>
+  <text class="vz-s" x="20" y="114" text-anchor="start">Ana</text>
+  <text class="vz-s" x="170" y="114" text-anchor="start">London</text>
+  <text class="vz-s" x="330" y="114" text-anchor="start">34</text>
+  <text class="vz-s" x="450" y="114" text-anchor="start">12</text>
+  <text class="vz-s" x="20" y="152" text-anchor="start">Ben</text>
+  <rect class="vz-bad" x="164" y="130" width="150" height="30" rx="4"/>
+  <text class="vz-s" x="170" y="152" text-anchor="start">(empty)</text>
+  <text class="vz-s" x="330" y="152" text-anchor="start">29</text>
+  <text class="vz-s" x="450" y="152" text-anchor="start">9</text>
+  <rect class="vz-warn" x="14" y="168" width="140" height="30" rx="4"/>
+  <text class="vz-s" x="20" y="190" text-anchor="start">Ana</text>
+  <rect class="vz-warn" x="164" y="168" width="150" height="30" rx="4"/>
+  <text class="vz-s" x="170" y="190" text-anchor="start">London</text>
+  <rect class="vz-warn" x="324" y="168" width="110" height="30" rx="4"/>
+  <text class="vz-s" x="330" y="190" text-anchor="start">34</text>
+  <rect class="vz-warn" x="444" y="168" width="80" height="30" rx="4"/>
+  <text class="vz-s" x="450" y="190" text-anchor="start">12</text>
+  <text class="vz-s" x="20" y="228" text-anchor="start">Cy</text>
+  <rect class="vz-warn" x="164" y="206" width="150" height="30" rx="4"/>
+  <text class="vz-s" x="170" y="228" text-anchor="start">london</text>
+  <text class="vz-s" x="330" y="228" text-anchor="start">41</text>
+  <rect class="vz-bad" x="444" y="206" width="80" height="30" rx="4"/>
+  <text class="vz-s" x="450" y="228" text-anchor="start">-3</text>
+  <text class="vz-s" x="20" y="266" text-anchor="start">Di</text>
+  <text class="vz-s" x="170" y="266" text-anchor="start">Leeds</text>
+  <text class="vz-s" x="330" y="266" text-anchor="start">38</text>
+  <rect class="vz-bad" x="444" y="244" width="80" height="30" rx="4"/>
+  <text class="vz-s" x="450" y="266" text-anchor="start">2000</text>
+  <rect class="vz-bad" x="560" y="54" width="148" height="52" rx="8"/>
+  <text class="vz-s" x="568" y="76" text-anchor="start">Missing value</text>
+  <text class="vz-n" x="568" y="94" text-anchor="start">(empty) city</text>
+  <rect class="vz-warn" x="560" y="118" width="148" height="52" rx="8"/>
+  <text class="vz-s" x="568" y="140" text-anchor="start">Duplicate row</text>
+  <text class="vz-n" x="568" y="158" text-anchor="start">Ana appears twice</text>
+  <rect class="vz-warn" x="560" y="182" width="148" height="52" rx="8"/>
+  <text class="vz-s" x="568" y="204" text-anchor="start">Messy category</text>
+  <text class="vz-n" x="568" y="222" text-anchor="start">London / london</text>
+  <rect class="vz-bad" x="560" y="246" width="148" height="52" rx="8"/>
+  <text class="vz-s" x="568" y="268" text-anchor="start">Invalid or outlier</text>
+  <text class="vz-n" x="568" y="286" text-anchor="start">-3 or 2000 min</text>
+  <text class="vz-title" x="14" y="34" text-anchor="start">A small made-up table with four kinds of mess</text>
+  <text class="vz-n vz-note" x="12" y="300" text-anchor="start">Clean it before you train: fix, fill or remove each problem, and keep a record of what you changed.</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg viewBox="0 0 720 306" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- DPO: raise the chosen answer, lower the rejected one. -->
+  <rect class="vz-card" x="14" y="20" width="692" height="52" rx="8"/>
+  <text class="vz-title" x="30" y="52" text-anchor="start">Prompt: "Explain our refund rule to a customer."</text>
+  <rect class="vz-ok" x="14" y="92" width="330" height="100" rx="10"/>
+  <text class="vz-title" x="30" y="120" text-anchor="start">Chosen answer</text>
+  <text class="vz-s" x="30" y="144" text-anchor="start">Clear, polite, mentions the</text>
+  <text class="vz-s" x="30" y="162" text-anchor="start">14-day window.</text>
+  <rect class="vz-bad" x="376" y="92" width="330" height="100" rx="10"/>
+  <text class="vz-title" x="392" y="120" text-anchor="start">Rejected answer</text>
+  <text class="vz-s" x="392" y="144" text-anchor="start">Vague and curt, leaves out</text>
+  <text class="vz-s" x="392" y="162" text-anchor="start">the window.</text>
+  <line class="vz-arrowr" x1="180.0" y1="224.0" x2="180.0" y2="211.0"/>
+  <polygon class="vz-headk" points="180.0,200.0 174.0,211.0 186.0,211.0"/>
+  <line class="vz-arrow" x1="542.0" y1="200.0" x2="542.0" y2="213.0"/>
+  <polygon class="vz-headk" points="542.0,224.0 548.0,213.0 536.0,213.0"/>
+  <text class="vz-s" x="190" y="218" text-anchor="start">make this more likely</text>
+  <text class="vz-s" x="552" y="218" text-anchor="start">make this less likely</text>
+  <text class="vz-s" x="14" y="258" text-anchor="start">A frozen copy of the starting model (the reference) is the anchor, so the model does not drift too far.</text>
+  <text class="vz-n vz-note" x="12" y="290" text-anchor="start">A made-up pair. DPO needs no separate reward model.</text>
+</svg>

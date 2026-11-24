@@ -1,6 +1,6 @@
 # Plan: concept visuals for the whole guide
 
-Status 2026-11-23: plan only, nothing is built. Request from the owner: add the kind of visuals found in `InitialData/topics`
+Status 2026-11-24: built (see the end of this file for what was done). Earlier status: plan only. Request from the owner: add the kind of visuals found in `InitialData/topics`
 to every concept where they help.
 
 **Owner requirement (2026-11-23): the existing boxes-and-arrows diagrams stay.** Each concept gets tabs. One tab, "Boxes", is the
@@ -207,3 +207,7 @@ Every visual is a second tab of a diagram that already exists. Nothing is remove
 - Illustrations add weight to every page. Cards are SVG (small), loaded only on the lesson that uses them.
 - Decoration without meaning confuses beginners. Each visual must carry one idea, and the text must work without it.
 - Two styles can look inconsistent. The pilot and one shared set of colours and line weights prevent that.
+
+## Built (2026-11-24)
+
+Tab support, 78 Visual tabs in 49 lessons (all priority 1 items and most priority 2 and 3 items of section 5; a few were left out where a lesson already has a simulation or a picture of the same idea), a layout test for every drawing, a review page (`/visuals-sheet.html` on the local server), and 12 cheat sheets (an index and one page each). Not done: hand-drawn character artwork (needs an illustrator or an image tool).

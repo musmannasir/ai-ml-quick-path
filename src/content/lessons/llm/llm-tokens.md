@@ -8,7 +8,7 @@ maths: algebra
 goal: Explain how tokenisers split text, why tokens drive cost and limits, and how temperature and top-p change generated text.
 prereqs: llm-how
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: Token counts for the same paragraph in two languages, and the same prompt run at three temperatures with your observations.
 code: Python executed 2026-11-02 (quickpath.py bpe and sampling)
 ---
@@ -21,6 +21,12 @@ note: Common words stay whole. Rare words split into several pieces from the voc
 - Tokeniser | Splits text into pieces from a fixed vocabulary | process
 - Tokens | Each piece is a token | store
 - Token ids | Each token becomes a number the model reads | output
+```
+
+```visual A sentence cut into tokens and ids
+file: tokens-split
+alt: The sentence Please refund my broken headphones is shown cut into seven pieces called tokens: Please, refund, my, broken, head, phones and a full stop. Each token has an arrow down to a made-up id number. Common words stay whole, while headphones is split into head and phones.
+caption: Text is split into tokens from a fixed vocabulary, and each token becomes a number. The split and the ids here are illustrative.
 ```
 
 ```diagram flow How byte-pair encoding builds tokens
@@ -53,6 +59,12 @@ note: One count drives several practical limits.
 - Keeps the most likely tokens
 - Their probabilities add up to p
 - Drops the unlikely rest
+```
+
+```visual The same scores at three temperatures
+file: temperature-bars
+alt: Three small bar charts of the same five next-word scores. At temperature 0.2 refund has 0.92 and replacement 0.08, the others 0. At 1.0 refund 0.51, replacement 0.31, discount 0.11, apology 0.07, banana 0. At 2.0 the bars are flatter: refund 0.37, replacement 0.29, discount 0.17, apology 0.14, banana 0.03.
+caption: A low temperature makes one word dominate; a high temperature flattens the chances so odd words, like banana, slip in.
 ```
 
 ## Real-world example

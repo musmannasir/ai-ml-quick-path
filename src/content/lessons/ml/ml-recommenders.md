@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Build a collaborative-filtering recommender with matrix factorisation, compare it with simple baselines, and list the real-world issues (cold start, ranking, diversity).
 prereqs: ml-evaluation
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A recommender on rating or click data with held-out error against two baselines and top-5 recommendations for three users.
 code: Python executed 2026-11-02 (gap_topics.py recsys)
 ---
@@ -32,6 +32,12 @@ y: User 1 | User 2
 - Empty cell | Predicted from hidden taste numbers | warn
 - Empty cell | Predicted from hidden taste numbers | warn
 - Known rating | A cell we can see | store
+```
+
+```visual A mostly empty table of ratings
+file: rating-matrix
+alt: A four by four table of users and items. Some cells hold ratings from 1 to 5 and the others are dashed and marked with a question mark. Text says the model learns hidden taste numbers per user and per item and multiplies them to fill each question mark with a guess.
+caption: Recommenders predict the empty cells of a user-by-item table from a few hidden taste numbers. The ratings are made up.
 ```
 
 ```diagram merge Hidden taste numbers predict a missing cell

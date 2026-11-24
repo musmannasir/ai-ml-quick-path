@@ -1,0 +1,64 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Normal points in a cloud and a few unusual ones. -->
+  <rect class="vz-card" x="12" y="12" width="460" height="270" rx="10"/>
+  <circle class="vz-c0" cx="163.3" cy="168.9" r="5"/>
+  <circle class="vz-c0" cx="209.1" cy="155.4" r="5"/>
+  <circle class="vz-c0" cx="219.3" cy="149.2" r="5"/>
+  <circle class="vz-c0" cx="227.4" cy="149.2" r="5"/>
+  <circle class="vz-c0" cx="236.9" cy="147.4" r="5"/>
+  <circle class="vz-c0" cx="234.6" cy="162.3" r="5"/>
+  <circle class="vz-c0" cx="258.0" cy="159.2" r="5"/>
+  <circle class="vz-c0" cx="292.5" cy="161.3" r="5"/>
+  <circle class="vz-c0" cx="293.7" cy="145.2" r="5"/>
+  <circle class="vz-c0" cx="230.9" cy="143.5" r="5"/>
+  <circle class="vz-c0" cx="265.5" cy="181.0" r="5"/>
+  <circle class="vz-c0" cx="244.1" cy="151.3" r="5"/>
+  <circle class="vz-c0" cx="240.2" cy="150.4" r="5"/>
+  <circle class="vz-c0" cx="230.9" cy="151.7" r="5"/>
+  <circle class="vz-c0" cx="216.5" cy="157.4" r="5"/>
+  <circle class="vz-c0" cx="215.5" cy="126.3" r="5"/>
+  <circle class="vz-c0" cx="218.0" cy="150.0" r="5"/>
+  <circle class="vz-c0" cx="233.7" cy="178.2" r="5"/>
+  <circle class="vz-c0" cx="312.7" cy="149.1" r="5"/>
+  <circle class="vz-c0" cx="239.5" cy="148.5" r="5"/>
+  <circle class="vz-c0" cx="238.4" cy="152.9" r="5"/>
+  <circle class="vz-c0" cx="268.2" cy="160.6" r="5"/>
+  <circle class="vz-c0" cx="246.1" cy="102.5" r="5"/>
+  <circle class="vz-c0" cx="207.4" cy="172.6" r="5"/>
+  <circle class="vz-c0" cx="240.7" cy="149.8" r="5"/>
+  <circle class="vz-c0" cx="240.3" cy="150.8" r="5"/>
+  <circle class="vz-c0" cx="328.4" cy="105.3" r="5"/>
+  <circle class="vz-c0" cx="224.0" cy="159.6" r="5"/>
+  <circle class="vz-c0" cx="280.6" cy="166.1" r="5"/>
+  <circle class="vz-c0" cx="234.1" cy="188.1" r="5"/>
+  <circle class="vz-c0" cx="281.5" cy="170.2" r="5"/>
+  <circle class="vz-c0" cx="244.3" cy="82.0" r="5"/>
+  <circle class="vz-c0" cx="240.3" cy="150.2" r="5"/>
+  <circle class="vz-c0" cx="256.3" cy="155.2" r="5"/>
+  <circle class="vz-c0" cx="246.2" cy="133.7" r="5"/>
+  <circle class="vz-c0" cx="198.7" cy="161.3" r="5"/>
+  <circle class="vz-c0" cx="240.8" cy="151.7" r="5"/>
+  <circle class="vz-c0" cx="227.6" cy="137.4" r="5"/>
+  <circle class="vz-c0" cx="257.2" cy="162.4" r="5"/>
+  <circle class="vz-c0" cx="238.4" cy="160.0" r="5"/>
+  <circle class="vz-c0" cx="250.5" cy="148.4" r="5"/>
+  <circle class="vz-c0" cx="262.9" cy="133.8" r="5"/>
+  <circle class="vz-c0" cx="254.4" cy="195.6" r="5"/>
+  <circle class="vz-c0" cx="211.1" cy="121.4" r="5"/>
+  <circle class="vz-c0" cx="261.2" cy="162.4" r="5"/>
+  <ellipse class="vz-knn" cx="240" cy="150" rx="104" ry="86"/>
+  <polygon class="vz-new" points="70,39 80,50 70,61 60,50"/>
+  <polygon class="vz-new" points="410,219 420,230 410,241 400,230"/>
+  <polygon class="vz-new" points="400,49 410,60 400,71 390,60"/>
+  <text class="vz-s" x="240" y="262" text-anchor="middle">normal behaviour</text>
+  <text class="vz-s" x="84" y="78" text-anchor="start">unusual</text>
+  <text class="vz-title" x="500" y="50" text-anchor="start">Anomaly detection</text>
+  <text class="vz-s" x="500" y="82" text-anchor="start">Learn what "normal" looks</text>
+  <text class="vz-s" x="500" y="100" text-anchor="start">like (the cloud of dots).</text>
+  <text class="vz-s" x="500" y="132" text-anchor="start">Points far from it are</text>
+  <text class="vz-s" x="500" y="150" text-anchor="start">flagged (the diamonds).</text>
+  <text class="vz-s" x="500" y="182" text-anchor="start">An unusual point is not</text>
+  <text class="vz-s" x="500" y="200" text-anchor="start">always a problem: send</text>
+  <text class="vz-s" x="500" y="218" text-anchor="start">flags to a person to check.</text>
+  <text class="vz-n vz-note" x="12" y="306" text-anchor="start">Made-up points. The dashed ring is the boundary of "normal" the method has learned.</text>
+</svg>

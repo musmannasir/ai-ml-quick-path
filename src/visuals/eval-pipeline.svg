@@ -1,0 +1,35 @@
+<svg viewBox="0 0 720 292" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- An eval step by step. -->
+  <rect class="vz-ml" x="14" y="60" width="150" height="100" rx="12"/>
+  <text class="vz-title" x="89" y="94" text-anchor="middle">Evaluation set</text>
+  <text class="vz-s" x="89" y="118" text-anchor="middle">realistic inputs with</text>
+  <text class="vz-s" x="89" y="136" text-anchor="middle">expected outcomes</text>
+  <line class="vz-arrow" x1="168.0" y1="110.0" x2="175.0" y2="110.0"/>
+  <polygon class="vz-headk" points="186.0,110.0 175.0,104.0 175.0,116.0"/>
+  <rect class="vz-ap" x="190" y="60" width="150" height="100" rx="12"/>
+  <text class="vz-title" x="265" y="94" text-anchor="middle">Run the app</text>
+  <text class="vz-s" x="265" y="118" text-anchor="middle">same inputs</text>
+  <text class="vz-s" x="265" y="136" text-anchor="middle">every time</text>
+  <line class="vz-arrow" x1="344.0" y1="110.0" x2="351.0" y2="110.0"/>
+  <polygon class="vz-headk" points="362.0,110.0 351.0,104.0 351.0,116.0"/>
+  <rect class="vz-lm" x="366" y="60" width="150" height="100" rx="12"/>
+  <text class="vz-title" x="441" y="94" text-anchor="middle">Score outputs</text>
+  <text class="vz-s" x="441" y="118" text-anchor="middle">checks first, then a</text>
+  <text class="vz-s" x="441" y="136" text-anchor="middle">judge or a person</text>
+  <line class="vz-arrow" x1="520.0" y1="110.0" x2="527.0" y2="110.0"/>
+  <polygon class="vz-headk" points="538.0,110.0 527.0,104.0 527.0,116.0"/>
+  <rect class="vz-warn" x="542" y="60" width="150" height="100" rx="12"/>
+  <text class="vz-title" x="617" y="94" text-anchor="middle">Compare</text>
+  <text class="vz-s" x="617" y="118" text-anchor="middle">with the thresholds</text>
+  <text class="vz-s" x="617" y="136" text-anchor="middle">you set</text>
+  <rect class="vz-bad" x="560" y="190" width="146" height="44" rx="8"/>
+  <text class="vz-s" x="633" y="218" text-anchor="middle">below: block release</text>
+  <rect class="vz-ok" x="14" y="190" width="146" height="44" rx="8"/>
+  <text class="vz-s" x="87" y="218" text-anchor="middle">above: release</text>
+  <text class="vz-title" x="14" y="34" text-anchor="start">An eval is a repeatable test on fixed inputs</text>
+  <line class="vz-arrow" x1="600.0" y1="164.0" x2="613.0" y2="179.5"/>
+  <polygon class="vz-headk" points="620.0,188.0 617.6,175.7 608.3,183.4"/>
+  <line class="vz-arrow" x1="500.0" y1="164.0" x2="111.0" y2="187.3"/>
+  <polygon class="vz-headk" points="100.0,188.0 111.3,193.3 110.6,181.4"/>
+  <text class="vz-n vz-note" x="12" y="276" text-anchor="start">Run it on every change to the prompt, the model or the retrieval, so a regression shows up before users see it.</text>
+</svg>

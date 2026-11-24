@@ -1,0 +1,26 @@
+<svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Classification, detection and segmentation of one picture. -->
+  <rect class="vz-card" x="14" y="40" width="222" height="200" rx="10"/>
+  <text class="vz-title" x="28" y="66" text-anchor="start">Classification</text>
+  <circle class="vz-c0" cx="94" cy="150" r="34"/>
+  <rect class="vz-c1" x="144" y="120" width="64" height="56" rx="4"/>
+  <rect class="vz-ok" x="50" y="196" width="150" height="26" rx="6"/>
+  <text class="vz-s" x="125" y="214" text-anchor="middle">label: ball and box</text>
+  <rect class="vz-card" x="249" y="40" width="222" height="200" rx="10"/>
+  <text class="vz-title" x="263" y="66" text-anchor="start">Object detection</text>
+  <circle class="vz-c0" cx="329" cy="150" r="34"/>
+  <rect class="vz-c1" x="379" y="120" width="64" height="56" rx="4"/>
+  <rect class="vz-bbox" x="289" y="110" width="80" height="80" rx="3"/>
+  <text class="vz-n" x="293" y="104" text-anchor="start">ball 0.96</text>
+  <rect class="vz-bbox" x="373" y="114" width="76" height="68" rx="3"/>
+  <text class="vz-n" x="375" y="208" text-anchor="start">box 0.91</text>
+  <text class="vz-s" x="263" y="232" text-anchor="start">a box and a name per object</text>
+  <rect class="vz-card" x="484" y="40" width="222" height="200" rx="10"/>
+  <text class="vz-title" x="498" y="66" text-anchor="start">Segmentation</text>
+  <circle class="vz-seg0" cx="564" cy="150" r="34"/>
+  <rect class="vz-seg1" x="614" y="120" width="64" height="56" rx="4"/>
+  <text class="vz-s" x="498" y="232" text-anchor="start">every pixel gets a class</text>
+  <text class="vz-title" x="14" y="28" text-anchor="start">The same picture, three questions</text>
+  <text class="vz-s" x="14" y="268" text-anchor="start">Classification: what is in the picture?   Detection: what and where?   Segmentation: which pixels belong to what?</text>
+  <text class="vz-n vz-note" x="12" y="296" text-anchor="start">A made-up scene of two shapes. The scores on the boxes are invented.</text>
+</svg>

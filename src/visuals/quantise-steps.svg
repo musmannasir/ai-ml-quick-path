@@ -1,0 +1,25 @@
+<svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Quantisation: fewer levels, less memory. -->
+  <rect class="vz-card" x="12" y="12" width="340" height="250" rx="10"/>
+  <text class="vz-title" x="28" y="40" text-anchor="start">Rounding to fewer levels</text>
+  <path class="vz-curve" d="M30 220 L330 70"/>
+  <line class="vz-fit" x1="30" y1="201.2" x2="105" y2="201.2"/>
+  <line class="vz-fit" x1="105" y1="163.8" x2="180" y2="163.8"/>
+  <line class="vz-fit" x1="180" y1="126.2" x2="255" y2="126.2"/>
+  <line class="vz-fit" x1="255" y1="88.8" x2="330" y2="88.8"/>
+  <text class="vz-s" x="28" y="248" text-anchor="start">smooth values (grey) → a few steps (green)</text>
+  <rect class="vz-card" x="372" y="12" width="336" height="250" rx="10"/>
+  <text class="vz-title" x="388" y="40" text-anchor="start">Memory for 8 billion weights</text>
+  <text class="vz-s" x="388" y="88" text-anchor="start">16-bit</text>
+  <rect class="vz-bad" x="448" y="66" width="200.0" height="34" rx="4"/>
+  <text class="vz-s" x="652.0" y="88" text-anchor="start">16 GB</text>
+  <text class="vz-s" x="388" y="146" text-anchor="start">8-bit</text>
+  <rect class="vz-warn" x="448" y="124" width="100.0" height="34" rx="4"/>
+  <text class="vz-s" x="552.0" y="146" text-anchor="start">8 GB</text>
+  <text class="vz-s" x="388" y="204" text-anchor="start">4-bit</text>
+  <rect class="vz-ok" x="448" y="182" width="50.0" height="34" rx="4"/>
+  <text class="vz-s" x="502.0" y="204" text-anchor="start">4 GB</text>
+  <text class="vz-s" x="388" y="244" text-anchor="start">Smaller files and faster loading, with a</text>
+  <text class="vz-s" x="388" y="262" text-anchor="start">small quality loss to measure.</text>
+  <text class="vz-n vz-note" x="12" y="296" text-anchor="start">Memory numbers are from the lesson's executed run. Real quantisation schemes group weights and treat outliers carefully.</text>
+</svg>

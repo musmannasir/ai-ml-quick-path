@@ -1,0 +1,26 @@
+<svg viewBox="0 0 720 334" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The parts of a good prompt, in order. -->
+  <rect class="vz-ml" x="14" y="20" width="450" height="46" rx="8"/>
+  <text class="vz-title" x="28" y="40" text-anchor="start">Role and task</text>
+  <text class="vz-s" x="28" y="58" text-anchor="start">who the model is and what to do</text>
+  <rect class="vz-ap" x="14" y="76" width="450" height="46" rx="8"/>
+  <text class="vz-title" x="28" y="96" text-anchor="start">Rules</text>
+  <text class="vz-s" x="28" y="114" text-anchor="start">what to do when information is missing</text>
+  <rect class="vz-lm" x="14" y="132" width="450" height="46" rx="8"/>
+  <text class="vz-title" x="28" y="152" text-anchor="start">Examples</text>
+  <text class="vz-s" x="28" y="170" text-anchor="start">one or two inputs with the ideal output</text>
+  <rect class="vz-warn" x="14" y="188" width="450" height="46" rx="8"/>
+  <text class="vz-title" x="28" y="208" text-anchor="start">Data in delimiters</text>
+  <text class="vz-s" x="28" y="226" text-anchor="start">user content, marked as data, not instructions</text>
+  <rect class="vz-ok" x="14" y="244" width="450" height="46" rx="8"/>
+  <text class="vz-title" x="28" y="264" text-anchor="start">Output format</text>
+  <text class="vz-s" x="28" y="282" text-anchor="start">for example JSON with named fields</text>
+  <text class="vz-title" x="490" y="70" text-anchor="start">A sensible order,</text>
+  <text class="vz-title" x="490" y="94" text-anchor="start">top to bottom.</text>
+  <text class="vz-s" x="490" y="130" text-anchor="start">Not every prompt needs</text>
+  <text class="vz-s" x="490" y="148" text-anchor="start">every part.</text>
+  <text class="vz-s" x="490" y="184" text-anchor="start">Keep the data apart from</text>
+  <text class="vz-s" x="490" y="202" text-anchor="start">the instructions, so text</text>
+  <text class="vz-s" x="490" y="220" text-anchor="start">inside it is not obeyed.</text>
+  <text class="vz-n vz-note" x="12" y="318" text-anchor="start">Test prompts like code: keep versions and run them on a fixed set of examples.</text>
+</svg>

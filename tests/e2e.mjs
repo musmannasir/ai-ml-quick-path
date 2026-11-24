@@ -19,7 +19,7 @@ const url = (p) => { const [f, h] = p.split('#'); return pathToFileURL(join(DIST
 const ALL = (function walk(d, pre = '') { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p, pre + f + '/') : f.endsWith('.html') ? [pre + f] : []; }); })(DIST).sort();
 const ML_LESSONS = (readFileSync(join(DIST, 'index.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
 const LESSONS = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p)).length;   // read from dist/, not typed
-const KEY = ['index.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
+const KEY = ['index.html', 'cheatsheets.html', 'cheat-ml.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
 const results = [];
@@ -974,6 +974,27 @@ for (const w of [320, 390, 768]) {
   expect('Diagram tabs: at 320 px the page does not scroll sideways', f.page, JSON.stringify(f));
   expect('Diagram tabs: no script errors', !page.errors.length, page.errors.join('|'));
   await page.context().close();
+}
+
+// 12l. Every visual: all text inside its picture, no two pieces of text on top of each other, and the page never scrolls sideways
+{
+  const withVisuals = ALL.filter((p) => /^(lessons\/[^/]+|cheat-[^/]+)\.html$/.test(p) && readFileSync(join(DIST, p), 'utf8').includes('vz-fig'));
+  let n = 0; const bad = [];
+  for (const rel of withVisuals) {
+    const page = await newPage({ width: 1280 });
+    await page.goto(url(rel)); await page.evaluate(() => { try { const d = JSON.parse(localStorage.getItem('aimlqp.v1') || '{}'); d.prefs = d.prefs || {}; d.prefs.visualTab = 'visual'; localStorage.setItem('aimlqp.v1', JSON.stringify(d)); } catch (e) {} });
+    await page.reload(); await page.waitForTimeout(150);
+    const res = await page.evaluate(() => [...document.querySelectorAll('.vz-fig svg')].map((svg) => {
+      const vb = svg.viewBox.baseVal, probs = [], texts = [...svg.querySelectorAll('text')].filter((t) => t.textContent.trim()).map((t) => ({ t: t.textContent.trim().slice(0, 28), b: t.getBBox() }));
+      for (const x of texts) if (x.b.x < -0.5 || x.b.y < -0.5 || x.b.x + x.b.width > vb.width + 0.5 || x.b.y + x.b.height > vb.height + 0.5) probs.push('outside: ' + x.t);
+      for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) { const a = texts[i].b, c = texts[j].b, w = Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x), h = Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y); if (w > 3 && h > 5) probs.push('overlap: ' + texts[i].t + ' / ' + texts[j].t); }
+      return probs;
+    }));
+    n += res.length; res.forEach((r, i) => r.forEach((m) => bad.push(rel + ' #' + (i + 1) + ' ' + m)));
+    for (const w of [320, 768]) { await page.setViewportSize({ width: w, height: 800 }); const sw = await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth); if (!sw) bad.push(rel + ' scrolls sideways at ' + w); }
+    await page.context().close();
+  }
+  expect(`Visuals: all ${n} drawings keep their text inside the picture, with no overlapping text, and do not make the page scroll sideways at 320, 768 and 1280 px`, n > 0 && !bad.length, bad.slice(0, 12).join(' | '));
 }
 
 // 13. Screenshots

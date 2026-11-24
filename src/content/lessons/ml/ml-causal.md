@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain why a plain comparison of treated and untreated groups can mislead, remove the bias by adjusting for a confounder or by randomising, and read a simple causal diagram.
 prereqs: ml-evaluation
 reviewed: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A table showing the naive effect, the adjusted effect and the randomised effect for one dataset, with a sentence saying which you trust and why.
 code: Python executed 2026-11-19 (examples/causal/causal.py, NumPy only); the C# version prints the same output
 ---
@@ -30,6 +30,12 @@ note: The confounder drives both the treatment and the outcome, so the compariso
 - A hidden factor, such as how severe a case is | It affects who gets treated | warn
 - More severe cases get the treatment more often | Treated and untreated groups differ | process
 - Severe cases also have different outcomes | The difference gets blamed on the treatment | bad
+```
+
+```visual A hidden factor behind two things that move together
+file: confounder-triangle
+alt: A box at the top labelled hidden factor, for example hot weather, with arrows down to ice cream sales and to sunburn cases. A dashed line between those two is labelled move together but neither causes the other, a false link.
+caption: A hidden factor can drive two things at once so they look connected. The ice cream example is made up.
 ```
 
 ```diagram compare Two ways to get a fair comparison

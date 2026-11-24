@@ -1,0 +1,44 @@
+<svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A random forest as many trees voting. -->
+  <text class="vz-title" x="20" y="30" text-anchor="start">Each tree sees a different random re-sample of the data</text>
+  <text class="vz-s" x="130" y="62" text-anchor="middle">Tree 1</text>
+  <rect class="vz-ml" x="60" y="70" width="140" height="34" rx="6"/>
+  <text class="vz-s" x="130" y="92" text-anchor="middle">question</text>
+  <line class="vz-link" x1="130" y1="104" x2="96" y2="134"/>
+  <line class="vz-link" x1="130" y1="104" x2="164" y2="134"/>
+  <rect class="vz-card" x="68" y="134" width="56" height="30" rx="6"/>
+  <rect class="vz-card" x="136" y="134" width="56" height="30" rx="6"/>
+  <line class="vz-arrow" x1="130.0" y1="168.0" x2="130.0" y2="185.0"/>
+  <polygon class="vz-headk" points="130.0,196.0 136.0,185.0 124.0,185.0"/>
+  <rect class="vz-ok" x="90" y="198" width="80" height="34" rx="8"/>
+  <text class="vz-s" x="130" y="221" text-anchor="middle">votes yes</text>
+  <text class="vz-s" x="330" y="62" text-anchor="middle">Tree 2</text>
+  <rect class="vz-ml" x="260" y="70" width="140" height="34" rx="6"/>
+  <text class="vz-s" x="330" y="92" text-anchor="middle">question</text>
+  <line class="vz-link" x1="330" y1="104" x2="296" y2="134"/>
+  <line class="vz-link" x1="330" y1="104" x2="364" y2="134"/>
+  <rect class="vz-card" x="268" y="134" width="56" height="30" rx="6"/>
+  <rect class="vz-card" x="336" y="134" width="56" height="30" rx="6"/>
+  <line class="vz-arrow" x1="330.0" y1="168.0" x2="330.0" y2="185.0"/>
+  <polygon class="vz-headk" points="330.0,196.0 336.0,185.0 324.0,185.0"/>
+  <rect class="vz-bad" x="290" y="198" width="80" height="34" rx="8"/>
+  <text class="vz-s" x="330" y="221" text-anchor="middle">votes no</text>
+  <text class="vz-s" x="530" y="62" text-anchor="middle">Tree 3</text>
+  <rect class="vz-ml" x="460" y="70" width="140" height="34" rx="6"/>
+  <text class="vz-s" x="530" y="92" text-anchor="middle">question</text>
+  <line class="vz-link" x1="530" y1="104" x2="496" y2="134"/>
+  <line class="vz-link" x1="530" y1="104" x2="564" y2="134"/>
+  <rect class="vz-card" x="468" y="134" width="56" height="30" rx="6"/>
+  <rect class="vz-card" x="536" y="134" width="56" height="30" rx="6"/>
+  <line class="vz-arrow" x1="530.0" y1="168.0" x2="530.0" y2="185.0"/>
+  <polygon class="vz-headk" points="530.0,196.0 536.0,185.0 524.0,185.0"/>
+  <rect class="vz-ok" x="490" y="198" width="80" height="34" rx="8"/>
+  <text class="vz-s" x="530" y="221" text-anchor="middle">votes yes</text>
+  <line class="vz-link" x1="130" y1="236" x2="330" y2="262"/><line class="vz-link" x1="330" y1="236" x2="330" y2="262"/><line class="vz-link" x1="530" y1="236" x2="330" y2="262"/>
+  <rect class="vz-lm" x="240" y="262" width="180" height="40" rx="8"/>
+  <text class="vz-s" x="330" y="288" text-anchor="middle">Forest answer: yes (2 to 1)</text>
+  <text class="vz-s" x="660" y="100" text-anchor="middle">Many trees,</text>
+  <text class="vz-s" x="660" y="118" text-anchor="middle">one vote.</text>
+  <text class="vz-n vz-note" x="12" y="322" text-anchor="start">Made-up example with three trees. A real forest has hundreds.</text>
+  <text class="vz-n vz-note" x="12" y="342" text-anchor="start">Averaging many different trees steadies a model that one tree overfits.</text>
+</svg>

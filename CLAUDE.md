@@ -68,6 +68,10 @@ scripts/check-links.mjs  Opens every address in src/data/sources.mjs; writes src
 scripts/check-maths.mjs  Parses every lesson and checks every "calculation = result" in the maths text
 scripts/check-sims.mjs   Runs each simulation's calculation in Node and compares it with its Python program (examples/sim-*)
 scripts/shot.mjs         Page or element screenshots for design review
+scripts/list-visuals.mjs  Lists every Visual tab: lesson, section, diagram and drawing file (npm run list:visuals)
+scripts/visual-sheet.mjs  Builds the review page with every visual (served at /visuals-sheet.html by npm run serve)
+src/lib/visual.mjs       Joins a ```visual block to its diagram as Boxes and Visual tabs; inlines the SVG from src/visuals/
+src/visuals/             The drawings (SVG, my own); src/data/cheatsheets.mjs holds the 12 cheat sheets
 src/lib/sim.mjs          Parses and renders ```sim blocks (simulations); public/assets/sim.js is the engine, public/assets/sims/<module>.js the modules
 src/lib/maths.mjs        Safe arithmetic evaluator, maths-moment renderer, prose arithmetic scanner, calculator definitions
 src/design/tokens.mjs    The only place theme tokens are defined; the build writes them into dist/assets/app.css
@@ -76,7 +80,7 @@ scripts/extract_lesson_code.py  Copies lesson code blocks into examples/lesson-c
 scripts/package.mjs      Release ZIPs (needs `zip`; Linux/macOS/WSL)
 src/lib/markdown.mjs     Markdown-subset renderer, lesson parser and validator (REQUIRED_SECTIONS)
 src/lib/layout.mjs       Page shell, sidebar tree (navGroups), SITE config, INLINE_SCRIPT
-src/pages/pages.mjs      All non-lesson pages + roadmapComponent()
+src/pages/pages.mjs      All non-lesson pages + roadmapComponent() + the cheat-sheet pages
 src/data/curriculum.mjs  MODULES (parts), ROADMAPS, ROUTES, LEVELS, REVIEWED
 src/data/cases.mjs       CASES (11), sources without URLs
 src/data/projects.mjs    PROJECTS (8 capstones, each with python and dotnet routes)
@@ -86,12 +90,12 @@ public/assets/app.css    The only stylesheet
 public/assets/app.js     The only client script
 examples/                Runnable code; examples/quickpath/quickpath.py is the main demo file
 tests/static-checks.mjs  HTML checks on dist/ (including zero external links)
-tests/e2e.mjs            124 Playwright checks; writes qa/e2e-results.json and qa/screenshots/
+tests/e2e.mjs            Playwright checks (the count is printed at the end of the run; includes a layout check of every drawing); writes qa/e2e-results.json and qa/screenshots/
 ```
 
-**Pages (115):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
+**Pages (128):** index, plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
 maths (maths names map, generated from every lesson's maths section), simulations (the Simulation lab catalogue), 7 part pages (`part-1-start.html` …
-`part-7-production.html`), 72 lessons, projects + 8 capstones, cases + 11, hardware, glossary, assessment,
+`part-7-production.html`), 72 lessons, projects + 8 capstones, cases + 11, hardware, glossary, cheat sheets (an index and 12 sheets), assessment,
 progress, about, 404. Output uses **relative links** and works from `file://`.
 
 ---
@@ -111,6 +115,7 @@ npm run check:sims     # every simulation's JavaScript calculation equals its Py
 npm run check:maths    # every maths moment and Applied Maths calculation adds up (also part of npm test)
 npm run check:links    # after adding or changing a source in src/data/sources.mjs (needs internet)
 npm run package        # release ZIPs into release/
+npm run list:visuals    # which lesson and diagram each Visual tab belongs to
 ```
 
 **Definition of done for every change:** `npm run build`, `npm run check:maths`, `npm run test:static` and `npm run test:e2e:edge` pass
@@ -247,6 +252,17 @@ program in `examples/sim-*` that prints the same headline numbers and `scripts/c
 out" note is required; colours come from the `--sim-*` tokens; no inline styles or scripts; reduced motion is respected; the default settings must not already
 satisfy a `try:` goal. Challenge ticks are stored under a separate key `aimlqp.sim.v1` (not yet in the progress export). The trained weights of the attention model are
 produced by `examples/sim-attention/train_tiny.py` (NumPy, hand-written gradients checked numerically). C# versions of the simulation calculations are not written yet.
+
+### 4.10 Visual tabs and cheat sheets (owner requirement 2026-11-23; plan and status in docs/VISUALS_PLAN.md)
+Every diagram keeps its boxes. A drawn picture is added as a second tab of the same diagram: a ```` ```visual <title> ```` block placed straight after a
+```` ```diagram ```` block, with `file:` (src/visuals/<file>.svg), `alt:` (the text alternative, required) and `caption:` (one visible sentence). `src/lib/visual.mjs`
+joins the two into `<div class="vz">` with a tab list ("Boxes" first, then "Visual"). Without the script both panels show; `app.js` adds the tab bar, remembers the
+choice in `prefs.visualTab`, and the arrow keys switch tabs. A diagram with no visual is unchanged. Rules: the visual says the same thing as its boxes and text (same labels,
+same numbers); made-up numbers are labelled; the SVG uses only the `vz-*` classes in app.css, which take colours from the tokens (no `style=`, no script, no outside address, no `<image>`);
+text must stay inside the picture and never overlap other text (checked for every drawing by tests/e2e.mjs); drawings are my own, never copies of other people's pictures.
+Look at all of them: `npm run list:visuals` (which lesson, section and diagram), `npm run serve` then http://localhost:8080/visuals-sheet.html (every visual on one page, light and dark).
+Cheat sheets live in `src/data/cheatsheets.mjs` (12 sheets: one per part and five by topic) and are built into `cheat-<id>.html` plus `cheatsheets.html`; every panel links to its lessons
+and may show one of the drawings.
 
 ## 5. Design system and UI rules
 - Theme tokens live ONLY in `src/design/tokens.mjs` (each colour once, as [light, dark]); the build writes them at the top of

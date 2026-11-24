@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Group similar items with clustering, compress many columns with PCA, and flag unusual records with anomaly detection, all without labels.
 prereqs: ml-algorithms
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A clustering or anomaly-detection result on your own data, with each group or flag explained in business words.
 code: Python executed 2026-11-02 (ml_basics.py kmeans, quickpath.py pca and anomaly); added technique snippets (2026-11-05) not run
 ---
@@ -38,12 +38,24 @@ Often you have data but no answers attached. **Unsupervised learning** finds str
 loop: Repeat until each item is near its centre and the centres stop moving
 ```
 
+```visual k-means in three steps
+file: kmeans-steps
+alt: Three panels with the same ten points and two diamond-shaped centres. Panel 1: each point joins its nearest centre. Panel 2: each centre moves to the middle of its points. Panel 3: repeating until the groups stop changing.
+caption: k-means assigns each point to its nearest centre, moves the centres to the middle of their points, and repeats. The points are made up.
+```
+
 ```diagram flow PCA: many columns into a few
 note: Useful for charts, speed and noise removal.
 - Many related columns | Many measurements per item | input
 - Find the main directions | The directions in which the data varies most | process
 - Keep the strongest few | Components that explain most of the variation | model
 - Few columns | Easier to plot and faster to use | output
+```
+
+```visual PCA as a shadow on the main direction
+file: pca-shadow
+alt: A cloud of dots stretched along a diagonal. A green line along the stretch is the main direction, and short orange segments drop from each dot onto the line, like shadows.
+caption: PCA finds the direction in which the data varies most and describes each point by where its shadow falls on it.
 ```
 
 ```diagram compare Normal points and anomalies
@@ -54,6 +66,12 @@ note: Isolation Forest relies on this: odd points are easy to separate from the 
 ## Anomalies | warn
 - Sit far from the crowd
 - Easy to separate from the rest
+```
+
+```visual A cloud of normal points and a few odd ones
+file: anomaly-dots
+alt: A dense cloud of dots inside a dashed ring labelled normal behaviour, and three diamond-shaped points far outside it, labelled unusual.
+caption: Anomaly detection learns what normal looks like and flags points far from it. An unusual point is not always a problem, so a person checks the flags.
 ```
 
 ## Real-world example

@@ -1,0 +1,41 @@
+<svg viewBox="0 0 720 362" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The parts of an AI system as a stack. -->
+  <rect class="vz-ml" x="14" y="18" width="450" height="44" rx="8"/>
+  <text class="vz-title" x="28" y="37" text-anchor="start">Front end</text>
+  <text class="vz-s" x="28" y="54" text-anchor="start">what the user sees</text>
+  <line class="vz-arrow" x1="239.0" y1="63.0" x2="239.0" y2="59.0"/>
+  <polygon class="vz-headk" points="239.0,70.0 245.0,59.0 233.0,59.0"/>
+  <rect class="vz-ap" x="14" y="70" width="450" height="44" rx="8"/>
+  <text class="vz-title" x="28" y="89" text-anchor="start">Application back end</text>
+  <text class="vz-s" x="28" y="106" text-anchor="start">often ASP.NET Core in .NET companies</text>
+  <line class="vz-arrow" x1="239.0" y1="115.0" x2="239.0" y2="111.0"/>
+  <polygon class="vz-headk" points="239.0,122.0 245.0,111.0 233.0,111.0"/>
+  <rect class="vz-lm" x="14" y="122" width="450" height="44" rx="8"/>
+  <text class="vz-title" x="28" y="141" text-anchor="start">Model services</text>
+  <text class="vz-s" x="28" y="158" text-anchor="start">often Python, where most ML libraries live</text>
+  <line class="vz-arrow" x1="239.0" y1="167.0" x2="239.0" y2="163.0"/>
+  <polygon class="vz-headk" points="239.0,174.0 245.0,163.0 233.0,163.0"/>
+  <rect class="vz-lm" x="14" y="174" width="450" height="44" rx="8"/>
+  <text class="vz-title" x="28" y="193" text-anchor="start">LLM provider</text>
+  <text class="vz-s" x="28" y="210" text-anchor="start">a hosted API or a local model</text>
+  <line class="vz-arrow" x1="239.0" y1="219.0" x2="239.0" y2="215.0"/>
+  <polygon class="vz-headk" points="239.0,226.0 245.0,215.0 233.0,215.0"/>
+  <rect class="vz-warn" x="14" y="226" width="450" height="44" rx="8"/>
+  <text class="vz-title" x="28" y="245" text-anchor="start">Vector database and data store</text>
+  <text class="vz-s" x="28" y="262" text-anchor="start">documents for RAG, tickets and decisions</text>
+  <line class="vz-arrow" x1="239.0" y1="271.0" x2="239.0" y2="267.0"/>
+  <polygon class="vz-headk" points="239.0,278.0 245.0,267.0 233.0,267.0"/>
+  <rect class="vz-ok" x="14" y="278" width="450" height="44" rx="8"/>
+  <text class="vz-title" x="28" y="297" text-anchor="start">Monitoring</text>
+  <text class="vz-s" x="28" y="314" text-anchor="start">logs, metrics, dashboards and alerts</text>
+  <text class="vz-title" x="490" y="60" text-anchor="start">Each part talks to the</text>
+  <text class="vz-title" x="490" y="84" text-anchor="start">next through a versioned</text>
+  <text class="vz-title" x="490" y="108" text-anchor="start">contract.</text>
+  <text class="vz-s" x="490" y="144" text-anchor="start">Plan for failure on every</text>
+  <text class="vz-s" x="490" y="162" text-anchor="start">model call: time-outs,</text>
+  <text class="vz-s" x="490" y="180" text-anchor="start">retries with growing waits,</text>
+  <text class="vz-s" x="490" y="198" text-anchor="start">and a fallback.</text>
+  <text class="vz-s" x="490" y="234" text-anchor="start">Keep secrets in a secret</text>
+  <text class="vz-s" x="490" y="252" text-anchor="start">store, never in the code.</text>
+  <text class="vz-n vz-note" x="12" y="346" text-anchor="start">A typical arrangement. Your own system may combine or skip some layers.</text>
+</svg>

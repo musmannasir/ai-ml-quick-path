@@ -1,0 +1,23 @@
+<svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Where training memory goes. -->
+  <text class="vz-title" x="20" y="30" text-anchor="start">Memory per parameter: full training with AdamW</text>
+  <rect class="vz-ml" x="40" y="50" width="80.0" height="54" rx="4"/>
+  <text class="vz-s" x="80.0" y="82" text-anchor="middle">2 bytes</text>
+  <rect class="vz-ap" x="120.0" y="50" width="80.0" height="54" rx="4"/>
+  <text class="vz-s" x="160.0" y="82" text-anchor="middle">2 bytes</text>
+  <rect class="vz-lm" x="200.0" y="50" width="480.0" height="54" rx="4"/>
+  <text class="vz-s" x="440.0" y="82" text-anchor="middle">12 bytes</text>
+  <text class="vz-s" x="80.0" y="124" text-anchor="middle">Weights</text>
+  <text class="vz-s" x="160.0" y="124" text-anchor="middle">Gradients</text>
+  <text class="vz-s" x="440.0" y="124" text-anchor="middle">Optimiser state: AdamW keeps extra numbers per weight</text>
+  <text class="vz-title" x="680" y="150" text-anchor="end">about 16 bytes per parameter, before activations</text>
+  <text class="vz-s" x="40" y="170" text-anchor="start">(a common mixed-precision breakdown: 2 + 2 + 12 bytes)</text>
+  <text class="vz-title" x="20" y="196" text-anchor="start">An 8-billion-parameter model, full fine-tuning:</text>
+  <text class="vz-s" x="20" y="218" text-anchor="start">8 billion × 16 bytes = about 128 GB of training state</text>
+  <rect class="vz-bad" x="40" y="232" width="640" height="30" rx="4"/>
+  <rect class="vz-ok" x="40" y="232" width="400" height="30" rx="4"/>
+  <line class="vz-limit" x1="440" y1="226" x2="440" y2="268"/>
+  <text class="vz-s" x="240" y="253" text-anchor="middle">one 80 GB GPU</text>
+  <text class="vz-s" x="560" y="253" text-anchor="middle">does not fit</text>
+  <text class="vz-n vz-note" x="20" y="296" text-anchor="start">Activations (saved for the backward pass) come on top. LoRA and QLoRA cut this memory far more than the other tools.</text>
+</svg>

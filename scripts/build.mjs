@@ -11,6 +11,7 @@ import { LEVELS, LESSON_ORDER, MODULES, REVIEWED, ROADMAPS, ROUTES, STARTS, modu
 import { CASES, CASE_CHECKS } from '../src/data/cases.mjs';
 import { PROJECTS, STARTERS } from '../src/data/projects.mjs';
 import { CHECKPOINTS, GLOSSARY, HARDWARE, WORKLOADS } from '../src/data/reference.mjs';
+import { CHEATSHEETS } from '../src/data/cheatsheets.mjs';
 import * as P from '../src/pages/pages.mjs';
 import { tokensCss } from '../src/design/tokens.mjs';
 import { SOURCES, LESSON_REFS } from '../src/data/sources.mjs';
@@ -318,7 +319,7 @@ ${adSlot('end')}
 });
 
 // ---------- other pages ----------
-const shared = { CASE_CHECKS, STARTERS, ADS, SOURCES, sourceItem, sourceLink, sourceNote, CODE_STATUS, codeEvidence, pill, mathsIndex, usedSources, STARTS, LEVELS, lessons, ctxFor: makeCtx, lessonLink, levelBadge, fmtMinutes, esc, md, slug, MODULES, ROADMAPS, ROUTES, PROJECTS, CASES, HARDWARE, WORKLOADS, GLOSSARY, CHECKPOINTS, REVIEWED, LESSON_ORDER, projectsById };
+const shared = { CASE_CHECKS, STARTERS, ADS, SOURCES, sourceItem, sourceLink, sourceNote, CODE_STATUS, codeEvidence, pill, mathsIndex, usedSources, STARTS, LEVELS, lessons, ctxFor: makeCtx, lessonLink, levelBadge, fmtMinutes, esc, md, slug, MODULES, ROADMAPS, ROUTES, PROJECTS, CASES, HARDWARE, WORKLOADS, GLOSSARY, CHEATSHEETS, CHECKPOINTS, REVIEWED, LESSON_ORDER, projectsById };
 for (const def of P.allPages(shared)) emit(def.path, def);
 for (const c of CASES) for (const s of c.sources) if (s.ref) usedSources.add(s.ref);
 
@@ -350,7 +351,7 @@ if (SITE.url) {
     pages.filter((p) => p.path !== '404.html').map((p) => `  <url><loc>${SITE.url}/${publicPath(p.path)}</loc><lastmod>${p.modified || newestLesson}</lastmod></url>`).join('\n')}\n</urlset>\n`);
   // llms.txt: a plain list of the main pages for AI tools (an optional, still unproven convention; it costs nothing).
   const at = (p) => `${SITE.url}/${publicPath(p)}`;
-  const main = [['Simulation lab', 'simulations.html', 'Live, interactive simulations that explain the main ideas'], ['All lessons', 'lessons.html', 'The lesson catalogue with filters'], ['Visual roadmaps', 'roadmaps.html', 'Three paths through the lessons'], ['Glossary', 'glossary.html', 'Plain-words definitions of the terms'], ['Real-world cases', 'cases.html', 'How companies use AI, with sources'], ['Capstone projects', 'projects.html', 'Eight projects to build']];
+  const main = [['Simulation lab', 'simulations.html', 'Live, interactive simulations that explain the main ideas'], ['All lessons', 'lessons.html', 'The lesson catalogue with filters'], ['Visual roadmaps', 'roadmaps.html', 'Three paths through the lessons'], ['Cheat sheets', 'cheatsheets.html', 'One-page revision summaries, one for each part and five by topic'], ['Glossary', 'glossary.html', 'Plain-words definitions of the terms'], ['Real-world cases', 'cases.html', 'How companies use AI, with sources'], ['Capstone projects', 'projects.html', 'Eight projects to build']];
   writeFileSync(join(DIST, 'llms.txt'), [`# ${SITE.name}`, '', `> ${SITE.description}`, '', 'Every lesson explains a concept in plain words, shows how industry uses it, and has Python and .NET (C#) examples. Where a calculation matters, it is worked out by hand with small numbers. Many lessons have a live simulation.', '', '## Start here', ...main.map(([t, p, d]) => `- [${t}](${at(p)}): ${d}`),
     ...MODULES.flatMap((m) => ['', `## ${m.title}`, ...m.groups.flatMap((g) => g.lessons).map((id) => `- [${lessons[id].title}](${at(`lessons/${id}.html`)}): ${lessons[id].goal}`)]),
     '', '## Optional', `- [About this guide](${at('about.html')}): Who it is for and how it was checked`, `- [Privacy](${at('privacy.html')}): What the site does and does not collect`, ''].join('\n'));

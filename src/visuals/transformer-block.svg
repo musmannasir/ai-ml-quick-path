@@ -1,0 +1,41 @@
+<svg viewBox="0 0 720 440" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- One transformer block, step by step, with its two shortcuts. -->
+  <rect class="vz-r0" x="80.0" y="14" width="300" height="44" rx="10"/>
+  <text class="vz-title" x="230" y="38.0" text-anchor="middle">Words in (as number lists)</text>
+  <line class="vz-arrow" x1="230.0" y1="58.0" x2="230.0" y2="69.0"/>
+  <polygon class="vz-headk" points="230.0,80.0 236.0,69.0 224.0,69.0"/>
+  <rect class="vz-ml" x="80.0" y="82" width="300" height="62" rx="10"/>
+  <text class="vz-title" x="230" y="104" text-anchor="middle">Attention</text>
+  <text class="vz-s" x="230" y="122" text-anchor="middle">each word looks at the other words</text>
+  <line class="vz-arrow" x1="230.0" y1="144.0" x2="230.0" y2="155.0"/>
+  <polygon class="vz-headk" points="230.0,166.0 236.0,155.0 224.0,155.0"/>
+  <rect class="vz-ap" x="80.0" y="168" width="300" height="40" rx="10"/>
+  <text class="vz-title" x="230" y="190.0" text-anchor="middle">Add the input back, then normalise</text>
+  <line class="vz-arrow" x1="230.0" y1="208.0" x2="230.0" y2="219.0"/>
+  <polygon class="vz-headk" points="230.0,230.0 236.0,219.0 224.0,219.0"/>
+  <rect class="vz-lm" x="80.0" y="232" width="300" height="62" rx="10"/>
+  <text class="vz-title" x="230" y="254" text-anchor="middle">Small neural network</text>
+  <text class="vz-s" x="230" y="272" text-anchor="middle">processes each word's position alone</text>
+  <line class="vz-arrow" x1="230.0" y1="294.0" x2="230.0" y2="305.0"/>
+  <polygon class="vz-headk" points="230.0,316.0 236.0,305.0 224.0,305.0"/>
+  <rect class="vz-ap" x="80.0" y="318" width="300" height="40" rx="10"/>
+  <text class="vz-title" x="230" y="340.0" text-anchor="middle">Add the input back, then normalise</text>
+  <line class="vz-arrow" x1="230.0" y1="358.0" x2="230.0" y2="369.0"/>
+  <polygon class="vz-headk" points="230.0,380.0 236.0,369.0 224.0,369.0"/>
+  <rect class="vz-r0" x="80.0" y="382" width="300" height="44" rx="10"/>
+  <text class="vz-title" x="230" y="406.0" text-anchor="middle">Words out (to the next block)</text>
+  <path class="vz-resid" d="M380.0 36 C 420 36 420 188 380.0 188"/>
+  <path class="vz-resid" d="M380.0 208 C 420 208 420 338 380.0 338"/>
+  <line class="vz-arrowr" x1="396.0" y1="184.0" x2="392.6" y2="185.0"/>
+  <polygon class="vz-headk" points="382.0,188.0 394.2,190.7 390.9,179.2"/>
+  <line class="vz-arrowr" x1="396.0" y1="334.0" x2="392.6" y2="335.0"/>
+  <polygon class="vz-headk" points="382.0,338.0 394.2,340.7 390.9,329.2"/>
+  <text class="vz-title" x="450" y="90" text-anchor="start">Shortcuts (residual connections):</text>
+  <text class="vz-s" x="450" y="112" text-anchor="start">the input skips past each step and is</text>
+  <text class="vz-s" x="450" y="130" text-anchor="start">added back, so very deep stacks can</text>
+  <text class="vz-s" x="450" y="148" text-anchor="start">still be trained.</text>
+  <text class="vz-s" x="450" y="210" text-anchor="start">Normalising keeps the numbers</text>
+  <text class="vz-s" x="450" y="228" text-anchor="start">in a steady range.</text>
+  <text class="vz-s" x="450" y="300" text-anchor="start">A model stacks many of these</text>
+  <text class="vz-s" x="450" y="318" text-anchor="start">blocks, one after another.</text>
+</svg>

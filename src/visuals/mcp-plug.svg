@@ -1,0 +1,50 @@
+<svg viewBox="0 0 720 418" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- MCP as one standard plug between AI apps and tools. -->
+  <text class="vz-title" x="14" y="28" text-anchor="start">Without a standard: every app needs its own connector to every tool</text>
+  <rect class="vz-ml" x="40" y="52" width="110" height="38" rx="8"/>
+  <text class="vz-s" x="95" y="77" text-anchor="middle">App A</text>
+  <line class="vz-edge" x1="150" y1="71" x2="330" y2="71"/>
+  <line class="vz-edge" x1="150" y1="71" x2="330" y2="123"/>
+  <line class="vz-edge" x1="150" y1="71" x2="330" y2="175"/>
+  <rect class="vz-ml" x="40" y="104" width="110" height="38" rx="8"/>
+  <text class="vz-s" x="95" y="129" text-anchor="middle">App B</text>
+  <line class="vz-edge" x1="150" y1="123" x2="330" y2="71"/>
+  <line class="vz-edge" x1="150" y1="123" x2="330" y2="123"/>
+  <line class="vz-edge" x1="150" y1="123" x2="330" y2="175"/>
+  <rect class="vz-ml" x="40" y="156" width="110" height="38" rx="8"/>
+  <text class="vz-s" x="95" y="181" text-anchor="middle">App C</text>
+  <line class="vz-edge" x1="150" y1="175" x2="330" y2="71"/>
+  <line class="vz-edge" x1="150" y1="175" x2="330" y2="123"/>
+  <line class="vz-edge" x1="150" y1="175" x2="330" y2="175"/>
+  <rect class="vz-ap" x="330" y="52" width="110" height="38" rx="8"/>
+  <text class="vz-s" x="385" y="77" text-anchor="middle">Files</text>
+  <rect class="vz-ap" x="330" y="104" width="110" height="38" rx="8"/>
+  <text class="vz-s" x="385" y="129" text-anchor="middle">Database</text>
+  <rect class="vz-ap" x="330" y="156" width="110" height="38" rx="8"/>
+  <text class="vz-s" x="385" y="181" text-anchor="middle">Calendar</text>
+  <text class="vz-title" x="480" y="100" text-anchor="start">3 apps × 3 tools</text>
+  <text class="vz-title" x="480" y="124" text-anchor="start">= 9 connectors</text>
+  <text class="vz-title" x="14" y="236" text-anchor="start">With MCP: write each tool once as a server; any app that speaks MCP can use it</text>
+  <rect class="vz-ml" x="40" y="260" width="110" height="34" rx="8"/>
+  <text class="vz-s" x="95" y="282" text-anchor="middle">App A</text>
+  <line class="vz-link" x1="150" y1="277" x2="250" y2="320"/>
+  <rect class="vz-ml" x="40" y="304" width="110" height="34" rx="8"/>
+  <text class="vz-s" x="95" y="326" text-anchor="middle">App B</text>
+  <line class="vz-link" x1="150" y1="321" x2="250" y2="320"/>
+  <rect class="vz-ml" x="40" y="348" width="110" height="34" rx="8"/>
+  <text class="vz-s" x="95" y="370" text-anchor="middle">App C</text>
+  <line class="vz-link" x1="150" y1="365" x2="250" y2="320"/>
+  <rect class="vz-warn" x="250" y="296" width="110" height="48" rx="8"/>
+  <text class="vz-title" x="305" y="326" text-anchor="middle">MCP</text>
+  <rect class="vz-ap" x="460" y="260" width="110" height="34" rx="8"/>
+  <text class="vz-s" x="515" y="282" text-anchor="middle">Files</text>
+  <line class="vz-link" x1="360" y1="320" x2="460" y2="277"/>
+  <rect class="vz-ap" x="460" y="304" width="110" height="34" rx="8"/>
+  <text class="vz-s" x="515" y="326" text-anchor="middle">Database</text>
+  <line class="vz-link" x1="360" y1="320" x2="460" y2="321"/>
+  <rect class="vz-ap" x="460" y="348" width="110" height="34" rx="8"/>
+  <text class="vz-s" x="515" y="370" text-anchor="middle">Calendar</text>
+  <line class="vz-link" x1="360" y1="320" x2="460" y2="365"/>
+  <text class="vz-title" x="590" y="310" text-anchor="start">3 + 3 = 6 pieces</text>
+  <text class="vz-n vz-note" x="12" y="402" text-anchor="start">An illustration of the idea. Treat every MCP server as code you must trust and limit.</text>
+</svg>

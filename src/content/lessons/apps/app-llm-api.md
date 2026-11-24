@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Call a language model from Python and C#, request structured JSON, validate it, handle failures, stream answers and control cost.
 prereqs: llm-how
 reviewed: 2026-11-02
-updated: 2026-11-23
+updated: 2026-11-24
 evidence: The same support-email summarizer working in Python and C#, rejecting invalid output, with token use and latency logged for 20 test emails.
 code: Python validator executed 2026-11-02 (examples/llm-summarizer/python, offline mode and 4 unit tests); live model calls not run (no API key)
 ---
@@ -22,6 +22,12 @@ note: Your application sends messages and gets text back. You pay for the tokens
 - LLM API | Receives the request and counts tokens in | process
 - Model | Writes the reply one token at a time | model
 - Reply text | Ideally JSON with named fields; tokens out are counted | output
+```
+
+```visual A request and a streamed reply
+file: api-sequence
+alt: A sequence picture with your application on the left and the LLM API on the right. An arrow carries the request, a system message plus user messages, to the API, and several small arrows carry the reply back in pieces. Notes say tokens in and out are counted and the first piece marks the time to first token.
+caption: Your application sends messages and receives the reply in small pieces. You pay for tokens in both directions.
 ```
 
 ```diagram layers What goes into the messages

@@ -1,0 +1,61 @@
+<svg viewBox="0 0 720 334" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Cross-validation folds taking turns as the test part. -->
+  <text class="vz-title" x="20" y="30" text-anchor="start">5-fold cross-validation: every part takes a turn as the test part</text>
+  <text class="vz-s" x="20" y="76" text-anchor="start">Round 1</text>
+  <rect class="vz-chunk2 vz-testfold" x="100" y="50" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="152" y="73" text-anchor="middle">test</text>
+  <rect class="vz-ml" x="212" y="50" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="264" y="73" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="324" y="50" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="376" y="73" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="436" y="50" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="488" y="73" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="548" y="50" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="600" y="73" text-anchor="middle">train</text>
+  <text class="vz-s" x="20" y="120" text-anchor="start">Round 2</text>
+  <rect class="vz-ml" x="100" y="94" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="152" y="117" text-anchor="middle">train</text>
+  <rect class="vz-chunk2 vz-testfold" x="212" y="94" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="264" y="117" text-anchor="middle">test</text>
+  <rect class="vz-ml" x="324" y="94" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="376" y="117" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="436" y="94" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="488" y="117" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="548" y="94" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="600" y="117" text-anchor="middle">train</text>
+  <text class="vz-s" x="20" y="164" text-anchor="start">Round 3</text>
+  <rect class="vz-ml" x="100" y="138" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="152" y="161" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="212" y="138" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="264" y="161" text-anchor="middle">train</text>
+  <rect class="vz-chunk2 vz-testfold" x="324" y="138" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="376" y="161" text-anchor="middle">test</text>
+  <rect class="vz-ml" x="436" y="138" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="488" y="161" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="548" y="138" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="600" y="161" text-anchor="middle">train</text>
+  <text class="vz-s" x="20" y="208" text-anchor="start">Round 4</text>
+  <rect class="vz-ml" x="100" y="182" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="152" y="205" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="212" y="182" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="264" y="205" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="324" y="182" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="376" y="205" text-anchor="middle">train</text>
+  <rect class="vz-chunk2 vz-testfold" x="436" y="182" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="488" y="205" text-anchor="middle">test</text>
+  <rect class="vz-ml" x="548" y="182" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="600" y="205" text-anchor="middle">train</text>
+  <text class="vz-s" x="20" y="252" text-anchor="start">Round 5</text>
+  <rect class="vz-ml" x="100" y="226" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="152" y="249" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="212" y="226" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="264" y="249" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="324" y="226" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="376" y="249" text-anchor="middle">train</text>
+  <rect class="vz-ml" x="436" y="226" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="488" y="249" text-anchor="middle">train</text>
+  <rect class="vz-chunk2 vz-testfold" x="548" y="226" width="104" height="34" rx="6"/>
+  <text class="vz-s" x="600" y="249" text-anchor="middle">test</text>
+  <text class="vz-s" x="20" y="290" text-anchor="start">Average the five scores and report the spread (for example 0.908 ± 0.009). One lucky split cannot fool you.</text>
+  <text class="vz-n vz-note" x="12" y="318" text-anchor="start">The five blocks are five equal parts of the same data. The final test set stays untouched.</text>
+</svg>

@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Design a complete AI system (a .NET application calling a Python model service and an LLM), with containers, secrets, fallbacks, security and a clear checklist, so you can plan any industry case.
 prereqs: ops-serving, ops-monitoring, app-rag, app-security
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: An architecture diagram and one-page design note for a capstone, covering components, contract, failure modes, security, monitoring and cost.
 code: FastAPI service not run (FastAPI not installed in the build environment); Dockerfile not built (no Docker in the build environment)
 ---
@@ -23,6 +23,12 @@ note: Each part talks to the next through a versioned contract.
 - LLM provider | hosted API or a local model | model
 - Vector database and data store | documents for RAG, tickets and decisions | store
 - Monitoring | logs, metrics, dashboards and alerts | output
+```
+
+```visual The parts of an AI system as a stack
+file: architecture-stack
+alt: Six stacked layers with arrows between them: front end, application back end, model services, LLM provider, vector database and data store, and monitoring. Notes say each part talks to the next through a versioned contract, to plan for failure on every model call, and to keep secrets in a secret store.
+caption: A typical arrangement of an AI system. Your own system may combine or skip some layers.
 ```
 
 ```diagram nest A container packages everything the app needs

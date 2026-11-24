@@ -1,0 +1,23 @@
+<svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A model guessing, and a model answering from supplied documents. -->
+  <rect class="vz-bad" x="14" y="14" width="340" height="250" rx="12"/>
+  <text class="vz-title" x="30" y="44" text-anchor="start">Model alone</text>
+  <text class="vz-s" x="30" y="72" text-anchor="start">Question: "When was our</text>
+  <text class="vz-s" x="30" y="90" text-anchor="start">refund policy last changed?"</text>
+  <rect class="vz-card" x="30" y="112" width="308" height="50" rx="8"/>
+  <text class="vz-s" x="44" y="142" text-anchor="start">"It was changed in March 2021."</text>
+  <text class="vz-s" x="30" y="190" text-anchor="start">Sounds sure, but it has no source:</text>
+  <text class="vz-s" x="30" y="208" text-anchor="start">it generates likely-sounding text.</text>
+  <text class="vz-title" x="30" y="240" text-anchor="start">Can be wrong with full confidence.</text>
+  <rect class="vz-ok" x="366" y="14" width="340" height="250" rx="12"/>
+  <text class="vz-title" x="382" y="44" text-anchor="start">Model with grounding</text>
+  <rect class="vz-card" x="382" y="60" width="308" height="52" rx="8"/>
+  <text class="vz-s" x="396" y="82" text-anchor="start">Supplied document (policy v4):</text>
+  <text class="vz-s" x="396" y="100" text-anchor="start">"Updated on 5 June."</text>
+  <rect class="vz-card" x="382" y="124" width="308" height="50" rx="8"/>
+  <text class="vz-s" x="396" y="154" text-anchor="start">"5 June, per policy v4 [doc 1]"</text>
+  <text class="vz-s" x="382" y="200" text-anchor="start">Answers from real documents, with</text>
+  <text class="vz-s" x="382" y="218" text-anchor="start">a citation, and says "I don't know"</text>
+  <text class="vz-s" x="382" y="236" text-anchor="start">when the evidence is missing.</text>
+  <text class="vz-n vz-note" x="12" y="296" text-anchor="start">Made-up question and dates. Outputs are also checked, and people review important decisions.</text>
+</svg>

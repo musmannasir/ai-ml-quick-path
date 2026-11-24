@@ -1,0 +1,82 @@
+<svg viewBox="0 0 720 334" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Dropout: some neurons off during training, all on in use. -->
+  <rect class="vz-card" x="14" y="40" width="340" height="250" rx="10"/>
+  <text class="vz-title" x="30" y="66" text-anchor="start">During training</text>
+  <line class="vz-edge" x1="74" y1="116" x2="184" y2="95"/>
+  <line class="vz-edgex" x1="74" y1="116" x2="184" y2="137"/>
+  <line class="vz-edgex" x1="74" y1="116" x2="184" y2="179"/>
+  <line class="vz-edge" x1="74" y1="116" x2="184" y2="221"/>
+  <line class="vz-edge" x1="74" y1="158" x2="184" y2="95"/>
+  <line class="vz-edgex" x1="74" y1="158" x2="184" y2="137"/>
+  <line class="vz-edgex" x1="74" y1="158" x2="184" y2="179"/>
+  <line class="vz-edge" x1="74" y1="158" x2="184" y2="221"/>
+  <line class="vz-edge" x1="74" y1="200" x2="184" y2="95"/>
+  <line class="vz-edgex" x1="74" y1="200" x2="184" y2="137"/>
+  <line class="vz-edgex" x1="74" y1="200" x2="184" y2="179"/>
+  <line class="vz-edge" x1="74" y1="200" x2="184" y2="221"/>
+  <line class="vz-edgex" x1="184" y1="95" x2="294" y2="116"/>
+  <line class="vz-edge" x1="184" y1="95" x2="294" y2="158"/>
+  <line class="vz-edge" x1="184" y1="95" x2="294" y2="200"/>
+  <line class="vz-edgex" x1="184" y1="137" x2="294" y2="116"/>
+  <line class="vz-edgex" x1="184" y1="137" x2="294" y2="158"/>
+  <line class="vz-edgex" x1="184" y1="137" x2="294" y2="200"/>
+  <line class="vz-edgex" x1="184" y1="179" x2="294" y2="116"/>
+  <line class="vz-edgex" x1="184" y1="179" x2="294" y2="158"/>
+  <line class="vz-edgex" x1="184" y1="179" x2="294" y2="200"/>
+  <line class="vz-edgex" x1="184" y1="221" x2="294" y2="116"/>
+  <line class="vz-edge" x1="184" y1="221" x2="294" y2="158"/>
+  <line class="vz-edge" x1="184" y1="221" x2="294" y2="200"/>
+  <circle class="vz-nodeB" cx="74.0" cy="116.0" r="14"/>
+  <circle class="vz-nodeB" cx="74.0" cy="158.0" r="14"/>
+  <circle class="vz-nodeB" cx="74.0" cy="200.0" r="14"/>
+  <circle class="vz-nodeB" cx="184.0" cy="95.0" r="14"/>
+  <circle class="vz-nodeoff" cx="184.0" cy="137.0" r="14"/>
+  <line class="vz-cross" x1="176" y1="129" x2="192" y2="145"/><line class="vz-cross" x1="176" y1="145" x2="192" y2="129"/>
+  <circle class="vz-nodeoff" cx="184.0" cy="179.0" r="14"/>
+  <line class="vz-cross" x1="176" y1="171" x2="192" y2="187"/><line class="vz-cross" x1="176" y1="187" x2="192" y2="171"/>
+  <circle class="vz-nodeB" cx="184.0" cy="221.0" r="14"/>
+  <circle class="vz-nodeoff" cx="294.0" cy="116.0" r="14"/>
+  <line class="vz-cross" x1="286" y1="108" x2="302" y2="124"/><line class="vz-cross" x1="286" y1="124" x2="302" y2="108"/>
+  <circle class="vz-nodeB" cx="294.0" cy="158.0" r="14"/>
+  <circle class="vz-nodeB" cx="294.0" cy="200.0" r="14"/>
+  <text class="vz-s" x="30" y="280" text-anchor="start">some neurons are switched off at random</text>
+  <rect class="vz-card" x="366" y="40" width="340" height="250" rx="10"/>
+  <text class="vz-title" x="382" y="66" text-anchor="start">In use (and when validating)</text>
+  <line class="vz-edge" x1="426" y1="116" x2="536" y2="95"/>
+  <line class="vz-edge" x1="426" y1="116" x2="536" y2="137"/>
+  <line class="vz-edge" x1="426" y1="116" x2="536" y2="179"/>
+  <line class="vz-edge" x1="426" y1="116" x2="536" y2="221"/>
+  <line class="vz-edge" x1="426" y1="158" x2="536" y2="95"/>
+  <line class="vz-edge" x1="426" y1="158" x2="536" y2="137"/>
+  <line class="vz-edge" x1="426" y1="158" x2="536" y2="179"/>
+  <line class="vz-edge" x1="426" y1="158" x2="536" y2="221"/>
+  <line class="vz-edge" x1="426" y1="200" x2="536" y2="95"/>
+  <line class="vz-edge" x1="426" y1="200" x2="536" y2="137"/>
+  <line class="vz-edge" x1="426" y1="200" x2="536" y2="179"/>
+  <line class="vz-edge" x1="426" y1="200" x2="536" y2="221"/>
+  <line class="vz-edge" x1="536" y1="95" x2="646" y2="116"/>
+  <line class="vz-edge" x1="536" y1="95" x2="646" y2="158"/>
+  <line class="vz-edge" x1="536" y1="95" x2="646" y2="200"/>
+  <line class="vz-edge" x1="536" y1="137" x2="646" y2="116"/>
+  <line class="vz-edge" x1="536" y1="137" x2="646" y2="158"/>
+  <line class="vz-edge" x1="536" y1="137" x2="646" y2="200"/>
+  <line class="vz-edge" x1="536" y1="179" x2="646" y2="116"/>
+  <line class="vz-edge" x1="536" y1="179" x2="646" y2="158"/>
+  <line class="vz-edge" x1="536" y1="179" x2="646" y2="200"/>
+  <line class="vz-edge" x1="536" y1="221" x2="646" y2="116"/>
+  <line class="vz-edge" x1="536" y1="221" x2="646" y2="158"/>
+  <line class="vz-edge" x1="536" y1="221" x2="646" y2="200"/>
+  <circle class="vz-nodeB" cx="426.0" cy="116.0" r="14"/>
+  <circle class="vz-nodeB" cx="426.0" cy="158.0" r="14"/>
+  <circle class="vz-nodeB" cx="426.0" cy="200.0" r="14"/>
+  <circle class="vz-nodeB" cx="536.0" cy="95.0" r="14"/>
+  <circle class="vz-nodeB" cx="536.0" cy="137.0" r="14"/>
+  <circle class="vz-nodeB" cx="536.0" cy="179.0" r="14"/>
+  <circle class="vz-nodeB" cx="536.0" cy="221.0" r="14"/>
+  <circle class="vz-nodeB" cx="646.0" cy="116.0" r="14"/>
+  <circle class="vz-nodeB" cx="646.0" cy="158.0" r="14"/>
+  <circle class="vz-nodeB" cx="646.0" cy="200.0" r="14"/>
+  <text class="vz-s" x="382" y="280" text-anchor="start">all neurons on: use eval mode so dropout is off</text>
+  <text class="vz-title" x="14" y="28" text-anchor="start">Dropout: practice with parts missing so no neuron is relied on too much</text>
+  <text class="vz-n vz-note" x="12" y="318" text-anchor="start">The neurons that are off change at every training step. This reduces overfitting.</text>
+</svg>

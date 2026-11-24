@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain convolutional networks, transfer learning, object detection, segmentation and vision transformers, and run a trained vision model from Python and C#.
 prereqs: dl-training
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A fine-tuned image classifier (or detector) evaluated on images from a different session than training, exported to ONNX and called from C# or Python.
 code: Python NumPy demos executed 2026-11-02 (ai_extras.py conv, gap_topics.py vision); PyTorch not run (not installed in the build environment); added technique snippets (2026-11-05) not run
 ---
@@ -22,6 +22,12 @@ Images are grids of numbers (pixel brightness per colour). A **convolutional neu
 - Answer | Label, boxes or a mask | output
 ```
 
+```visual A filter sliding over an image
+file: conv-slide
+alt: A grid of 5 by 5 pixels with a 3 by 3 window outlined at the top left and a second window, dashed, one pixel to the right. A 3 by 3 filter is shown in the middle. An arrow leads to a 3 by 3 output grid whose first two cells are highlighted to match the two window positions. Text says there are 5 minus 3 plus 1 equals 3 positions across and 3 down, so 9 output numbers.
+caption: A small filter slides over the image one pixel at a time. Each output number says how well that patch matches the filter.
+```
+
 ```diagram compare Three vision tasks
 ## Classification | model
 - What is in the picture? | One label, such as scratched part
@@ -29,6 +35,12 @@ Images are grids of numbers (pixel brightness per colour). A **convolutional neu
 - What and where? | Boxes around each object
 ## Segmentation | output
 - Which pixel is what? | Every pixel labelled: road, car, person
+```
+
+```visual One picture, three questions
+file: vision-tasks
+alt: Three copies of a scene with a circle and a square. In classification the picture gets one label, ball and box. In object detection each object gets a dashed box and a name with a made-up score. In segmentation every pixel of each object is coloured by its class.
+caption: Classification says what is in the picture, detection says what and where, and segmentation says which pixels belong to what.
 ```
 
 ```diagram flow Transfer learning
