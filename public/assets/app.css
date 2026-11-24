@@ -1015,4 +1015,11 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .vz-w { fill: var(--ink); font-size: 20px; font-weight: 700; }
 .vz-n { fill: var(--ink-2); font-size: 14px; }
 .vz-note { fill: var(--ink-3); font-size: 13px; }
+.vz-title { fill: var(--ink); font-size: 17px; font-weight: 700; }
+.vz-v { fill: var(--ink); font-size: 21px; font-weight: 700; }
+.vz-s { fill: var(--ink-2); font-size: 13px; }
+.vz-card { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.vz-caught { fill: var(--sim-c2); }
+.vz-missed { fill: none; stroke: var(--bad-ink); stroke-width: 2; stroke-dasharray: 3 2; }
+.vz-false { fill: var(--sim-c1); }
 @media print { .vz-bar { display: none; } .vz-panel[hidden] { display: block; } .vz-on .vz-label { display: block; } .vz-fig { break-inside: avoid; } }
