@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Recognise the main kinds of data, tell features from labels, and split data into training, validation and test sets.
 prereqs: s-lifecycle
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A table of three datasets from your own work or life, with their data type, features, label and how you would split them.
 code: Python executed 2026-11-02 (quickpath.py data)
 ---
@@ -38,6 +38,12 @@ note: Each row is one example, such as one house.
 - Training set | Learn from it | model
 - Validation set | Compare ideas | process
 - Test set | Open only once at the end, like a final exam | output
+```
+
+```visual The three sets as three kinds of exam
+file: three-sets-exams
+alt: Three cards joined by arrows: the training set is the practice questions the model learns from, the validation set is a mock exam used to compare ideas and settings, and the test set is the final exam, opened once at the very end and shown with a padlock. Below them a bar shows an illustrative split of 70 percent training, 15 percent validation and 15 percent test.
+caption: Practice questions, a mock exam, then one final exam. The split is made before any training, and the test set is never used for tuning.
 ```
 
 ## Real-world example

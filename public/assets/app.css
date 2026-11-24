@@ -1022,4 +1022,35 @@ a.ext::after { content: "\2197" / ""; font-size: .8em; margin-left: .15em; }
 .vz-caught { fill: var(--sim-c2); }
 .vz-missed { fill: none; stroke: var(--bad-ink); stroke-width: 2; stroke-dasharray: 3 2; }
 .vz-false { fill: var(--sim-c1); }
+.vz-ring { stroke-width: 2.5; }
+.vz-r0 { fill: var(--surface-2); stroke: var(--line-strong); }
+.vz-r1 { fill: var(--ml-soft); stroke: var(--ml); }
+.vz-r2 { fill: var(--lm-soft); stroke: var(--lm); }
+.vz-r3 { fill: var(--applied-soft); stroke: var(--applied); }
+.vz-ringt { fill: var(--ink); font-size: 15px; font-weight: 700; }
+.vz-ml, .vz-ap, .vz-lm, .vz-ok, .vz-warn, .vz-bad { stroke-width: 2; }
+.vz-ml { fill: var(--ml-soft); stroke: var(--ml); }
+.vz-ap { fill: var(--applied-soft); stroke: var(--applied); }
+.vz-lm { fill: var(--lm-soft); stroke: var(--lm); }
+.vz-ok { fill: var(--ok-bg); stroke: var(--ok-ink); }
+.vz-warn { fill: var(--warn-bg); stroke: var(--warn-ink); }
+.vz-bad { fill: var(--bad-bg); stroke: var(--bad-ink); }
+.vz-code { fill: var(--ink); font-family: var(--mono); font-size: 15px; }
+.vz-lock { fill: var(--lm); }
+.vz-lockarc { fill: none; stroke: var(--lm); stroke-width: 5; }
+.vz-curve { fill: none; stroke: var(--line-strong); stroke-width: 3; }
+.vz-step { stroke: var(--sim-c1); stroke-width: 2.5; }
+.vz-dot { fill: var(--sim-c1); }
+.vz-fit { fill: none; stroke: var(--sim-c2); stroke-width: 3.5; stroke-linejoin: round; }
+.vz-wild { stroke: var(--sim-c1); stroke-width: 3; }
+.vz-pt { fill: var(--sim-c0); stroke: var(--surface); stroke-width: 1.5; }
+.vz-ring0 { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
+.vz-ring1 { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1.5; }
+.vz-ring2 { fill: var(--sim-c1); stroke: var(--line-strong); stroke-width: 1.5; fill-opacity: .55; }
+.vz-dart { fill: var(--sim-c0); stroke: var(--ink); stroke-width: 1.5; }
+.vz-knn { fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-dasharray: 6 5; }
+.vz-c0 { fill: var(--sim-c0); stroke: var(--surface); stroke-width: 1.5; }
+.vz-c1 { fill: var(--sim-c1); stroke: var(--surface); stroke-width: 1.5; }
+.vz-new { fill: var(--ink); }
+.vz-link { stroke: var(--ink-2); stroke-width: 2.5; }
 @media print { .vz-bar { display: none; } .vz-panel[hidden] { display: block; } .vz-on .vz-label { display: block; } .vz-fig { break-inside: avoid; } }

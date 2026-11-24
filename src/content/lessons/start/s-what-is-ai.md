@@ -8,7 +8,7 @@ maths: basic arithmetic
 goal: Explain the difference between AI, machine learning, deep learning, generative AI and large language models, and name the four ways machines learn.
 prereqs:
 reviewed: 2026-11-02
-updated: 2026-11-19
+updated: 2026-11-24
 evidence: A one-page note that sorts five products you use (for example a spam filter, a map app, a chat assistant) into the right AI family, with one sentence each.
 code: Python executed 2026-11-02 (examples/quickpath/quickpath.py rules_vs_ml)
 ---
@@ -21,6 +21,12 @@ note: Each family is a smaller part of the one around it. A large language model
 - Machine learning | Systems that learn their rules from examples instead of being given them | process
 - Deep learning | Machine learning with many-layered neural networks | model
 - Generative AI | Deep learning that creates new text, images, audio or code | output
+```
+
+```visual Four circles, one inside the next
+file: ai-families
+alt: Four circles, each inside the larger one. The outer circle is artificial intelligence, then machine learning, then deep learning, and the smallest is generative AI. A list on the right says what each one is: any computer system doing a task that needs human judgement; a system that learns its rules from examples; machine learning with many-layered neural networks; and deep learning that creates new text, images, audio or code, of which a large language model is one kind.
+caption: Each family is a smaller part of the one around it. A large language model sits in the smallest circle.
 ```
 
 Machines learn in four main ways:
@@ -55,6 +61,12 @@ note: The spam example from the paragraph above.
 ## Machine learning | model
 - Who makes the rules | The computer, from examples
 - Example | Thousands of emails already marked spam or not spam
+```
+
+```visual Rules written by a person, or learned by the computer
+file: rules-vs-learning
+alt: Two panels. On the left, hand-written rules: a person writes an IF rule that marks an email containing the words free prize as spam; spammers change the words, so the rule stops working and a person must write a new one. On the right, machine learning: many emails already marked spam or not spam are given to the computer, which learns the rules from the examples and updates them when new ones arrive.
+caption: The same spam example, two ways: a person writes the rule, or the computer learns it from marked examples.
 ```
 
 ## Real-world example

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Training, validation and test sets as practice, mock exam and final exam. -->
+  <rect class="vz-ml" x="12" y="14" width="216" height="140" rx="12"/>
+  <text class="vz-title" x="28" y="44" text-anchor="start">Training set</text>
+  <text class="vz-v" x="28" y="72" text-anchor="start">Practice questions</text>
+  <text class="vz-s" x="28" y="100" text-anchor="start">The model learns from it.</text>
+  <polygon class="vz-head" points="234,74 248,84 234,94"/>
+  <rect class="vz-ap" x="252" y="14" width="216" height="140" rx="12"/>
+  <text class="vz-title" x="268" y="44" text-anchor="start">Validation set</text>
+  <text class="vz-v" x="268" y="72" text-anchor="start">Mock exam</text>
+  <text class="vz-s" x="268" y="100" text-anchor="start">Compare ideas and settings.</text>
+  <polygon class="vz-head" points="474,74 488,84 474,94"/>
+  <rect class="vz-lm" x="492" y="14" width="216" height="140" rx="12"/>
+  <text class="vz-title" x="508" y="44" text-anchor="start">Test set</text>
+  <text class="vz-v" x="508" y="72" text-anchor="start">Final exam</text>
+  <text class="vz-s" x="508" y="100" text-anchor="start">Open once, at the very end.</text>
+  <rect class="vz-lock" x="652" y="34" width="30" height="22" rx="4"/>
+  <path class="vz-lockarc" d="M658 34 v-6 a9 9 0 0 1 18 0 v6" />
+  <text class="vz-s" x="20" y="188" text-anchor="start">The split is made before any training. Illustrative sizes (as in the maths box):</text>
+  <rect class="vz-ml" x="20" y="204" width="476" height="34" rx="4"/>
+  <text class="vz-s" x="258.0" y="226" text-anchor="middle">Train 70%</text>
+  <rect class="vz-ap" x="496" y="204" width="102" height="34" rx="4"/>
+  <text class="vz-s" x="547.0" y="226" text-anchor="middle">Validation 15%</text>
+  <rect class="vz-lm" x="598" y="204" width="102" height="34" rx="4"/>
+  <text class="vz-s" x="649.0" y="226" text-anchor="middle">Test 15%</text>
+  <text class="vz-n vz-note" x="20" y="266" text-anchor="start">Never tune the model on the test set: it stops being a fair final exam.</text>
+</svg>
