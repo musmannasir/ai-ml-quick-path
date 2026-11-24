@@ -98,6 +98,21 @@ export const CHEATSHEETS = [
     ],
   },
   {
+    id: 'hardware', title: 'Cheat sheet: hardware, CUDA and running models', short: 'Hardware',
+    intro: 'What a GPU and CUDA are, whether a model fits, how fast it can write, and what to do when it does not.',
+    panels: [
+      { title: 'CPU or GPU', points: ['A CPU has a few strong cores that work one thing after another; a GPU has thousands of small cores that do the same sum on many numbers at once.', 'Neural networks are mostly matrix multiplication, which suits a GPU.', 'You do not need a GPU to start learning; rent one for big jobs.'], lessons: ['llm-hardware', 's-setup'], visual: 'cpu-vs-gpu' },
+      { title: 'What CUDA is', points: ['CUDA is NVIDIA\'s platform for running calculations on its GPUs. Frameworks call it for you.', 'The GPU driver, the framework\'s CUDA build and the GPU must match. A framework install for CUDA brings its own CUDA libraries.', 'nvidia-smi shows the newest CUDA version the driver supports, not an installed toolkit.'], lessons: ['llm-hardware'], visual: 'gpu-stack' },
+      { title: 'Choose the device in code', points: ['Ask the framework whether a GPU is available, then use it or the CPU.', 'The model and its inputs must be on the same device.', 'AMD builds of PyTorch still call the device \"cuda\"; Apple computers use \"mps\".', 'Print the device: a program can fall back to the CPU with no error.'], formula: ['device = \"cuda\" if torch.cuda.is_available() else \"cpu\"', 'model = model.to(device);  x = x.to(device)'], lessons: ['llm-hardware'] },
+      { title: 'Does it fit in VRAM?', points: ['Weights = parameters x bytes per weight.', 'The cache grows with the conversation; working space is extra.', 'Leave a safety margin of a few GB.'], formula: ['needed = weights + cache + working space', '8 billion x 0.5 byte = 4 GB; cache for 8,192 tokens is about 1.07 GB', '4 + 1.07 + 1 = 6.07 GB'], lessons: ['llm-hardware', 'llm-local'], visual: 'vram-budget' },
+      { title: 'Number formats', points: ['FP32: 4 bytes. FP16 and BF16: 2 bytes. INT8: 1 byte. 4-bit: half a byte.', 'BF16 keeps FP32\'s range with fewer digits, which makes training steadier; FP16 has a narrower range and needs more care.', 'Mixed precision does the heavy sums in 16 bits and keeps a few sensitive numbers in higher precision.'], lessons: ['llm-hardware', 'llm-scale'] },
+      { title: 'How fast can it write?', points: ['Every new token reads all the weights once, so memory speed sets an upper limit for one conversation.', 'Fewer bits means fewer bytes to read, so a smaller model is also faster.', 'Real speeds are lower than the limit.'], formula: ['tokens per second (at most) = bandwidth / size of the weights', '400 GB/s / 4 GB = 100 tokens per second'], lessons: ['llm-hardware'] },
+      { title: 'When it does not fit', points: ['Try in order: fewer bits, a shorter context, offload layers to the CPU (slower), a bigger or rented GPU, a smaller model.', 'Accelerate can place layers on GPU, then CPU, then disk with device_map=\"auto\".', 'llama.cpp has a setting for how many layers go to the GPU; runners such as Ollama choose a split.'], lessons: ['llm-hardware', 'llm-local'], visual: 'fit-options' },
+      { title: 'Other hardware', points: ['AMD: ROCm. Apple: Metal, device \"mps\". ONNX Runtime picks an execution provider for the hardware it finds.', 'TPU: Google\'s matrix chip, mostly in Google\'s cloud. NPU: a small low-power AI unit in many laptops and phones.', 'Check the support list of your framework or runner before you buy.'], lessons: ['llm-hardware'] },
+      { title: 'Watch it and fix it', points: ['nvidia-smi shows memory used and how busy the GPU is; ollama ps shows how much of a model is on the GPU.', 'Slow or failing: does the system see the GPU, does the framework see it, are the model and inputs on it, does memory fit, is it busy.', 'Out of memory: fewer bits, shorter context, smaller batch, offload.'], lessons: ['llm-hardware'] },
+    ],
+  },
+  {
     id: 'llm-maths', title: 'Cheat sheet: the maths behind language models', short: 'LLM maths',
     intro: 'The few calculations that appear again and again. Each one is worked with small numbers in a lesson.',
     panels: [

@@ -15,6 +15,14 @@
   L.kvBytesPerToken = function (layers, d, bits) { return 2 * layers * d * bits / 8; };
   // Grouped-query attention: `group` query heads share one key and one value head, so the cache is `group` times smaller (group 1 = every head has its own).
   L.kvBytesGrouped = function (layers, d, bits, group) { return L.kvBytesPerToken(layers, d, bits) / group; };
+  // Does a model fit in GPU memory, and how fast could it write? Weights = parameters x bytes each; the cache holds keys and values (2 bytes each) for every token;
+  // working space is a fixed assumption. Speed limit: every new token reads all the weights once, so bandwidth / weights.
+  L.fitCheck = function (paramsB, bits, layers, ctx, vram, kvHeads, headSize, working) {
+    kvHeads = kvHeads || 8; headSize = headSize || 128; working = working === undefined ? 1 : working;
+    var w = paramsB * bits / 8, perTok = 2 * layers * kvHeads * headSize * 2, c = perTok * ctx / 1e9, t = w + c + working;
+    return { weights: w, cache: c, working: working, total: t, fits: t <= vram, spare: vram - t };
+  };
+  L.speedLimit = function (weightsGb, bandwidth) { return bandwidth / weightsGb; };
   L.trainFlops = function (n, tokens) { return 6 * n * tokens; };
 
   // ---- learning to write ----

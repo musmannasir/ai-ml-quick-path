@@ -167,6 +167,10 @@ checks.push(['llm', 'examples/sim-llm/llm.py', () => {
   out.push('rank-r error of a made-up update (relative): ' + [1, 2, 3, 4].map((r) => `r=${r}:${r3(L.lowRank(M, r).err)}`).join(' '));
   out.push(`one 4096 by 4096 layer: ${4096 * 4096} weights to change, LoRA rank 8 trains ${2 * 4096 * 8} (${f(100 * 2 * 4096 * 8 / (4096 * 4096), 2)}%)`);
   out.push('cache per token, 7B-class shape at 16 bits, query heads per key-value head 1/4/8: ' + [1, 4, 8].map((g) => `${f(L.kvBytesGrouped(32, 4096, 16, g) / 1e3, 1)} KB`).join(' '));
+  for (const [name, p, b, layers, vram] of [['8B 16-bit 24 GB', 8, 16, 32, 24], ['8B 4-bit 16 GB', 8, 4, 32, 16], ['8B 16-bit 16 GB', 8, 16, 32, 16], ['70B 4-bit 48 GB', 70, 4, 80, 48], ['70B 16-bit 48 GB', 70, 16, 80, 48]]) {
+    const r = L.fitCheck(p, b, layers, 8192, vram); out.push(`hardware fit check, ${name}, 8192 tokens: weights ${f(r.weights, 2)} cache ${f(r.cache, 2)} total ${f(r.total, 2)} ${r.fits ? 'fits' : 'does not fit'}`);
+  }
+  out.push('hardware speed limit at 400 GB/s, 8B: ' + [16, 8, 4].map((b) => `${b}-bit ${f(L.speedLimit(8 * b / 8, 400), 1)}`).join(' ') + `; 70B 4-bit at 1000 GB/s: ${f(L.speedLimit(35, 1000), 1)}`);
   for (const [d, r] of [[4096, 8], [4096, 64], [768, 8]]) { const v = L.loraVariants(d, r); out.push(`LoRA variants, ${d} by ${d} layer, rank ${r}: LoRA ${v.lora}, LoRA-FA ${v.fa}, VeRA ${v.vera}, LoRA+ ${v.plus}, Delta-LoRA ${v.delta}`); }
   const W = L.quantWeights();
   out.push('quantisation error (RMSE) by bits: ' + [8, 6, 4, 3, 2].map((b) => `${b}:${f(L.quantRmse(W, b), 5)}`).join(' '));

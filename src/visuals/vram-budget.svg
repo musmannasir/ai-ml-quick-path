@@ -1,0 +1,26 @@
+<svg viewBox="0 0 720 322" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Weights, cache and working space against the GPU memory. -->
+  <text class="vz-title" x="14" y="30" text-anchor="start">An 8-billion-parameter model, 8,192 tokens, on a 16 GB GPU</text>
+  <text class="vz-title" x="14" y="64" text-anchor="start">At 4 bits</text>
+  <rect class="vz-ml" x="60" y="76" width="120.0" height="40" rx="3"/>
+  <rect class="vz-ap" x="180.0" y="76" width="32.1" height="40" rx="3"/>
+  <rect class="vz-warn" x="212.1" y="76" width="30.0" height="40" rx="3"/>
+  <text class="vz-s" x="120.0" y="102" text-anchor="middle">4</text>
+  <text class="vz-s" x="196.05" y="102" text-anchor="start"></text>
+  <text class="vz-s" x="252.1" y="102" text-anchor="start">6.07 GB: fits, 9.93 GB to spare</text>
+  <text class="vz-title" x="14" y="150" text-anchor="start">At 16 bits</text>
+  <rect class="vz-ml" x="60" y="162" width="480.0" height="40" rx="3"/>
+  <rect class="vz-ap" x="540.0" y="162" width="32.1" height="40" rx="3"/>
+  <rect class="vz-warn" x="572.1" y="162" width="30.0" height="40" rx="3"/>
+  <rect class="vz-cut" x="540.0" y="162" width="62.10000000000002" height="40" rx="3"/>
+  <text class="vz-s" x="14" y="224" text-anchor="start">18.07 GB: does not fit, 2.07 GB short</text>
+  <line class="vz-limit" x1="540.0" y1="50" x2="540.0" y2="214"/>
+  <text class="vz-s" x="540.0" y="244" text-anchor="middle">GPU memory: 16 GB</text>
+  <rect class="vz-ml" x="60" y="266" width="16" height="14" rx="2"/>
+  <text class="vz-s" x="82" y="278" text-anchor="start">weights</text>
+  <rect class="vz-ap" x="160" y="266" width="16" height="14" rx="2"/>
+  <text class="vz-s" x="182" y="278" text-anchor="start">cache (grows with the conversation)</text>
+  <rect class="vz-warn" x="420" y="266" width="16" height="14" rx="2"/>
+  <text class="vz-s" x="442" y="278" text-anchor="start">working space (assumed 1 GB)</text>
+  <text class="vz-n vz-note" x="14" y="308" text-anchor="start">The numbers are the made-up example in the lesson. Real programs need a safety margin of a few GB.</text>
+</svg>

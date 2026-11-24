@@ -1,0 +1,80 @@
+<svg viewBox="0 0 720 296" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- A few strong cores against a grid of many small cores. -->
+  <rect class="vz-card" x="14" y="14" width="330" height="236" rx="12"/>
+  <text class="vz-title" x="30" y="44" text-anchor="start">CPU</text>
+  <text class="vz-s" x="30" y="64" text-anchor="start">a few strong cores</text>
+  <rect class="vz-ml" x="40" y="84" width="120" height="60" rx="10"/>
+  <text class="vz-s" x="100" y="120" text-anchor="middle">core</text>
+  <rect class="vz-ml" x="180" y="84" width="120" height="60" rx="10"/>
+  <text class="vz-s" x="240" y="120" text-anchor="middle">core</text>
+  <rect class="vz-ml" x="40" y="160" width="120" height="60" rx="10"/>
+  <text class="vz-s" x="100" y="196" text-anchor="middle">core</text>
+  <rect class="vz-ml" x="180" y="160" width="120" height="60" rx="10"/>
+  <text class="vz-s" x="240" y="196" text-anchor="middle">core</text>
+  <text class="vz-s" x="30" y="242" text-anchor="start">One thing after another, very fast</text>
+  <rect class="vz-card" x="376" y="14" width="330" height="236" rx="12"/>
+  <text class="vz-title" x="392" y="44" text-anchor="start">GPU</text>
+  <text class="vz-s" x="392" y="64" text-anchor="start">thousands of small cores</text>
+  <rect class="vz-ap" x="394" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="424" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="454" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="484" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="514" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="544" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="574" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="604" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="634" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="664" y="80" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="394" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="424" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="454" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="484" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="514" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="544" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="574" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="604" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="634" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="664" y="104" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="394" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="424" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="454" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="484" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="514" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="544" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="574" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="604" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="634" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="664" y="128" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="394" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="424" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="454" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="484" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="514" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="544" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="574" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="604" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="634" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="664" y="152" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="394" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="424" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="454" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="484" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="514" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="544" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="574" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="604" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="634" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="664" y="176" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="394" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="424" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="454" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="484" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="514" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="544" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="574" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="604" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="634" y="200" width="24" height="18" rx="3"/>
+  <rect class="vz-ap" x="664" y="200" width="24" height="18" rx="3"/>
+  <text class="vz-s" x="392" y="242" text-anchor="start">The same sum on many numbers at once</text>
+  <text class="vz-n vz-note" x="14" y="280" text-anchor="start">Neural networks are mostly matrix multiplication, which suits the GPU. The drawing is illustrative: real chips differ.</text>
+</svg>

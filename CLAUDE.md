@@ -36,8 +36,8 @@ little, or are learning to. They do not want heavy mathematics, so maths is kept
 `aiea.v1`) and "Complete AI Academy" (for CS graduates, with full maths, key `caia.v1`) share this code base.
 Keep them separate: this site uses storage key `aimlqp.v1` and export schema `aimlqp-progress`.
 
-**Structure (7 parts, 72 lessons):** 1 The big picture (5), 2 Data (4), 3 Machine learning (20),
-4 Deep learning (15), 5 Large language models (10), 6 AI applications (12), 7 Production (6).
+**Structure (7 parts, 73 lessons):** 1 The big picture (5), 2 Data (4), 3 Machine learning (20),
+4 Deep learning (15), 5 Large language models (11), 6 AI applications (12), 7 Production (6).
 Roadmaps: `applied` "Quick path: complete grip" (10 steps), `ml` "ML engineer view" (9), `lm` "AI engineer view" (9).
 Capstones: c01-churn, c02-forecast, c03-vision, c04-rag-assistant, c05-agent, c06-tiny-llm, c07-local-assistant, c08-lora-finetune.
 
@@ -85,7 +85,7 @@ src/data/curriculum.mjs  MODULES (parts), ROADMAPS, ROUTES, LEVELS, REVIEWED
 src/data/cases.mjs       CASES (11), sources without URLs
 src/data/projects.mjs    PROJECTS (8 capstones, each with python and dotnet routes)
 src/data/reference.mjs   HARDWARE, WORKLOADS, GLOSSARY (166), CHECKPOINTS (7 quizzes)
-src/content/lessons/<part>/<id>.md   50 lessons; part folders: start, data, ml, dl, llm, apps, ops
+src/content/lessons/<part>/<id>.md   73 lessons; part folders: start, data, ml, dl, llm, apps, ops
 public/assets/app.css    The only stylesheet
 public/assets/app.js     The only client script
 examples/                Runnable code; examples/quickpath/quickpath.py is the main demo file
@@ -95,7 +95,7 @@ tests/e2e.mjs            Playwright checks (the count is printed at the end of t
 
 **Pages (129):** index (the landing page: title, a "Get started: free learning" button to start.html, an overview with live counts, no sidebar), start (the welcome page with the starting-point chooser and resume card), plan (12 weeks), roles, roadmaps, lessons (catalogue with filters), solve (decision guide),
 maths (maths names map, generated from every lesson's maths section), simulations (the Simulation lab catalogue), 7 part pages (`part-1-start.html` …
-`part-7-production.html`), 72 lessons, projects + 8 capstones, cases + 11, hardware, glossary, cheat sheets (an index and 12 sheets), assessment,
+`part-7-production.html`), 73 lessons, projects + 8 capstones, cases + 11, hardware, glossary, cheat sheets (an index and 13 sheets), assessment,
 progress, about, 404. Output uses **relative links** and works from `file://`.
 
 ---
@@ -245,7 +245,7 @@ Modules so far: `nn` (neural network playground), `bpe` (tokens), `gen` (text ge
 `attn-model.js`), `sup` (supervised algorithms), the Transformer series `tf1` (words to numbers), `tf4` (one block stage by stage), `tf5` (writing one word at a time, cache),
 `tf6` (training against using), all on the same tiny model (21 words, one block with 2 heads, feed-forward and layer norm), plus `gd` (gradient descent), `train` (optimiser race) and `bp`
 (backpropagation), and the Phase 2 set `reg`, `cls`, `bv`, `cv`, `km` (k-means and DBSCAN), `pca`, `anom`, whose shared calculations are in `core.js` (Python twin
-`examples/sim-core/core.py`; helper `AIQPSim.plot`), and the Phase 3 set `mb` (model builder), `lw` (a count model learning to write), `emb` (embedding training), `lora` (LoRA and quantisation), `vs` (vector search), `rag` (retrieval), whose calculations are in `llm.js` (Python twin `examples/sim-llm/llm.py`), and the Phase 4 set `cnn` (convolution), `seq` (running state), `txt` (TF-IDF), `ae` (autoencoder and diffusion noise), `gnn` (message passing), `spec` (spectrogram with a real Fourier transform), `rl` (Q-learning grid world and bandit), whose calculations are in `dl.js` (Python twin `examples/sim-dl/dl.py`), and the Phase 5 set `rec` (recommender), `ts` (forecasting), `bay` (probability of a test result), `cau` (Simpson's paradox), `srch` (maze search and a game tree), `csp` (backtracking), whose calculations are in `ai.js` (Python twin `examples/sim-ai/ai.py`), and the Phase 6 set `rul`, `loop`, `spl`, `cln`, `feat`, `lab`, `api`, `agent`, `mm`, `inj`, `evl`, `fair`, `mcp` for the start, data and application lessons, whose calculations are in `fnd.js` (Python twin `examples/sim-apps/apps.py`; `mcp` is a step-through with no calculation), and the Phase 7 set `val`, `rel`, `mon`, `srv`, `arch` (production lessons) and `ppl` (perplexity and answer scoring), whose calculations are in `ops.js` (Python twin `examples/sim-ops/ops.py`). `simulations.html` ("Simulation lab") is generated from every lesson's `## Live simulation` section, so a new simulation appears there by itself. Register a new module in `SIM_MODULES` (src/lib/sim.mjs); a module that needs the shared model lists `attn-model.js` and `attn.js` in `SIM_FILES`. The shared UI helpers
+`examples/sim-core/core.py`; helper `AIQPSim.plot`), and the Phase 3 set `mb` (model builder), `lw` (a count model learning to write), `emb` (embedding training), `lora` (LoRA, its variants and quantisation), `hw` (does a model fit in GPU memory, and a memory-bound speed limit; lesson llm-hardware), `vs` (vector search), `rag` (retrieval), whose calculations are in `llm.js` (Python twin `examples/sim-llm/llm.py`), and the Phase 4 set `cnn` (convolution), `seq` (running state), `txt` (TF-IDF), `ae` (autoencoder and diffusion noise), `gnn` (message passing), `spec` (spectrogram with a real Fourier transform), `rl` (Q-learning grid world and bandit), whose calculations are in `dl.js` (Python twin `examples/sim-dl/dl.py`), and the Phase 5 set `rec` (recommender), `ts` (forecasting), `bay` (probability of a test result), `cau` (Simpson's paradox), `srch` (maze search and a game tree), `csp` (backtracking), whose calculations are in `ai.js` (Python twin `examples/sim-ai/ai.py`), and the Phase 6 set `rul`, `loop`, `spl`, `cln`, `feat`, `lab`, `api`, `agent`, `mm`, `inj`, `evl`, `fair`, `mcp` for the start, data and application lessons, whose calculations are in `fnd.js` (Python twin `examples/sim-apps/apps.py`; `mcp` is a step-through with no calculation), and the Phase 7 set `val`, `rel`, `mon`, `srv`, `arch` (production lessons) and `ppl` (perplexity and answer scoring), whose calculations are in `ops.js` (Python twin `examples/sim-ops/ops.py`). `simulations.html` ("Simulation lab") is generated from every lesson's `## Live simulation` section, so a new simulation appears there by itself. Register a new module in `SIM_MODULES` (src/lib/sim.mjs); a module that needs the shared model lists `attn-model.js` and `attn.js` in `SIM_FILES`. The shared UI helpers
 (`AIQPSim.ui.vecRows`, `bars`, `legend`) live in `attn.js`.
 Rules: the calculation is real, repeatable (LCG random numbers) and kept in `AIQPSim.logic.<module>` so Node can run it; every module has a Python
 program in `examples/sim-*` that prints the same headline numbers and `scripts/check-sims.mjs` compares them; data is made up and labelled; a "What this leaves
@@ -261,7 +261,7 @@ choice in `prefs.visualTab`, and the arrow keys switch tabs. A diagram with no v
 same numbers); made-up numbers are labelled; the SVG uses only the `vz-*` classes in app.css, which take colours from the tokens (no `style=`, no script, no outside address, no `<image>`);
 text must stay inside the picture and never overlap other text (checked for every drawing by tests/e2e.mjs); drawings are my own, never copies of other people's pictures.
 Look at all of them: `npm run list:visuals` (which lesson, section and diagram), `npm run serve` then http://localhost:8080/visuals-sheet.html (every visual on one page, light and dark).
-Cheat sheets live in `src/data/cheatsheets.mjs` (12 sheets: one per part and five by topic) and are built into `cheat-<id>.html` plus `cheatsheets.html`; every panel links to its lessons
+Cheat sheets live in `src/data/cheatsheets.mjs` (13 sheets: one per part and six by topic) and are built into `cheat-<id>.html` plus `cheatsheets.html`; every panel links to its lessons
 and may show one of the drawings.
 
 ## 5. Design system and UI rules
