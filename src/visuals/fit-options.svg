@@ -1,0 +1,32 @@
+<svg viewBox="0 0 720 352" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- Five things to try when a model does not fit, in order. -->
+  <rect class="vz-ml" x="14" y="18" width="430" height="50" rx="10"/>
+  <text class="vz-title" x="30" y="40" text-anchor="start">1. Fewer bits per weight</text>
+  <text class="vz-s" x="30" y="59" text-anchor="start">a 4-bit file is a quarter of the size</text>
+  <text class="vz-s" x="462" y="49" text-anchor="start">costs a little quality</text>
+  <line class="vz-arrow" x1="229.0" y1="69.0" x2="229.0" y2="67.0"/>
+  <polygon class="vz-headk" points="229.0,78.0 235.0,67.0 223.0,67.0"/>
+  <rect class="vz-ap" x="14" y="78" width="430" height="50" rx="10"/>
+  <text class="vz-title" x="30" y="100" text-anchor="start">2. Shorter context</text>
+  <text class="vz-s" x="30" y="119" text-anchor="start">a smaller cache, fewer users at once</text>
+  <text class="vz-s" x="462" y="109" text-anchor="start">costs shorter conversations</text>
+  <line class="vz-arrow" x1="229.0" y1="129.0" x2="229.0" y2="127.0"/>
+  <polygon class="vz-headk" points="229.0,138.0 235.0,127.0 223.0,127.0"/>
+  <rect class="vz-warn" x="14" y="138" width="430" height="50" rx="10"/>
+  <text class="vz-title" x="30" y="160" text-anchor="start">3. Offload layers to the CPU</text>
+  <text class="vz-s" x="30" y="179" text-anchor="start">layers that do not fit run from system memory</text>
+  <text class="vz-s" x="462" y="169" text-anchor="start">costs speed</text>
+  <line class="vz-arrow" x1="229.0" y1="189.0" x2="229.0" y2="187.0"/>
+  <polygon class="vz-headk" points="229.0,198.0 235.0,187.0 223.0,187.0"/>
+  <rect class="vz-lm" x="14" y="198" width="430" height="50" rx="10"/>
+  <text class="vz-title" x="30" y="220" text-anchor="start">4. Bigger GPU, or rent one</text>
+  <text class="vz-s" x="30" y="239" text-anchor="start">more VRAM, or several GPUs</text>
+  <text class="vz-s" x="462" y="229" text-anchor="start">costs money</text>
+  <line class="vz-arrow" x1="229.0" y1="249.0" x2="229.0" y2="247.0"/>
+  <polygon class="vz-headk" points="229.0,258.0 235.0,247.0 223.0,247.0"/>
+  <rect class="vz-ok" x="14" y="258" width="430" height="50" rx="10"/>
+  <text class="vz-title" x="30" y="280" text-anchor="start">5. A smaller model</text>
+  <text class="vz-s" x="30" y="299" text-anchor="start">often enough for a narrow task</text>
+  <text class="vz-s" x="462" y="289" text-anchor="start">costs ability</text>
+  <text class="vz-n vz-note" x="14" y="336" text-anchor="start">Stop at the first step that works. Each one costs a little more than the last.</text>
+</svg>

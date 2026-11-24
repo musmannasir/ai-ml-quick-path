@@ -8,6 +8,7 @@ maths: none
 goal: Install and check a Python and a .NET environment for AI work, run notebooks, use Git, and understand when you need a GPU.
 prereqs:
 reviewed: 2026-11-02
+updated: 2026-11-24
 evidence: Both environment checks run on your machine, a Git repository with your first notebook, and a note of whether your laptop has a usable GPU.
 code: Python executed 2026-11-02 (quickpath.py env)
 ---
@@ -147,4 +148,4 @@ Q: Name one .NET library for classic ML and one for running trained models fast.
 A: ML.NET for classic ML; ONNX Runtime for fast inference of trained models.
 
 Q: Do you need a GPU to start learning?
-A: No. Classic ML and small neural networks run on a CPU; rent a GPU later for larger deep-learning work.
+A: No. Classic ML and small neural networks run on a CPU; rent a GPU later for larger deep-learning work. When you do reach for one, the lesson [Hardware for AI](lesson:llm-hardware) explains what a GPU and CUDA are and how to use them.

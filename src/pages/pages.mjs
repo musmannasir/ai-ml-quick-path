@@ -543,7 +543,7 @@ function hardware(S) {
   const mark = { yes: ['Suitable', 'ok'], limited: ['Limited', 'mid'], no: ['Not practical', 'no'] };
   const body = `
 <h1>Hardware: laptop to large-scale</h1>
-<p class="lede">What each class of machine can reasonably do, how to estimate GPU memory, and when to move from your laptop to bigger hardware. Specifications checked ${S.REVIEWED}.</p>
+<p class="lede">What each class of machine can reasonably do, how to estimate GPU memory, and when to move from your laptop to bigger hardware. Specifications checked ${S.REVIEWED}. New to GPUs and CUDA? Read ${S.lessonLink('llm-hardware', ctx)} first.</p>
 <div class="callout callout-warn"><p><strong>No prices.</strong> Prices change by region and month and were not verified for this guide, so machines are grouped by relative cost. Nothing here is a purchasing recommendation.</p></div>
 <section aria-labelledby="vram"><h2 id="vram">GPU memory: the simple arithmetic</h2>
 <p>For running a model (<strong>weights only</strong>): number of parameters × bytes per weight. An 8-billion-parameter model at 16 bits (2 bytes) needs about 8 × 2 = 16 GB. That is the minimum; real use needs more.</p>
@@ -705,7 +705,7 @@ function cheatIndex(S) {
   const card = (c) => `<li><a class="sim-lab-t" href="cheat-${S.esc(c.id)}.html">${S.esc(c.title)}</a><p>${S.esc(c.intro)}</p><p class="small muted">${c.panels.length} panels</p></li>`;
   const body = `
 <h1>Cheat sheets</h1>
-<p class="lede">${S.CHEATSHEETS.length} one-page summaries for revision: one for each part of the guide, and five that cut across parts. Every line repeats something a lesson teaches, and each panel links to the lessons that explain it. They print on one or two pages.</p>
+<p class="lede">${S.CHEATSHEETS.length} one-page summaries for revision: one for each part of the guide, and ${topics.length} that cut across parts. Every line repeats something a lesson teaches, and each panel links to the lessons that explain it. They print on one or two pages.</p>
 <h2 id="by-part">By part</h2>
 <ul class="sim-lab">${parts.map(card).join('')}</ul>
 <h2 id="by-topic">By topic</h2>

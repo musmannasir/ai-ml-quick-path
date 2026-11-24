@@ -30,6 +30,17 @@ def kv_bytes_per_token(layers, d, bits):
     return 2 * layers * d * bits / 8                  # one key and one value vector per layer
 
 
+def fit_check(params_b, bits, layers, ctx, vram, kv_heads=8, head_size=128, working=1.0):
+    w = params_b * bits / 8
+    c = 2 * layers * kv_heads * head_size * 2 * ctx / 1e9
+    t = w + c + working
+    return w, c, t, t <= vram
+
+
+def speed_limit(weights_gb, bandwidth):
+    return bandwidth / weights_gb
+
+
 def kv_bytes_grouped(layers, d, bits, group):
     return kv_bytes_per_token(layers, d, bits) / group  # group query heads share one key and value head
 
@@ -268,6 +279,10 @@ if __name__ == "__main__":
     print("rank-r error of a made-up update (relative): " + " ".join("r=%d:%.3f" % (r, low_rank_error(M, r)) for r in (1, 2, 3, 4)))
     print("one 4096 by 4096 layer: %d weights to change, LoRA rank 8 trains %d (%.2f%%)" % (4096 * 4096, 2 * 4096 * 8, 100 * 2 * 4096 * 8 / (4096 * 4096)))
     print("cache per token, 7B-class shape at 16 bits, query heads per key-value head 1/4/8: " + " ".join("%.1f KB" % (kv_bytes_grouped(32, 4096, 16, g) / 1e3) for g in (1, 4, 8)))
+    for name, p, b, layers, ctx, vram in (("8B 16-bit 24 GB", 8, 16, 32, 8192, 24), ("8B 4-bit 16 GB", 8, 4, 32, 8192, 16), ("8B 16-bit 16 GB", 8, 16, 32, 8192, 16), ("70B 4-bit 48 GB", 70, 4, 80, 8192, 48), ("70B 16-bit 48 GB", 70, 16, 80, 8192, 48)):
+        w, c, t, ok = fit_check(p, b, layers, ctx, vram)
+        print("hardware fit check, %s, 8192 tokens: weights %.2f cache %.2f total %.2f %s" % (name, w, c, t, "fits" if ok else "does not fit"))
+    print("hardware speed limit at 400 GB/s, 8B: " + " ".join("%d-bit %.1f" % (b, speed_limit(8 * b / 8, 400)) for b in (16, 8, 4)) + "; 70B 4-bit at 1000 GB/s: %.1f" % speed_limit(35, 1000))
     for d, r in ((4096, 8), (4096, 64), (768, 8)):
         v = lora_variants(d, r)
         print("LoRA variants, %d by %d layer, rank %d: LoRA %d, LoRA-FA %d, VeRA %d, LoRA+ %d, Delta-LoRA %d" % (d, d, r, v["lora"], v["fa"], v["vera"], v["plus"], v["delta"]))

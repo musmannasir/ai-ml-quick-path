@@ -275,3 +275,4 @@ New for this plan:
 - 2026-11-23: `tf5` table now labels the first step "prefill" and later steps "decode" (labels only; the calculation is unchanged).
 - 2026-11-23: `mb` gained a setting "Query heads sharing one key-value head" (grouped-query attention): the cache readout is the usual cache divided by the group size (`kvBytesGrouped` in `llm.js`, Python twin `kv_bytes_grouped`). Default 1 leaves every earlier number unchanged.
 - 2026-11-23: `sup` decision tree gained a switch "Gini impurity or entropy" (`fitTree(d, depth, measure)` in `sup.js`, `fit_tree(..., measure)` in `algorithms.py`; default Gini leaves every earlier number unchanged).
+- 2026-11-24: new module `hw` for the lesson `llm-hardware` (does a model fit in GPU memory, and the speed limit memory sets). Calculation `fitCheck` and `speedLimit` in `llm.js`, Python twin `fit_check` and `speed_limit` in `llm.py`, compared by `check-sims`.

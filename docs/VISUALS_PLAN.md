@@ -210,4 +210,4 @@ Every visual is a second tab of a diagram that already exists. Nothing is remove
 
 ## Built (2026-11-24)
 
-Tab support, 78 Visual tabs in 49 lessons (all priority 1 items and most priority 2 and 3 items of section 5; a few were left out where a lesson already has a simulation or a picture of the same idea), a layout test for every drawing, a review page (`/visuals-sheet.html` on the local server), and 12 cheat sheets (an index and one page each). Not done: hand-drawn character artwork (needs an illustrator or an image tool).
+Tab support, 82 Visual tabs in 50 lessons (all priority 1 items and most priority 2 and 3 items of section 5; a few were left out where a lesson already has a simulation or a picture of the same idea), a layout test for every drawing, a review page (`/visuals-sheet.html` on the local server), and 13 cheat sheets (an index and one page each). Not done: hand-drawn character artwork (needs an illustrator or an image tool).

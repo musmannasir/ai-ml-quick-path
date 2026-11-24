@@ -1,0 +1,36 @@
+<svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" class="vz-svg" focusable="false">
+  <!-- The software layers between your code and the GPU. -->
+  <rect class="vz-ml" x="14" y="18" width="430" height="52" rx="10"/>
+  <text class="vz-title" x="30" y="40" text-anchor="start">Your code</text>
+  <text class="vz-s" x="30" y="60" text-anchor="start">Python or C# asking for a device</text>
+  <line class="vz-arrow" x1="229.0" y1="71.0" x2="229.0" y2="69.0"/>
+  <polygon class="vz-headk" points="229.0,80.0 235.0,69.0 223.0,69.0"/>
+  <rect class="vz-ap" x="14" y="80" width="430" height="52" rx="10"/>
+  <text class="vz-title" x="30" y="102" text-anchor="start">Framework</text>
+  <text class="vz-s" x="30" y="122" text-anchor="start">PyTorch, TorchSharp or ONNX Runtime</text>
+  <line class="vz-arrow" x1="229.0" y1="133.0" x2="229.0" y2="131.0"/>
+  <polygon class="vz-headk" points="229.0,142.0 235.0,131.0 223.0,131.0"/>
+  <rect class="vz-lm" x="14" y="142" width="430" height="52" rx="10"/>
+  <text class="vz-title" x="30" y="164" text-anchor="start">CUDA libraries and runtime</text>
+  <text class="vz-s" x="30" y="184" text-anchor="start">NVIDIA's code that runs the sums on the GPU</text>
+  <line class="vz-arrow" x1="229.0" y1="195.0" x2="229.0" y2="193.0"/>
+  <polygon class="vz-headk" points="229.0,204.0 235.0,193.0 223.0,193.0"/>
+  <rect class="vz-warn" x="14" y="204" width="430" height="52" rx="10"/>
+  <text class="vz-title" x="30" y="226" text-anchor="start">GPU driver</text>
+  <text class="vz-s" x="30" y="246" text-anchor="start">lets the operating system talk to the GPU</text>
+  <line class="vz-arrow" x1="229.0" y1="257.0" x2="229.0" y2="255.0"/>
+  <polygon class="vz-headk" points="229.0,266.0 235.0,255.0 223.0,255.0"/>
+  <rect class="vz-ok" x="14" y="266" width="430" height="52" rx="10"/>
+  <text class="vz-title" x="30" y="288" text-anchor="start">The GPU</text>
+  <text class="vz-s" x="30" y="308" text-anchor="start">cores and its own memory (VRAM)</text>
+  <text class="vz-title" x="470" y="40" text-anchor="start">You work at the top:</text>
+  <text class="vz-code" x="470" y="62" text-anchor="start">model.to("cuda")</text>
+  <rect class="vz-fit" x="462" y="150" width="8" height="150" rx="3"/>
+  <text class="vz-s" x="486" y="196" text-anchor="start">These layers must match</text>
+  <text class="vz-s" x="486" y="214" text-anchor="start">the GPU and each other.</text>
+  <text class="vz-s" x="486" y="244" text-anchor="start">A framework install for</text>
+  <text class="vz-s" x="486" y="262" text-anchor="start">CUDA brings its own CUDA</text>
+  <text class="vz-s" x="486" y="280" text-anchor="start">libraries; you need a</text>
+  <text class="vz-s" x="486" y="298" text-anchor="start">driver that is new enough.</text>
+  <text class="vz-n vz-note" x="14" y="340" text-anchor="start">nvidia-smi shows the newest CUDA version the driver supports, not a toolkit you installed.</text>
+</svg>

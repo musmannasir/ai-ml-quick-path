@@ -160,7 +160,7 @@ export const PROJECTS = [
   {
     id: 'c07-local-assistant', n: 7, title: 'Private assistant running fully on a laptop', track: 'lm', level: 'Advanced', effort: '20–30 h', reuses: ['c04-rag-assistant'],
     requirement: 'A law office wants a document assistant that never sends text outside the building: a local model summarises and answers questions over local files.',
-    prereqs: ['llm-local', 'llm-finetune', 'app-rag', 'app-security', 'ops-scale'],
+    prereqs: ['llm-hardware', 'llm-local', 'llm-finetune', 'app-rag', 'app-security', 'ops-scale'],
     architecture: ['Local model runtime (for example Ollama with a small quantised model)', 'Local embeddings and vector index', 'Desktop or local web UI', 'Structured output for summaries', 'Speed and quality measurements'],
     steps: [
       'Install a local model runtime and download two small open models of different sizes.',

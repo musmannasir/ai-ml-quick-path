@@ -50,3 +50,7 @@ Stages 2, 3, 4 and 6 partly done; Stage 5 not started apart from case source lin
 ## 2026-11-24: visuals
 
 The guide now has Visual tabs (a drawn picture beside the boxes of a diagram) and 12 cheat sheets. Plan and status: `docs/VISUALS_PLAN.md`; design rules: `CLAUDE.md` section 4.10.
+
+## 2026-11-24: hardware lesson
+
+New lesson `llm-hardware` in Part 5 ("Hardware for AI: CPU, GPU, CUDA and putting a model to work"): what a GPU and CUDA are, the software stack, VRAM and memory arithmetic, number formats, loading a model onto a GPU, what to do when it does not fit, other vendors, troubleshooting. Adds a simulation (`hw`), 4 Visual tabs, 14 glossary terms, a cheat sheet and 6 registered sources. 73 lessons in all.
