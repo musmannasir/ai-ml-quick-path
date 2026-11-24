@@ -50,3 +50,7 @@ Stages 2, 3, 4 and 6 partly done; Stage 5 not started apart from case source lin
 ## 2026-11-24: visuals
 
 The guide now has Visual tabs (a drawn picture beside the boxes of a diagram) and 12 cheat sheets. Plan and status: `docs/VISUALS_PLAN.md`; design rules: `CLAUDE.md` section 4.10.
+
+## 2026-11-24: landing page
+
+`index.html` is now a landing page (title, overview, a "Get started: free learning" button). The old welcome page moved to `start.html`. Three mock-ups were compared; the first (classic landing) was chosen by the owner.

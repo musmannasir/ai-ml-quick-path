@@ -17,9 +17,9 @@ const QA = join(ROOT, 'qa');
 mkdirSync(join(QA, 'screenshots'), { recursive: true });
 const url = (p) => { const [f, h] = p.split('#'); return pathToFileURL(join(DIST, f)).href + (h ? '#' + h : ''); };
 const ALL = (function walk(d, pre = '') { return readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p, pre + f + '/') : f.endsWith('.html') ? [pre + f] : []; }); })(DIST).sort();
-const ML_LESSONS = (readFileSync(join(DIST, 'index.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
+const ML_LESSONS = (readFileSync(join(DIST, 'start.html'), 'utf8').match(/data-group="ml"[\s\S]*?data-progress-ids="([^"]+)"/) || [, ''])[1].split(' ').length;   // Part 3 size, read from the built sidebar
 const LESSONS = ALL.filter((p) => /^lessons\/[^/]+\.html$/.test(p)).length;   // read from dist/, not typed
-const KEY = ['index.html', 'cheatsheets.html', 'cheat-ml.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
+const KEY = ['index.html', 'start.html', 'cheatsheets.html', 'cheat-ml.html', 'lessons.html', 'plan.html', 'roles.html', 'roadmaps.html', 'solve.html', 'maths.html', 'simulations.html', 'part-1-start.html', 'part-3-ml.html', 'part-5-llms.html', 'part-7-production.html', 'projects.html', 'projects/c04-rag-assistant.html', 'cases.html', 'cases/klarna.html', 'hardware.html', 'glossary.html', 'assessment.html', 'progress.html', 'about.html', 'lessons/app-rag.html', 'lessons/dl-transformers.html', 'lessons/llm-train-laptop.html', 'lessons/ml-classification.html', 'lessons/ops-architecture.html', 'lessons/app-agents.html', 'lessons/s-setup.html'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
 const results = [];
@@ -104,7 +104,7 @@ for (const scheme of ['light', 'dark']) {
   await page.goto(url('cases.html'));
   await page.selectOption('select[data-filter="industry"]', 'finance'); await page.selectOption('select[data-filter="difficulty"]', 'advanced'); await audit('cases empty state');
   await page.fill('#site-search', 'attention'); await audit('search results');
-  await page.goto(url('index.html')); await page.click('#sidebar-toggle'); await audit('drawer open');
+  await page.goto(url('start.html')); await page.click('#sidebar-toggle'); await audit('drawer open');
   await page.goto(url('roadmaps.html#lm')); await page.click('[data-roadmap-expand]'); await audit('roadmap expanded');
   await page.goto(url('assessment.html')); await page.check('input[name="cp-ml-0"][value="0"]'); await page.click('[data-check-answer]'); await audit('quiz feedback wrong');
   await page.goto(url('progress.html')); await page.fill('#cal-hours', '1'); await audit('calendar error');
@@ -197,7 +197,7 @@ for (const w of [320, 390, 768]) {
 // 6. Theme persistence
 {
   const page = await newPage({ scheme: 'light' });
-  await page.goto(url('index.html'));
+  await page.goto(url('start.html'));
   await page.selectOption('#theme-select', 'dark');
   await page.goto(url('glossary.html'));
   const t1 = await page.getAttribute('html', 'data-theme');
@@ -313,7 +313,7 @@ for (const w of [320, 390, 768]) {
 // 9. Search
 {
   const page = await newPage();
-  await page.goto(url('index.html'));
+  await page.goto(url('start.html'));
   await page.fill('#site-search', 'kv cache');
   const items = await page.$$eval('#search-results a', (as) => as.map((a) => a.textContent));
   const exp = await page.getAttribute('#site-search', 'aria-expanded');
@@ -397,7 +397,7 @@ for (const w of [320, 390, 768]) {
   expect('Quiz feedback marks a correct answer', /Correct/.test(await page.textContent('#cp-ml + .mcq-list .mcq-feedback >> nth=0')), '');
   await page.context().close();
   const rm = await newPage({ reducedMotion: 'reduce', width: 390 });
-  await rm.goto(url('index.html'));
+  await rm.goto(url('start.html'));
   const dur = await rm.evaluate(() => getComputedStyle(document.getElementById('sidebar')).transitionDuration);
   expect('Reduced-motion preference removes transitions', /^0s/.test(dur), dur);
   await rm.context().close();
@@ -459,7 +459,7 @@ for (const w of [320, 390, 768]) {
 {
   // Search inside lesson text (learner journey 7): a phrase that is in no page title finds a lesson section with a marked snippet
   const page = await newPage({ width: 1280 });
-  await page.goto(url('index.html'));
+  await page.goto(url('start.html'));
   await page.fill('#site-search', 'jumped right over');
   await page.waitForSelector('#search-results .res-snippet mark', { timeout: 10000 }).catch(() => {});
   const groups = await page.$$eval('#search-results .search-group', (g) => g.map((x) => x.textContent));
@@ -473,7 +473,7 @@ for (const w of [320, 390, 768]) {
 {
   // Start chooser and resume (learner journeys 1 and 5)
   const page = await newPage({ width: 1280 });
-  await page.goto(url('index.html'));
+  await page.goto(url('start.html'));
   const noResume = !(await page.isVisible('#resume-card'));
   await page.click('[data-persona-pick="dotnet"]');
   const start = await page.getAttribute('#hero-start', 'href');
@@ -481,7 +481,7 @@ for (const w of [320, 390, 768]) {
   await page.click('#hero-start');
   const onSetup = page.url().endsWith('lessons/s-setup.html');
   const csFirst = await page.isChecked('[data-lang-switch] input[value="cs"]');
-  await page.goto(url('index.html'));
+  await page.goto(url('start.html'));
   const resume = (await page.isVisible('#resume-card')) && /Set up your laptop/.test(await page.innerText('#resume-link'));
   const chosen = await page.getAttribute('.persona-card[data-persona="dotnet"]', 'data-chosen');
   await page.click('[data-persona-pick="dotnet"]');
@@ -493,7 +493,7 @@ for (const w of [320, 390, 768]) {
 {
   // Data written by the previous site version (version 1) is kept and upgraded, never lost
   const page = await newPage();
-  await page.goto(url('index.html'));
+  await page.goto(url('start.html'));
   await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 1, prefs: { theme: 'dark', sidebar: 'hidden' }, progress: { 'lesson:ml-regression': { done: true, at: '2026-11-01' }, 'project:c01-churn': { done: true, at: '2026-11-02' } } })));
   await page.goto(url('lessons/ml-regression.html'));
   const theme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
@@ -995,6 +995,34 @@ for (const w of [320, 390, 768]) {
     await page.context().close();
   }
   expect(`Visuals: all ${n} drawings keep their text inside the picture, with no overlapping text, and do not make the page scroll sideways at 320, 768 and 1280 px`, n > 0 && !bad.length, bad.slice(0, 12).join(' | '));
+}
+
+// 12m. Landing page (index.html): the first page a visitor sees. The old welcome page is start.html.
+{
+  const page = await newPage({ width: 1280 });
+  await page.goto(url('index.html')); await page.waitForTimeout(250);
+  const a = await page.evaluate(() => ({
+    h1: document.querySelector('h1').textContent, sidebar: !!document.getElementById('sidebar'), skip: !!document.querySelector('.skip-link'),
+    ctas: [...document.querySelectorAll('[data-landing-cta]')].map((x) => x.getAttribute('href')), stats: [...document.querySelectorAll('.lp-stat b')].map((x) => Number(x.textContent)),
+    visual: !!document.querySelector('.lp-demo svg[role=img] title'), parts: document.querySelectorAll('.lp-parts li').length }));
+  expect('Landing page: one h1, no sidebar, a skip link, two "Get started" buttons that open the start page, and real counts of lessons, simulations, pictures, cheat sheets and projects',
+    /Learn AI and machine learning/.test(a.h1) && !a.sidebar && a.skip && a.ctas.length === 2 && a.ctas.every((h) => h === 'start.html') && a.stats.length === 5 && a.stats.every((n) => n > 0) && a.stats[0] === LESSONS && a.visual && a.parts === 7, JSON.stringify(a));
+  expect('Landing page: no script errors', !page.errors.length, page.errors.join('|'));
+  await page.evaluate(() => localStorage.setItem('aimlqp.v1', JSON.stringify({ version: 2, prefs: {}, progress: {}, last: { id: 'ml-regression', title: 'Regression: predicting a number', at: '2026-11-20' } })));
+  await page.reload(); await page.waitForTimeout(250);
+  const r = await page.evaluate(() => ({ ctas: [...document.querySelectorAll('[data-landing-cta]')].map((x) => x.getAttribute('href') + '|' + x.textContent.trim()), note: document.querySelector('[data-landing-note]').textContent }));
+  expect('Landing page: a returning learner sees "Continue learning" linked to the last lesson', r.ctas.every((c) => c.startsWith('lessons/ml-regression.html|Continue learning')) && /Regression: predicting a number/.test(r.note), JSON.stringify(r));
+  const bad = [];
+  for (const w of [320, 390, 768, 1280]) { await page.setViewportSize({ width: w, height: 800 }); if (!(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))) bad.push(w); }
+  expect('Landing page: no sideways scrolling at 320, 390, 768 and 1280 px', !bad.length, bad.join(','));
+  const tab = await page.evaluate(() => { const b = document.querySelector('.lp-btn'); const r = b.getBoundingClientRect(); return { h: Math.round(r.height) }; });
+  expect('Landing page: the main button is at least 44 px tall', tab.h >= 44, JSON.stringify(tab));
+  await page.context().close();
+  const p2 = await newPage({ width: 1280 });
+  await p2.goto(url('start.html')); await p2.waitForTimeout(200);
+  const st = await p2.evaluate(() => ({ h1: document.querySelector('h1').textContent, sidebar: !!document.getElementById('sidebar'), persona: document.querySelectorAll('.persona-card').length }));
+  expect('Start page (the old welcome page): has the sidebar, the starting-point chooser and the roadmap links', /AI and machine learning/.test(st.h1) && st.sidebar && st.persona === 4, JSON.stringify(st));
+  await p2.context().close();
 }
 
 // 13. Screenshots
