@@ -26,12 +26,24 @@ with the strict CSP. No code change is needed.
 | Page type | Ads allowed later? | Slot |
 |---|---|---|
 | Lesson pages | Yes, at most 2: bottom of the side panel, and after the completion box | `rail`, `end` |
-| Catalogue, glossary, cases, capstones, hardware, solve guide, maths map, part pages | Yes, one at the page foot | `footer` |
+| Glossary, hardware, each case page, each capstone page | Yes, one at the page foot | `footer` |
+| Catalogue, part pages, case and capstone index pages, solve guide, maths map, cheat sheets | No (navigation or short pages) | none |
 | Home, progress, about, privacy, 404 | No | none |
 | Inside lesson text, maths moments, calculators, diagrams, code, quizzes, roadmap controls, next and previous links | Never | none |
 
 Each slot is a labelled box ("Advertisement") with reserved height, hidden in print and in focus mode. Auto Ads are not
 used: they place ads automatically and could land inside teaching content.
+
+## Update 2026-11-25 (checked against Google's help pages on that date)
+
+- Privacy page (advertising build): states that third-party vendors including Google use cookies, links Google Ads Settings and
+  aboutads.info, and links Google's information on advertising partners. Review which partners are enabled in your AdSense
+  account; if you enable vendors outside Google's list, name and link them.
+- The landing page no longer says "no tracking" in an advertising build.
+- A "Contact" link appears in the footers and a contact section on the About page when `CONTACT_EMAIL` is set.
+- Footer ad slots are limited to content pages (section 2).
+- `npm run test:static` run with the advertising variables set checks these points.
+- Still yours: age and account details, a review of the lesson text, the consent message in the AdSense account, Auto Ads off.
 
 ## 3. Before applying (quality gates)
 

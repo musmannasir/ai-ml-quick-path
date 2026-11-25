@@ -160,6 +160,30 @@ if (SITE_URL) {
     for (const m of html.matchAll(/<svg[^>]*class="vz-svg"[^>]*>/g)) if (!/role="img"/.test(m[0]) || !/aria-labelledby=/.test(m[0])) problems.push(rel + ': a drawing in a cheat sheet has no text alternative');
   }
 }
+// ---- One title and one description per page (search results need them to differ) ----
+{
+  const seen = { title: new Map(), description: new Map() };
+  for (const f of files) {
+    const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1).replace(/\\/g, '/');
+    if (rel === '404.html' || rel === 'visuals-sheet.html') continue;
+    const got = { title: (html.match(/<title>([^<]*)<\/title>/) || [])[1], description: (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] };
+    for (const k of ['title', 'description']) {
+      if (!got[k]) { problems.push(`${rel}: no ${k}`); continue; }
+      if (seen[k].has(got[k])) problems.push(`${rel}: same ${k} as ${seen[k].get(got[k])}`); else seen[k].set(got[k], rel);
+    }
+  }
+}
+// ---- Advertising build only: what AdSense requires, and claims that must not become false ----
+if (process.env.ADSENSE_CLIENT) {
+  const privacy = readFileSync(join(DIST, 'privacy.html'), 'utf8');
+  for (const need of ['https://www.google.com/settings/ads', 'https://www.aboutads.info/choices/', 'Third-party vendors, including Google, use cookies', 'enables it and its partners to serve ads'])
+    if (!privacy.includes(need)) problems.push('privacy.html (advertising build): missing "' + need + '"');
+  for (const f of files) {
+    const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1).replace(/\\/g, '/');
+    if (/no tracking|No advertising|sets no cookies/i.test(html)) problems.push(`${rel}: claims no tracking, no advertising or no cookies in an advertising build`);
+    if (html.includes('ad-slot-footer') && !/^(glossary\.html|hardware\.html|cases\/|projects\/)/.test(rel)) problems.push(`${rel}: footer ad slot on a navigation or utility page`);
+  }
+}
 for (const u of external) problems.push(`outside address not registered in src/data/sources.mjs: ${u}`);
 console.log(`Checked ${files.length} pages, ${links} internal links, ${outside} outside reference links to ${usedSources.size} registered sources, ${external.size} unregistered outside addresses or outside resources (must be 0).`);
 if (problems.length) { console.error(problems.join('\n')); process.exit(1); }
