@@ -103,8 +103,13 @@ for (const f of files) {
     if (/^(mailto:|data:)/.test(url)) continue;
     links++;
     const [path, hash] = url.split('#');
-    const target = path ? normalize(join(dirname(f), path)) : f;
-    if (!existsSync(target)) { problems.push(`${rel}: broken link ${url}`); continue; }
+    let target = path ? normalize(join(dirname(f), path)) : f;
+    if (CLEAN_URLS && path) {   // clean addresses: no link goes through a redirect, and each one still names a real file
+      if (path.endsWith('.html')) problems.push(`${rel}: link keeps .html in a clean-address build: ${url}`);
+      else if (path.endsWith('/')) target = join(target, 'index.html');
+      else if (existsSync(target + '.html')) target += '.html';
+    }
+    if (!existsSync(target) || statSync(target).isDirectory()) { problems.push(`${rel}: broken link ${url}`); continue; }
     if (hash && target.endsWith('.html') && !ids.get(target)?.has(decodeURIComponent(hash)) && !['applied', 'ml', 'lm'].includes(hash))
       problems.push(`${rel}: missing anchor ${url}`);
   }
@@ -156,7 +161,7 @@ if (SITE_URL) {
     const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1);
     const panels = (html.match(/class="cheat-panel/g) || []).length;
     if (panels < 5) problems.push(rel + ': a cheat sheet needs at least 5 panels, found ' + panels);
-    if (!/<a href="lessons\/[^"]+\.html">/.test(html)) problems.push(rel + ': a cheat sheet panel must link to its lessons');
+    if (!(CLEAN_URLS ? /<a href="lessons\/[^".#]+">/ : /<a href="lessons\/[^"]+\.html">/).test(html)) problems.push(rel + ': a cheat sheet panel must link to its lessons');
     for (const m of html.matchAll(/<svg[^>]*class="vz-svg"[^>]*>/g)) if (!/role="img"/.test(m[0]) || !/aria-labelledby=/.test(m[0])) problems.push(rel + ': a drawing in a cheat sheet has no text alternative');
   }
 }
@@ -172,6 +177,20 @@ if (SITE_URL) {
       if (seen[k].has(got[k])) problems.push(`${rel}: same ${k} as ${seen[k].get(got[k])}`); else seen[k].set(got[k], rel);
     }
   }
+}
+// ---- Search results show about 60 characters of a title and 160 of a description (src/data/seo.mjs) ----
+{
+  const plain = (t) => t.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+  for (const f of files) {
+    const html = readFileSync(f, 'utf8'), rel = f.slice(DIST.length + 1).replace(/\\/g, '/');
+    if (rel === 'visuals-sheet.html') continue;
+    const t = plain((html.match(/<title>([^<]*)<\/title>/) || [])[1] || ''), d = plain((html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || '');
+    if (t.length > 60) problems.push(`${rel}: title has ${t.length} characters (at most 60): ${t}`);
+    if (d.length < 50 || d.length > 160) problems.push(`${rel}: description has ${d.length} characters (50 to 160): ${d}`);
+  }
+  const home = readFileSync(join(DIST, 'index.html'), 'utf8');
+  const featured = (home.match(/<ul class="lp-feat">[\s\S]*?<\/ul>/) || [''])[0].match(/<a href="lessons\/[^"]+">/g) || [];
+  if (featured.length !== 6) problems.push(`index.html: expected 6 featured lesson links, found ${featured.length}`);
 }
 // ---- Advertising build only: what AdSense requires, and claims that must not become false ----
 if (process.env.ADSENSE_CLIENT) {

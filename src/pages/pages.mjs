@@ -3,40 +3,21 @@
 // (S.sourceItem / S.sourceLink); the build and static checks enforce this.
 
 import { inlineVisual } from '../lib/visual.mjs';
+import { SEARCH } from '../data/seo.mjs';
 
 const TRACK_LABEL = { applied: 'AI application', ml: 'Machine learning', lm: 'Language models' };
 
-// Each page needs its own description for search results. Pages built from data (lessons, parts, cases, capstones) already have one.
-const DESCRIPTIONS = {
-  'plan.html': 'A 12-week study plan through the guide, with the lessons, practice and capstone project for each week.',
-  'roles.html': 'AI engineer or ML engineer? What each role does, the skills each needs, and which lessons to read for them.',
-  'roadmaps.html': 'Three visual roadmaps through the lessons: a quick complete path, a machine learning engineer view and an AI engineer view.',
-  'lessons.html': 'Every lesson in the guide, with filters by part, level, study time, track and the maths it uses.',
-  'solve.html': 'A decision guide: start from your problem and find the kind of AI or machine learning approach that fits it.',
-  'maths.html': 'A map of the maths names used in the lessons, from averages to attention, with the lessons that explain each one.',
-  'simulations.html': 'All the live simulations in one place: change a setting, watch the calculation respond and make a prediction first.',
-  'projects.html': 'Capstone projects that combine the lessons into working AI and machine learning systems, with acceptance tests.',
-  'cases.html': 'How real companies use AI, with published sources, the documented facts kept apart from the suggested design.',
-  'hardware.html': 'What laptops, desktops and cloud GPUs can do for AI work, and how to estimate the GPU memory a model needs.',
-  'glossary.html': 'AI and machine learning terms in plain words, each linked to the lesson that explains it with an example.',
-  'assessment.html': 'Short quizzes for each part and readiness checklists, to find gaps in what you have learned. Self-checks, not a certificate.',
-  'progress.html': 'Your reading progress, stored only in your browser: see it, resume a lesson, export it, import it or reset it.',
-  'about.html': 'About this free guide: who it is for, how it was checked, its sources, licences and accessibility.',
-  'privacy.html': 'Privacy and cookies: what this site stores in your browser, what it does not collect, and how advertising works.',
-  'cheatsheets.html': 'One-page cheat sheets for revising AI and machine learning: one for each part of the guide, and several by topic.',
-};
-
+// Search titles and descriptions that differ from a page's own live in src/data/seo.mjs.
 export function allPages(S) {
-  return withDescriptions([
+  return [
     landing(S), home(S), plan(S), roles(S), roadmaps(S), catalogue(S), solve(S), maths(S), simulations(S),
     ...S.MODULES.map((m) => modulePage(S, m)),
     projectsIndex(S), ...S.PROJECTS.map((p) => projectPage(S, p)),
     casesIndex(S), ...S.CASES.map((c) => casePage(S, c)),
     hardware(S), glossary(S), assessment(S), progress(S), about(S), privacy(S), notFound(S),
     cheatIndex(S), ...S.CHEATSHEETS.map((c) => cheatSheet(S, c)),
-  ]);
+  ];
 }
-const withDescriptions = (list) => list.map((p) => (p.description || !DESCRIPTIONS[p.path] ? p : { ...p, description: DESCRIPTIONS[p.path] }));
 
 const list = (items, esc) => `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
 // Options are strings, or [label, value] pairs when the visible label differs from the filter value.
@@ -766,6 +747,8 @@ ${v ? `<figure class="cheat-vis vz-fig">${v.svg}<figcaption>${S.esc(v.caption)}<
 }
 
 // ---------- Landing page (index.html): the first page a visitor sees; the old welcome page is start.html ----------
+// Chosen by hand as starting points; "featured", not "popular", because the site does not measure what is read.
+const FEATURED = ['s-what-is-ai', 'ml-algorithms', 'ml-timeseries', 'dl-rl', 'llm-finetune', 'app-rag'];
 function landing(S) {
   const ext = S.esc;
   const hours = hoursOf(S, S.LESSON_ORDER);
@@ -830,6 +813,12 @@ function landing(S) {
     <h2 id="lp-path">${S.MODULES.length} parts, one path</h2>
     <p class="lp-sub">Each part builds on the one before. You can start at the top or jump to what you need.</p>
     <ol class="lp-parts">${S.MODULES.map((m, i) => `<li><b>${i + 1}</b><span><a href="${ext(m.page)}"><strong>${ext(m.title.replace(/^Part \d+: /, ''))}</strong></a><br>${ext(partLines[m.id] || '')}</span></li>`).join('')}</ol>
+  </section>
+
+  <section class="lp-sec" aria-labelledby="lp-feat">
+    <h2 id="lp-feat">Featured lessons</h2>
+    <p class="lp-sub">Six good places to look first. Each opens a full lesson, free and with no sign-up.</p>
+    <ul class="lp-feat">${FEATURED.map((id) => `<li><h3><a href="lessons/${id}.html">${ext(S.lessons[id].title)}</a></h3><p>${ext(SEARCH[`lessons/${id}.html`]?.description || S.lessons[id].goal)}</p></li>`).join('')}</ul>
   </section>
 
   <section class="lp-band" aria-labelledby="lp-go">

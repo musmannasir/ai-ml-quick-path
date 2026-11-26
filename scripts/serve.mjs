@@ -15,6 +15,9 @@ createServer((req, res) => {
   // Local review page: every visual on one screen (built on each request, no security headers because it uses inline script). Not part of the site.
   if (p === 'visuals-sheet.html') { res.writeHead(200, { 'Content-Type': TYPES['.html'] }); return res.end(buildSheet().html); }
   let file = join(DIST, p || 'index.html');
+  // Clean addresses, as the live host serves them: /lessons gives lessons.html even though a lessons/ folder exists too.
+  const asPage = file.replace(/[/\\]+$/, '') + '.html';
+  if (p && !extname(p) && existsSync(asPage)) file = asPage;
   if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
   if (!existsSync(file)) { res.writeHead(404, { 'Content-Type': TYPES['.html'] }); return res.end(readFileSync(join(DIST, '404.html'))); }
   res.writeHead(200, { ...HEADERS, 'Content-Type': TYPES[extname(file)] || 'application/octet-stream' });

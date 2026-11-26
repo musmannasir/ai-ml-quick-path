@@ -16,6 +16,19 @@ export const SITE = {
 // The address a page is public at: no file name for the home page, and no .html where the host serves clean addresses.
 export const publicPath = (path) => (path === 'index.html' ? '' : SITE.cleanUrls ? path.replace(/\.html$/, '') : path);
 
+// On a host with clean addresses, links inside the site name the clean address too, so that neither a click nor a search
+// crawler goes through a redirect. Other builds keep .html, so the site also works from a local file.
+export function cleanHref(url) {
+  if (!SITE.cleanUrls || /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(url)) return url;
+  const [, path, tail = ''] = url.match(/^([^?#]*)([?#].*)?$/s);
+  if (!path.endsWith('.html')) return url;
+  const clean = /(^|\/)index\.html$/.test(path) ? path.slice(0, -'index.html'.length) || './' : path.slice(0, -'.html'.length);
+  return clean + tail;
+}
+// Only real links are rewritten: code samples in lessons are escaped text, so they never match a tag.
+export const cleanLinks = (html) => (!SITE.cleanUrls ? html : html.replace(/<(?:a|button)\b[^<>]*>/g,
+  (tag) => tag.replace(/(\s(?:href|data-first)=")([^"]*)"/g, (m, head, url) => `${head}${cleanHref(url)}"`)));
+
 // ---------- optional Google AdSense (owner decision 2026-11-05) ----------
 // Everything is OFF unless ADSENSE_CLIENT is set. Stage 1 (approval): ADSENSE_CLIENT only -> Google loader script,
 // verification meta tag, ads.txt, privacy wording. Stage 2 (ads visible): also ADS_SLOTS=on plus AD_SLOT_RAIL /
@@ -117,7 +130,7 @@ export function page({ path, title, description, body, crumbs = [], groups, toc 
   // The brand is added only when the whole title fits in about 60 characters; search results cut longer titles.
   const named = headTitle || title;
   const branded = `${named} | ${SITE.short}`;
-  const fullTitle = path === 'index.html' ? SITE.name : branded.length <= 60 ? branded : named;
+  const fullTitle = path === 'index.html' && !headTitle ? SITE.name : branded.length <= 60 ? branded : named;
   const canonical = SITE.url ? `${SITE.url}/${publicPath(path)}` : '';
   const desc = description || SITE.description;
   return `<!doctype html>

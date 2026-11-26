@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { INLINE_SCRIPT } from '../src/lib/layout.mjs';
 import { APPLIED_MATHS, esc, md, parseLesson, parseQA, slug } from '../src/lib/markdown.mjs';
-import { navGroups, page, SITE, ADS, adSlot, publicPath } from '../src/lib/layout.mjs';
+import { navGroups, page, SITE, ADS, adSlot, publicPath, cleanHref, cleanLinks } from '../src/lib/layout.mjs';
+import { SEARCH } from '../src/data/seo.mjs';
 import { LEVELS, LESSON_ORDER, MODULES, REVIEWED, ROADMAPS, ROUTES, STARTS, moduleOfLesson } from '../src/data/curriculum.mjs';
 import { CASES, CASE_CHECKS } from '../src/data/cases.mjs';
 import { PROJECTS, STARTERS } from '../src/data/projects.mjs';
@@ -111,7 +112,8 @@ const fmtMinutes = (m) => (m >= 90 ? `${(m / 60).toFixed(m % 60 ? 1 : 0)} h` : `
 // ---------- output helpers ----------
 const pages = [];      // for search index and sitemap
 function emit(path, opts) {
-  const html = page({ ...opts, path, groups });
+  const search = SEARCH[path] || {};   // search-result title and description (src/data/seo.mjs) where the page's own are weak or long
+  const html = cleanLinks(page({ ...opts, path, groups, headTitle: search.title || opts.headTitle || '', description: search.description || opts.description }));
   const out = join(DIST, path);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
@@ -322,6 +324,7 @@ ${adSlot('end')}
 const shared = { CASE_CHECKS, STARTERS, ADS, SOURCES, sourceItem, sourceLink, sourceNote, CODE_STATUS, codeEvidence, pill, mathsIndex, usedSources, STARTS, LEVELS, lessons, ctxFor: makeCtx, lessonLink, levelBadge, fmtMinutes, esc, md, slug, MODULES, ROADMAPS, ROUTES, PROJECTS, CASES, HARDWARE, WORKLOADS, GLOSSARY, CHEATSHEETS, CHECKPOINTS, REVIEWED, LESSON_ORDER, projectsById };
 for (const def of P.allPages(shared)) emit(def.path, def);
 for (const c of CASES) for (const s of c.sources) if (s.ref) usedSources.add(s.ref);
+for (const path of Object.keys(SEARCH)) if (!pages.some((p) => p.path === path)) errors.push(`src/data/seo.mjs: no page ${path}`);
 
 if (errors.length) { console.error('Build failed:\n- ' + [...new Set(errors)].join('\n- ')); process.exit(1); }
 
@@ -329,10 +332,10 @@ if (errors.length) { console.error('Build failed:\n- ' + [...new Set(errors)].jo
 cpSync(join(ROOT, 'public'), DIST, { recursive: true });
 // Theme tokens are defined once (src/design/tokens.mjs) and written at the top of the stylesheet.
 writeFileSync(join(DIST, 'assets/app.css'), tokensCss() + readFileSync(join(ROOT, 'public/assets/app.css'), 'utf8'));
-const index = pages.filter((p) => p.path !== '404.html').map((p) => ({ t: p.title, u: p.path, s: p.section, k: p.keywords.slice(0, 700) }));
-for (const [term, def, l] of GLOSSARY) index.push({ t: term, u: `glossary.html#${slug(term)}`, s: 'Glossary', k: def });
+const index = pages.filter((p) => p.path !== '404.html').map((p) => ({ t: p.title, u: cleanHref(p.path), s: p.section, k: p.keywords.slice(0, 700) }));
+for (const [term, def, l] of GLOSSARY) index.push({ t: term, u: cleanHref(`glossary.html#${slug(term)}`), s: 'Glossary', k: def });
 writeFileSync(join(DIST, 'assets/search-index.js'), `window.SEARCH_INDEX=${JSON.stringify(index)};\n`);
-writeFileSync(join(DIST, 'assets/search-text.js'), `window.SEARCH_TEXT=${JSON.stringify(searchText)};\n`);
+writeFileSync(join(DIST, 'assets/search-text.js'), `window.SEARCH_TEXT=${JSON.stringify(searchText.map((e) => ({ ...e, u: cleanHref(e.u) })))};\n`);
 // Security headers for hosts that support them (Netlify, Cloudflare Pages, Azure Static Web Apps).
 const scriptHash = createHash('sha256').update(INLINE_SCRIPT).digest('base64');
 const CSP = `default-src 'self'; script-src 'self' 'sha256-${scriptHash}'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`;

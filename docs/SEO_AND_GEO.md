@@ -14,6 +14,22 @@ describe. Nobody can promise rankings or citations; links from other sites, ment
 - `robots.txt` allows all crawlers and names the sitemap.
 - `npm run test:static` (with `SITE_URL` set) checks the JSON-LD, the image tags, title length, sitemap dates and `llms.txt`.
 
+## Search titles and descriptions
+`src/data/seo.mjs` holds the title and description used in search results where a page's own are weak or too long. Page
+headings do not change. Lessons without an entry use their title and goal. `npm run test:static` fails on a title over
+60 characters, a description outside 50 to 160 characters, or a title or description used by two pages. Say only what the
+page really contains.
+
+## Links inside the site
+In a clean-address build (Cloudflare, or `CLEAN_URLS=on`) every internal link, and the search index, names the clean
+address, so no click or crawl goes through a redirect. Other builds keep `.html`, so the site works from a local file.
+`npm run serve` serves both forms. A few links that the script creates for returning learners ("Continue learning") still
+use `.html` and are redirected by the host; search crawlers do not see them.
+
+## Featured lessons
+The home page links six lessons chosen by hand (`FEATURED` in `src/pages/pages.mjs`). They are not called popular, because
+the site does not measure what is read.
+
 ## Front matter
 `updated: YYYY-MM-DD` (optional) is the date a lesson's content last changed in a real way. It must not be earlier than `reviewed`.
 Set it when you change a lesson; do not use it for a subject review (that is `reviewed`).
@@ -24,5 +40,4 @@ Set it when you change a lesson; do not use it for a subject review (that is `re
 - No analytics script is used on purpose. Use Search Console and Cloudflare's own traffic charts.
 
 ## Left out on purpose
-- `.html` links in the pages are kept, because the site must also work from a local file. Cloudflare redirects them to the clean address.
 - FAQ structured data: Google shows FAQ results only for a few site types, so it would add nothing.
