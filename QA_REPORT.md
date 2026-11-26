@@ -171,3 +171,17 @@ C#: 57 of 57 samples compiled and 25 ran to the end; Python: 14 of 14 example pr
 Still open after round 2: lesson-by-lesson teaching review; rewording or trimming the older maths topics; the six unopened sources; roadmap
 redesign; diagram audit; separate progress for exercises; quiz retry flow; feedback link; screen reader, other browsers, phones, axe and
 Lighthouse; PyTorch, FastAPI, MLflow, LangGraph and live model calls; the migration pack.
+
+## Search ranking fixes, 2026-11-26
+
+Real results on this date, on the final text: build 131 pages; `check:maths` 1012 calculations, 0 problems; static checks passed on the default
+build and on the clean-address build (`SITE_URL` with `CLEAN_URLS=on`); browser tests in Microsoft Edge 141 of 141; local IIS deploy done and
+smoke test passed (pages 200, unknown page 404, security headers present). Run earlier the same day, before four descriptions were reworded:
+static checks on the advertising build (made-up ids) and with `SITE_URL` only, `check:sims` (13 simulations agree) and the diagram check
+(529 diagrams, 0 problems). In the browser, on the clean-address build: 130 internal links from ten pages answered 200 with no `.html`;
+search results, a featured lesson link and a 360 px home page worked; no console errors.
+
+New static checks: titles at most 60 characters, descriptions 50 to 160, six featured lesson links, and in clean-address builds no internal
+link ending in `.html`.
+
+Not done: nothing measured on the live site (not published yet); no speed (Core Web Vitals) measurement; the effect on Google ranking is unknown.

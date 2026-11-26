@@ -62,3 +62,7 @@ New lesson `llm-hardware` in Part 5 ("Hardware for AI: CPU, GPU, CUDA and puttin
 ## 2026-11-25: AdSense readiness and search descriptions
 
 Privacy wording and opt-out links for the advertising build, no false "no tracking" claim there, contact links, footer ad slots only on content pages, a different description for every page and different titles for capstones. Static checks cover them. Details in `MONETIZATION_READINESS.md`.
+
+## 2026-11-26: search ranking fixes
+
+Internal links name the clean address in clean-address builds (no redirect); search titles and descriptions moved to `src/data/seo.mjs`, with new titles for case studies and the pages already shown in Google, and every description at most 160 characters; six featured lessons on the home page. Static checks cover all of this. Details in `docs/SEO_AND_GEO.md`.

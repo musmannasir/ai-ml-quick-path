@@ -75,6 +75,7 @@ src/visuals/             The drawings (SVG, my own); src/data/cheatsheets.mjs ho
 src/lib/sim.mjs          Parses and renders ```sim blocks (simulations); public/assets/sim.js is the engine, public/assets/sims/<module>.js the modules
 src/lib/maths.mjs        Safe arithmetic evaluator, maths-moment renderer, prose arithmetic scanner, calculator definitions
 src/design/tokens.mjs    The only place theme tokens are defined; the build writes them into dist/assets/app.css
+src/data/seo.mjs         Search-result titles and descriptions (docs/SEO_AND_GEO.md); clean-address builds also link to clean addresses
 src/data/sources.mjs     Register of vetted outside sources (SOURCES) and the references shown per lesson (LESSON_REFS)
 scripts/extract_lesson_code.py  Copies lesson code blocks into examples/lesson-code/{python,dotnet}/
 scripts/package.mjs      Release ZIPs (needs `zip`; Linux/macOS/WSL)
