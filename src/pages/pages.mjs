@@ -6,16 +6,37 @@ import { inlineVisual } from '../lib/visual.mjs';
 
 const TRACK_LABEL = { applied: 'AI application', ml: 'Machine learning', lm: 'Language models' };
 
+// Each page needs its own description for search results. Pages built from data (lessons, parts, cases, capstones) already have one.
+const DESCRIPTIONS = {
+  'plan.html': 'A 12-week study plan through the guide, with the lessons, practice and capstone project for each week.',
+  'roles.html': 'AI engineer or ML engineer? What each role does, the skills each needs, and which lessons to read for them.',
+  'roadmaps.html': 'Three visual roadmaps through the lessons: a quick complete path, a machine learning engineer view and an AI engineer view.',
+  'lessons.html': 'Every lesson in the guide, with filters by part, level, study time, track and the maths it uses.',
+  'solve.html': 'A decision guide: start from your problem and find the kind of AI or machine learning approach that fits it.',
+  'maths.html': 'A map of the maths names used in the lessons, from averages to attention, with the lessons that explain each one.',
+  'simulations.html': 'All the live simulations in one place: change a setting, watch the calculation respond and make a prediction first.',
+  'projects.html': 'Capstone projects that combine the lessons into working AI and machine learning systems, with acceptance tests.',
+  'cases.html': 'How real companies use AI, with published sources, the documented facts kept apart from the suggested design.',
+  'hardware.html': 'What laptops, desktops and cloud GPUs can do for AI work, and how to estimate the GPU memory a model needs.',
+  'glossary.html': 'AI and machine learning terms in plain words, each linked to the lesson that explains it with an example.',
+  'assessment.html': 'Short quizzes for each part and readiness checklists, to find gaps in what you have learned. Self-checks, not a certificate.',
+  'progress.html': 'Your reading progress, stored only in your browser: see it, resume a lesson, export it, import it or reset it.',
+  'about.html': 'About this free guide: who it is for, how it was checked, its sources, licences and accessibility.',
+  'privacy.html': 'Privacy and cookies: what this site stores in your browser, what it does not collect, and how advertising works.',
+  'cheatsheets.html': 'One-page cheat sheets for revising AI and machine learning: one for each part of the guide, and several by topic.',
+};
+
 export function allPages(S) {
-  return [
+  return withDescriptions([
     landing(S), home(S), plan(S), roles(S), roadmaps(S), catalogue(S), solve(S), maths(S), simulations(S),
     ...S.MODULES.map((m) => modulePage(S, m)),
     projectsIndex(S), ...S.PROJECTS.map((p) => projectPage(S, p)),
     casesIndex(S), ...S.CASES.map((c) => casePage(S, c)),
     hardware(S), glossary(S), assessment(S), progress(S), about(S), privacy(S), notFound(S),
     cheatIndex(S), ...S.CHEATSHEETS.map((c) => cheatSheet(S, c)),
-  ];
+  ]);
 }
+const withDescriptions = (list) => list.map((p) => (p.description || !DESCRIPTIONS[p.path] ? p : { ...p, description: DESCRIPTIONS[p.path] }));
 
 const list = (items, esc) => `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
 // Options are strings, or [label, value] pairs when the visible label differs from the filter value.
@@ -495,7 +516,7 @@ ${sec('Definition of done', list(p.acceptance, S.esc))}
 ${sec('Stretch goals', list(p.stretch, S.esc))}
 ${sec('What to show an employer', `<p>${S.esc(p.evidence)}</p>`)}
 <section class="completion"><h2>Completion</h2><label class="check-row"><input type="checkbox" data-progress-checkbox="project:${p.id}"> I have met every item in the definition of done</label><p class="small muted">Saved in this browser only.</p></section>`;
-  return { path, title: p.title, description: p.requirement, body, crumbs: [['Capstones', 'projects.html'], [`Capstone ${p.n}`, path]], section: 'Capstones', keywords: `${p.requirement} ${p.python} ${p.dotnet}` };
+  return { path, title: p.title, headTitle: `Capstone: ${p.title}`, description: p.requirement, body, crumbs: [['Capstones', 'projects.html'], [`Capstone ${p.n}`, path]], section: 'Capstones', keywords: `${p.requirement} ${p.python} ${p.dotnet}` };
 }
 
 // ---------- Case studies ----------
@@ -676,6 +697,7 @@ function about(S) {
 <p>Case facts and results come only from published sources, linked on each case page with the date of the last link check. Each case separates documented facts from the guide's suggested workflow. Research notes and confidence levels are in <code>CONTENT_SOURCES.md</code> in the source package.</p>
 <ul>${S.CASES.map((c) => `<li><a href="cases/${c.id}.html">${S.esc(c.company)}</a>: ${c.sources.map((s) => S.esc(s.publisher)).join('; ')}</li>`).join('')}</ul></section>
 <section aria-labelledby="privacy"><h2 id="privacy">Privacy</h2><p>What the site stores, what it shares and how advertising works is on the <a href="privacy.html">Privacy and cookies</a> page. In short: no account or sign-in, and your progress stays in your browser. All example data is synthetic. Do not paste confidential data into exercises that call outside model APIs.</p></section>
+${process.env.CONTACT_EMAIL ? `<section aria-labelledby="contact"><h2 id="contact">Contact</h2><p>Questions, or a mistake to report in a lesson: <a href="mailto:${S.esc(process.env.CONTACT_EMAIL)}">${S.esc(process.env.CONTACT_EMAIL)}</a>.</p></section>` : ''}
 <section aria-labelledby="licence"><h2 id="licence">Licences</h2><p>Lesson text and diagrams: Creative Commons Attribution 4.0 (CC BY 4.0). Example code: MIT licence. Company and product names belong to their owners and are used only to identify them.</p></section>
 <section aria-labelledby="a11y"><h2 id="a11y">Accessibility</h2><p>The site targets WCAG 2.2 level AA: semantic structure, keyboard operation for every control, visible focus, text contrast of at least 4.5:1 in light and dark themes, support for 200% zoom and reduced motion, and readable print output. Test results and their limits are in <code>QA_REPORT.md</code> in the source package.</p></section>`;
   return { path: 'about.html', title: 'About, sources and privacy', body, crumbs: [['About', 'about.html']], section: 'Reference', keywords: 'about privacy licence accessibility sources' };
@@ -684,11 +706,19 @@ function about(S) {
 // ---------- Privacy and cookies (wording depends on whether the AdSense build is on) ----------
 function privacy(S) {
   const ads = !!S.ADS.client;
-  const own = `<section aria-labelledby="own-h"><h2 id="own-h">What this site stores</h2><ul><li>No account, sign-in or analytics of our own.</li><li>Your progress and preferences (theme, sidebar, focus mode, completed lessons) are stored only in your browser under the key <code>aimlqp.v1</code>. Nothing is sent to a server. You can export or reset them on the <a href="progress.html">progress page</a>.</li><li>The site loads no external fonts or images.</li></ul></section>`;
+  const own = `<section aria-labelledby="own-h"><h2 id="own-h">What this site stores</h2><ul><li>No account, sign-in or analytics of our own.</li><li>Your progress and preferences (theme, sidebar, focus mode, completed lessons) are stored only in your browser under the key <code>aimlqp.v1</code>. Nothing is sent to a server. You can export or reset them on the <a href="progress.html">progress page</a>.</li><li>${ads ? 'The site itself loads no external fonts or images. Advertisements are loaded from Google and its partners.' : 'The site loads no external fonts or images.'}</li></ul></section>`;
   const adText = ads ? `<section aria-labelledby="ads-h"><h2 id="ads-h">Advertising</h2>
 <p>This site shows advertisements served by Google AdSense. Advertisements pay for the free lessons. They are marked "Advertisement" and never appear inside lesson text, quizzes, code or diagrams.</p>
-<ul><li>Google and its partners may use cookies or similar technologies to show and measure ads, and may show ads based on your earlier visits to this and other sites.</li><li>In the European Economic Area, the United Kingdom and Switzerland, a consent message asks for your choice before personalised ads are used. You can change your choice from the same message when it is shown.</li><li>You can manage personalised ads in your Google account ad settings, or block ads in your browser. The lessons work either way.</li></ul>
-<p>The ad provider, not this site, receives the data that ad cookies collect. Read the provider's own privacy information for details.</p></section>` : `<section aria-labelledby="ads-h"><h2 id="ads-h">Advertising</h2><p>This edition shows no advertisements and sets no cookies.</p></section>`;
+<ul>
+<li>Third-party vendors, including Google, use cookies to serve ads based on your earlier visits to this website or other websites.</li>
+<li>Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this site and/or other sites on the internet.</li>
+<li>You can opt out of personalised advertising in ${S.sourceLink('google-ads-settings')}.</li>
+<li>You can also opt out of some third-party vendors' use of cookies for personalised advertising at ${S.sourceLink('aboutads-choices')}.</li>
+<li>Other advertising companies may show or measure ads here. Google publishes information about them, with links to their privacy policies, in ${S.sourceLink('google-ad-partners')}. See also ${S.sourceLink('google-ads-cookies')}.</li>
+<li>In the European Economic Area, the United Kingdom and Switzerland, a consent message asks for your choice before personalised ads are used. You can change your choice from the same message when it is shown.</li>
+<li>You can block cookies or ads in your browser. The lessons work either way.</li>
+</ul>
+<p>The ad providers, not this site, receive the data that advertising cookies collect.</p></section>` : `<section aria-labelledby="ads-h"><h2 id="ads-h">Advertising</h2><p>This edition shows no advertisements and sets no cookies.</p></section>`;
   const contact = process.env.CONTACT_EMAIL ? `<section aria-labelledby="contact-h"><h2 id="contact-h">Contact</h2><p>Questions about privacy or corrections to a lesson: <a href="mailto:${S.esc(process.env.CONTACT_EMAIL)}">${S.esc(process.env.CONTACT_EMAIL)}</a>.</p></section>` : '';
   const body = `<h1>Privacy and cookies</h1>\n${own}\n${adText}\n${contact}`;
   return { path: 'privacy.html', title: 'Privacy and cookies', body, crumbs: [['Privacy and cookies', 'privacy.html']], section: 'Reference', keywords: 'privacy cookies advertising adsense consent data storage' };
@@ -732,7 +762,7 @@ ${v ? `<figure class="cheat-vis vz-fig">${v.svg}<figcaption>${S.esc(v.caption)}<
 <h1>${S.esc(c.title)}</h1>
 <p class="lede">${S.esc(c.intro)} <button type="button" class="btn btn-small" data-print>Print this sheet</button></p>
 <div class="cheat-grid">${panels}</div>`;
-  return { path, title: c.title, body, crumbs: [['Cheat sheets', 'cheatsheets.html'], [c.short, path]], wide: true, section: 'Reference', keywords: `cheat sheet summary revision ${c.short}` };
+  return { path, title: c.title, description: `Cheat sheet, ${c.short}: ${c.intro}`, body, crumbs: [['Cheat sheets', 'cheatsheets.html'], [c.short, path]], wide: true, section: 'Reference', keywords: `cheat sheet summary revision ${c.short}` };
 }
 
 // ---------- Landing page (index.html): the first page a visitor sees; the old welcome page is start.html ----------
@@ -759,7 +789,7 @@ function landing(S) {
         <a class="lp-btn" href="start.html" data-landing-cta>Get started: free learning <span aria-hidden="true">→</span></a>
         <a class="lp-btn lp-btn-2" href="roadmaps.html">See the roadmaps</a>
       </div>
-      <p class="lp-note" data-landing-note>No account, no tracking. Your progress stays in your own browser.</p>
+      <p class="lp-note" data-landing-note>${S.ADS.client ? 'No account needed. Your progress stays in your own browser. This site shows advertising: see <a href="privacy.html">Privacy and cookies</a>.' : 'No account, no tracking. Your progress stays in your own browser.'}</p>
     </div>
     <div class="lp-demo" role="group" aria-label="A preview of one lesson picture">
       <div class="lp-demo-tabs" aria-hidden="true"><span>Boxes</span><span class="on">Visual</span></div>
@@ -809,6 +839,6 @@ function landing(S) {
   </section>
 </div>
 </main>
-<footer class="lp-wrap lp-foot"><span>AI &amp; ML Quick Path</span><a href="about.html">About this guide</a><a href="privacy.html">Privacy</a><span>Built to be honest: made-up numbers are labelled, and code that was not run says so.</span></footer>`;
+<footer class="lp-wrap lp-foot"><span>AI &amp; ML Quick Path</span><a href="about.html">About this guide</a><a href="privacy.html">Privacy</a>${process.env.CONTACT_EMAIL ? '<a href="privacy.html#contact-h">Contact</a>' : ''}<span>Built to be honest: made-up numbers are labelled, and code that was not run says so.</span></footer>`;
   return { path: 'index.html', title: 'AI & ML Quick Path', description: 'A free, plain-language guide to AI and machine learning, with live simulations, pictures, and Python and .NET (C#) examples. No sign-up.', body, landing: true, section: 'Home', keywords: 'ai machine learning free guide start learn' };
 }

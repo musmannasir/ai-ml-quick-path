@@ -31,7 +31,7 @@ export function adSlot(name) {
   if (!ADS.client || !ADS.slotsOn || !id) return '';
   return `<aside class="ad-slot ad-slot-${name}" aria-label="Advertisement"><p class="ad-label">Advertisement</p><ins class="adsbygoogle" data-ad-client="${esc(ADS.client)}" data-ad-slot="${esc(id)}" data-ad-format="auto" data-full-width-responsive="true"></ins></aside>`;
 }
-const FOOTER_AD_PAGES = /^(lessons\.html|glossary|cases|projects|hardware|solve|maths|part-[0-9])/;
+const FOOTER_AD_PAGES = /^(glossary\.html|hardware\.html|cases\/|projects\/)/;
 
 const ICON = {
   menu: '<svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>',
@@ -111,12 +111,13 @@ function structuredData({ path, title, desc, crumbs, lessonMeta, canonical }) {
   return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>`;
 }
 
-export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [], lessonMeta = null, landing = false }) {
+export function page({ path, title, description, body, crumbs = [], groups, toc = '', wide = false, bodyClass = '', lessonId = '', scripts = [], lessonMeta = null, landing = false, headTitle = '' }) {
   const depth = path.split('/').length - 1;
   const root = depth ? '../'.repeat(depth) : '';
   // The brand is added only when the whole title fits in about 60 characters; search results cut longer titles.
-  const branded = `${title} | ${SITE.short}`;
-  const fullTitle = path === 'index.html' ? SITE.name : branded.length <= 60 ? branded : title;
+  const named = headTitle || title;
+  const branded = `${named} | ${SITE.short}`;
+  const fullTitle = path === 'index.html' ? SITE.name : branded.length <= 60 ? branded : named;
   const canonical = SITE.url ? `${SITE.url}/${publicPath(path)}` : '';
   const desc = description || SITE.description;
   return `<!doctype html>
@@ -180,7 +181,7 @@ ${toc}
 ${FOOTER_AD_PAGES.test(path) ? adSlot('footer') : ''}
 <footer class="site-footer">
   <p>${SITE.name}. Content reviewed ${REVIEWED}. ${ADS.client ? 'This site is supported by advertising.' : 'No advertising, no tracking, no account.'} Lessons work without leaving the site; links to official documentation are optional reading. Text CC BY 4.0, code MIT.</p>
-  <ul class="footer-links"><li><a href="${root}about.html">About and accessibility</a></li><li><a href="${root}privacy.html">Privacy and cookies</a></li><li><a href="${root}cases.html">Real-world cases</a></li><li><a href="${root}progress.html">Progress export</a></li></ul>
+  <ul class="footer-links"><li><a href="${root}about.html">About and accessibility</a></li><li><a href="${root}privacy.html">Privacy and cookies</a></li><li><a href="${root}cases.html">Real-world cases</a></li>${env('CONTACT_EMAIL') ? `<li><a href="${root}privacy.html#contact-h">Contact</a></li>` : ''}<li><a href="${root}progress.html">Progress export</a></li></ul>
 </footer>
 </div>
 </div>

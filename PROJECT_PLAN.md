@@ -58,3 +58,7 @@ New lesson `llm-hardware` in Part 5 ("Hardware for AI: CPU, GPU, CUDA and puttin
 ## 2026-11-24: landing page
 
 `index.html` is now a landing page (title, overview, a "Get started: free learning" button). The old welcome page moved to `start.html`. Three mock-ups were compared; the first (classic landing) was chosen by the owner.
+
+## 2026-11-25: AdSense readiness and search descriptions
+
+Privacy wording and opt-out links for the advertising build, no false "no tracking" claim there, contact links, footer ad slots only on content pages, a different description for every page and different titles for capstones. Static checks cover them. Details in `MONETIZATION_READINESS.md`.
